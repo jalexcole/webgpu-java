@@ -6,9 +6,17 @@
     <artifactId>wgpu-native</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
+    <parent>
+        <groupId>com.mycompany.app</groupId>
+        <artifactId>project-parent</artifactId>
+        <version>1</version>
+    </parent>
+
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -30,6 +38,41 @@
 
                             <verbosity>-v</verbosity>
                             <!-- <copyWithPlatformDir>true</copyWithPlatformDir> -->
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Package the native shared library into the JAR -->
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+
+            </plugin>
+            
+            <!-- Copy Rust shared library into desired location -->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-shared-library</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.outputDirectory}/native</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.build.outputDirectory}/rust-maven-plugin/${artifactId}/release</directory> <!-- or
+                                    release -->
+                                    <includes>
+                                        <include>libyourlib.so</include>
+                                        <include>libwgpu_native.dylib</include>
+                                        <include>yourlib.dll</include>
+                                    </includes>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
                         </configuration>
                     </execution>
                 </executions>
