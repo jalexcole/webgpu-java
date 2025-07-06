@@ -1,8 +1,11 @@
 package org.webgpu;
 
+import java.lang.foreign.MemorySegment;
 import java.time.Instant;
 
 public class Adapter {
+    private MemorySegment ptr;
+
     /**
      * The features which can be used to create devices on this adapter.
      * 

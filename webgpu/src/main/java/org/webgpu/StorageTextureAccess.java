@@ -1,5 +1,18 @@
 package org.webgpu;
 
-public class StorageTextureAccess {
-    
+import org.webgpu.extract.webgpu_h;
+
+public enum StorageTextureAccess {
+    BindingNotUsed(webgpu_h.WGPUStorageTextureAccess_BindingNotUsed()),
+    UNDEFINED(webgpu_h.WGPUStorageTextureAccess_Undefined()),
+    WRITE_ONLY(webgpu_h.WGPUStorageTextureAccess_WriteOnly()),
+    READ_ONLY(webgpu_h.WGPUStorageTextureAccess_ReadOnly()),
+    READ_WRITE(webgpu_h.WGPUStorageTextureAccess_ReadWrite()),
+    FORCE32(webgpu_h.WGPUStorageTextureAccess_Force32());
+
+    public final int value;
+
+    StorageTextureAccess(int value) {
+        this.value = value;
+    }
 }

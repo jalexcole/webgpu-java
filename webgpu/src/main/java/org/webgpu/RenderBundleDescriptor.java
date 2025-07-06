@@ -1,5 +1,7 @@
 package org.webgpu;
 
-public class RenderBundleDescriptor {
+import java.lang.foreign.MemorySegment;
 
+public class RenderBundleDescriptor {
+    private MemorySegment ptr;
 }

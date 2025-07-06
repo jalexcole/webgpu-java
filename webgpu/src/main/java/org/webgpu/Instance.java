@@ -1,5 +1,11 @@
 package org.webgpu;
 
-public class Instance {
+import java.lang.foreign.MemorySegment;
 
+public class Instance {
+    private MemorySegment instance;
+
+    Instance(MemorySegment instance) {
+        this.instance = instance;
+    }
 }

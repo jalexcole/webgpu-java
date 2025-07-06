@@ -1,5 +1,7 @@
 package org.webgpu;
 
-public class RenderBundleEncoder {
+import java.lang.foreign.MemorySegment;
 
+public class RenderBundleEncoder {
+private MemorySegment ptr;
 }

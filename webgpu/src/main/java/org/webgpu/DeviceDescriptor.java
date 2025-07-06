@@ -1,5 +1,7 @@
 package org.webgpu;
 
-public class DeviceDescriptor {
+import java.lang.foreign.MemorySegment;
 
+public class DeviceDescriptor {
+    private MemorySegment ptr;
 }

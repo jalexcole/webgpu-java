@@ -1,13 +1,57 @@
 package org.webgpu;
 
+import java.lang.foreign.Arena;
+import java.lang.foreign.Linker;
+import java.lang.foreign.MemorySegment;
 import java.time.Duration;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+import org.webgpu.extract.WGPUInstanceDescriptor;
+import org.webgpu.extract.webgpu_h;
 
 public class WGPU {
-    public static int getInstanceLimits(InstanceLimits... limits) {
+    @SuppressWarnings("preview")
+    static final Linker NATIVE_LINKER = Linker.nativeLinker();
+    static {
+        try {
+            System.load("/Users/alex/dev/webgpu-java/webgpu/src/main/resources/libwgpu_native.dylib");
+        } catch (SecurityException e) {
+            System.out.println(e.getMessage());
+        } catch (final UnsatisfiedLinkError e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    @SuppressWarnings("preview")
+    public static Instance createInstance(@Nullable InstanceDescriptor descriptor) {
+        try (Arena arena = Arena.ofConfined()) {
+            if (descriptor == null) {
+                var instance = webgpu_h.wgpuCreateInstance(MemorySegment.NULL);
+                return new Instance(instance);
+            }
+
+            var wgpuDescriptor = arena.allocate(WGPUInstanceDescriptor.layout());
+
+            
+
+            var instance = webgpu_h.wgpuCreateInstance(wgpuDescriptor);
+            return new Instance(instance);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        
+        throw new UnsupportedOperationException("Unimplemented method 'createInstance'");
+    }
+
+    public static void getInstanceFeatures(SupportedFeatures... features) {
+        throw new UnsupportedOperationException("Unimplemented method 'getInstanceFeatures'");
+    }
+
+    public static void getInstanceLimits(InstanceLimits... limits) {
         throw new UnsupportedOperationException("Unimplemented method 'getInstanceLimits'");
     }
 
@@ -640,7 +684,7 @@ public class WGPU {
             @NonNull Color color) {
         throw new UnsupportedOperationException("Unimplemented method 'renderPassEncoderSetBlendConstants'");
     }
-    
+
     public static void renderPassEncoderSetIndexBuffer(@NonNull RenderPassEncoder renderPassEncoder,
             @NonNull Buffer buffer, @NonNull IndexFormat format, long offset, long size) {
         throw new UnsupportedOperationException("Unimplemented method 'renderPassEncoderSetIndexBuffer'");
@@ -664,7 +708,7 @@ public class WGPU {
             int reference) {
         throw new UnsupportedOperationException("Unimplemented method 'renderPassEncoderSetStencilReference'");
     }
-    
+
     public static void renderPassEncoderSetVertexBuffer(@NonNull RenderPassEncoder renderPassEncoder, int slot,
             @NonNull Buffer buffer, long offset, long size) {
         throw new UnsupportedOperationException("Unimplemented method 'renderPassEncoderSetVertexBuffer'");
@@ -736,7 +780,7 @@ public class WGPU {
             @NonNull SupportedInstanceFeatures supportedInstanceFeatures) {
         throw new UnsupportedOperationException("Unimplemented method 'supportedInstanceFeaturesFreeMembers'");
     }
-    
+
     public static void supportedWGSLLLanguageFeatureFreeMembers(
             @NonNull SupportedWGSLLanguageFeatures supportedWGSLLanguageFeatures) {
         throw new UnsupportedOperationException("Unimplemented method 'supportedWGSLLanguageFeatureFreeMembers'");
@@ -750,7 +794,7 @@ public class WGPU {
             @NonNull SurfaceCapabilities capabilities) {
         throw new UnsupportedOperationException("Unimplemented method 'surfaceGetCapabilities'");
     }
-    
+
     public static void surfaceGetCurrentTexture(@NonNull Surface surface, @NonNull SurfaceTexture currentTexture) {
         throw new UnsupportedOperationException("Unimplemented method 'surfaceGetCurrentTexture'");
     }
@@ -839,9 +883,5 @@ public class WGPU {
     public static void textureViewAddRef(@NonNull TextureView textureView) {
         throw new UnsupportedOperationException("Unimplemented method 'textureViewAddRef'");
     }
-
-    
-
-
 
 }

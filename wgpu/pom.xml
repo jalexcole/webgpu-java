@@ -7,9 +7,9 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <parent>
-        <groupId>com.mycompany.app</groupId>
-        <artifactId>project-parent</artifactId>
-        <version>1</version>
+        <groupId>com.webgpu</groupId>
+        <artifactId>webgpu-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <properties>
@@ -47,7 +47,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
 
             </plugin>
-            
+
             <!-- Copy Rust shared library into desired location -->
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>

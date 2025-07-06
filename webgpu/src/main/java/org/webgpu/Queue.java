@@ -1,5 +1,7 @@
 package org.webgpu;
 
-public class Queue {
+import java.lang.foreign.MemorySegment;
 
+public class Queue {
+    private MemorySegment queuePtr;
 }

@@ -2,9 +2,9 @@
 <project>
     
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.mycompany.app</groupId>
-    <artifactId>project-parent</artifactId>
-    <version>1</version>
+    <groupId>com.webgpu</groupId>
+    <artifactId>webgpu-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <properties>

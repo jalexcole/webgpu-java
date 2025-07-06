@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.mycompany.app</groupId>
+    <groupId>org.webgpu</groupId>
     <artifactId>webgpu</artifactId>
-    <version>1</version>
+    <version>0.0.1-SNAPSHOT</version>
 
     <parent>
-        <groupId>com.mycompany.app</groupId>
-        <artifactId>project-parent</artifactId>
-        <version>1</version>
+        <groupId>com.webgpu</groupId>
+        <artifactId>webgpu-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <properties>

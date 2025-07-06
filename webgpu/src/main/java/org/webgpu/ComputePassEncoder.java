@@ -1,5 +1,7 @@
 package org.webgpu;
 
-public class ComputePassEncoder {
+import java.lang.foreign.MemorySegment;
 
+public class ComputePassEncoder {
+    private MemorySegment ptr;
 }

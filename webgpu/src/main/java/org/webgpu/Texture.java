@@ -1,5 +1,5 @@
 package org.webgpu;
 
-public class Texture {
+public class Texture implements ObjectBase {
 
 }

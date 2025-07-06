@@ -1,5 +1,7 @@
 package org.webgpu;
 
-public class RenderPassDescriptor {
+import java.lang.foreign.MemorySegment;
 
+public class RenderPassDescriptor {
+private MemorySegment ptr;
 }

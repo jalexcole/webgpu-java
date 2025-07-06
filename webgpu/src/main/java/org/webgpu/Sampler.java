@@ -1,5 +1,7 @@
 package org.webgpu;
 
-public class Sampler {
+import java.lang.foreign.MemorySegment;
 
+public class Sampler {
+    private MemorySegment ptr;
 }

@@ -35,7 +35,7 @@ public class WebGPU {
     }
 
     public static void instanceRequestAdapter(WebGPUInstance instance) {
-
+        // webgpu_h.wgpuInstanceRequestAdapter(null, null, null, null)
     }
 
     public static Adapter requestAdapterSync(WebGPUInstance instance) {

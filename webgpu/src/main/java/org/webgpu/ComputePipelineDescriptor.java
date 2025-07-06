@@ -1,5 +1,7 @@
 package org.webgpu;
 
-public class ComputePipelineDescriptor {
+import java.lang.foreign.MemorySegment;
 
+public class ComputePipelineDescriptor {
+    private MemorySegment ptr;
 }

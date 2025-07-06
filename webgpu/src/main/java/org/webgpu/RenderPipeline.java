@@ -1,5 +1,7 @@
 package org.webgpu;
 
-public class RenderPipeline {
+import java.lang.foreign.MemorySegment;
 
+public class RenderPipeline {
+private MemorySegment ptr;
 }

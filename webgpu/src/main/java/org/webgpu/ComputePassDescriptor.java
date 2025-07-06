@@ -1,5 +1,7 @@
 package org.webgpu;
 
-public class ComputePassDescriptor {
+import java.lang.foreign.MemorySegment;
 
+public class ComputePassDescriptor {
+    private MemorySegment ptr;
 }
