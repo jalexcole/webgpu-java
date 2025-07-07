@@ -13,4 +13,8 @@ public enum WGSLLanguageFeatureName {
     WGSLLanguageFeatureName(int value) {
         this.value = value;
     }
+
+    public int value() {
+        return value;
+    }
 }

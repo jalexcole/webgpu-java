@@ -12,7 +12,7 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c :
+ * {@snippet lang=c :
  * struct WGPUSupportedWGSLLanguageFeatures {
  *     size_t featureCount;
  *     const WGPUWGSLLanguageFeatureName *features;
@@ -26,8 +26,9 @@ public class WGPUSupportedWGSLLanguageFeatures {
     }
 
     private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
-            webgpu_h.C_LONG.withName("featureCount"),
-            webgpu_h.C_POINTER.withName("features")).withName("WGPUSupportedWGSLLanguageFeatures");
+        webgpu_h.C_LONG.withName("featureCount"),
+        webgpu_h.C_POINTER.withName("features")
+    ).withName("WGPUSupportedWGSLLanguageFeatures");
 
     /**
      * The layout of this struct
@@ -36,11 +37,12 @@ public class WGPUSupportedWGSLLanguageFeatures {
         return $LAYOUT;
     }
 
-    private static final OfLong featureCount$LAYOUT = (OfLong) $LAYOUT.select(groupElement("featureCount"));
+    private static final OfLong featureCount$LAYOUT = (OfLong)$LAYOUT.select(groupElement("featureCount"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * size_t featureCount
+     * {@snippet lang=c :
+     * size_t featureCount
      * }
      */
     public static final OfLong featureCount$layout() {
@@ -51,7 +53,8 @@ public class WGPUSupportedWGSLLanguageFeatures {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * size_t featureCount
+     * {@snippet lang=c :
+     * size_t featureCount
      * }
      */
     public static final long featureCount$offset() {
@@ -60,7 +63,8 @@ public class WGPUSupportedWGSLLanguageFeatures {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * size_t featureCount
+     * {@snippet lang=c :
+     * size_t featureCount
      * }
      */
     public static long featureCount(MemorySegment struct) {
@@ -69,18 +73,20 @@ public class WGPUSupportedWGSLLanguageFeatures {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * size_t featureCount
+     * {@snippet lang=c :
+     * size_t featureCount
      * }
      */
     public static void featureCount(MemorySegment struct, long fieldValue) {
         struct.set(featureCount$LAYOUT, featureCount$OFFSET, fieldValue);
     }
 
-    private static final AddressLayout features$LAYOUT = (AddressLayout) $LAYOUT.select(groupElement("features"));
+    private static final AddressLayout features$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("features"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * const WGPUWGSLLanguageFeatureName *features
+     * {@snippet lang=c :
+     * const WGPUWGSLLanguageFeatureName *features
      * }
      */
     public static final AddressLayout features$layout() {
@@ -91,7 +97,8 @@ public class WGPUSupportedWGSLLanguageFeatures {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * const WGPUWGSLLanguageFeatureName *features
+     * {@snippet lang=c :
+     * const WGPUWGSLLanguageFeatureName *features
      * }
      */
     public static final long features$offset() {
@@ -100,7 +107,8 @@ public class WGPUSupportedWGSLLanguageFeatures {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * const WGPUWGSLLanguageFeatureName *features
+     * {@snippet lang=c :
+     * const WGPUWGSLLanguageFeatureName *features
      * }
      */
     public static MemorySegment features(MemorySegment struct) {
@@ -109,7 +117,8 @@ public class WGPUSupportedWGSLLanguageFeatures {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * const WGPUWGSLLanguageFeatureName *features
+     * {@snippet lang=c :
+     * const WGPUWGSLLanguageFeatureName *features
      * }
      */
     public static void features(MemorySegment struct, MemorySegment fieldValue) {
@@ -117,10 +126,8 @@ public class WGPUSupportedWGSLLanguageFeatures {
     }
 
     /**
-     * Obtains a slice of {@code arrayParam} which selects the array element at
-     * {@code index}.
-     * The returned segment has address
-     * {@code arrayParam.address() + index * layout().byteSize()}
+     * Obtains a slice of {@code arrayParam} which selects the array element at {@code index}.
+     * The returned segment has address {@code arrayParam.address() + index * layout().byteSize()}
      */
     public static MemorySegment asSlice(MemorySegment array, long index) {
         return array.asSlice(layout().byteSize() * index);
@@ -129,13 +136,10 @@ public class WGPUSupportedWGSLLanguageFeatures {
     /**
      * The size (in bytes) of this struct
      */
-    public static long sizeof() {
-        return layout().byteSize();
-    }
+    public static long sizeof() { return layout().byteSize(); }
 
     /**
-     * Allocate a segment of size {@code layout().byteSize()} using
-     * {@code allocator}
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
      */
     public static MemorySegment allocate(SegmentAllocator allocator) {
         return allocator.allocate(layout());
@@ -150,8 +154,7 @@ public class WGPUSupportedWGSLLanguageFeatures {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code layout().byteSize()}
      */
     public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
@@ -159,12 +162,11 @@ public class WGPUSupportedWGSLLanguageFeatures {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code elementCount * layout().byteSize()}
      */
-    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena,
-            Consumer<MemorySegment> cleanup) {
+    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
         return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
     }
 }
+

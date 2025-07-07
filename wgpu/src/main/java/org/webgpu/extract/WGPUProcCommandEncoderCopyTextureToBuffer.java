@@ -12,8 +12,8 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c
- * : * typedef void (*WGPUProcCommandEncoderCopyTextureToBuffer)(WGPUCommandEncoder, const WGPUTexelCopyTextureInfo *, const WGPUTexelCopyBufferInfo *, const WGPUExtent3D *)
+ * {@snippet lang=c :
+ * typedef void (*WGPUProcCommandEncoderCopyTextureToBuffer)(WGPUCommandEncoder, const WGPUTexelCopyTextureInfo *, const WGPUTexelCopyBufferInfo *, const WGPUExtent3D *)
  * }
  */
 public class WGPUProcCommandEncoderCopyTextureToBuffer {
@@ -26,15 +26,15 @@ public class WGPUProcCommandEncoderCopyTextureToBuffer {
      * The function pointer signature, expressed as a functional interface
      */
     public interface Function {
-        void apply(MemorySegment commandEncoder, MemorySegment source, MemorySegment destination,
-                MemorySegment copySize);
+        void apply(MemorySegment commandEncoder, MemorySegment source, MemorySegment destination, MemorySegment copySize);
     }
 
     private static final FunctionDescriptor $DESC = FunctionDescriptor.ofVoid(
-            webgpu_h.C_POINTER,
-            webgpu_h.C_POINTER,
-            webgpu_h.C_POINTER,
-            webgpu_h.C_POINTER);
+        webgpu_h.C_POINTER,
+        webgpu_h.C_POINTER,
+        webgpu_h.C_POINTER,
+        webgpu_h.C_POINTER
+    );
 
     /**
      * The descriptor of this function pointer
@@ -43,8 +43,7 @@ public class WGPUProcCommandEncoderCopyTextureToBuffer {
         return $DESC;
     }
 
-    private static final MethodHandle UP$MH = webgpu_h
-            .upcallHandle(WGPUProcCommandEncoderCopyTextureToBuffer.Function.class, "apply", $DESC);
+    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcCommandEncoderCopyTextureToBuffer.Function.class, "apply", $DESC);
 
     /**
      * Allocates a new upcall stub, whose implementation is defined by {@code fi}.
@@ -59,12 +58,12 @@ public class WGPUProcCommandEncoderCopyTextureToBuffer {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr, MemorySegment commandEncoder, MemorySegment source,
-            MemorySegment destination, MemorySegment copySize) {
+    public static void invoke(MemorySegment funcPtr,MemorySegment commandEncoder, MemorySegment source, MemorySegment destination, MemorySegment copySize) {
         try {
-            DOWN$MH.invokeExact(funcPtr, commandEncoder, source, destination, copySize);
+             DOWN$MH.invokeExact(funcPtr, commandEncoder, source, destination, copySize);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
     }
 }
+

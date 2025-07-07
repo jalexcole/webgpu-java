@@ -12,7 +12,8 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c : * typedef void (*WGPUProcBufferRelease)(WGPUBuffer)
+ * {@snippet lang=c :
+ * typedef void (*WGPUProcBufferRelease)(WGPUBuffer)
  * }
  */
 public class WGPUProcBufferRelease {
@@ -29,7 +30,8 @@ public class WGPUProcBufferRelease {
     }
 
     private static final FunctionDescriptor $DESC = FunctionDescriptor.ofVoid(
-            webgpu_h.C_POINTER);
+        webgpu_h.C_POINTER
+    );
 
     /**
      * The descriptor of this function pointer
@@ -38,8 +40,7 @@ public class WGPUProcBufferRelease {
         return $DESC;
     }
 
-    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcBufferRelease.Function.class, "apply",
-            $DESC);
+    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcBufferRelease.Function.class, "apply", $DESC);
 
     /**
      * Allocates a new upcall stub, whose implementation is defined by {@code fi}.
@@ -54,11 +55,12 @@ public class WGPUProcBufferRelease {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr, MemorySegment buffer) {
+    public static void invoke(MemorySegment funcPtr,MemorySegment buffer) {
         try {
-            DOWN$MH.invokeExact(funcPtr, buffer);
+             DOWN$MH.invokeExact(funcPtr, buffer);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
     }
 }
+

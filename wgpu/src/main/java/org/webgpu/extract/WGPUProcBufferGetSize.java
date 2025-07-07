@@ -12,7 +12,8 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c : * typedef uint64_t (*WGPUProcBufferGetSize)(WGPUBuffer)
+ * {@snippet lang=c :
+ * typedef uint64_t (*WGPUProcBufferGetSize)(WGPUBuffer)
  * }
  */
 public class WGPUProcBufferGetSize {
@@ -29,8 +30,9 @@ public class WGPUProcBufferGetSize {
     }
 
     private static final FunctionDescriptor $DESC = FunctionDescriptor.of(
-            webgpu_h.C_LONG_LONG,
-            webgpu_h.C_POINTER);
+        webgpu_h.C_LONG_LONG,
+        webgpu_h.C_POINTER
+    );
 
     /**
      * The descriptor of this function pointer
@@ -39,8 +41,7 @@ public class WGPUProcBufferGetSize {
         return $DESC;
     }
 
-    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcBufferGetSize.Function.class, "apply",
-            $DESC);
+    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcBufferGetSize.Function.class, "apply", $DESC);
 
     /**
      * Allocates a new upcall stub, whose implementation is defined by {@code fi}.
@@ -55,7 +56,7 @@ public class WGPUProcBufferGetSize {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static long invoke(MemorySegment funcPtr, MemorySegment buffer) {
+    public static long invoke(MemorySegment funcPtr,MemorySegment buffer) {
         try {
             return (long) DOWN$MH.invokeExact(funcPtr, buffer);
         } catch (Throwable ex$) {
@@ -63,3 +64,4 @@ public class WGPUProcBufferGetSize {
         }
     }
 }
+

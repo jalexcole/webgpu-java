@@ -12,9 +12,9 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c :
+ * {@snippet lang=c :
  * struct WGPUMultisampleState {
- *     WGPUChainedStruct *nextInChain;
+ *     const WGPUChainedStruct *nextInChain;
  *     uint32_t count;
  *     uint32_t mask;
  *     WGPUBool alphaToCoverageEnabled;
@@ -28,11 +28,12 @@ public class WGPUMultisampleState {
     }
 
     private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
-            webgpu_h.C_POINTER.withName("nextInChain"),
-            webgpu_h.C_INT.withName("count"),
-            webgpu_h.C_INT.withName("mask"),
-            webgpu_h.C_INT.withName("alphaToCoverageEnabled"),
-            MemoryLayout.paddingLayout(4)).withName("WGPUMultisampleState");
+        webgpu_h.C_POINTER.withName("nextInChain"),
+        webgpu_h.C_INT.withName("count"),
+        webgpu_h.C_INT.withName("mask"),
+        webgpu_h.C_INT.withName("alphaToCoverageEnabled"),
+        MemoryLayout.paddingLayout(4)
+    ).withName("WGPUMultisampleState");
 
     /**
      * The layout of this struct
@@ -41,11 +42,12 @@ public class WGPUMultisampleState {
         return $LAYOUT;
     }
 
-    private static final AddressLayout nextInChain$LAYOUT = (AddressLayout) $LAYOUT.select(groupElement("nextInChain"));
+    private static final AddressLayout nextInChain$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("nextInChain"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static final AddressLayout nextInChain$layout() {
@@ -56,7 +58,8 @@ public class WGPUMultisampleState {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static final long nextInChain$offset() {
@@ -65,7 +68,8 @@ public class WGPUMultisampleState {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static MemorySegment nextInChain(MemorySegment struct) {
@@ -74,18 +78,20 @@ public class WGPUMultisampleState {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static void nextInChain(MemorySegment struct, MemorySegment fieldValue) {
         struct.set(nextInChain$LAYOUT, nextInChain$OFFSET, fieldValue);
     }
 
-    private static final OfInt count$LAYOUT = (OfInt) $LAYOUT.select(groupElement("count"));
+    private static final OfInt count$LAYOUT = (OfInt)$LAYOUT.select(groupElement("count"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * uint32_t count
+     * {@snippet lang=c :
+     * uint32_t count
      * }
      */
     public static final OfInt count$layout() {
@@ -96,7 +102,8 @@ public class WGPUMultisampleState {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * uint32_t count
+     * {@snippet lang=c :
+     * uint32_t count
      * }
      */
     public static final long count$offset() {
@@ -105,7 +112,8 @@ public class WGPUMultisampleState {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * uint32_t count
+     * {@snippet lang=c :
+     * uint32_t count
      * }
      */
     public static int count(MemorySegment struct) {
@@ -114,18 +122,20 @@ public class WGPUMultisampleState {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * uint32_t count
+     * {@snippet lang=c :
+     * uint32_t count
      * }
      */
     public static void count(MemorySegment struct, int fieldValue) {
         struct.set(count$LAYOUT, count$OFFSET, fieldValue);
     }
 
-    private static final OfInt mask$LAYOUT = (OfInt) $LAYOUT.select(groupElement("mask"));
+    private static final OfInt mask$LAYOUT = (OfInt)$LAYOUT.select(groupElement("mask"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * uint32_t mask
+     * {@snippet lang=c :
+     * uint32_t mask
      * }
      */
     public static final OfInt mask$layout() {
@@ -136,7 +146,8 @@ public class WGPUMultisampleState {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * uint32_t mask
+     * {@snippet lang=c :
+     * uint32_t mask
      * }
      */
     public static final long mask$offset() {
@@ -145,7 +156,8 @@ public class WGPUMultisampleState {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * uint32_t mask
+     * {@snippet lang=c :
+     * uint32_t mask
      * }
      */
     public static int mask(MemorySegment struct) {
@@ -154,19 +166,20 @@ public class WGPUMultisampleState {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * uint32_t mask
+     * {@snippet lang=c :
+     * uint32_t mask
      * }
      */
     public static void mask(MemorySegment struct, int fieldValue) {
         struct.set(mask$LAYOUT, mask$OFFSET, fieldValue);
     }
 
-    private static final OfInt alphaToCoverageEnabled$LAYOUT = (OfInt) $LAYOUT
-            .select(groupElement("alphaToCoverageEnabled"));
+    private static final OfInt alphaToCoverageEnabled$LAYOUT = (OfInt)$LAYOUT.select(groupElement("alphaToCoverageEnabled"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUBool alphaToCoverageEnabled
+     * {@snippet lang=c :
+     * WGPUBool alphaToCoverageEnabled
      * }
      */
     public static final OfInt alphaToCoverageEnabled$layout() {
@@ -177,7 +190,8 @@ public class WGPUMultisampleState {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUBool alphaToCoverageEnabled
+     * {@snippet lang=c :
+     * WGPUBool alphaToCoverageEnabled
      * }
      */
     public static final long alphaToCoverageEnabled$offset() {
@@ -186,7 +200,8 @@ public class WGPUMultisampleState {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUBool alphaToCoverageEnabled
+     * {@snippet lang=c :
+     * WGPUBool alphaToCoverageEnabled
      * }
      */
     public static int alphaToCoverageEnabled(MemorySegment struct) {
@@ -195,7 +210,8 @@ public class WGPUMultisampleState {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUBool alphaToCoverageEnabled
+     * {@snippet lang=c :
+     * WGPUBool alphaToCoverageEnabled
      * }
      */
     public static void alphaToCoverageEnabled(MemorySegment struct, int fieldValue) {
@@ -203,10 +219,8 @@ public class WGPUMultisampleState {
     }
 
     /**
-     * Obtains a slice of {@code arrayParam} which selects the array element at
-     * {@code index}.
-     * The returned segment has address
-     * {@code arrayParam.address() + index * layout().byteSize()}
+     * Obtains a slice of {@code arrayParam} which selects the array element at {@code index}.
+     * The returned segment has address {@code arrayParam.address() + index * layout().byteSize()}
      */
     public static MemorySegment asSlice(MemorySegment array, long index) {
         return array.asSlice(layout().byteSize() * index);
@@ -215,13 +229,10 @@ public class WGPUMultisampleState {
     /**
      * The size (in bytes) of this struct
      */
-    public static long sizeof() {
-        return layout().byteSize();
-    }
+    public static long sizeof() { return layout().byteSize(); }
 
     /**
-     * Allocate a segment of size {@code layout().byteSize()} using
-     * {@code allocator}
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
      */
     public static MemorySegment allocate(SegmentAllocator allocator) {
         return allocator.allocate(layout());
@@ -236,8 +247,7 @@ public class WGPUMultisampleState {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code layout().byteSize()}
      */
     public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
@@ -245,12 +255,11 @@ public class WGPUMultisampleState {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code elementCount * layout().byteSize()}
      */
-    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena,
-            Consumer<MemorySegment> cleanup) {
+    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
         return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
     }
 }
+

@@ -12,9 +12,9 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c :
+ * {@snippet lang=c :
  * struct WGPUTextureViewDescriptor {
- *     WGPUChainedStruct *nextInChain;
+ *     const WGPUChainedStruct *nextInChain;
  *     WGPUStringView label;
  *     WGPUTextureFormat format;
  *     WGPUTextureViewDimension dimension;
@@ -34,17 +34,18 @@ public class WGPUTextureViewDescriptor {
     }
 
     private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
-            webgpu_h.C_POINTER.withName("nextInChain"),
-            WGPUStringView.layout().withName("label"),
-            webgpu_h.C_INT.withName("format"),
-            webgpu_h.C_INT.withName("dimension"),
-            webgpu_h.C_INT.withName("baseMipLevel"),
-            webgpu_h.C_INT.withName("mipLevelCount"),
-            webgpu_h.C_INT.withName("baseArrayLayer"),
-            webgpu_h.C_INT.withName("arrayLayerCount"),
-            webgpu_h.C_INT.withName("aspect"),
-            MemoryLayout.paddingLayout(4),
-            webgpu_h.C_LONG_LONG.withName("usage")).withName("WGPUTextureViewDescriptor");
+        webgpu_h.C_POINTER.withName("nextInChain"),
+        WGPUStringView.layout().withName("label"),
+        webgpu_h.C_INT.withName("format"),
+        webgpu_h.C_INT.withName("dimension"),
+        webgpu_h.C_INT.withName("baseMipLevel"),
+        webgpu_h.C_INT.withName("mipLevelCount"),
+        webgpu_h.C_INT.withName("baseArrayLayer"),
+        webgpu_h.C_INT.withName("arrayLayerCount"),
+        webgpu_h.C_INT.withName("aspect"),
+        MemoryLayout.paddingLayout(4),
+        webgpu_h.C_LONG_LONG.withName("usage")
+    ).withName("WGPUTextureViewDescriptor");
 
     /**
      * The layout of this struct
@@ -53,11 +54,12 @@ public class WGPUTextureViewDescriptor {
         return $LAYOUT;
     }
 
-    private static final AddressLayout nextInChain$LAYOUT = (AddressLayout) $LAYOUT.select(groupElement("nextInChain"));
+    private static final AddressLayout nextInChain$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("nextInChain"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static final AddressLayout nextInChain$layout() {
@@ -68,7 +70,8 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static final long nextInChain$offset() {
@@ -77,7 +80,8 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static MemorySegment nextInChain(MemorySegment struct) {
@@ -86,18 +90,20 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static void nextInChain(MemorySegment struct, MemorySegment fieldValue) {
         struct.set(nextInChain$LAYOUT, nextInChain$OFFSET, fieldValue);
     }
 
-    private static final GroupLayout label$LAYOUT = (GroupLayout) $LAYOUT.select(groupElement("label"));
+    private static final GroupLayout label$LAYOUT = (GroupLayout)$LAYOUT.select(groupElement("label"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUStringView label
+     * {@snippet lang=c :
+     * WGPUStringView label
      * }
      */
     public static final GroupLayout label$layout() {
@@ -108,7 +114,8 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUStringView label
+     * {@snippet lang=c :
+     * WGPUStringView label
      * }
      */
     public static final long label$offset() {
@@ -117,7 +124,8 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUStringView label
+     * {@snippet lang=c :
+     * WGPUStringView label
      * }
      */
     public static MemorySegment label(MemorySegment struct) {
@@ -126,18 +134,20 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUStringView label
+     * {@snippet lang=c :
+     * WGPUStringView label
      * }
      */
     public static void label(MemorySegment struct, MemorySegment fieldValue) {
         MemorySegment.copy(fieldValue, 0L, struct, label$OFFSET, label$LAYOUT.byteSize());
     }
 
-    private static final OfInt format$LAYOUT = (OfInt) $LAYOUT.select(groupElement("format"));
+    private static final OfInt format$LAYOUT = (OfInt)$LAYOUT.select(groupElement("format"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUTextureFormat format
+     * {@snippet lang=c :
+     * WGPUTextureFormat format
      * }
      */
     public static final OfInt format$layout() {
@@ -148,7 +158,8 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUTextureFormat format
+     * {@snippet lang=c :
+     * WGPUTextureFormat format
      * }
      */
     public static final long format$offset() {
@@ -157,7 +168,8 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUTextureFormat format
+     * {@snippet lang=c :
+     * WGPUTextureFormat format
      * }
      */
     public static int format(MemorySegment struct) {
@@ -166,18 +178,20 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUTextureFormat format
+     * {@snippet lang=c :
+     * WGPUTextureFormat format
      * }
      */
     public static void format(MemorySegment struct, int fieldValue) {
         struct.set(format$LAYOUT, format$OFFSET, fieldValue);
     }
 
-    private static final OfInt dimension$LAYOUT = (OfInt) $LAYOUT.select(groupElement("dimension"));
+    private static final OfInt dimension$LAYOUT = (OfInt)$LAYOUT.select(groupElement("dimension"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUTextureViewDimension dimension
+     * {@snippet lang=c :
+     * WGPUTextureViewDimension dimension
      * }
      */
     public static final OfInt dimension$layout() {
@@ -188,7 +202,8 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUTextureViewDimension dimension
+     * {@snippet lang=c :
+     * WGPUTextureViewDimension dimension
      * }
      */
     public static final long dimension$offset() {
@@ -197,7 +212,8 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUTextureViewDimension dimension
+     * {@snippet lang=c :
+     * WGPUTextureViewDimension dimension
      * }
      */
     public static int dimension(MemorySegment struct) {
@@ -206,18 +222,20 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUTextureViewDimension dimension
+     * {@snippet lang=c :
+     * WGPUTextureViewDimension dimension
      * }
      */
     public static void dimension(MemorySegment struct, int fieldValue) {
         struct.set(dimension$LAYOUT, dimension$OFFSET, fieldValue);
     }
 
-    private static final OfInt baseMipLevel$LAYOUT = (OfInt) $LAYOUT.select(groupElement("baseMipLevel"));
+    private static final OfInt baseMipLevel$LAYOUT = (OfInt)$LAYOUT.select(groupElement("baseMipLevel"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * uint32_t baseMipLevel
+     * {@snippet lang=c :
+     * uint32_t baseMipLevel
      * }
      */
     public static final OfInt baseMipLevel$layout() {
@@ -228,7 +246,8 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * uint32_t baseMipLevel
+     * {@snippet lang=c :
+     * uint32_t baseMipLevel
      * }
      */
     public static final long baseMipLevel$offset() {
@@ -237,7 +256,8 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * uint32_t baseMipLevel
+     * {@snippet lang=c :
+     * uint32_t baseMipLevel
      * }
      */
     public static int baseMipLevel(MemorySegment struct) {
@@ -246,18 +266,20 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * uint32_t baseMipLevel
+     * {@snippet lang=c :
+     * uint32_t baseMipLevel
      * }
      */
     public static void baseMipLevel(MemorySegment struct, int fieldValue) {
         struct.set(baseMipLevel$LAYOUT, baseMipLevel$OFFSET, fieldValue);
     }
 
-    private static final OfInt mipLevelCount$LAYOUT = (OfInt) $LAYOUT.select(groupElement("mipLevelCount"));
+    private static final OfInt mipLevelCount$LAYOUT = (OfInt)$LAYOUT.select(groupElement("mipLevelCount"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * uint32_t mipLevelCount
+     * {@snippet lang=c :
+     * uint32_t mipLevelCount
      * }
      */
     public static final OfInt mipLevelCount$layout() {
@@ -268,7 +290,8 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * uint32_t mipLevelCount
+     * {@snippet lang=c :
+     * uint32_t mipLevelCount
      * }
      */
     public static final long mipLevelCount$offset() {
@@ -277,7 +300,8 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * uint32_t mipLevelCount
+     * {@snippet lang=c :
+     * uint32_t mipLevelCount
      * }
      */
     public static int mipLevelCount(MemorySegment struct) {
@@ -286,18 +310,20 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * uint32_t mipLevelCount
+     * {@snippet lang=c :
+     * uint32_t mipLevelCount
      * }
      */
     public static void mipLevelCount(MemorySegment struct, int fieldValue) {
         struct.set(mipLevelCount$LAYOUT, mipLevelCount$OFFSET, fieldValue);
     }
 
-    private static final OfInt baseArrayLayer$LAYOUT = (OfInt) $LAYOUT.select(groupElement("baseArrayLayer"));
+    private static final OfInt baseArrayLayer$LAYOUT = (OfInt)$LAYOUT.select(groupElement("baseArrayLayer"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * uint32_t baseArrayLayer
+     * {@snippet lang=c :
+     * uint32_t baseArrayLayer
      * }
      */
     public static final OfInt baseArrayLayer$layout() {
@@ -308,7 +334,8 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * uint32_t baseArrayLayer
+     * {@snippet lang=c :
+     * uint32_t baseArrayLayer
      * }
      */
     public static final long baseArrayLayer$offset() {
@@ -317,7 +344,8 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * uint32_t baseArrayLayer
+     * {@snippet lang=c :
+     * uint32_t baseArrayLayer
      * }
      */
     public static int baseArrayLayer(MemorySegment struct) {
@@ -326,18 +354,20 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * uint32_t baseArrayLayer
+     * {@snippet lang=c :
+     * uint32_t baseArrayLayer
      * }
      */
     public static void baseArrayLayer(MemorySegment struct, int fieldValue) {
         struct.set(baseArrayLayer$LAYOUT, baseArrayLayer$OFFSET, fieldValue);
     }
 
-    private static final OfInt arrayLayerCount$LAYOUT = (OfInt) $LAYOUT.select(groupElement("arrayLayerCount"));
+    private static final OfInt arrayLayerCount$LAYOUT = (OfInt)$LAYOUT.select(groupElement("arrayLayerCount"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * uint32_t arrayLayerCount
+     * {@snippet lang=c :
+     * uint32_t arrayLayerCount
      * }
      */
     public static final OfInt arrayLayerCount$layout() {
@@ -348,7 +378,8 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * uint32_t arrayLayerCount
+     * {@snippet lang=c :
+     * uint32_t arrayLayerCount
      * }
      */
     public static final long arrayLayerCount$offset() {
@@ -357,7 +388,8 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * uint32_t arrayLayerCount
+     * {@snippet lang=c :
+     * uint32_t arrayLayerCount
      * }
      */
     public static int arrayLayerCount(MemorySegment struct) {
@@ -366,18 +398,20 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * uint32_t arrayLayerCount
+     * {@snippet lang=c :
+     * uint32_t arrayLayerCount
      * }
      */
     public static void arrayLayerCount(MemorySegment struct, int fieldValue) {
         struct.set(arrayLayerCount$LAYOUT, arrayLayerCount$OFFSET, fieldValue);
     }
 
-    private static final OfInt aspect$LAYOUT = (OfInt) $LAYOUT.select(groupElement("aspect"));
+    private static final OfInt aspect$LAYOUT = (OfInt)$LAYOUT.select(groupElement("aspect"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUTextureAspect aspect
+     * {@snippet lang=c :
+     * WGPUTextureAspect aspect
      * }
      */
     public static final OfInt aspect$layout() {
@@ -388,7 +422,8 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUTextureAspect aspect
+     * {@snippet lang=c :
+     * WGPUTextureAspect aspect
      * }
      */
     public static final long aspect$offset() {
@@ -397,7 +432,8 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUTextureAspect aspect
+     * {@snippet lang=c :
+     * WGPUTextureAspect aspect
      * }
      */
     public static int aspect(MemorySegment struct) {
@@ -406,18 +442,20 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUTextureAspect aspect
+     * {@snippet lang=c :
+     * WGPUTextureAspect aspect
      * }
      */
     public static void aspect(MemorySegment struct, int fieldValue) {
         struct.set(aspect$LAYOUT, aspect$OFFSET, fieldValue);
     }
 
-    private static final OfLong usage$LAYOUT = (OfLong) $LAYOUT.select(groupElement("usage"));
+    private static final OfLong usage$LAYOUT = (OfLong)$LAYOUT.select(groupElement("usage"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUTextureUsage usage
+     * {@snippet lang=c :
+     * WGPUTextureUsage usage
      * }
      */
     public static final OfLong usage$layout() {
@@ -428,7 +466,8 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUTextureUsage usage
+     * {@snippet lang=c :
+     * WGPUTextureUsage usage
      * }
      */
     public static final long usage$offset() {
@@ -437,7 +476,8 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUTextureUsage usage
+     * {@snippet lang=c :
+     * WGPUTextureUsage usage
      * }
      */
     public static long usage(MemorySegment struct) {
@@ -446,7 +486,8 @@ public class WGPUTextureViewDescriptor {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUTextureUsage usage
+     * {@snippet lang=c :
+     * WGPUTextureUsage usage
      * }
      */
     public static void usage(MemorySegment struct, long fieldValue) {
@@ -454,10 +495,8 @@ public class WGPUTextureViewDescriptor {
     }
 
     /**
-     * Obtains a slice of {@code arrayParam} which selects the array element at
-     * {@code index}.
-     * The returned segment has address
-     * {@code arrayParam.address() + index * layout().byteSize()}
+     * Obtains a slice of {@code arrayParam} which selects the array element at {@code index}.
+     * The returned segment has address {@code arrayParam.address() + index * layout().byteSize()}
      */
     public static MemorySegment asSlice(MemorySegment array, long index) {
         return array.asSlice(layout().byteSize() * index);
@@ -466,13 +505,10 @@ public class WGPUTextureViewDescriptor {
     /**
      * The size (in bytes) of this struct
      */
-    public static long sizeof() {
-        return layout().byteSize();
-    }
+    public static long sizeof() { return layout().byteSize(); }
 
     /**
-     * Allocate a segment of size {@code layout().byteSize()} using
-     * {@code allocator}
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
      */
     public static MemorySegment allocate(SegmentAllocator allocator) {
         return allocator.allocate(layout());
@@ -487,8 +523,7 @@ public class WGPUTextureViewDescriptor {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code layout().byteSize()}
      */
     public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
@@ -496,12 +531,11 @@ public class WGPUTextureViewDescriptor {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code elementCount * layout().byteSize()}
      */
-    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena,
-            Consumer<MemorySegment> cleanup) {
+    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
         return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
     }
 }
+

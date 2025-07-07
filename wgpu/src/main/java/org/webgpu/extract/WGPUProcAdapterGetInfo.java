@@ -12,8 +12,8 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c
- * : * typedef WGPUStatus (*WGPUProcAdapterGetInfo)(WGPUAdapter, WGPUAdapterInfo *)
+ * {@snippet lang=c :
+ * typedef WGPUStatus (*WGPUProcAdapterGetInfo)(WGPUAdapter, WGPUAdapterInfo *)
  * }
  */
 public class WGPUProcAdapterGetInfo {
@@ -30,9 +30,10 @@ public class WGPUProcAdapterGetInfo {
     }
 
     private static final FunctionDescriptor $DESC = FunctionDescriptor.of(
-            webgpu_h.C_INT,
-            webgpu_h.C_POINTER,
-            webgpu_h.C_POINTER);
+        webgpu_h.C_INT,
+        webgpu_h.C_POINTER,
+        webgpu_h.C_POINTER
+    );
 
     /**
      * The descriptor of this function pointer
@@ -41,8 +42,7 @@ public class WGPUProcAdapterGetInfo {
         return $DESC;
     }
 
-    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcAdapterGetInfo.Function.class, "apply",
-            $DESC);
+    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcAdapterGetInfo.Function.class, "apply", $DESC);
 
     /**
      * Allocates a new upcall stub, whose implementation is defined by {@code fi}.
@@ -57,7 +57,7 @@ public class WGPUProcAdapterGetInfo {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static int invoke(MemorySegment funcPtr, MemorySegment adapter, MemorySegment info) {
+    public static int invoke(MemorySegment funcPtr,MemorySegment adapter, MemorySegment info) {
         try {
             return (int) DOWN$MH.invokeExact(funcPtr, adapter, info);
         } catch (Throwable ex$) {
@@ -65,3 +65,4 @@ public class WGPUProcAdapterGetInfo {
         }
     }
 }
+

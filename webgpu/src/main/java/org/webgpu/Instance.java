@@ -3,9 +3,13 @@ package org.webgpu;
 import java.lang.foreign.MemorySegment;
 
 public class Instance {
-    private MemorySegment instance;
+    private MemorySegment instancePtr;
 
     Instance(MemorySegment instance) {
-        this.instance = instance;
+        this.instancePtr = instance;
+    }
+
+    MemorySegment ptr() {
+       return this.instancePtr;
     }
 }

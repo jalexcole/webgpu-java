@@ -12,8 +12,8 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c
- * : * typedef void (*WGPUUncapturedErrorCallback)(const WGPUDevice *, WGPUErrorType, WGPUStringView, void *, void *)
+ * {@snippet lang=c :
+ * typedef void (*WGPUUncapturedErrorCallback)(const WGPUDevice *, WGPUErrorType, WGPUStringView, void *, void *)
  * }
  */
 public class WGPUUncapturedErrorCallback {
@@ -26,16 +26,16 @@ public class WGPUUncapturedErrorCallback {
      * The function pointer signature, expressed as a functional interface
      */
     public interface Function {
-        void apply(MemorySegment device, int type, MemorySegment message, MemorySegment userdata1,
-                MemorySegment userdata2);
+        void apply(MemorySegment device, int type, MemorySegment message, MemorySegment userdata1, MemorySegment userdata2);
     }
 
     private static final FunctionDescriptor $DESC = FunctionDescriptor.ofVoid(
-            webgpu_h.C_POINTER,
-            webgpu_h.C_INT,
-            WGPUStringView.layout(),
-            webgpu_h.C_POINTER,
-            webgpu_h.C_POINTER);
+        webgpu_h.C_POINTER,
+        webgpu_h.C_INT,
+        WGPUStringView.layout(),
+        webgpu_h.C_POINTER,
+        webgpu_h.C_POINTER
+    );
 
     /**
      * The descriptor of this function pointer
@@ -44,8 +44,7 @@ public class WGPUUncapturedErrorCallback {
         return $DESC;
     }
 
-    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUUncapturedErrorCallback.Function.class, "apply",
-            $DESC);
+    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUUncapturedErrorCallback.Function.class, "apply", $DESC);
 
     /**
      * Allocates a new upcall stub, whose implementation is defined by {@code fi}.
@@ -60,12 +59,12 @@ public class WGPUUncapturedErrorCallback {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr, MemorySegment device, int type, MemorySegment message,
-            MemorySegment userdata1, MemorySegment userdata2) {
+    public static void invoke(MemorySegment funcPtr,MemorySegment device, int type, MemorySegment message, MemorySegment userdata1, MemorySegment userdata2) {
         try {
-            DOWN$MH.invokeExact(funcPtr, device, type, message, userdata1, userdata2);
+             DOWN$MH.invokeExact(funcPtr, device, type, message, userdata1, userdata2);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
     }
 }
+

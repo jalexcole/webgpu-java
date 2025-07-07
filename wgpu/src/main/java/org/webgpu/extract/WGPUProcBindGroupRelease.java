@@ -12,8 +12,8 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c
- * : * typedef void (*WGPUProcBindGroupRelease)(WGPUBindGroup)
+ * {@snippet lang=c :
+ * typedef void (*WGPUProcBindGroupRelease)(WGPUBindGroup)
  * }
  */
 public class WGPUProcBindGroupRelease {
@@ -30,7 +30,8 @@ public class WGPUProcBindGroupRelease {
     }
 
     private static final FunctionDescriptor $DESC = FunctionDescriptor.ofVoid(
-            webgpu_h.C_POINTER);
+        webgpu_h.C_POINTER
+    );
 
     /**
      * The descriptor of this function pointer
@@ -39,8 +40,7 @@ public class WGPUProcBindGroupRelease {
         return $DESC;
     }
 
-    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcBindGroupRelease.Function.class, "apply",
-            $DESC);
+    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcBindGroupRelease.Function.class, "apply", $DESC);
 
     /**
      * Allocates a new upcall stub, whose implementation is defined by {@code fi}.
@@ -55,11 +55,12 @@ public class WGPUProcBindGroupRelease {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr, MemorySegment bindGroup) {
+    public static void invoke(MemorySegment funcPtr,MemorySegment bindGroup) {
         try {
-            DOWN$MH.invokeExact(funcPtr, bindGroup);
+             DOWN$MH.invokeExact(funcPtr, bindGroup);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
     }
 }
+

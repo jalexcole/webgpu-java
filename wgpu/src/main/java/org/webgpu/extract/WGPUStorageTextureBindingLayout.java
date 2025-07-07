@@ -12,9 +12,9 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c :
+ * {@snippet lang=c :
  * struct WGPUStorageTextureBindingLayout {
- *     WGPUChainedStruct *nextInChain;
+ *     const WGPUChainedStruct *nextInChain;
  *     WGPUStorageTextureAccess access;
  *     WGPUTextureFormat format;
  *     WGPUTextureViewDimension viewDimension;
@@ -28,11 +28,12 @@ public class WGPUStorageTextureBindingLayout {
     }
 
     private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
-            webgpu_h.C_POINTER.withName("nextInChain"),
-            webgpu_h.C_INT.withName("access"),
-            webgpu_h.C_INT.withName("format"),
-            webgpu_h.C_INT.withName("viewDimension"),
-            MemoryLayout.paddingLayout(4)).withName("WGPUStorageTextureBindingLayout");
+        webgpu_h.C_POINTER.withName("nextInChain"),
+        webgpu_h.C_INT.withName("access"),
+        webgpu_h.C_INT.withName("format"),
+        webgpu_h.C_INT.withName("viewDimension"),
+        MemoryLayout.paddingLayout(4)
+    ).withName("WGPUStorageTextureBindingLayout");
 
     /**
      * The layout of this struct
@@ -41,11 +42,12 @@ public class WGPUStorageTextureBindingLayout {
         return $LAYOUT;
     }
 
-    private static final AddressLayout nextInChain$LAYOUT = (AddressLayout) $LAYOUT.select(groupElement("nextInChain"));
+    private static final AddressLayout nextInChain$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("nextInChain"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static final AddressLayout nextInChain$layout() {
@@ -56,7 +58,8 @@ public class WGPUStorageTextureBindingLayout {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static final long nextInChain$offset() {
@@ -65,7 +68,8 @@ public class WGPUStorageTextureBindingLayout {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static MemorySegment nextInChain(MemorySegment struct) {
@@ -74,18 +78,20 @@ public class WGPUStorageTextureBindingLayout {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static void nextInChain(MemorySegment struct, MemorySegment fieldValue) {
         struct.set(nextInChain$LAYOUT, nextInChain$OFFSET, fieldValue);
     }
 
-    private static final OfInt access$LAYOUT = (OfInt) $LAYOUT.select(groupElement("access"));
+    private static final OfInt access$LAYOUT = (OfInt)$LAYOUT.select(groupElement("access"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUStorageTextureAccess access
+     * {@snippet lang=c :
+     * WGPUStorageTextureAccess access
      * }
      */
     public static final OfInt access$layout() {
@@ -96,7 +102,8 @@ public class WGPUStorageTextureBindingLayout {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUStorageTextureAccess access
+     * {@snippet lang=c :
+     * WGPUStorageTextureAccess access
      * }
      */
     public static final long access$offset() {
@@ -105,7 +112,8 @@ public class WGPUStorageTextureBindingLayout {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUStorageTextureAccess access
+     * {@snippet lang=c :
+     * WGPUStorageTextureAccess access
      * }
      */
     public static int access(MemorySegment struct) {
@@ -114,18 +122,20 @@ public class WGPUStorageTextureBindingLayout {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUStorageTextureAccess access
+     * {@snippet lang=c :
+     * WGPUStorageTextureAccess access
      * }
      */
     public static void access(MemorySegment struct, int fieldValue) {
         struct.set(access$LAYOUT, access$OFFSET, fieldValue);
     }
 
-    private static final OfInt format$LAYOUT = (OfInt) $LAYOUT.select(groupElement("format"));
+    private static final OfInt format$LAYOUT = (OfInt)$LAYOUT.select(groupElement("format"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUTextureFormat format
+     * {@snippet lang=c :
+     * WGPUTextureFormat format
      * }
      */
     public static final OfInt format$layout() {
@@ -136,7 +146,8 @@ public class WGPUStorageTextureBindingLayout {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUTextureFormat format
+     * {@snippet lang=c :
+     * WGPUTextureFormat format
      * }
      */
     public static final long format$offset() {
@@ -145,7 +156,8 @@ public class WGPUStorageTextureBindingLayout {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUTextureFormat format
+     * {@snippet lang=c :
+     * WGPUTextureFormat format
      * }
      */
     public static int format(MemorySegment struct) {
@@ -154,18 +166,20 @@ public class WGPUStorageTextureBindingLayout {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUTextureFormat format
+     * {@snippet lang=c :
+     * WGPUTextureFormat format
      * }
      */
     public static void format(MemorySegment struct, int fieldValue) {
         struct.set(format$LAYOUT, format$OFFSET, fieldValue);
     }
 
-    private static final OfInt viewDimension$LAYOUT = (OfInt) $LAYOUT.select(groupElement("viewDimension"));
+    private static final OfInt viewDimension$LAYOUT = (OfInt)$LAYOUT.select(groupElement("viewDimension"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUTextureViewDimension viewDimension
+     * {@snippet lang=c :
+     * WGPUTextureViewDimension viewDimension
      * }
      */
     public static final OfInt viewDimension$layout() {
@@ -176,7 +190,8 @@ public class WGPUStorageTextureBindingLayout {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUTextureViewDimension viewDimension
+     * {@snippet lang=c :
+     * WGPUTextureViewDimension viewDimension
      * }
      */
     public static final long viewDimension$offset() {
@@ -185,7 +200,8 @@ public class WGPUStorageTextureBindingLayout {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUTextureViewDimension viewDimension
+     * {@snippet lang=c :
+     * WGPUTextureViewDimension viewDimension
      * }
      */
     public static int viewDimension(MemorySegment struct) {
@@ -194,7 +210,8 @@ public class WGPUStorageTextureBindingLayout {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUTextureViewDimension viewDimension
+     * {@snippet lang=c :
+     * WGPUTextureViewDimension viewDimension
      * }
      */
     public static void viewDimension(MemorySegment struct, int fieldValue) {
@@ -202,10 +219,8 @@ public class WGPUStorageTextureBindingLayout {
     }
 
     /**
-     * Obtains a slice of {@code arrayParam} which selects the array element at
-     * {@code index}.
-     * The returned segment has address
-     * {@code arrayParam.address() + index * layout().byteSize()}
+     * Obtains a slice of {@code arrayParam} which selects the array element at {@code index}.
+     * The returned segment has address {@code arrayParam.address() + index * layout().byteSize()}
      */
     public static MemorySegment asSlice(MemorySegment array, long index) {
         return array.asSlice(layout().byteSize() * index);
@@ -214,13 +229,10 @@ public class WGPUStorageTextureBindingLayout {
     /**
      * The size (in bytes) of this struct
      */
-    public static long sizeof() {
-        return layout().byteSize();
-    }
+    public static long sizeof() { return layout().byteSize(); }
 
     /**
-     * Allocate a segment of size {@code layout().byteSize()} using
-     * {@code allocator}
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
      */
     public static MemorySegment allocate(SegmentAllocator allocator) {
         return allocator.allocate(layout());
@@ -235,8 +247,7 @@ public class WGPUStorageTextureBindingLayout {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code layout().byteSize()}
      */
     public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
@@ -244,12 +255,11 @@ public class WGPUStorageTextureBindingLayout {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code elementCount * layout().byteSize()}
      */
-    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena,
-            Consumer<MemorySegment> cleanup) {
+    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
         return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
     }
 }
+

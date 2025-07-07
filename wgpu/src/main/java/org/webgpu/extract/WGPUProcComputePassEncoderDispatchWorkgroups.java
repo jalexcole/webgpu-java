@@ -12,8 +12,8 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c
- * : * typedef void (*WGPUProcComputePassEncoderDispatchWorkgroups)(WGPUComputePassEncoder, uint32_t, uint32_t, uint32_t)
+ * {@snippet lang=c :
+ * typedef void (*WGPUProcComputePassEncoderDispatchWorkgroups)(WGPUComputePassEncoder, uint32_t, uint32_t, uint32_t)
  * }
  */
 public class WGPUProcComputePassEncoderDispatchWorkgroups {
@@ -30,10 +30,11 @@ public class WGPUProcComputePassEncoderDispatchWorkgroups {
     }
 
     private static final FunctionDescriptor $DESC = FunctionDescriptor.ofVoid(
-            webgpu_h.C_POINTER,
-            webgpu_h.C_INT,
-            webgpu_h.C_INT,
-            webgpu_h.C_INT);
+        webgpu_h.C_POINTER,
+        webgpu_h.C_INT,
+        webgpu_h.C_INT,
+        webgpu_h.C_INT
+    );
 
     /**
      * The descriptor of this function pointer
@@ -42,8 +43,7 @@ public class WGPUProcComputePassEncoderDispatchWorkgroups {
         return $DESC;
     }
 
-    private static final MethodHandle UP$MH = webgpu_h
-            .upcallHandle(WGPUProcComputePassEncoderDispatchWorkgroups.Function.class, "apply", $DESC);
+    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcComputePassEncoderDispatchWorkgroups.Function.class, "apply", $DESC);
 
     /**
      * Allocates a new upcall stub, whose implementation is defined by {@code fi}.
@@ -58,12 +58,12 @@ public class WGPUProcComputePassEncoderDispatchWorkgroups {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr, MemorySegment computePassEncoder, int workgroupCountX,
-            int workgroupCountY, int workgroupCountZ) {
+    public static void invoke(MemorySegment funcPtr,MemorySegment computePassEncoder, int workgroupCountX, int workgroupCountY, int workgroupCountZ) {
         try {
-            DOWN$MH.invokeExact(funcPtr, computePassEncoder, workgroupCountX, workgroupCountY, workgroupCountZ);
+             DOWN$MH.invokeExact(funcPtr, computePassEncoder, workgroupCountX, workgroupCountY, workgroupCountZ);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
     }
 }
+

@@ -1,6 +1,8 @@
 package org.webgpu;
 
-public class Color {
+import java.lang.foreign.MemorySegment;
+
+public class Color implements ObjectBase {
     public float r;
     public float g;
     public float b;
@@ -18,6 +20,12 @@ public class Color {
         this.g = g;
         this.b = b;
         this.a = a;
+    }
+
+    @Override
+    public MemorySegment ptr() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'ptr'");
     }
 
     

@@ -12,8 +12,8 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c
- * : * typedef void (*WGPUProcCommandEncoderPushDebugGroup)(WGPUCommandEncoder, WGPUStringView)
+ * {@snippet lang=c :
+ * typedef void (*WGPUProcCommandEncoderPushDebugGroup)(WGPUCommandEncoder, WGPUStringView)
  * }
  */
 public class WGPUProcCommandEncoderPushDebugGroup {
@@ -30,8 +30,9 @@ public class WGPUProcCommandEncoderPushDebugGroup {
     }
 
     private static final FunctionDescriptor $DESC = FunctionDescriptor.ofVoid(
-            webgpu_h.C_POINTER,
-            WGPUStringView.layout());
+        webgpu_h.C_POINTER,
+        WGPUStringView.layout()
+    );
 
     /**
      * The descriptor of this function pointer
@@ -40,8 +41,7 @@ public class WGPUProcCommandEncoderPushDebugGroup {
         return $DESC;
     }
 
-    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcCommandEncoderPushDebugGroup.Function.class,
-            "apply", $DESC);
+    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcCommandEncoderPushDebugGroup.Function.class, "apply", $DESC);
 
     /**
      * Allocates a new upcall stub, whose implementation is defined by {@code fi}.
@@ -56,11 +56,12 @@ public class WGPUProcCommandEncoderPushDebugGroup {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr, MemorySegment commandEncoder, MemorySegment groupLabel) {
+    public static void invoke(MemorySegment funcPtr,MemorySegment commandEncoder, MemorySegment groupLabel) {
         try {
-            DOWN$MH.invokeExact(funcPtr, commandEncoder, groupLabel);
+             DOWN$MH.invokeExact(funcPtr, commandEncoder, groupLabel);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
     }
 }
+

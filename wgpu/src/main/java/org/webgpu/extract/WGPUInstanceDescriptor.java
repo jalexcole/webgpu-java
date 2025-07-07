@@ -12,12 +12,10 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c :
+ * {@snippet lang=c :
  * struct WGPUInstanceDescriptor {
- *     WGPUChainedStruct *nextInChain;
- *     size_t requiredFeatureCount;
- *     const WGPUInstanceFeatureName *requiredFeatures;
- *     const WGPUInstanceLimits *requiredLimits;
+ *     const WGPUChainedStruct *nextInChain;
+ *     WGPUInstanceCapabilities features;
  * }
  * }
  */
@@ -28,10 +26,9 @@ public class WGPUInstanceDescriptor {
     }
 
     private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
-            webgpu_h.C_POINTER.withName("nextInChain"),
-            webgpu_h.C_LONG.withName("requiredFeatureCount"),
-            webgpu_h.C_POINTER.withName("requiredFeatures"),
-            webgpu_h.C_POINTER.withName("requiredLimits")).withName("WGPUInstanceDescriptor");
+        webgpu_h.C_POINTER.withName("nextInChain"),
+        WGPUInstanceCapabilities.layout().withName("features")
+    ).withName("WGPUInstanceDescriptor");
 
     /**
      * The layout of this struct
@@ -40,11 +37,12 @@ public class WGPUInstanceDescriptor {
         return $LAYOUT;
     }
 
-    private static final AddressLayout nextInChain$LAYOUT = (AddressLayout) $LAYOUT.select(groupElement("nextInChain"));
+    private static final AddressLayout nextInChain$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("nextInChain"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static final AddressLayout nextInChain$layout() {
@@ -55,7 +53,8 @@ public class WGPUInstanceDescriptor {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static final long nextInChain$offset() {
@@ -64,7 +63,8 @@ public class WGPUInstanceDescriptor {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static MemorySegment nextInChain(MemorySegment struct) {
@@ -73,141 +73,61 @@ public class WGPUInstanceDescriptor {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static void nextInChain(MemorySegment struct, MemorySegment fieldValue) {
         struct.set(nextInChain$LAYOUT, nextInChain$OFFSET, fieldValue);
     }
 
-    private static final OfLong requiredFeatureCount$LAYOUT = (OfLong) $LAYOUT
-            .select(groupElement("requiredFeatureCount"));
+    private static final GroupLayout features$LAYOUT = (GroupLayout)$LAYOUT.select(groupElement("features"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * size_t requiredFeatureCount
+     * {@snippet lang=c :
+     * WGPUInstanceCapabilities features
      * }
      */
-    public static final OfLong requiredFeatureCount$layout() {
-        return requiredFeatureCount$LAYOUT;
+    public static final GroupLayout features$layout() {
+        return features$LAYOUT;
     }
 
-    private static final long requiredFeatureCount$OFFSET = 8;
+    private static final long features$OFFSET = 8;
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * size_t requiredFeatureCount
+     * {@snippet lang=c :
+     * WGPUInstanceCapabilities features
      * }
      */
-    public static final long requiredFeatureCount$offset() {
-        return requiredFeatureCount$OFFSET;
+    public static final long features$offset() {
+        return features$OFFSET;
     }
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * size_t requiredFeatureCount
+     * {@snippet lang=c :
+     * WGPUInstanceCapabilities features
      * }
      */
-    public static long requiredFeatureCount(MemorySegment struct) {
-        return struct.get(requiredFeatureCount$LAYOUT, requiredFeatureCount$OFFSET);
+    public static MemorySegment features(MemorySegment struct) {
+        return struct.asSlice(features$OFFSET, features$LAYOUT.byteSize());
     }
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * size_t requiredFeatureCount
+     * {@snippet lang=c :
+     * WGPUInstanceCapabilities features
      * }
      */
-    public static void requiredFeatureCount(MemorySegment struct, long fieldValue) {
-        struct.set(requiredFeatureCount$LAYOUT, requiredFeatureCount$OFFSET, fieldValue);
-    }
-
-    private static final AddressLayout requiredFeatures$LAYOUT = (AddressLayout) $LAYOUT
-            .select(groupElement("requiredFeatures"));
-
-    /**
-     * Layout for field:
-     * {@snippet lang = c : * const WGPUInstanceFeatureName *requiredFeatures
-     * }
-     */
-    public static final AddressLayout requiredFeatures$layout() {
-        return requiredFeatures$LAYOUT;
-    }
-
-    private static final long requiredFeatures$OFFSET = 16;
-
-    /**
-     * Offset for field:
-     * {@snippet lang = c : * const WGPUInstanceFeatureName *requiredFeatures
-     * }
-     */
-    public static final long requiredFeatures$offset() {
-        return requiredFeatures$OFFSET;
+    public static void features(MemorySegment struct, MemorySegment fieldValue) {
+        MemorySegment.copy(fieldValue, 0L, struct, features$OFFSET, features$LAYOUT.byteSize());
     }
 
     /**
-     * Getter for field:
-     * {@snippet lang = c : * const WGPUInstanceFeatureName *requiredFeatures
-     * }
-     */
-    public static MemorySegment requiredFeatures(MemorySegment struct) {
-        return struct.get(requiredFeatures$LAYOUT, requiredFeatures$OFFSET);
-    }
-
-    /**
-     * Setter for field:
-     * {@snippet lang = c : * const WGPUInstanceFeatureName *requiredFeatures
-     * }
-     */
-    public static void requiredFeatures(MemorySegment struct, MemorySegment fieldValue) {
-        struct.set(requiredFeatures$LAYOUT, requiredFeatures$OFFSET, fieldValue);
-    }
-
-    private static final AddressLayout requiredLimits$LAYOUT = (AddressLayout) $LAYOUT
-            .select(groupElement("requiredLimits"));
-
-    /**
-     * Layout for field:
-     * {@snippet lang = c : * const WGPUInstanceLimits *requiredLimits
-     * }
-     */
-    public static final AddressLayout requiredLimits$layout() {
-        return requiredLimits$LAYOUT;
-    }
-
-    private static final long requiredLimits$OFFSET = 24;
-
-    /**
-     * Offset for field:
-     * {@snippet lang = c : * const WGPUInstanceLimits *requiredLimits
-     * }
-     */
-    public static final long requiredLimits$offset() {
-        return requiredLimits$OFFSET;
-    }
-
-    /**
-     * Getter for field:
-     * {@snippet lang = c : * const WGPUInstanceLimits *requiredLimits
-     * }
-     */
-    public static MemorySegment requiredLimits(MemorySegment struct) {
-        return struct.get(requiredLimits$LAYOUT, requiredLimits$OFFSET);
-    }
-
-    /**
-     * Setter for field:
-     * {@snippet lang = c : * const WGPUInstanceLimits *requiredLimits
-     * }
-     */
-    public static void requiredLimits(MemorySegment struct, MemorySegment fieldValue) {
-        struct.set(requiredLimits$LAYOUT, requiredLimits$OFFSET, fieldValue);
-    }
-
-    /**
-     * Obtains a slice of {@code arrayParam} which selects the array element at
-     * {@code index}.
-     * The returned segment has address
-     * {@code arrayParam.address() + index * layout().byteSize()}
+     * Obtains a slice of {@code arrayParam} which selects the array element at {@code index}.
+     * The returned segment has address {@code arrayParam.address() + index * layout().byteSize()}
      */
     public static MemorySegment asSlice(MemorySegment array, long index) {
         return array.asSlice(layout().byteSize() * index);
@@ -216,13 +136,10 @@ public class WGPUInstanceDescriptor {
     /**
      * The size (in bytes) of this struct
      */
-    public static long sizeof() {
-        return layout().byteSize();
-    }
+    public static long sizeof() { return layout().byteSize(); }
 
     /**
-     * Allocate a segment of size {@code layout().byteSize()} using
-     * {@code allocator}
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
      */
     public static MemorySegment allocate(SegmentAllocator allocator) {
         return allocator.allocate(layout());
@@ -237,8 +154,7 @@ public class WGPUInstanceDescriptor {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code layout().byteSize()}
      */
     public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
@@ -246,12 +162,11 @@ public class WGPUInstanceDescriptor {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code elementCount * layout().byteSize()}
      */
-    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena,
-            Consumer<MemorySegment> cleanup) {
+    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
         return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
     }
 }
+

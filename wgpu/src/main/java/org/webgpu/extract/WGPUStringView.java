@@ -12,7 +12,7 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c :
+ * {@snippet lang=c :
  * struct WGPUStringView {
  *     const char *data;
  *     size_t length;
@@ -26,8 +26,9 @@ public class WGPUStringView {
     }
 
     private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
-            webgpu_h.C_POINTER.withName("data"),
-            webgpu_h.C_LONG.withName("length")).withName("WGPUStringView");
+        webgpu_h.C_POINTER.withName("data"),
+        webgpu_h.C_LONG.withName("length")
+    ).withName("WGPUStringView");
 
     /**
      * The layout of this struct
@@ -36,11 +37,12 @@ public class WGPUStringView {
         return $LAYOUT;
     }
 
-    private static final AddressLayout data$LAYOUT = (AddressLayout) $LAYOUT.select(groupElement("data"));
+    private static final AddressLayout data$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("data"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * const char *data
+     * {@snippet lang=c :
+     * const char *data
      * }
      */
     public static final AddressLayout data$layout() {
@@ -51,7 +53,8 @@ public class WGPUStringView {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * const char *data
+     * {@snippet lang=c :
+     * const char *data
      * }
      */
     public static final long data$offset() {
@@ -60,7 +63,8 @@ public class WGPUStringView {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * const char *data
+     * {@snippet lang=c :
+     * const char *data
      * }
      */
     public static MemorySegment data(MemorySegment struct) {
@@ -69,18 +73,20 @@ public class WGPUStringView {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * const char *data
+     * {@snippet lang=c :
+     * const char *data
      * }
      */
     public static void data(MemorySegment struct, MemorySegment fieldValue) {
         struct.set(data$LAYOUT, data$OFFSET, fieldValue);
     }
 
-    private static final OfLong length$LAYOUT = (OfLong) $LAYOUT.select(groupElement("length"));
+    private static final OfLong length$LAYOUT = (OfLong)$LAYOUT.select(groupElement("length"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * size_t length
+     * {@snippet lang=c :
+     * size_t length
      * }
      */
     public static final OfLong length$layout() {
@@ -91,7 +97,8 @@ public class WGPUStringView {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * size_t length
+     * {@snippet lang=c :
+     * size_t length
      * }
      */
     public static final long length$offset() {
@@ -100,7 +107,8 @@ public class WGPUStringView {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * size_t length
+     * {@snippet lang=c :
+     * size_t length
      * }
      */
     public static long length(MemorySegment struct) {
@@ -109,7 +117,8 @@ public class WGPUStringView {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * size_t length
+     * {@snippet lang=c :
+     * size_t length
      * }
      */
     public static void length(MemorySegment struct, long fieldValue) {
@@ -117,10 +126,8 @@ public class WGPUStringView {
     }
 
     /**
-     * Obtains a slice of {@code arrayParam} which selects the array element at
-     * {@code index}.
-     * The returned segment has address
-     * {@code arrayParam.address() + index * layout().byteSize()}
+     * Obtains a slice of {@code arrayParam} which selects the array element at {@code index}.
+     * The returned segment has address {@code arrayParam.address() + index * layout().byteSize()}
      */
     public static MemorySegment asSlice(MemorySegment array, long index) {
         return array.asSlice(layout().byteSize() * index);
@@ -129,13 +136,10 @@ public class WGPUStringView {
     /**
      * The size (in bytes) of this struct
      */
-    public static long sizeof() {
-        return layout().byteSize();
-    }
+    public static long sizeof() { return layout().byteSize(); }
 
     /**
-     * Allocate a segment of size {@code layout().byteSize()} using
-     * {@code allocator}
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
      */
     public static MemorySegment allocate(SegmentAllocator allocator) {
         return allocator.allocate(layout());
@@ -150,8 +154,7 @@ public class WGPUStringView {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code layout().byteSize()}
      */
     public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
@@ -159,12 +162,11 @@ public class WGPUStringView {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code elementCount * layout().byteSize()}
      */
-    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena,
-            Consumer<MemorySegment> cleanup) {
+    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
         return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
     }
 }
+

@@ -12,8 +12,8 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c
- * : * typedef WGPUBindGroupLayout (*WGPUProcComputePipelineGetBindGroupLayout)(WGPUComputePipeline, uint32_t)
+ * {@snippet lang=c :
+ * typedef WGPUBindGroupLayout (*WGPUProcComputePipelineGetBindGroupLayout)(WGPUComputePipeline, uint32_t)
  * }
  */
 public class WGPUProcComputePipelineGetBindGroupLayout {
@@ -30,9 +30,10 @@ public class WGPUProcComputePipelineGetBindGroupLayout {
     }
 
     private static final FunctionDescriptor $DESC = FunctionDescriptor.of(
-            webgpu_h.C_POINTER,
-            webgpu_h.C_POINTER,
-            webgpu_h.C_INT);
+        webgpu_h.C_POINTER,
+        webgpu_h.C_POINTER,
+        webgpu_h.C_INT
+    );
 
     /**
      * The descriptor of this function pointer
@@ -41,8 +42,7 @@ public class WGPUProcComputePipelineGetBindGroupLayout {
         return $DESC;
     }
 
-    private static final MethodHandle UP$MH = webgpu_h
-            .upcallHandle(WGPUProcComputePipelineGetBindGroupLayout.Function.class, "apply", $DESC);
+    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcComputePipelineGetBindGroupLayout.Function.class, "apply", $DESC);
 
     /**
      * Allocates a new upcall stub, whose implementation is defined by {@code fi}.
@@ -57,7 +57,7 @@ public class WGPUProcComputePipelineGetBindGroupLayout {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static MemorySegment invoke(MemorySegment funcPtr, MemorySegment computePipeline, int groupIndex) {
+    public static MemorySegment invoke(MemorySegment funcPtr,MemorySegment computePipeline, int groupIndex) {
         try {
             return (MemorySegment) DOWN$MH.invokeExact(funcPtr, computePipeline, groupIndex);
         } catch (Throwable ex$) {
@@ -65,3 +65,4 @@ public class WGPUProcComputePipelineGetBindGroupLayout {
         }
     }
 }
+

@@ -12,9 +12,9 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c :
+ * {@snippet lang=c :
  * struct WGPUSurfaceDescriptor {
- *     WGPUChainedStruct *nextInChain;
+ *     const WGPUChainedStruct *nextInChain;
  *     WGPUStringView label;
  * }
  * }
@@ -26,8 +26,9 @@ public class WGPUSurfaceDescriptor {
     }
 
     private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
-            webgpu_h.C_POINTER.withName("nextInChain"),
-            WGPUStringView.layout().withName("label")).withName("WGPUSurfaceDescriptor");
+        webgpu_h.C_POINTER.withName("nextInChain"),
+        WGPUStringView.layout().withName("label")
+    ).withName("WGPUSurfaceDescriptor");
 
     /**
      * The layout of this struct
@@ -36,11 +37,12 @@ public class WGPUSurfaceDescriptor {
         return $LAYOUT;
     }
 
-    private static final AddressLayout nextInChain$LAYOUT = (AddressLayout) $LAYOUT.select(groupElement("nextInChain"));
+    private static final AddressLayout nextInChain$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("nextInChain"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static final AddressLayout nextInChain$layout() {
@@ -51,7 +53,8 @@ public class WGPUSurfaceDescriptor {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static final long nextInChain$offset() {
@@ -60,7 +63,8 @@ public class WGPUSurfaceDescriptor {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static MemorySegment nextInChain(MemorySegment struct) {
@@ -69,18 +73,20 @@ public class WGPUSurfaceDescriptor {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static void nextInChain(MemorySegment struct, MemorySegment fieldValue) {
         struct.set(nextInChain$LAYOUT, nextInChain$OFFSET, fieldValue);
     }
 
-    private static final GroupLayout label$LAYOUT = (GroupLayout) $LAYOUT.select(groupElement("label"));
+    private static final GroupLayout label$LAYOUT = (GroupLayout)$LAYOUT.select(groupElement("label"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUStringView label
+     * {@snippet lang=c :
+     * WGPUStringView label
      * }
      */
     public static final GroupLayout label$layout() {
@@ -91,7 +97,8 @@ public class WGPUSurfaceDescriptor {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUStringView label
+     * {@snippet lang=c :
+     * WGPUStringView label
      * }
      */
     public static final long label$offset() {
@@ -100,7 +107,8 @@ public class WGPUSurfaceDescriptor {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUStringView label
+     * {@snippet lang=c :
+     * WGPUStringView label
      * }
      */
     public static MemorySegment label(MemorySegment struct) {
@@ -109,7 +117,8 @@ public class WGPUSurfaceDescriptor {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUStringView label
+     * {@snippet lang=c :
+     * WGPUStringView label
      * }
      */
     public static void label(MemorySegment struct, MemorySegment fieldValue) {
@@ -117,10 +126,8 @@ public class WGPUSurfaceDescriptor {
     }
 
     /**
-     * Obtains a slice of {@code arrayParam} which selects the array element at
-     * {@code index}.
-     * The returned segment has address
-     * {@code arrayParam.address() + index * layout().byteSize()}
+     * Obtains a slice of {@code arrayParam} which selects the array element at {@code index}.
+     * The returned segment has address {@code arrayParam.address() + index * layout().byteSize()}
      */
     public static MemorySegment asSlice(MemorySegment array, long index) {
         return array.asSlice(layout().byteSize() * index);
@@ -129,13 +136,10 @@ public class WGPUSurfaceDescriptor {
     /**
      * The size (in bytes) of this struct
      */
-    public static long sizeof() {
-        return layout().byteSize();
-    }
+    public static long sizeof() { return layout().byteSize(); }
 
     /**
-     * Allocate a segment of size {@code layout().byteSize()} using
-     * {@code allocator}
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
      */
     public static MemorySegment allocate(SegmentAllocator allocator) {
         return allocator.allocate(layout());
@@ -150,8 +154,7 @@ public class WGPUSurfaceDescriptor {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code layout().byteSize()}
      */
     public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
@@ -159,12 +162,11 @@ public class WGPUSurfaceDescriptor {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code elementCount * layout().byteSize()}
      */
-    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena,
-            Consumer<MemorySegment> cleanup) {
+    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
         return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
     }
 }
+

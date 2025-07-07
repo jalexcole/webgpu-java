@@ -12,7 +12,7 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c :
+ * {@snippet lang=c :
  * struct WGPUOrigin3D {
  *     uint32_t x;
  *     uint32_t y;
@@ -27,9 +27,10 @@ public class WGPUOrigin3D {
     }
 
     private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
-            webgpu_h.C_INT.withName("x"),
-            webgpu_h.C_INT.withName("y"),
-            webgpu_h.C_INT.withName("z")).withName("WGPUOrigin3D");
+        webgpu_h.C_INT.withName("x"),
+        webgpu_h.C_INT.withName("y"),
+        webgpu_h.C_INT.withName("z")
+    ).withName("WGPUOrigin3D");
 
     /**
      * The layout of this struct
@@ -38,11 +39,12 @@ public class WGPUOrigin3D {
         return $LAYOUT;
     }
 
-    private static final OfInt x$LAYOUT = (OfInt) $LAYOUT.select(groupElement("x"));
+    private static final OfInt x$LAYOUT = (OfInt)$LAYOUT.select(groupElement("x"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * uint32_t x
+     * {@snippet lang=c :
+     * uint32_t x
      * }
      */
     public static final OfInt x$layout() {
@@ -53,7 +55,8 @@ public class WGPUOrigin3D {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * uint32_t x
+     * {@snippet lang=c :
+     * uint32_t x
      * }
      */
     public static final long x$offset() {
@@ -62,7 +65,8 @@ public class WGPUOrigin3D {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * uint32_t x
+     * {@snippet lang=c :
+     * uint32_t x
      * }
      */
     public static int x(MemorySegment struct) {
@@ -71,18 +75,20 @@ public class WGPUOrigin3D {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * uint32_t x
+     * {@snippet lang=c :
+     * uint32_t x
      * }
      */
     public static void x(MemorySegment struct, int fieldValue) {
         struct.set(x$LAYOUT, x$OFFSET, fieldValue);
     }
 
-    private static final OfInt y$LAYOUT = (OfInt) $LAYOUT.select(groupElement("y"));
+    private static final OfInt y$LAYOUT = (OfInt)$LAYOUT.select(groupElement("y"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * uint32_t y
+     * {@snippet lang=c :
+     * uint32_t y
      * }
      */
     public static final OfInt y$layout() {
@@ -93,7 +99,8 @@ public class WGPUOrigin3D {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * uint32_t y
+     * {@snippet lang=c :
+     * uint32_t y
      * }
      */
     public static final long y$offset() {
@@ -102,7 +109,8 @@ public class WGPUOrigin3D {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * uint32_t y
+     * {@snippet lang=c :
+     * uint32_t y
      * }
      */
     public static int y(MemorySegment struct) {
@@ -111,18 +119,20 @@ public class WGPUOrigin3D {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * uint32_t y
+     * {@snippet lang=c :
+     * uint32_t y
      * }
      */
     public static void y(MemorySegment struct, int fieldValue) {
         struct.set(y$LAYOUT, y$OFFSET, fieldValue);
     }
 
-    private static final OfInt z$LAYOUT = (OfInt) $LAYOUT.select(groupElement("z"));
+    private static final OfInt z$LAYOUT = (OfInt)$LAYOUT.select(groupElement("z"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * uint32_t z
+     * {@snippet lang=c :
+     * uint32_t z
      * }
      */
     public static final OfInt z$layout() {
@@ -133,7 +143,8 @@ public class WGPUOrigin3D {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * uint32_t z
+     * {@snippet lang=c :
+     * uint32_t z
      * }
      */
     public static final long z$offset() {
@@ -142,7 +153,8 @@ public class WGPUOrigin3D {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * uint32_t z
+     * {@snippet lang=c :
+     * uint32_t z
      * }
      */
     public static int z(MemorySegment struct) {
@@ -151,7 +163,8 @@ public class WGPUOrigin3D {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * uint32_t z
+     * {@snippet lang=c :
+     * uint32_t z
      * }
      */
     public static void z(MemorySegment struct, int fieldValue) {
@@ -159,10 +172,8 @@ public class WGPUOrigin3D {
     }
 
     /**
-     * Obtains a slice of {@code arrayParam} which selects the array element at
-     * {@code index}.
-     * The returned segment has address
-     * {@code arrayParam.address() + index * layout().byteSize()}
+     * Obtains a slice of {@code arrayParam} which selects the array element at {@code index}.
+     * The returned segment has address {@code arrayParam.address() + index * layout().byteSize()}
      */
     public static MemorySegment asSlice(MemorySegment array, long index) {
         return array.asSlice(layout().byteSize() * index);
@@ -171,13 +182,10 @@ public class WGPUOrigin3D {
     /**
      * The size (in bytes) of this struct
      */
-    public static long sizeof() {
-        return layout().byteSize();
-    }
+    public static long sizeof() { return layout().byteSize(); }
 
     /**
-     * Allocate a segment of size {@code layout().byteSize()} using
-     * {@code allocator}
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
      */
     public static MemorySegment allocate(SegmentAllocator allocator) {
         return allocator.allocate(layout());
@@ -192,8 +200,7 @@ public class WGPUOrigin3D {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code layout().byteSize()}
      */
     public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
@@ -201,12 +208,11 @@ public class WGPUOrigin3D {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code elementCount * layout().byteSize()}
      */
-    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena,
-            Consumer<MemorySegment> cleanup) {
+    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
         return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
     }
 }
+

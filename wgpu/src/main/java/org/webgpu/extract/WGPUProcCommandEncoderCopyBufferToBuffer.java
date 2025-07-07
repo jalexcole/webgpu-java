@@ -12,8 +12,8 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c
- * : * typedef void (*WGPUProcCommandEncoderCopyBufferToBuffer)(WGPUCommandEncoder, WGPUBuffer, uint64_t, WGPUBuffer, uint64_t, uint64_t)
+ * {@snippet lang=c :
+ * typedef void (*WGPUProcCommandEncoderCopyBufferToBuffer)(WGPUCommandEncoder, WGPUBuffer, uint64_t, WGPUBuffer, uint64_t, uint64_t)
  * }
  */
 public class WGPUProcCommandEncoderCopyBufferToBuffer {
@@ -26,17 +26,17 @@ public class WGPUProcCommandEncoderCopyBufferToBuffer {
      * The function pointer signature, expressed as a functional interface
      */
     public interface Function {
-        void apply(MemorySegment commandEncoder, MemorySegment source, long sourceOffset, MemorySegment destination,
-                long destinationOffset, long size);
+        void apply(MemorySegment commandEncoder, MemorySegment source, long sourceOffset, MemorySegment destination, long destinationOffset, long size);
     }
 
     private static final FunctionDescriptor $DESC = FunctionDescriptor.ofVoid(
-            webgpu_h.C_POINTER,
-            webgpu_h.C_POINTER,
-            webgpu_h.C_LONG_LONG,
-            webgpu_h.C_POINTER,
-            webgpu_h.C_LONG_LONG,
-            webgpu_h.C_LONG_LONG);
+        webgpu_h.C_POINTER,
+        webgpu_h.C_POINTER,
+        webgpu_h.C_LONG_LONG,
+        webgpu_h.C_POINTER,
+        webgpu_h.C_LONG_LONG,
+        webgpu_h.C_LONG_LONG
+    );
 
     /**
      * The descriptor of this function pointer
@@ -45,8 +45,7 @@ public class WGPUProcCommandEncoderCopyBufferToBuffer {
         return $DESC;
     }
 
-    private static final MethodHandle UP$MH = webgpu_h
-            .upcallHandle(WGPUProcCommandEncoderCopyBufferToBuffer.Function.class, "apply", $DESC);
+    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcCommandEncoderCopyBufferToBuffer.Function.class, "apply", $DESC);
 
     /**
      * Allocates a new upcall stub, whose implementation is defined by {@code fi}.
@@ -61,12 +60,12 @@ public class WGPUProcCommandEncoderCopyBufferToBuffer {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr, MemorySegment commandEncoder, MemorySegment source,
-            long sourceOffset, MemorySegment destination, long destinationOffset, long size) {
+    public static void invoke(MemorySegment funcPtr,MemorySegment commandEncoder, MemorySegment source, long sourceOffset, MemorySegment destination, long destinationOffset, long size) {
         try {
-            DOWN$MH.invokeExact(funcPtr, commandEncoder, source, sourceOffset, destination, destinationOffset, size);
+             DOWN$MH.invokeExact(funcPtr, commandEncoder, source, sourceOffset, destination, destinationOffset, size);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
     }
 }
+

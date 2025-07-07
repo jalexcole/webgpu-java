@@ -12,7 +12,8 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c : * typedef void (*WGPUProcBufferUnmap)(WGPUBuffer)
+ * {@snippet lang=c :
+ * typedef void (*WGPUProcBufferUnmap)(WGPUBuffer)
  * }
  */
 public class WGPUProcBufferUnmap {
@@ -29,7 +30,8 @@ public class WGPUProcBufferUnmap {
     }
 
     private static final FunctionDescriptor $DESC = FunctionDescriptor.ofVoid(
-            webgpu_h.C_POINTER);
+        webgpu_h.C_POINTER
+    );
 
     /**
      * The descriptor of this function pointer
@@ -53,11 +55,12 @@ public class WGPUProcBufferUnmap {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr, MemorySegment buffer) {
+    public static void invoke(MemorySegment funcPtr,MemorySegment buffer) {
         try {
-            DOWN$MH.invokeExact(funcPtr, buffer);
+             DOWN$MH.invokeExact(funcPtr, buffer);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
     }
 }
+

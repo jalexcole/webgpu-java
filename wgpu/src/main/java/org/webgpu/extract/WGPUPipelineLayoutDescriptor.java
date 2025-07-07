@@ -12,13 +12,12 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c :
+ * {@snippet lang=c :
  * struct WGPUPipelineLayoutDescriptor {
- *     WGPUChainedStruct *nextInChain;
+ *     const WGPUChainedStruct *nextInChain;
  *     WGPUStringView label;
  *     size_t bindGroupLayoutCount;
  *     const WGPUBindGroupLayout *bindGroupLayouts;
- *     uint32_t immediateSize;
  * }
  * }
  */
@@ -29,12 +28,11 @@ public class WGPUPipelineLayoutDescriptor {
     }
 
     private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
-            webgpu_h.C_POINTER.withName("nextInChain"),
-            WGPUStringView.layout().withName("label"),
-            webgpu_h.C_LONG.withName("bindGroupLayoutCount"),
-            webgpu_h.C_POINTER.withName("bindGroupLayouts"),
-            webgpu_h.C_INT.withName("immediateSize"),
-            MemoryLayout.paddingLayout(4)).withName("WGPUPipelineLayoutDescriptor");
+        webgpu_h.C_POINTER.withName("nextInChain"),
+        WGPUStringView.layout().withName("label"),
+        webgpu_h.C_LONG.withName("bindGroupLayoutCount"),
+        webgpu_h.C_POINTER.withName("bindGroupLayouts")
+    ).withName("WGPUPipelineLayoutDescriptor");
 
     /**
      * The layout of this struct
@@ -43,11 +41,12 @@ public class WGPUPipelineLayoutDescriptor {
         return $LAYOUT;
     }
 
-    private static final AddressLayout nextInChain$LAYOUT = (AddressLayout) $LAYOUT.select(groupElement("nextInChain"));
+    private static final AddressLayout nextInChain$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("nextInChain"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static final AddressLayout nextInChain$layout() {
@@ -58,7 +57,8 @@ public class WGPUPipelineLayoutDescriptor {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static final long nextInChain$offset() {
@@ -67,7 +67,8 @@ public class WGPUPipelineLayoutDescriptor {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static MemorySegment nextInChain(MemorySegment struct) {
@@ -76,18 +77,20 @@ public class WGPUPipelineLayoutDescriptor {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static void nextInChain(MemorySegment struct, MemorySegment fieldValue) {
         struct.set(nextInChain$LAYOUT, nextInChain$OFFSET, fieldValue);
     }
 
-    private static final GroupLayout label$LAYOUT = (GroupLayout) $LAYOUT.select(groupElement("label"));
+    private static final GroupLayout label$LAYOUT = (GroupLayout)$LAYOUT.select(groupElement("label"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUStringView label
+     * {@snippet lang=c :
+     * WGPUStringView label
      * }
      */
     public static final GroupLayout label$layout() {
@@ -98,7 +101,8 @@ public class WGPUPipelineLayoutDescriptor {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUStringView label
+     * {@snippet lang=c :
+     * WGPUStringView label
      * }
      */
     public static final long label$offset() {
@@ -107,7 +111,8 @@ public class WGPUPipelineLayoutDescriptor {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUStringView label
+     * {@snippet lang=c :
+     * WGPUStringView label
      * }
      */
     public static MemorySegment label(MemorySegment struct) {
@@ -116,19 +121,20 @@ public class WGPUPipelineLayoutDescriptor {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUStringView label
+     * {@snippet lang=c :
+     * WGPUStringView label
      * }
      */
     public static void label(MemorySegment struct, MemorySegment fieldValue) {
         MemorySegment.copy(fieldValue, 0L, struct, label$OFFSET, label$LAYOUT.byteSize());
     }
 
-    private static final OfLong bindGroupLayoutCount$LAYOUT = (OfLong) $LAYOUT
-            .select(groupElement("bindGroupLayoutCount"));
+    private static final OfLong bindGroupLayoutCount$LAYOUT = (OfLong)$LAYOUT.select(groupElement("bindGroupLayoutCount"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * size_t bindGroupLayoutCount
+     * {@snippet lang=c :
+     * size_t bindGroupLayoutCount
      * }
      */
     public static final OfLong bindGroupLayoutCount$layout() {
@@ -139,7 +145,8 @@ public class WGPUPipelineLayoutDescriptor {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * size_t bindGroupLayoutCount
+     * {@snippet lang=c :
+     * size_t bindGroupLayoutCount
      * }
      */
     public static final long bindGroupLayoutCount$offset() {
@@ -148,7 +155,8 @@ public class WGPUPipelineLayoutDescriptor {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * size_t bindGroupLayoutCount
+     * {@snippet lang=c :
+     * size_t bindGroupLayoutCount
      * }
      */
     public static long bindGroupLayoutCount(MemorySegment struct) {
@@ -157,19 +165,20 @@ public class WGPUPipelineLayoutDescriptor {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * size_t bindGroupLayoutCount
+     * {@snippet lang=c :
+     * size_t bindGroupLayoutCount
      * }
      */
     public static void bindGroupLayoutCount(MemorySegment struct, long fieldValue) {
         struct.set(bindGroupLayoutCount$LAYOUT, bindGroupLayoutCount$OFFSET, fieldValue);
     }
 
-    private static final AddressLayout bindGroupLayouts$LAYOUT = (AddressLayout) $LAYOUT
-            .select(groupElement("bindGroupLayouts"));
+    private static final AddressLayout bindGroupLayouts$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("bindGroupLayouts"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * const WGPUBindGroupLayout *bindGroupLayouts
+     * {@snippet lang=c :
+     * const WGPUBindGroupLayout *bindGroupLayouts
      * }
      */
     public static final AddressLayout bindGroupLayouts$layout() {
@@ -180,7 +189,8 @@ public class WGPUPipelineLayoutDescriptor {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * const WGPUBindGroupLayout *bindGroupLayouts
+     * {@snippet lang=c :
+     * const WGPUBindGroupLayout *bindGroupLayouts
      * }
      */
     public static final long bindGroupLayouts$offset() {
@@ -189,7 +199,8 @@ public class WGPUPipelineLayoutDescriptor {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * const WGPUBindGroupLayout *bindGroupLayouts
+     * {@snippet lang=c :
+     * const WGPUBindGroupLayout *bindGroupLayouts
      * }
      */
     public static MemorySegment bindGroupLayouts(MemorySegment struct) {
@@ -198,58 +209,17 @@ public class WGPUPipelineLayoutDescriptor {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * const WGPUBindGroupLayout *bindGroupLayouts
+     * {@snippet lang=c :
+     * const WGPUBindGroupLayout *bindGroupLayouts
      * }
      */
     public static void bindGroupLayouts(MemorySegment struct, MemorySegment fieldValue) {
         struct.set(bindGroupLayouts$LAYOUT, bindGroupLayouts$OFFSET, fieldValue);
     }
 
-    private static final OfInt immediateSize$LAYOUT = (OfInt) $LAYOUT.select(groupElement("immediateSize"));
-
     /**
-     * Layout for field:
-     * {@snippet lang = c : * uint32_t immediateSize
-     * }
-     */
-    public static final OfInt immediateSize$layout() {
-        return immediateSize$LAYOUT;
-    }
-
-    private static final long immediateSize$OFFSET = 40;
-
-    /**
-     * Offset for field:
-     * {@snippet lang = c : * uint32_t immediateSize
-     * }
-     */
-    public static final long immediateSize$offset() {
-        return immediateSize$OFFSET;
-    }
-
-    /**
-     * Getter for field:
-     * {@snippet lang = c : * uint32_t immediateSize
-     * }
-     */
-    public static int immediateSize(MemorySegment struct) {
-        return struct.get(immediateSize$LAYOUT, immediateSize$OFFSET);
-    }
-
-    /**
-     * Setter for field:
-     * {@snippet lang = c : * uint32_t immediateSize
-     * }
-     */
-    public static void immediateSize(MemorySegment struct, int fieldValue) {
-        struct.set(immediateSize$LAYOUT, immediateSize$OFFSET, fieldValue);
-    }
-
-    /**
-     * Obtains a slice of {@code arrayParam} which selects the array element at
-     * {@code index}.
-     * The returned segment has address
-     * {@code arrayParam.address() + index * layout().byteSize()}
+     * Obtains a slice of {@code arrayParam} which selects the array element at {@code index}.
+     * The returned segment has address {@code arrayParam.address() + index * layout().byteSize()}
      */
     public static MemorySegment asSlice(MemorySegment array, long index) {
         return array.asSlice(layout().byteSize() * index);
@@ -258,13 +228,10 @@ public class WGPUPipelineLayoutDescriptor {
     /**
      * The size (in bytes) of this struct
      */
-    public static long sizeof() {
-        return layout().byteSize();
-    }
+    public static long sizeof() { return layout().byteSize(); }
 
     /**
-     * Allocate a segment of size {@code layout().byteSize()} using
-     * {@code allocator}
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
      */
     public static MemorySegment allocate(SegmentAllocator allocator) {
         return allocator.allocate(layout());
@@ -279,8 +246,7 @@ public class WGPUPipelineLayoutDescriptor {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code layout().byteSize()}
      */
     public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
@@ -288,12 +254,11 @@ public class WGPUPipelineLayoutDescriptor {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code elementCount * layout().byteSize()}
      */
-    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena,
-            Consumer<MemorySegment> cleanup) {
+    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
         return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
     }
 }
+

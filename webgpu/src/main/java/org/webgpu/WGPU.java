@@ -24,30 +24,25 @@ public class WGPU {
             System.out.println(e.getMessage());
         }
     }
-    
+
     @SuppressWarnings("preview")
     public static Instance createInstance(@Nullable InstanceDescriptor descriptor) {
         try (Arena arena = Arena.ofConfined()) {
             if (descriptor == null) {
-                var instance = webgpu_h.wgpuCreateInstance(MemorySegment.NULL);
-                return new Instance(instance);
+                var instancePtr = webgpu_h.wgpuCreateInstance(MemorySegment.NULL);
+                return new Instance(instancePtr);
             }
 
             var wgpuDescriptor = arena.allocate(WGPUInstanceDescriptor.layout());
 
-            
-
             var instance = webgpu_h.wgpuCreateInstance(wgpuDescriptor);
             return new Instance(instance);
 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
         }
-        
-        throw new UnsupportedOperationException("Unimplemented method 'createInstance'");
     }
 
     public static void getInstanceFeatures(SupportedFeatures... features) {
+
         throw new UnsupportedOperationException("Unimplemented method 'getInstanceFeatures'");
     }
 
@@ -55,11 +50,18 @@ public class WGPU {
         throw new UnsupportedOperationException("Unimplemented method 'getInstanceLimits'");
     }
 
-    public static int hasInstanceFeature(int feature) {
-        throw new UnsupportedOperationException("Unimplemented method 'hasInstanceFeature'");
+    public static boolean hasInstanceFeature(InstanceFeatureName feature) {
+        var result = webgpu_h.wgpuHasInstanceFeature(feature.value());
+
+        if (result != 0) {
+            return true;
+        }
+
+        return false;
     }
 
     public static Proc getProgAddress(String procName) {
+
         throw new UnsupportedOperationException("Unimplemented method 'getProgAddress'");
     }
 
@@ -75,53 +77,60 @@ public class WGPU {
         throw new UnsupportedOperationException("Unimplemented method 'adapterGetLimits'");
     }
 
-    public static int adapterHasFeature(@NonNull Adapter adapter, int feature) {
-        throw new UnsupportedOperationException("Unimplemented method 'adapterHasFeature'");
+    public static boolean adapterHasFeature(@NonNull Adapter adapter, FeatureName feature) {
+        var result = webgpu_h.wgpuAdapterHasFeature(adapter.ptr(), feature.value());
+
+        if (result != 0) {
+            return true;
+        }
+
+        return false;
+
     }
 
-    public static CompletableFuture<?> adapterRequestDevice(@NonNull Adapter adapter,
-            @NonNull final DeviceDescriptor[] descriptors, @NonNull RequestDeviceCallbackInfo callbackInfo) {
+    public static CompletableFuture<Device> adapterRequestDevice(@NonNull Adapter adapter,
+            @NonNull final DeviceDescriptor[] descriptors) {
         throw new UnsupportedOperationException("Unimplemented method 'adapterRequestDevice'");
     }
 
     public static void adapterAddRef(@NonNull Adapter adapter) {
-        throw new UnsupportedOperationException("Unimplemented method 'adapterAddRef'");
+        webgpu_h.wgpuAdapterAddRef(adapter.ptr());
     }
 
     public static void adapterRelease(@NonNull Adapter adapter) {
-        throw new UnsupportedOperationException("Unimplemented method 'adapterRelease'");
+        webgpu_h.wgpuAdapterRelease(adapter.ptr());
     }
 
     public static void adapterInfoFreeMembers(@NonNull AdapterInfo info) {
-        throw new UnsupportedOperationException("Unimplemented method 'adapterInfoFreeMembers'");
+        webgpu_h.wgpuAdapterInfoFreeMembers(info.ptr());
     }
 
     public static void bindGroupSetLabel(@NonNull BindGroup bindGroup, String label) {
-        throw new UnsupportedOperationException("Unimplemented method 'bindGroupSetLabel'");
+        webgpu_h.wgpuBindGroupSetLabel(bindGroup.ptr(), new StringView(label).ptr());
     }
 
     public static void bindGroupAddRef(@NonNull BindGroup bindGroup) {
-        throw new UnsupportedOperationException("Unimplemented method 'bindGroupAddRef'");
+        webgpu_h.wgpuBindGroupAddRef(bindGroup.ptr());
     }
 
     public static void bindGroupRelease(@NonNull BindGroup bindGroup) {
-        throw new UnsupportedOperationException("Unimplemented method 'bindGroupRelease'");
+        webgpu_h.wgpuBindGroupRelease(bindGroup.ptr());
     }
 
     public static void bindGroupLayoutSetLabel(@NonNull BindGroupLayout bindGroupLayout, String label) {
-        throw new UnsupportedOperationException("Unimplemented method 'bindGroupLayoutSetLabel'");
+        webgpu_h.wgpuBindGroupLayoutSetLabel(bindGroupLayout.ptr(), new StringView(label).ptr());
     }
 
     public static void bindGroupLayoutAddRef(@NonNull BindGroupLayout bindGroupLayout) {
-        throw new UnsupportedOperationException("Unimplemented method 'bindGroupLayoutAddRef'");
+        webgpu_h.wgpuBindGroupLayoutAddRef(bindGroupLayout.ptr());
     }
 
     public static void bindGroupLayoutRelease(@NonNull BindGroupLayout bindGroupLayout) {
-        throw new UnsupportedOperationException("Unimplemented method 'bindGroupLayoutRelease'");
+        webgpu_h.wgpuBindGroupLayoutRelease(bindGroupLayout.ptr());
     }
 
     public static void bufferDestroy(@NonNull Buffer buffer) {
-        throw new UnsupportedOperationException("Unimplemented method 'bufferDestroy'");
+        webgpu_h.wgpuBufferDestroy(buffer.ptr());
     }
 
     public static Object bufferGetConstMappedRange(@NonNull Buffer buffer, long offset, long size) {
@@ -132,12 +141,12 @@ public class WGPU {
         throw new UnsupportedOperationException("Unimplemented method 'wgpuBufferGetMappedRange'");
     }
 
-    public static int bufferGetMapState(@NonNull Buffer buffer) {
-        throw new UnsupportedOperationException("Unimplemented method 'bufferGetMapState'");
+    public static BufferMapState bufferGetMapState(@NonNull Buffer buffer) {
+        return BufferMapState.set(webgpu_h.wgpuBufferGetMapState(buffer.ptr()));
     }
 
     public static final long bufferGetSize(@NonNull Buffer buffer) {
-        throw new UnsupportedOperationException("Unimplemented method 'bufferGetSize'");
+        return webgpu_h.wgpuBufferGetSize(buffer.ptr());
     }
 
     public static final CompletableFuture<?> bufferMapAsync(@NonNull Buffer buffer, int mode, long offset, long size) {
@@ -145,195 +154,210 @@ public class WGPU {
     }
 
     public static final int bufferReadMappedRange(@NonNull Buffer buffer, long offset, byte[] data, long size) {
-        throw new UnsupportedOperationException("Unimplemented method 'bufferReadMappedRange'");
+        return webgpu_h.wgpuBufferReadMappedRange(buffer.ptr(), offset, MemorySegment.ofArray(data), size);
     }
 
     public static final void bufferSetLabel(@NonNull Buffer buffer, String label) {
-        throw new UnsupportedOperationException("Unimplemented method 'bufferSetLabel'");
+        webgpu_h.wgpuBufferSetLabel(buffer.ptr(), new StringView(label).ptr());
     }
 
     public static final void bufferUnmap(@NonNull Buffer buffer) {
-        throw new UnsupportedOperationException("Unimplemented method 'bufferUnmap'");
+        webgpu_h.wgpuBufferUnmap(buffer.ptr());
     }
 
     public static final Status bufferWriteMappedRange(@NonNull Buffer buffer, long offset, byte[] data, long size) {
-        throw new UnsupportedOperationException("Unimplemented method 'bufferWriteMappedRange'");
+        var statusCode = (webgpu_h.wgpuBufferWriteMappedRange(buffer.ptr(), offset, MemorySegment.ofArray(data), size));
+
+        if (statusCode == Status.Success.value()) {
+            return Status.Success;
+        } else {
+            return Status.Error;
+        }
     }
 
     public static final void bufferAddRef(@NonNull Buffer buffer) {
-        throw new UnsupportedOperationException("Unimplemented method 'bufferAddRef'");
+        webgpu_h.wgpuBufferAddRef(buffer.ptr());
     }
 
     public static final void bufferRelease(@NonNull Buffer buffer) {
-        throw new UnsupportedOperationException("Unimplemented method 'bufferRelease'");
+        webgpu_h.wgpuBufferRelease(buffer.ptr());
     }
 
     public static void commandBufferSetLabel(@NonNull CommandBuffer commandBuffer, String label) {
-        throw new UnsupportedOperationException("Unimplemented method 'commandBufferSetLabel'");
+        webgpu_h.wgpuCommandBufferSetLabel(commandBuffer.ptr(), new StringView(label).ptr());
     }
 
     public static void commandBufferAddRef(@NonNull CommandBuffer commandBuffer) {
-        throw new UnsupportedOperationException("Unimplemented method 'commandBufferAddRef'");
+        webgpu_h.wgpuCommandBufferAddRef(commandBuffer.ptr());
     }
 
     public static void commandBufferRelease(@NonNull CommandBuffer commandBuffer) {
-        throw new UnsupportedOperationException("Unimplemented method 'commandBufferRelease'");
+        webgpu_h.wgpuCommandBufferRelease(commandBuffer.ptr());
     }
 
     public static ComputePassEncoder commandEncoderBeginComputePass(@NonNull CommandEncoder commandEncoder,
             @NonNull ComputePassDescriptor descriptor) {
-        throw new UnsupportedOperationException("Unimplemented method 'commandEncoderBeginComputePass'");
+        return new ComputePassEncoder(
+                webgpu_h.wgpuCommandEncoderBeginComputePass(commandEncoder.ptr(), descriptor.ptr()));
     }
 
     public static final RenderPassEncoder commandEncoderBeginRenderPass(@NonNull CommandEncoder commandEncoder,
             @NonNull RenderPassDescriptor descriptor) {
-        throw new UnsupportedOperationException("Unimplemented method 'commandEncoderBeginRenderPass'");
+        return new RenderPassEncoder(
+                webgpu_h.wgpuCommandEncoderBeginRenderPass(commandEncoder.ptr(), descriptor.ptr()));
     }
 
     public static final void commandEncoderClearBuffer(@NonNull CommandEncoder commandEncoder, @NonNull Buffer buffer,
             long offset, long size) {
-        throw new UnsupportedOperationException("Unimplemented method 'commandEncoderClearBuffer'");
+        webgpu_h.wgpuCommandEncoderClearBuffer(commandEncoder.ptr(), buffer.ptr(), offset, size);
     }
 
     public static final void commandEncoderCopyBufferToBuffer(@NonNull CommandEncoder commandEncoder,
             @NonNull Buffer source, long sourceOffset, @NonNull Buffer destination, long destinationOffset, long size) {
-        throw new UnsupportedOperationException("Unimplemented method 'commandEncoderCopyBufferToBuffer'");
+        webgpu_h.wgpuCommandEncoderCopyBufferToBuffer(commandEncoder.ptr(), source.ptr(), sourceOffset,
+                destination.ptr(), destinationOffset, size);
     }
 
     public static final void commandEncoderCopyBufferToTexture(@NonNull CommandEncoder commandEncoder,
             @NonNull final TexelCopyBufferInfo source, @NonNull final TexelCopyTextureInfo destination,
             @NonNull final Extend3D copySize) {
-        throw new UnsupportedOperationException("Unimplemented method 'commandEncoderCopyBufferToTexture'");
+        webgpu_h.wgpuCommandEncoderCopyBufferToTexture(commandEncoder.ptr(), source.ptr(), destination.ptr(),
+                copySize.ptr());
     }
 
     public static final void commandEncoderCopyTextureToBuffer(@NonNull CommandEncoder commandEncoder,
             @NonNull final TexelCopyTextureInfo source, @NonNull final TexelCopyBufferInfo destination,
             @NonNull final Extend3D copySize) {
-        throw new UnsupportedOperationException("Unimplemented method 'commandEncoderCopyTextureToBuffer'");
+        webgpu_h.wgpuCommandEncoderCopyTextureToBuffer(commandEncoder.ptr(), source.ptr(), destination.ptr(),
+                copySize.ptr());
     }
 
     public static final void commandEncoderCopyTextureToTexture(@NonNull CommandEncoder commandEncoder,
             @NonNull final TexelCopyTextureInfo source, @NonNull final TexelCopyTextureInfo destination,
             @NonNull final Extend3D copySize) {
-        throw new UnsupportedOperationException("Unimplemented method 'commandEncoderCopyTextureToTexture'");
+        webgpu_h.wgpuCommandEncoderCopyTextureToTexture(commandEncoder.ptr(), source.ptr(), destination.ptr(),
+                copySize.ptr());
     }
 
     public static final CommandBuffer commandEncoderFinish(@NonNull CommandEncoder commandEncoder,
             @NonNull CommandBufferDescriptor descriptor) {
-        throw new UnsupportedOperationException("Unimplemented method 'commandEncoderFinish'");
+        return new CommandBuffer(webgpu_h.wgpuCommandEncoderFinish(commandEncoder.ptr(), descriptor.ptr()));
     }
 
     public static void commandEncoderInsertDebugMarker(@NonNull CommandEncoder commandEncoder, String markerLabel) {
-        throw new UnsupportedOperationException("Unimplemented method 'commandEncoderInsertDebugMarker'");
+        webgpu_h.wgpuCommandEncoderInsertDebugMarker(commandEncoder.ptr(), new StringView(markerLabel).ptr());
     }
 
     public static void commandEncoderPopDebugGroup(@NonNull CommandEncoder commandEncoder) {
-        throw new UnsupportedOperationException("Unimplemented method 'commandEncoderPopDebugGroup'");
+        webgpu_h.wgpuCommandEncoderPopDebugGroup(commandEncoder.ptr());
     }
 
     public static void commandEncoderPushDebugGroup(@NonNull CommandEncoder commandEncoder, String groupLabel) {
-        throw new UnsupportedOperationException("Unimplemented method 'commandEncoderPushDebugGroup'");
+        webgpu_h.wgpuCommandEncoderPushDebugGroup(commandEncoder.ptr(), new StringView(groupLabel).ptr());
     }
 
     public static void commandEncoderSetLabel(@NonNull CommandEncoder commandEncoder, String label) {
-        throw new UnsupportedOperationException("Unimplemented method 'commandEncoderSetLabel'");
+        webgpu_h.wgpuCommandEncoderSetLabel(commandEncoder.ptr(), new StringView(label).ptr());
     }
 
     public static void commandEncoderWriteTimestamp(@NonNull CommandEncoder commandEncoder, @NonNull QuerySet querySet,
             int queryIndex) {
-        throw new UnsupportedOperationException("Unimplemented method 'commandEncoderWriteTimestamp'");
+        webgpu_h.wgpuCommandEncoderWriteTimestamp(commandEncoder.ptr(), querySet.ptr(), queryIndex);
     }
 
     public static void commandEncoderAddRef(@NonNull CommandEncoder commandEncoder) {
-        throw new UnsupportedOperationException("Unimplemented method 'commandEncoderAddRef'");
+        webgpu_h.wgpuCommandEncoderAddRef(commandEncoder.ptr());
     }
 
     public static void commandEncoderRelease(@NonNull CommandEncoder commandEncoder) {
-        throw new UnsupportedOperationException("Unimplemented method 'commandEncoderRelease'");
+        webgpu_h.wgpuCommandEncoderRelease(commandEncoder.ptr());
     }
 
     public static final void computePassEncoderDispatchWorkgroups(@NonNull ComputePassEncoder computePassEncoder,
             int workgroupCountX,
             int workgroupCountY, int workgroupCountZ) {
-        throw new UnsupportedOperationException("Unimplemented method 'computePassEncoderDispatchWorkgroups'");
+        webgpu_h.wgpuComputePassEncoderDispatchWorkgroups(computePassEncoder.ptr(), workgroupCountX, workgroupCountY,
+                workgroupCountZ);
     }
 
     public static final void computePassEncoderDispatchWorkgroupsIndirect(
             @NonNull ComputePassEncoder computePassEncoder,
             @NonNull Buffer indirectBuffer, int indirectOffset) {
-        throw new UnsupportedOperationException("Unimplemented method 'computePassEncoderDipatchWorkgroupsIndirect'");
+        webgpu_h.wgpuComputePassEncoderDispatchWorkgroupsIndirect(computePassEncoder.ptr(), indirectBuffer.ptr(),
+                indirectOffset);
     }
 
     public static final void computePassEncoderEnd(@NonNull ComputePassEncoder computePassEncoder) {
-        throw new UnsupportedOperationException("Unimplemented method 'computePassEncoderEnd'");
+        webgpu_h.wgpuComputePassEncoderEnd(computePassEncoder.ptr());
     }
 
     public static final void computePassEncoderInsertDebugMarker(@NonNull ComputePassEncoder computePassEncoder,
             String markerLabel) {
-        throw new UnsupportedOperationException("Unimplemented method 'computePassEncoderInsertDebugMarker'");
+        webgpu_h.wgpuComputePassEncoderInsertDebugMarker(computePassEncoder.ptr(), new StringView(markerLabel).ptr());
     }
 
     public static final void computePassEncoderPopDebugGroup(@NonNull ComputePassEncoder computePassEncoder) {
-        throw new UnsupportedOperationException("Unimplemented method 'computePassEncoderPopDebugGroup'");
+        webgpu_h.wgpuComputePassEncoderPopDebugGroup(computePassEncoder.ptr());
     }
 
     public static final void computePassEncoderPushDebugGroup(@NonNull ComputePassEncoder computePassEncoder,
             String groupLabel) {
-        throw new UnsupportedOperationException("Unimplemented method 'computePassEncoderPushDebugGroup'");
+        webgpu_h.wgpuComputePassEncoderPushDebugGroup(computePassEncoder.ptr(), new StringView(groupLabel).ptr());
     }
 
     public static final void computePassEncoderSetBindGroup(@NonNull ComputePassEncoder computePassEncoder,
             int groupIndex,
             @NonNull BindGroup group, long dynamicOffsetCount, int... dynamicOffsets) {
-        throw new UnsupportedOperationException("Unimplemented method 'computePassEncoderSetBindGroup'");
+        webgpu_h.wgpuComputePassEncoderSetBindGroup(computePassEncoder.ptr(), groupIndex, group.ptr(),
+                dynamicOffsetCount, MemorySegment.ofArray(dynamicOffsets));
     }
 
     public static final void computePassEncoderSetLabel(@NonNull ComputePassEncoder computePassEncoder, String label) {
-        throw new UnsupportedOperationException("Unimplemented method 'computePassEncoderSetLabel'");
+        webgpu_h.wgpuComputePassEncoderSetLabel(computePassEncoder.ptr(), new StringView(label).ptr());
     }
 
     public static final void computePassEncoderSetPipeline(@NonNull ComputePassEncoder computePassEncoder,
             @NonNull ComputePipeline pipeline) {
-        throw new UnsupportedOperationException("Unimplemented method 'computePassEncoderSetPipeline'");
+        webgpu_h.wgpuComputePassEncoderSetPipeline(computePassEncoder.ptr(), pipeline.ptr());
     }
 
     public static final void computePassEncoderAddRef(@NonNull ComputePassEncoder computePassEncoder) {
-        throw new UnsupportedOperationException("Unimplemented method 'computePassEncoderAddRef'");
+        webgpu_h.wgpuComputePassEncoderAddRef(computePassEncoder.ptr());
     }
 
     public static final void computePassEncoderRelease(@NonNull ComputePassEncoder computePassEncoder) {
-        throw new UnsupportedOperationException("Unimplemented method 'computePassEncoderRelease'");
+        webgpu_h.wgpuComputePassEncoderRelease(computePassEncoder.ptr());
     }
 
     public static final void computePipelineGetBindGroupLayout(@NonNull ComputePipeline computePipeline,
             int groupIndex) {
-        throw new UnsupportedOperationException("Unimplemented method 'computePipelineGetBindGroupLayout'");
+        webgpu_h.wgpuComputePipelineGetBindGroupLayout(computePipeline.ptr(), groupIndex);
     }
 
     public static final void computePipelineSetLabel(@NonNull ComputePipeline computePipeline, String label) {
-        throw new UnsupportedOperationException("Unimplemented method 'computePipelineSetLabel'");
+        webgpu_h.wgpuComputePipelineSetLabel(computePipeline.ptr(), new StringView(label).ptr());
     }
 
     public static final void computePipelineAddRef(@NonNull ComputePipeline computePipeline) {
-        throw new UnsupportedOperationException("Unimplemented method 'computePipelineAddRef'");
+        webgpu_h.wgpuComputePipelineAddRef(computePipeline.ptr());
     }
 
     public static final void computePipelineRelease(@NonNull ComputePipeline computePipeline) {
-        throw new UnsupportedOperationException("Unimplemented method 'computePipelineRelease'");
+        webgpu_h.wgpuComputePipelineRelease(computePipeline.ptr());
     }
 
     public static final BindGroup deviceCreateBindGroup(@NonNull Device device,
             @NonNull BindGroupDescriptor descriptor) {
-        throw new UnsupportedOperationException("Unimplemented method 'deviceCreateBindGroup'");
+        return new BindGroup(webgpu_h.wgpuDeviceCreateBindGroup(device.ptr(), descriptor.ptr()));
     }
 
     public static final BindGroupLayout deviceCreateBindGroupLayout(@NonNull Device device,
-            @NonNull BindGroupLayoutDescriptor descriptor) {
-        throw new UnsupportedOperationException("Unimplemented method 'deviceCreateBindGroupLayout'");
+            @Nullable BindGroupLayoutDescriptor descriptor) {
+        return new BindGroupLayout(webgpu_h.wgpuDeviceCreateBindGroupLayout(device.ptr(), descriptor.ptr()));
     }
 
     public static final Buffer deviceCreateBuffer(@NonNull Device device, @NonNull final BufferDescriptor descriptor) {
-        throw new UnsupportedOperationException("Unimplemented method 'deviceCreateBuffer'");
+        return new Buffer(webgpu_h.wgpuDeviceCreateBuffer(device.ptr(), descriptor.ptr()));
     }
 
     public static final CommandBuffer deviceCreateCommandBuffer(@NonNull Device device,
@@ -343,7 +367,7 @@ public class WGPU {
 
     public static ComputePipeline deviceCreateComputePipeline(@NonNull Device device,
             @NonNull ComputePipelineDescriptor descriptor) {
-        throw new UnsupportedOperationException("Unimplemented method 'deviceCreateComputePipeline'");
+        return new ComputePipeline(webgpu_h.wgpuDeviceCreateComputePipeline(device.ptr(), descriptor.ptr()));
     }
 
     public static final CompletableFuture<?> deviceCreateComputePipelineAsync(@NonNull Device device,
@@ -353,22 +377,22 @@ public class WGPU {
 
     public static final PipelineLayout deviceCreatePipelineLayout(@NonNull Device device,
             @NonNull PipelineLayoutDescriptor descriptor) {
-        throw new UnsupportedOperationException("Unimplemented method 'deviceCreatePipelineLayout'");
+        return new PipelineLayout(webgpu_h.wgpuDeviceCreatePipelineLayout(device.ptr(), descriptor.ptr()));
     }
 
     public static final QuerySet deviceCreateQuerySet(@NonNull Device device,
             @NonNull QuerySetDescriptor descriptor) {
-        throw new UnsupportedOperationException("Unimplemented method 'deviceCreateQuerySet'");
+        return new QuerySet(webgpu_h.wgpuDeviceCreateQuerySet(device.ptr(), descriptor.ptr()));
     }
 
     public static final RenderBundleEncoder deviceCreateRenderBundleEncoder(@NonNull Device device,
             @NonNull RenderBundleEncoderDescriptor descriptor) {
-        throw new UnsupportedOperationException("Unimplemented method 'deviceCreateRenderBundleEncoder'");
+        return new RenderBundleEncoder(webgpu_h.wgpuDeviceCreateRenderBundleEncoder(device.ptr(), descriptor.ptr()));
     }
 
     public static final RenderPipeline deviceCreateRenderPipeline(@NonNull Device device,
             @NonNull RenderPipelineDescriptor descriptor) {
-        throw new UnsupportedOperationException("Unimplemented method 'deviceCreateRenderPipeline'");
+        return new RenderPipeline(webgpu_h.wgpuDeviceCreateRenderPipeline(device.ptr(), descriptor.ptr()));
     }
 
     public static final CompletableFuture<?> deviceCreateRenderPipelineAsync(@NonNull Device device,
@@ -379,33 +403,45 @@ public class WGPU {
 
     public static final Sampler deviceCreateSampler(@NonNull Device device,
             @NonNull SamplerDescriptor descriptor) {
-        throw new UnsupportedOperationException("Unimplemented method 'deviceCreateSampler'");
+        return new Sampler(webgpu_h.wgpuDeviceCreateSampler(device.ptr(), descriptor.ptr()));
     }
 
     public static final ShaderModule deviceCreateShaderModule(@NonNull Device device,
             @NonNull final ShaderModuleDescriptor descriptor) {
-        throw new UnsupportedOperationException("Unimplemented method 'deviceCreateShaderModule'");
+        return new ShaderModule(webgpu_h.wgpuDeviceCreateShaderModule(device.ptr(), descriptor.ptr()));
     }
 
     public static final Texture deviceCreateTexture(@NonNull Device device,
             @NonNull TextureDescriptor descriptor) {
-        throw new UnsupportedOperationException("Unimplemented method 'deviceCreateTexture'");
+        return new Texture(webgpu_h.wgpuDeviceCreateTexture(device.ptr(), descriptor.ptr()));
     }
 
     public static final void deviceDestroy(@NonNull Device device) {
-        throw new UnsupportedOperationException("Unimplemented method 'deviceDestroy'");
+        webgpu_h.wgpuDeviceDestroy(device.ptr());
     }
 
     public static final Status deviceGetAdapterInfo(@NonNull Device device, @NonNull AdapterInfo adapterInfo) {
-        throw new UnsupportedOperationException("Unimplemented method 'deviceGetAdapterInfo'");
+        var statusCode = (webgpu_h.wgpuDeviceGetAdapterInfo(device.ptr(), adapterInfo.ptr()));
+
+        if (statusCode == Status.Success.value()) {
+            return Status.Success;
+        } else {
+            return Status.Error;
+        }
     }
 
     public static void deviceGetFeatures(@NonNull Device device, @NonNull SupportedFeatures features) {
-        throw new UnsupportedOperationException("Unimplemented method 'deviceGetFeatures'");
+        webgpu_h.wgpuDeviceGetFeatures(device.ptr(), features.ptr());
     }
 
     public static final Status deviceGetLimits(@NonNull Device device, @NonNull Limits limits) {
-        throw new UnsupportedOperationException("Unimplemented method 'deviceGetLimits'");
+        final var statusCode = (webgpu_h.wgpuDeviceGetLimits(device.ptr(), limits.ptr()));
+
+        if (statusCode == Status.Success.value()) {
+            return Status.Success;
+        } else {
+            return Status.Error;
+        }
     }
 
     public static final Future<?>[] deviceGetLostFuture(@NonNull Device device) {
@@ -413,11 +449,12 @@ public class WGPU {
     }
 
     public static final Queue deviceGetQueue(@NonNull Device device) {
-        throw new UnsupportedOperationException("Unimplemented method 'deviceGetQueue'");
+        return new Queue(webgpu_h.wgpuDeviceGetQueue(device.ptr()));
     }
 
     public static final boolean deviceHasFeature(@NonNull Device device, @NonNull FeatureName feature) {
-        throw new UnsupportedOperationException("Unimplemented method 'deviceHasFeature'");
+        var hasFeature = webgpu_h.wgpuDeviceHasFeature(device.ptr(), feature.value());
+        return hasFeature != 0;
     }
 
     public static final Future<?> devicePopErrorScope(@NonNull Device device, @NonNull PopErrorScopeCallback callback) {
@@ -425,42 +462,52 @@ public class WGPU {
     }
 
     public static final void devicePushErrorScope(@NonNull Device device, ErrorFilter filter) {
-        throw new UnsupportedOperationException("Unimplemented method 'devicePushErrorScope'");
+        webgpu_h.wgpuDevicePushErrorScope(device.ptr(), filter.value());
     }
 
     public static final void deviceSetLabel(@NonNull Device device, @NonNull String label) {
-        throw new UnsupportedOperationException("Unimplemented method 'deviceSetLabel'");
+        webgpu_h.wgpuDeviceSetLabel(device.ptr(), new StringView(label).ptr());
     }
 
     public static final void deviceAddRef(@NonNull Device device) {
-        throw new UnsupportedOperationException("Unimplemented method 'deviceAddRef'");
+        webgpu_h.wgpuDeviceAddRef(device.ptr());
     }
 
     public static void deviceRelease(@NonNull Device device) {
-        throw new UnsupportedOperationException("Unimplemented method 'deviceRelease'");
+        webgpu_h.wgpuDeviceRelease(device.ptr());
     }
 
     public static Surface instanceCreateSurface(@NonNull Instance instance,
-            @NonNull SurfaceDescriptor descriptor) {
-        throw new UnsupportedOperationException("Unimplemented method 'instanceCreateSurface'");
+            @Nullable SurfaceDescriptor descriptor) {
+
+        if (descriptor == null) {
+            return new Surface(webgpu_h.wgpuInstanceCreateSurface(instance.ptr(), MemorySegment.NULL));
+        }
+        return new Surface(webgpu_h.wgpuInstanceCreateSurface(instance.ptr(), descriptor.ptr()));
     }
 
     public static Status instanceGetWGSLLanguageFeatures(@NonNull Instance instance,
             @NonNull SupportedWGSLLanguageFeatures features) {
-        throw new UnsupportedOperationException("Unimplemented method 'instanceGetWGSLLanguageFeatures'");
+        var statusCode = (webgpu_h.wgpuInstanceGetWGSLLanguageFeatures(instance.ptr(), features.ptr()));
+
+        if (statusCode == Status.Success.value()) {
+            return Status.Success;
+        } else {
+            return Status.Error;
+        }
     }
 
     public static boolean instanceHasWGSLLanguageFeature(@NonNull Instance instance,
             @NonNull WGSLLanguageFeatureName feature) {
-        throw new UnsupportedOperationException("Unimplemented method 'instanceHasWGSLLanguageFeature'");
+        var hasFeature = webgpu_h.wgpuInstanceHasWGSLLanguageFeature(instance.ptr(), feature.value());
+        return hasFeature != 0;
     }
 
     public static void instanceProcessEvents(@NonNull Instance instance) {
-        throw new UnsupportedOperationException("Unimplemented method 'instanceProcessEvents'");
+        webgpu_h.wgpuInstanceProcessEvents(instance.ptr());
     }
 
-    public static Future<?> instanceRequestAdapter(@NonNull Instance instance,
-            @NonNull RequestAdapterCallbackInfo callback) {
+    public static Future<Adapter> instanceRequestAdapter(@NonNull Instance instance) {
         throw new UnsupportedOperationException("Unimplemented method 'instanceRequestAdapter'");
     }
 
@@ -470,47 +517,48 @@ public class WGPU {
     }
 
     public static void instanceAddRef(@NonNull Instance instance) {
-        throw new UnsupportedOperationException("Unimplemented method 'instanceAddRef'");
+        webgpu_h.wgpuInstanceAddRef(instance.ptr());
     }
 
     public static void instanceRelease(@NonNull Instance instance) {
-        throw new UnsupportedOperationException("Unimplemented method 'instanceRelease'");
+        webgpu_h.wgpuInstanceRelease(instance.ptr());
     }
 
     public static void pipelineLayoutSetLabel(@NonNull PipelineLayout pipelineLayout, String label) {
-        throw new UnsupportedOperationException("Unimplemented method 'pipelineLayoutSetLabel'");
+        webgpu_h.wgpuPipelineLayoutSetLabel(pipelineLayout.ptr(), new StringView(label).ptr());
     }
 
     public static void pipelineLayoutAddRef(@NonNull PipelineLayout pipelineLayout) {
-        throw new UnsupportedOperationException("Unimplemented method 'pipelineLayoutAddRef'");
+        webgpu_h.wgpuPipelineLayoutAddRef(pipelineLayout.ptr());
     }
 
     public static void pipelineLayoutRelease(@NonNull PipelineLayout pipelineLayout) {
-        throw new UnsupportedOperationException("Unimplemented method 'pipelineLayoutRelease'");
+        webgpu_h.wgpuPipelineLayoutRelease(pipelineLayout.ptr());
     }
 
     public static void querySetDestroy(@NonNull QuerySet querySet) {
-        throw new UnsupportedOperationException("Unimplemented method 'querySetDestroy'");
+        webgpu_h.wgpuQuerySetDestroy(querySet.ptr());
     }
 
     public static int querySetGetCount(@NonNull QuerySet querySet) {
-        throw new UnsupportedOperationException("Unimplemented method 'querySetGetCount'");
+        return webgpu_h.wgpuQuerySetGetCount(querySet.ptr());
     }
 
     public static QueryType querySetGetType(@NonNull QuerySet querySet) {
-        throw new UnsupportedOperationException("Unimplemented method 'querySetGetType'");
+        var queryTypeCode = webgpu_h.wgpuQuerySetGetType(querySet.ptr());
+        return QueryType.values()[queryTypeCode];
     }
 
     public static void querySetSetLabel(@NonNull QuerySet querySet, String label) {
-        throw new UnsupportedOperationException("Unimplemented method 'querySetSetLabel'");
+        webgpu_h.wgpuQuerySetSetLabel(querySet.ptr(), new StringView(label).ptr());
     }
 
     public static void querySetAddRef(@NonNull QuerySet querySet) {
-        throw new UnsupportedOperationException("Unimplemented method 'querySetAddRef'");
+        webgpu_h.wgpuQuerySetAddRef(querySet.ptr());
     }
 
     public static void querySetRelease(@NonNull QuerySet querySet) {
-        throw new UnsupportedOperationException("Unimplemented method 'querySetRelease'");
+        webgpu_h.wgpuQuerySetRelease(querySet.ptr());
     }
 
     public static Future<?> queueOnSubmittedWorkDone(@NonNull Queue queue,
@@ -519,29 +567,31 @@ public class WGPU {
     }
 
     public static void queueSetLabel(@NonNull Queue queue, String label) {
-        throw new UnsupportedOperationException("Unimplemented method 'queueSetLabel'");
+        webgpu_h.wgpuQueueSetLabel(queue.ptr(), new StringView(label).ptr());
     }
 
     public static void queueSubmit(@NonNull Queue queue, @NonNull CommandBuffer... commands) {
-        throw new UnsupportedOperationException("Unimplemented method 'queueSubmit'");
+
+        webgpu_h.wgpuQueueSubmit(queue.ptr(), commands.length, commands[0].ptr());
     }
 
     public static void queueWriteBuffer(@NonNull Queue queue, @NonNull Buffer buffer, long offset,
             @NonNull byte[] data) {
-        throw new UnsupportedOperationException("Unimplemented method 'queueWriteBuffer'");
+        webgpu_h.wgpuQueueWriteBuffer(queue.ptr(), buffer.ptr(), offset, MemorySegment.ofArray(data), data.length);
     }
 
     public static void queueWriteTexture(@NonNull Queue queue, @NonNull TexelCopyTextureInfo destination,
             @NonNull byte[] data, TexelCopyBufferLayout dataLayout, final Extend3D writeSize) {
-        throw new UnsupportedOperationException("Unimplemented method 'queueWriteTexture'");
+        webgpu_h.wgpuQueueWriteTexture(queue.ptr(), destination.ptr(), MemorySegment.ofArray(data), (long) data.length,
+                dataLayout.ptr(), writeSize.ptr());
     }
 
     public static void queueAddRef(@NonNull Queue queue) {
-        throw new UnsupportedOperationException("Unimplemented method 'queueAddRef'");
+        webgpu_h.wgpuQueueAddRef(queue.ptr());
     }
 
     public static void queueRelease(@NonNull Queue queue) {
-        throw new UnsupportedOperationException("Unimplemented method 'queueRelease'");
+        webgpu_h.wgpuQueueRelease(queue.ptr());
     }
 
     public static void renderPassSetLabel(@NonNull RenderPass renderPass, String label) {
@@ -549,111 +599,119 @@ public class WGPU {
     }
 
     public static void renderBundleAddRef(@NonNull RenderBundle renderBundle) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderBundleAddRef'");
+        webgpu_h.wgpuRenderBundleAddRef(renderBundle.ptr());
     }
 
     public static void renderBundleRelease(@NonNull RenderBundle renderBundle) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderBundleRelease'");
+        webgpu_h.wgpuRenderBundleRelease(renderBundle.ptr());
     }
 
     public static void renderBundleEncoderDraw(@NonNull RenderBundleEncoder renderBundleEncoder,
             int vertexCount, int instanceCount, int firstVertex, int firstInstance) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderBundleEncoderDraw'");
+        webgpu_h.wgpuRenderBundleEncoderDraw(renderBundleEncoder.ptr(), vertexCount, instanceCount, firstVertex,
+                firstInstance);
     }
 
     public static void renderBundleEncoderDrawIndexed(@NonNull RenderBundleEncoder renderBundleEncoder,
             int indexCount, int instanceCount, int firstIndex, int baseVertex, int firstInstance) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderBundleEncoderDrawIndexed'");
+        webgpu_h.wgpuRenderBundleEncoderDrawIndexed(renderBundleEncoder.ptr(), indexCount, instanceCount, firstIndex,
+                baseVertex, firstInstance);
     }
 
     public static void renderBundleEncoderDrawIndexedIndirect(@NonNull RenderBundleEncoder renderBundleEncoder,
             @NonNull Buffer indirectBuffer, long indirectOffset) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderBundleEncoderDrawIndexedIndirect'");
+        webgpu_h.wgpuRenderBundleEncoderDrawIndexedIndirect(renderBundleEncoder.ptr(), indirectBuffer.ptr(),
+                indirectOffset);
     }
 
     public static void renderBundleEncoderDrawIndirect(@NonNull RenderBundleEncoder renderBundleEncoder,
             @NonNull Buffer indirectBuffer, long indirectOffset) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderBundleEncoderDrawIndirect'");
+        webgpu_h.wgpuRenderBundleEncoderDrawIndirect(renderBundleEncoder.ptr(), indirectBuffer.ptr(), indirectOffset);
     }
 
     public static RenderBundle renderBundleEncoderFinish(@NonNull RenderBundleEncoder renderBundleEncoder,
             @NonNull RenderBundleDescriptor descriptor) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderBundleEncoderFinish'");
+        return new RenderBundle(webgpu_h.wgpuRenderBundleEncoderFinish(renderBundleEncoder.ptr(), descriptor.ptr()));
     }
 
     public static void renderBundleEncoderInsertDebugMarker(@NonNull RenderBundleEncoder renderBundleEncoder,
             String markerLabel) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderBundleEncoderInsertDebugMarker'");
+        webgpu_h.wgpuRenderBundleEncoderInsertDebugMarker(renderBundleEncoder.ptr(), new StringView(markerLabel).ptr());
     }
 
     public static void renderBundleEncoderPopDebugGroup(@NonNull RenderBundleEncoder renderBundleEncoder) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderBundleEncoderPopDebugGroup'");
+        webgpu_h.wgpuRenderBundleEncoderPopDebugGroup(renderBundleEncoder.ptr());
     }
 
     public static void renderBundleEncoderPushDebugGroup(@NonNull RenderBundleEncoder renderBundleEncoder,
             String groupLabel) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderBundleEncoderPushDebugGroup'");
+        webgpu_h.wgpuRenderBundleEncoderPushDebugGroup(renderBundleEncoder.ptr(), new StringView(groupLabel).ptr());
     }
 
     public static void renderBundleEncoderSetBindGroup(@NonNull RenderBundleEncoder renderBundleEncoder,
             int groupIndex, @NonNull BindGroup bindGroup, int dynamicOffsetCount, int[] dynamicOffsets) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderBundleEncoderSetBindGroup'");
+        webgpu_h.wgpuRenderBundleEncoderSetBindGroup(renderBundleEncoder.ptr(), groupIndex, bindGroup.ptr(),
+                dynamicOffsetCount, MemorySegment.ofArray(dynamicOffsets));
     }
 
     public static void renderBundleEncoderSetIndexBuffer(@NonNull RenderBundleEncoder renderBundleEncoder,
             @NonNull Buffer buffer, @NonNull IndexFormat format, long offset, long size) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderBundleEncoderSetIndexBuffer'");
+        webgpu_h.wgpuRenderBundleEncoderSetIndexBuffer(renderBundleEncoder.ptr(), buffer.ptr(), format.value(), offset,
+                size);
     }
 
     public static void renderBundleEncoderSetPipeline(@NonNull RenderBundleEncoder renderBundleEncoder,
             @NonNull RenderPipeline renderPipeline) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderBundleEncoderSetPipeline'");
+        webgpu_h.wgpuRenderBundleEncoderSetPipeline(renderBundleEncoder.ptr(), renderPipeline.ptr());
     }
 
     public static void renderBundleEncoderSetVertexBuffer(@NonNull RenderBundleEncoder renderBundleEncoder,
             int slot, @NonNull Buffer buffer, long offset, long size) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderBundleEncoderSetVertexBuffer'");
+        webgpu_h.wgpuRenderBundleEncoderSetVertexBuffer(renderBundleEncoder.ptr(), slot, buffer.ptr(), offset, size);
     }
 
     public static void renderBundleEncoderAddRef(RenderBundleEncoder renderBundleEncoder) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderBundleEncoderAddRef'");
+        webgpu_h.wgpuRenderBundleEncoderAddRef(renderBundleEncoder.ptr());
     }
 
     public static void renderBundleEncoderRelease(RenderBundleEncoder renderBundleEncoder) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderBundleEncoderRelease'");
+        webgpu_h.wgpuRenderBundleEncoderRelease(renderBundleEncoder.ptr());
     }
 
     public static void renderPassEncoderBeginOcclusionQuery(@NonNull RenderPassEncoder renderPassEncoder,
             int queryIndex) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderPassEncoderBeginOcclusionQuery'");
+        webgpu_h.wgpuRenderPassEncoderBeginOcclusionQuery(renderPassEncoder.ptr(), queryIndex);
     }
 
     public static void renderPassEncoderDraw(@NonNull RenderPassEncoder renderPassEncoder, int vertexCount,
             int instanceCount, int firstVertex, int firstInstance) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderPassEncoderDraw'");
+        webgpu_h.wgpuRenderPassEncoderDraw(renderPassEncoder.ptr(), vertexCount, instanceCount, firstVertex,
+                firstInstance);
     }
 
     public static void renderPassEncoderDrawIndexed(@NonNull RenderPassEncoder renderPassEncoder, int indexCount,
             int instanceCount, int firstIndex, int baseVertex, int firstInstance) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderPassEncoderDrawIndexed'");
+        webgpu_h.wgpuRenderPassEncoderDrawIndexed(renderPassEncoder.ptr(), indexCount, instanceCount, firstIndex,
+                baseVertex, firstInstance);
     }
 
     public static void renderPassEncoderDrawIndexedIndirect(@NonNull RenderPassEncoder renderPassEncoder,
             @NonNull Buffer indirectBuffer, long indirectOffset) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderPassEncoderDrawIndexedIndirect'");
+        webgpu_h.wgpuRenderPassEncoderDrawIndexedIndirect(renderPassEncoder.ptr(), indirectBuffer.ptr(),
+                indirectOffset);
     }
 
     public static void renderPassEncoderDrawIndirect(@NonNull RenderPassEncoder renderPassEncoder,
             @NonNull Buffer indirectBuffer, long indirectOffset) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderPassEncoderDrawIndirect'");
+        webgpu_h.wgpuRenderPassEncoderDrawIndirect(renderPassEncoder.ptr(), indirectBuffer.ptr(), indirectOffset);
     }
 
     public static void renderPassEncoderEnd(@NonNull RenderPassEncoder renderPassEncoder) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderPassEncoderEnd'");
+        webgpu_h.wgpuRenderPassEncoderEnd(renderPassEncoder.ptr());
     }
 
     public static void renderPassEncoderEndOcclusionQuery(@NonNull RenderPassEncoder renderPassEncoder) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderPassEncoderEndOcclusionQuery'");
+        webgpu_h.wgpuRenderPassEncoderEndOcclusionQuery(renderPassEncoder.ptr());
     }
 
     public static void renderPassEncoderExecuteBundles(@NonNull RenderPassEncoder renderPassEncoder,
@@ -663,96 +721,98 @@ public class WGPU {
 
     public static void renderPassEncoderInsertDebugMarker(@NonNull RenderPassEncoder renderPassEncoder,
             String markerLabel) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderPassEncoderInsertDebugMarker'");
+        webgpu_h.wgpuRenderPassEncoderInsertDebugMarker(renderPassEncoder.ptr(), new StringView(markerLabel).ptr());
     }
 
     public static void renderPassEncoderPopDebugGroup(@NonNull RenderPassEncoder renderPassEncoder) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderPassEncoderPopDebugGroup'");
+        webgpu_h.wgpuRenderPassEncoderPopDebugGroup(renderPassEncoder.ptr());
     }
 
     public static void renderPassEncoderPushDebugGroup(@NonNull RenderPassEncoder renderPassEncoder,
             String groupLabel) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderPassEncoderPushDebugGroup'");
+        webgpu_h.wgpuRenderPassEncoderPushDebugGroup(renderPassEncoder.ptr(), new StringView(groupLabel).ptr());
     }
 
     public static void renderPassEncoderSetBindGroup(@NonNull RenderPassEncoder renderPassEncoder, int groupIndex,
             @NonNull BindGroup bindGroup, int dynamicOffsetCount, int[] dynamicOffsets) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderPassEncoderSetBindGroup'");
+        webgpu_h.wgpuRenderPassEncoderSetBindGroup(renderPassEncoder.ptr(), groupIndex, bindGroup.ptr(),
+                dynamicOffsetCount, MemorySegment.ofArray(dynamicOffsets));
     }
 
-    public static void renderPassEncoderSetBlendConstants(@NonNull RenderPassEncoder renderPassEncoder,
+    public static void renderPassEncoderSetBlendConstant(@NonNull RenderPassEncoder renderPassEncoder,
             @NonNull Color color) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderPassEncoderSetBlendConstants'");
+        webgpu_h.wgpuRenderPassEncoderSetBlendConstant(renderPassEncoder.ptr(), color.ptr());
     }
 
     public static void renderPassEncoderSetIndexBuffer(@NonNull RenderPassEncoder renderPassEncoder,
             @NonNull Buffer buffer, @NonNull IndexFormat format, long offset, long size) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderPassEncoderSetIndexBuffer'");
+        webgpu_h.wgpuRenderPassEncoderSetIndexBuffer(renderPassEncoder.ptr(), buffer.ptr(), format.value(), offset,
+                size);
     }
 
     public static void renderPassEncoderSetLabel(@NonNull RenderPassEncoder renderPassEncoder, String label) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderPassEncoderSetLabel'");
+        webgpu_h.wgpuRenderPassEncoderSetLabel(renderPassEncoder.ptr(), new StringView(label).ptr());
     }
 
     public static void renderPassEncoderSetPipeline(@NonNull RenderPassEncoder renderPassEncoder,
             @NonNull RenderPipeline renderPipeline) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderPassEncoderSetPipeline'");
+        webgpu_h.wgpuRenderPassEncoderSetPipeline(renderPassEncoder.ptr(), renderPipeline.ptr());
     }
 
     public static void renderPassEncoderSetScissorRect(@NonNull RenderPassEncoder renderPassEncoder, int x,
             int y, int width, int height) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderPassEncoderSetScissorRect'");
+        webgpu_h.wgpuRenderPassEncoderSetScissorRect(renderPassEncoder.ptr(), x, y, width, height);
     }
 
     public static void renderPassEncoderSetStencilReference(@NonNull RenderPassEncoder renderPassEncoder,
             int reference) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderPassEncoderSetStencilReference'");
+        webgpu_h.wgpuRenderPassEncoderSetStencilReference(renderPassEncoder.ptr(), reference);
     }
 
     public static void renderPassEncoderSetVertexBuffer(@NonNull RenderPassEncoder renderPassEncoder, int slot,
             @NonNull Buffer buffer, long offset, long size) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderPassEncoderSetVertexBuffer'");
+        webgpu_h.wgpuRenderPassEncoderSetVertexBuffer(renderPassEncoder.ptr(), slot, buffer.ptr(), offset, size);
     }
 
     public static void renderPassEncoderSetViewport(@NonNull RenderPassEncoder renderPassEncoder, float x,
             float y, float width, float height, float minDepth, float maxDepth) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderPassEncoderSetViewport'");
+        webgpu_h.wgpuRenderPassEncoderSetViewport(renderPassEncoder.ptr(), x, y, width, height, minDepth, maxDepth);
     }
 
-    public static void renderPassEncoderAddRef(RenderPassEncoder renderPassEncoder) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderPassEncoderAddRef'");
+    public static final void renderPassEncoderAddRef(@NonNull RenderPassEncoder renderPassEncoder) {
+        webgpu_h.wgpuRenderPassEncoderAddRef(renderPassEncoder.ptr());
     }
 
-    public static void renderPassEncoderRelease(RenderPassEncoder renderPassEncoder) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderPassEncoderRelease'");
+    public static final void renderPassEncoderRelease(RenderPassEncoder renderPassEncoder) {
+        webgpu_h.wgpuRenderPassEncoderRelease(renderPassEncoder.ptr());
     }
 
     public static void renderPipelineGetBindGroupLayout(@NonNull RenderPipeline renderPipeline, int groupIndex) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderPipelineGetBindGroupLayout'");
+        webgpu_h.wgpuRenderPipelineGetBindGroupLayout(renderPipeline.ptr(), groupIndex);
     }
 
     public static void renderPipelineSetLabel(@NonNull RenderPipeline renderPipeline, String label) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderPipelineSetLabel'");
+        webgpu_h.wgpuRenderPipelineSetLabel(renderPipeline.ptr(), new StringView(label).ptr());
     }
 
     public static void renderPipelineAddRef(RenderPipeline renderPipeline) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderPipelineAddRef'");
+        webgpu_h.wgpuRenderPipelineAddRef(renderPipeline.ptr());
     }
 
     public static void renderPipelineRelease(RenderPipeline renderPipeline) {
-        throw new UnsupportedOperationException("Unimplemented method 'renderPipelineRelease'");
+        webgpu_h.wgpuRenderPipelineRelease(renderPipeline.ptr());
     }
 
     public static void samplerSetLabel(@NonNull Sampler sampler, String label) {
-        throw new UnsupportedOperationException("Unimplemented method 'samplerSetLabel'");
+        webgpu_h.wgpuSamplerSetLabel(sampler.ptr(), new StringView(label).ptr());
     }
 
     public static void samplerAddRef(Sampler sampler) {
-        throw new UnsupportedOperationException("Unimplemented method 'samplerAddRef'");
+        webgpu_h.wgpuSamplerAddRef(sampler.ptr());
     }
 
     public static void samplerRelease(Sampler sampler) {
-        throw new UnsupportedOperationException("Unimplemented method 'samplerRelease'");
+        webgpu_h.wgpuSamplerRelease(sampler.ptr());
     }
 
     public static void shaderModuleGetCompilationInfo(@NonNull ShaderModule shaderModule,
@@ -765,7 +825,7 @@ public class WGPU {
     }
 
     public static void shaderModuleAddRef(ShaderModule shaderModule) {
-        throw new UnsupportedOperationException("Unimplemented method 'shaderModuleAddRef'");
+
     }
 
     public static void shaderModuleRelease(ShaderModule shaderModule) {
@@ -773,115 +833,145 @@ public class WGPU {
     }
 
     public static void supportedFeaturesFreeMembers(@NonNull SupportedFeatures features) {
-        throw new UnsupportedOperationException("Unimplemented method 'supportedFeaturesFreeMembers'");
+        webgpu_h.wgpuSupportedFeaturesFreeMembers(features.ptr());
     }
 
     public static void supportedInstanceFeaturesFreeMembers(
             @NonNull SupportedInstanceFeatures supportedInstanceFeatures) {
-        throw new UnsupportedOperationException("Unimplemented method 'supportedInstanceFeaturesFreeMembers'");
+        webgpu_h.wgpuSupportedInstanceFeaturesFreeMembers(supportedInstanceFeatures.ptr());
     }
 
     public static void supportedWGSLLLanguageFeatureFreeMembers(
             @NonNull SupportedWGSLLanguageFeatures supportedWGSLLanguageFeatures) {
-        throw new UnsupportedOperationException("Unimplemented method 'supportedWGSLLanguageFeatureFreeMembers'");
+        webgpu_h.wgpuSupportedWGSLLanguageFeaturesFreeMembers(supportedWGSLLanguageFeatures.ptr());
     }
 
     public static void surfaceConfigure(@NonNull Surface surface, @NonNull SurfaceConfiguration configuration) {
-        throw new UnsupportedOperationException("Unimplemented method 'surfaceConfigure'");
+        webgpu_h.wgpuSurfaceConfigure(surface.ptr(), configuration.ptr());
     }
 
     public static Status surfaceGetCapabilities(@NonNull Surface surface, @NonNull Adapter adapter,
             @NonNull SurfaceCapabilities capabilities) {
-        throw new UnsupportedOperationException("Unimplemented method 'surfaceGetCapabilities'");
+        final int statusCode = (webgpu_h.wgpuSurfaceGetCapabilities(surface.ptr(), adapter.ptr(), capabilities.ptr()));
+
+        if (statusCode == Status.Success.value()) {
+            return Status.Success;
+        } else {
+            return Status.Error;
+        }
     }
 
     public static void surfaceGetCurrentTexture(@NonNull Surface surface, @NonNull SurfaceTexture currentTexture) {
-        throw new UnsupportedOperationException("Unimplemented method 'surfaceGetCurrentTexture'");
+        webgpu_h.wgpuSurfaceGetCurrentTexture(surface.ptr(), currentTexture.ptr());
     }
 
     public static Status surfacePresent(Surface surface) {
-        throw new UnsupportedOperationException("Unimplemented method 'surfacePresent'");
+        final int statusCode = (webgpu_h.wgpuSurfacePresent(surface.ptr()));
+
+        if (statusCode == Status.Success.value()) {
+            return Status.Success;
+        } else {
+            return Status.Error;
+        }
     }
 
     public static void surfaceSetLabel(@NonNull Surface surface, String label) {
-        throw new UnsupportedOperationException("Unimplemented method 'surfaceSetLabel'");
+        webgpu_h.wgpuSurfaceSetLabel(surface.ptr(), new StringView(label).ptr());
     }
 
     public static void surfaceUnconfigure(@NonNull Surface surface) {
-        throw new UnsupportedOperationException("Unimplemented method 'surfaceUnconfigure'");
+        webgpu_h.wgpuSurfaceUnconfigure(surface.ptr());
     }
 
     public static void surfaceAddRef(@NonNull Surface surface) {
-        throw new UnsupportedOperationException("Unimplemented method 'surfaceAddRef'");
+        webgpu_h.wgpuSurfaceAddRef(surface.ptr());
     }
 
     public static void surfaceRelease(@NonNull Surface surface) {
-        throw new UnsupportedOperationException("Unimplemented method 'surfaceRelease'");
+        webgpu_h.wgpuSurfaceRelease(surface.ptr());
     }
 
     public static void surfaceCapabilitiesFreeMembers(@NonNull SurfaceCapabilities capabilities) {
-        throw new UnsupportedOperationException("Unimplemented method 'surfaceCapabilitiesFreeMembers'");
+        webgpu_h.wgpuSurfaceCapabilitiesFreeMembers(capabilities.ptr());
     }
 
     public static TextureView textureCreateView(@NonNull Texture texture,
             @NonNull TextureViewDescriptor descriptor) {
-        throw new UnsupportedOperationException("Unimplemented method 'textureCreateView'");
+        return new TextureView(webgpu_h.wgpuTextureCreateView(texture.ptr(), descriptor.ptr()));
     }
 
     public static void textureDestroy(@NonNull Texture texture) {
-        throw new UnsupportedOperationException("Unimplemented method 'textureDestroy'");
+        webgpu_h.wgpuTextureDestroy(texture.ptr());
     }
 
     public static int textureGetDepthOrArrayLayers(@NonNull Texture texture) {
-        throw new UnsupportedOperationException("Unimplemented method 'textureGetDepthOrArrayLayers'");
+        return webgpu_h.wgpuTextureGetDepthOrArrayLayers(texture.ptr());
     }
 
     public static TextureDimension textureGetDimension(@NonNull Texture texture) {
-        throw new UnsupportedOperationException("Unimplemented method 'textureGetDimension'");
+        final var dimension = (webgpu_h.wgpuTextureGetDimension(texture.ptr()));
+
+        if (dimension == TextureDimension.ONE_D.value()) {
+            return TextureDimension.ONE_D;
+        } else if (dimension == TextureDimension.TWO_D.value()) {
+            return TextureDimension.TWO_D;
+        } else if (dimension == TextureDimension.THREE_D.value()) {
+            return TextureDimension.THREE_D;
+        } else {
+            return TextureDimension.UNDEFINED;
+        }
     }
 
+    /**
+     * Gets the format of a texture.
+     *
+     * @param texture the texture whose format should be queried
+     * @return the format of the given texture
+     */
     public static TextureFormat textureGetFormat(@NonNull Texture texture) {
-        throw new UnsupportedOperationException("Unimplemented method 'textureGetFormat'");
+        var format = webgpu_h.wgpuTextureGetFormat(texture.ptr());
+
+        return TextureFormat.values()[format];
     }
 
     public static int textureGetHeight(@NonNull Texture texture) {
-        throw new UnsupportedOperationException("Unimplemented method 'textureGetHeight'");
+        return webgpu_h.wgpuTextureGetHeight(texture.ptr());
     }
 
     public static int textureGetMipLevelCount(@NonNull Texture texture) {
-        throw new UnsupportedOperationException("Unimplemented method 'textureGetMipLevelCount'");
+        return webgpu_h.wgpuTextureGetMipLevelCount(texture.ptr());
     }
 
     public static int textureGetSampleCount(@NonNull Texture texture) {
-        throw new UnsupportedOperationException("Unimplemented method 'textureGetSampleCount'");
+        return webgpu_h.wgpuTextureGetSampleCount(texture.ptr());
     }
 
-    public static int textureGetUsage(@NonNull Texture texture) {
-        throw new UnsupportedOperationException("Unimplemented method 'textureGetUsage'");
+    public static long textureGetUsage(@NonNull Texture texture) {
+        return webgpu_h.wgpuTextureGetUsage(texture.ptr());
     }
 
     public static int textureGetWidth(@NonNull Texture texture) {
-        throw new UnsupportedOperationException("Unimplemented method 'textureGetWidth'");
+        return webgpu_h.wgpuTextureGetWidth(texture.ptr());
     }
 
     public static void textureSetLabel(@NonNull Texture texture, String label) {
-        throw new UnsupportedOperationException("Unimplemented method 'textureSetLabel'");
+        webgpu_h.wgpuTextureSetLabel(texture.ptr(), new StringView(label).ptr());
     }
 
     public static void textureAddRef(@NonNull Texture texture) {
-        throw new UnsupportedOperationException("Unimplemented method 'textureAddRef'");
+        webgpu_h.wgpuTextureAddRef(texture.ptr());
     }
 
     public static void textureRelease(@NonNull Texture texture) {
-        throw new UnsupportedOperationException("Unimplemented method 'textureRelease'");
+        webgpu_h.wgpuTextureRelease(texture.ptr());
     }
 
     public static void textureViewSetLabel(@NonNull TextureView textureView, String label) {
-        throw new UnsupportedOperationException("Unimplemented method 'textureViewSetLabel'");
+        webgpu_h.wgpuTextureViewSetLabel(textureView.ptr(), new StringView(label).ptr());
     }
 
     public static void textureViewAddRef(@NonNull TextureView textureView) {
-        throw new UnsupportedOperationException("Unimplemented method 'textureViewAddRef'");
+        webgpu_h.wgpuTextureViewAddRef(textureView.ptr());
     }
 
 }

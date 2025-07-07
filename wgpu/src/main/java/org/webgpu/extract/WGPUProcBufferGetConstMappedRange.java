@@ -12,8 +12,8 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c
- * : * typedef const void *(*WGPUProcBufferGetConstMappedRange)(WGPUBuffer, size_t, size_t)
+ * {@snippet lang=c :
+ * typedef const void *(*WGPUProcBufferGetConstMappedRange)(WGPUBuffer, size_t, size_t)
  * }
  */
 public class WGPUProcBufferGetConstMappedRange {
@@ -30,10 +30,11 @@ public class WGPUProcBufferGetConstMappedRange {
     }
 
     private static final FunctionDescriptor $DESC = FunctionDescriptor.of(
-            webgpu_h.C_POINTER,
-            webgpu_h.C_POINTER,
-            webgpu_h.C_LONG,
-            webgpu_h.C_LONG);
+        webgpu_h.C_POINTER,
+        webgpu_h.C_POINTER,
+        webgpu_h.C_LONG,
+        webgpu_h.C_LONG
+    );
 
     /**
      * The descriptor of this function pointer
@@ -42,8 +43,7 @@ public class WGPUProcBufferGetConstMappedRange {
         return $DESC;
     }
 
-    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcBufferGetConstMappedRange.Function.class,
-            "apply", $DESC);
+    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcBufferGetConstMappedRange.Function.class, "apply", $DESC);
 
     /**
      * Allocates a new upcall stub, whose implementation is defined by {@code fi}.
@@ -58,7 +58,7 @@ public class WGPUProcBufferGetConstMappedRange {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static MemorySegment invoke(MemorySegment funcPtr, MemorySegment buffer, long offset, long size) {
+    public static MemorySegment invoke(MemorySegment funcPtr,MemorySegment buffer, long offset, long size) {
         try {
             return (MemorySegment) DOWN$MH.invokeExact(funcPtr, buffer, offset, size);
         } catch (Throwable ex$) {
@@ -66,3 +66,4 @@ public class WGPUProcBufferGetConstMappedRange {
         }
     }
 }
+

@@ -12,9 +12,9 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c :
+ * {@snippet lang=c :
  * struct WGPUVertexState {
- *     WGPUChainedStruct *nextInChain;
+ *     const WGPUChainedStruct *nextInChain;
  *     WGPUShaderModule module;
  *     WGPUStringView entryPoint;
  *     size_t constantCount;
@@ -31,13 +31,14 @@ public class WGPUVertexState {
     }
 
     private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
-            webgpu_h.C_POINTER.withName("nextInChain"),
-            webgpu_h.C_POINTER.withName("module"),
-            WGPUStringView.layout().withName("entryPoint"),
-            webgpu_h.C_LONG.withName("constantCount"),
-            webgpu_h.C_POINTER.withName("constants"),
-            webgpu_h.C_LONG.withName("bufferCount"),
-            webgpu_h.C_POINTER.withName("buffers")).withName("WGPUVertexState");
+        webgpu_h.C_POINTER.withName("nextInChain"),
+        webgpu_h.C_POINTER.withName("module"),
+        WGPUStringView.layout().withName("entryPoint"),
+        webgpu_h.C_LONG.withName("constantCount"),
+        webgpu_h.C_POINTER.withName("constants"),
+        webgpu_h.C_LONG.withName("bufferCount"),
+        webgpu_h.C_POINTER.withName("buffers")
+    ).withName("WGPUVertexState");
 
     /**
      * The layout of this struct
@@ -46,11 +47,12 @@ public class WGPUVertexState {
         return $LAYOUT;
     }
 
-    private static final AddressLayout nextInChain$LAYOUT = (AddressLayout) $LAYOUT.select(groupElement("nextInChain"));
+    private static final AddressLayout nextInChain$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("nextInChain"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static final AddressLayout nextInChain$layout() {
@@ -61,7 +63,8 @@ public class WGPUVertexState {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static final long nextInChain$offset() {
@@ -70,7 +73,8 @@ public class WGPUVertexState {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static MemorySegment nextInChain(MemorySegment struct) {
@@ -79,18 +83,20 @@ public class WGPUVertexState {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static void nextInChain(MemorySegment struct, MemorySegment fieldValue) {
         struct.set(nextInChain$LAYOUT, nextInChain$OFFSET, fieldValue);
     }
 
-    private static final AddressLayout module$LAYOUT = (AddressLayout) $LAYOUT.select(groupElement("module"));
+    private static final AddressLayout module$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("module"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUShaderModule module
+     * {@snippet lang=c :
+     * WGPUShaderModule module
      * }
      */
     public static final AddressLayout module$layout() {
@@ -101,7 +107,8 @@ public class WGPUVertexState {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUShaderModule module
+     * {@snippet lang=c :
+     * WGPUShaderModule module
      * }
      */
     public static final long module$offset() {
@@ -110,7 +117,8 @@ public class WGPUVertexState {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUShaderModule module
+     * {@snippet lang=c :
+     * WGPUShaderModule module
      * }
      */
     public static MemorySegment module(MemorySegment struct) {
@@ -119,18 +127,20 @@ public class WGPUVertexState {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUShaderModule module
+     * {@snippet lang=c :
+     * WGPUShaderModule module
      * }
      */
     public static void module(MemorySegment struct, MemorySegment fieldValue) {
         struct.set(module$LAYOUT, module$OFFSET, fieldValue);
     }
 
-    private static final GroupLayout entryPoint$LAYOUT = (GroupLayout) $LAYOUT.select(groupElement("entryPoint"));
+    private static final GroupLayout entryPoint$LAYOUT = (GroupLayout)$LAYOUT.select(groupElement("entryPoint"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUStringView entryPoint
+     * {@snippet lang=c :
+     * WGPUStringView entryPoint
      * }
      */
     public static final GroupLayout entryPoint$layout() {
@@ -141,7 +151,8 @@ public class WGPUVertexState {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUStringView entryPoint
+     * {@snippet lang=c :
+     * WGPUStringView entryPoint
      * }
      */
     public static final long entryPoint$offset() {
@@ -150,7 +161,8 @@ public class WGPUVertexState {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUStringView entryPoint
+     * {@snippet lang=c :
+     * WGPUStringView entryPoint
      * }
      */
     public static MemorySegment entryPoint(MemorySegment struct) {
@@ -159,18 +171,20 @@ public class WGPUVertexState {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUStringView entryPoint
+     * {@snippet lang=c :
+     * WGPUStringView entryPoint
      * }
      */
     public static void entryPoint(MemorySegment struct, MemorySegment fieldValue) {
         MemorySegment.copy(fieldValue, 0L, struct, entryPoint$OFFSET, entryPoint$LAYOUT.byteSize());
     }
 
-    private static final OfLong constantCount$LAYOUT = (OfLong) $LAYOUT.select(groupElement("constantCount"));
+    private static final OfLong constantCount$LAYOUT = (OfLong)$LAYOUT.select(groupElement("constantCount"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * size_t constantCount
+     * {@snippet lang=c :
+     * size_t constantCount
      * }
      */
     public static final OfLong constantCount$layout() {
@@ -181,7 +195,8 @@ public class WGPUVertexState {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * size_t constantCount
+     * {@snippet lang=c :
+     * size_t constantCount
      * }
      */
     public static final long constantCount$offset() {
@@ -190,7 +205,8 @@ public class WGPUVertexState {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * size_t constantCount
+     * {@snippet lang=c :
+     * size_t constantCount
      * }
      */
     public static long constantCount(MemorySegment struct) {
@@ -199,18 +215,20 @@ public class WGPUVertexState {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * size_t constantCount
+     * {@snippet lang=c :
+     * size_t constantCount
      * }
      */
     public static void constantCount(MemorySegment struct, long fieldValue) {
         struct.set(constantCount$LAYOUT, constantCount$OFFSET, fieldValue);
     }
 
-    private static final AddressLayout constants$LAYOUT = (AddressLayout) $LAYOUT.select(groupElement("constants"));
+    private static final AddressLayout constants$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("constants"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * const WGPUConstantEntry *constants
+     * {@snippet lang=c :
+     * const WGPUConstantEntry *constants
      * }
      */
     public static final AddressLayout constants$layout() {
@@ -221,7 +239,8 @@ public class WGPUVertexState {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * const WGPUConstantEntry *constants
+     * {@snippet lang=c :
+     * const WGPUConstantEntry *constants
      * }
      */
     public static final long constants$offset() {
@@ -230,7 +249,8 @@ public class WGPUVertexState {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * const WGPUConstantEntry *constants
+     * {@snippet lang=c :
+     * const WGPUConstantEntry *constants
      * }
      */
     public static MemorySegment constants(MemorySegment struct) {
@@ -239,18 +259,20 @@ public class WGPUVertexState {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * const WGPUConstantEntry *constants
+     * {@snippet lang=c :
+     * const WGPUConstantEntry *constants
      * }
      */
     public static void constants(MemorySegment struct, MemorySegment fieldValue) {
         struct.set(constants$LAYOUT, constants$OFFSET, fieldValue);
     }
 
-    private static final OfLong bufferCount$LAYOUT = (OfLong) $LAYOUT.select(groupElement("bufferCount"));
+    private static final OfLong bufferCount$LAYOUT = (OfLong)$LAYOUT.select(groupElement("bufferCount"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * size_t bufferCount
+     * {@snippet lang=c :
+     * size_t bufferCount
      * }
      */
     public static final OfLong bufferCount$layout() {
@@ -261,7 +283,8 @@ public class WGPUVertexState {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * size_t bufferCount
+     * {@snippet lang=c :
+     * size_t bufferCount
      * }
      */
     public static final long bufferCount$offset() {
@@ -270,7 +293,8 @@ public class WGPUVertexState {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * size_t bufferCount
+     * {@snippet lang=c :
+     * size_t bufferCount
      * }
      */
     public static long bufferCount(MemorySegment struct) {
@@ -279,18 +303,20 @@ public class WGPUVertexState {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * size_t bufferCount
+     * {@snippet lang=c :
+     * size_t bufferCount
      * }
      */
     public static void bufferCount(MemorySegment struct, long fieldValue) {
         struct.set(bufferCount$LAYOUT, bufferCount$OFFSET, fieldValue);
     }
 
-    private static final AddressLayout buffers$LAYOUT = (AddressLayout) $LAYOUT.select(groupElement("buffers"));
+    private static final AddressLayout buffers$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("buffers"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * const WGPUVertexBufferLayout *buffers
+     * {@snippet lang=c :
+     * const WGPUVertexBufferLayout *buffers
      * }
      */
     public static final AddressLayout buffers$layout() {
@@ -301,7 +327,8 @@ public class WGPUVertexState {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * const WGPUVertexBufferLayout *buffers
+     * {@snippet lang=c :
+     * const WGPUVertexBufferLayout *buffers
      * }
      */
     public static final long buffers$offset() {
@@ -310,7 +337,8 @@ public class WGPUVertexState {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * const WGPUVertexBufferLayout *buffers
+     * {@snippet lang=c :
+     * const WGPUVertexBufferLayout *buffers
      * }
      */
     public static MemorySegment buffers(MemorySegment struct) {
@@ -319,7 +347,8 @@ public class WGPUVertexState {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * const WGPUVertexBufferLayout *buffers
+     * {@snippet lang=c :
+     * const WGPUVertexBufferLayout *buffers
      * }
      */
     public static void buffers(MemorySegment struct, MemorySegment fieldValue) {
@@ -327,10 +356,8 @@ public class WGPUVertexState {
     }
 
     /**
-     * Obtains a slice of {@code arrayParam} which selects the array element at
-     * {@code index}.
-     * The returned segment has address
-     * {@code arrayParam.address() + index * layout().byteSize()}
+     * Obtains a slice of {@code arrayParam} which selects the array element at {@code index}.
+     * The returned segment has address {@code arrayParam.address() + index * layout().byteSize()}
      */
     public static MemorySegment asSlice(MemorySegment array, long index) {
         return array.asSlice(layout().byteSize() * index);
@@ -339,13 +366,10 @@ public class WGPUVertexState {
     /**
      * The size (in bytes) of this struct
      */
-    public static long sizeof() {
-        return layout().byteSize();
-    }
+    public static long sizeof() { return layout().byteSize(); }
 
     /**
-     * Allocate a segment of size {@code layout().byteSize()} using
-     * {@code allocator}
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
      */
     public static MemorySegment allocate(SegmentAllocator allocator) {
         return allocator.allocate(layout());
@@ -360,8 +384,7 @@ public class WGPUVertexState {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code layout().byteSize()}
      */
     public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
@@ -369,12 +392,11 @@ public class WGPUVertexState {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code elementCount * layout().byteSize()}
      */
-    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena,
-            Consumer<MemorySegment> cleanup) {
+    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
         return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
     }
 }
+

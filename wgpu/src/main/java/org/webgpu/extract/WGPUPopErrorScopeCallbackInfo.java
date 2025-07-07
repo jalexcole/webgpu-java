@@ -12,9 +12,9 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c :
+ * {@snippet lang=c :
  * struct WGPUPopErrorScopeCallbackInfo {
- *     WGPUChainedStruct *nextInChain;
+ *     const WGPUChainedStruct *nextInChain;
  *     WGPUCallbackMode mode;
  *     WGPUPopErrorScopeCallback callback;
  *     void *userdata1;
@@ -29,12 +29,13 @@ public class WGPUPopErrorScopeCallbackInfo {
     }
 
     private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
-            webgpu_h.C_POINTER.withName("nextInChain"),
-            webgpu_h.C_INT.withName("mode"),
-            MemoryLayout.paddingLayout(4),
-            webgpu_h.C_POINTER.withName("callback"),
-            webgpu_h.C_POINTER.withName("userdata1"),
-            webgpu_h.C_POINTER.withName("userdata2")).withName("WGPUPopErrorScopeCallbackInfo");
+        webgpu_h.C_POINTER.withName("nextInChain"),
+        webgpu_h.C_INT.withName("mode"),
+        MemoryLayout.paddingLayout(4),
+        webgpu_h.C_POINTER.withName("callback"),
+        webgpu_h.C_POINTER.withName("userdata1"),
+        webgpu_h.C_POINTER.withName("userdata2")
+    ).withName("WGPUPopErrorScopeCallbackInfo");
 
     /**
      * The layout of this struct
@@ -43,11 +44,12 @@ public class WGPUPopErrorScopeCallbackInfo {
         return $LAYOUT;
     }
 
-    private static final AddressLayout nextInChain$LAYOUT = (AddressLayout) $LAYOUT.select(groupElement("nextInChain"));
+    private static final AddressLayout nextInChain$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("nextInChain"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static final AddressLayout nextInChain$layout() {
@@ -58,7 +60,8 @@ public class WGPUPopErrorScopeCallbackInfo {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static final long nextInChain$offset() {
@@ -67,7 +70,8 @@ public class WGPUPopErrorScopeCallbackInfo {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static MemorySegment nextInChain(MemorySegment struct) {
@@ -76,18 +80,20 @@ public class WGPUPopErrorScopeCallbackInfo {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static void nextInChain(MemorySegment struct, MemorySegment fieldValue) {
         struct.set(nextInChain$LAYOUT, nextInChain$OFFSET, fieldValue);
     }
 
-    private static final OfInt mode$LAYOUT = (OfInt) $LAYOUT.select(groupElement("mode"));
+    private static final OfInt mode$LAYOUT = (OfInt)$LAYOUT.select(groupElement("mode"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUCallbackMode mode
+     * {@snippet lang=c :
+     * WGPUCallbackMode mode
      * }
      */
     public static final OfInt mode$layout() {
@@ -98,7 +104,8 @@ public class WGPUPopErrorScopeCallbackInfo {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUCallbackMode mode
+     * {@snippet lang=c :
+     * WGPUCallbackMode mode
      * }
      */
     public static final long mode$offset() {
@@ -107,7 +114,8 @@ public class WGPUPopErrorScopeCallbackInfo {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUCallbackMode mode
+     * {@snippet lang=c :
+     * WGPUCallbackMode mode
      * }
      */
     public static int mode(MemorySegment struct) {
@@ -116,18 +124,20 @@ public class WGPUPopErrorScopeCallbackInfo {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUCallbackMode mode
+     * {@snippet lang=c :
+     * WGPUCallbackMode mode
      * }
      */
     public static void mode(MemorySegment struct, int fieldValue) {
         struct.set(mode$LAYOUT, mode$OFFSET, fieldValue);
     }
 
-    private static final AddressLayout callback$LAYOUT = (AddressLayout) $LAYOUT.select(groupElement("callback"));
+    private static final AddressLayout callback$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("callback"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUPopErrorScopeCallback callback
+     * {@snippet lang=c :
+     * WGPUPopErrorScopeCallback callback
      * }
      */
     public static final AddressLayout callback$layout() {
@@ -138,7 +148,8 @@ public class WGPUPopErrorScopeCallbackInfo {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUPopErrorScopeCallback callback
+     * {@snippet lang=c :
+     * WGPUPopErrorScopeCallback callback
      * }
      */
     public static final long callback$offset() {
@@ -147,7 +158,8 @@ public class WGPUPopErrorScopeCallbackInfo {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUPopErrorScopeCallback callback
+     * {@snippet lang=c :
+     * WGPUPopErrorScopeCallback callback
      * }
      */
     public static MemorySegment callback(MemorySegment struct) {
@@ -156,18 +168,20 @@ public class WGPUPopErrorScopeCallbackInfo {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUPopErrorScopeCallback callback
+     * {@snippet lang=c :
+     * WGPUPopErrorScopeCallback callback
      * }
      */
     public static void callback(MemorySegment struct, MemorySegment fieldValue) {
         struct.set(callback$LAYOUT, callback$OFFSET, fieldValue);
     }
 
-    private static final AddressLayout userdata1$LAYOUT = (AddressLayout) $LAYOUT.select(groupElement("userdata1"));
+    private static final AddressLayout userdata1$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("userdata1"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * void *userdata1
+     * {@snippet lang=c :
+     * void *userdata1
      * }
      */
     public static final AddressLayout userdata1$layout() {
@@ -178,7 +192,8 @@ public class WGPUPopErrorScopeCallbackInfo {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * void *userdata1
+     * {@snippet lang=c :
+     * void *userdata1
      * }
      */
     public static final long userdata1$offset() {
@@ -187,7 +202,8 @@ public class WGPUPopErrorScopeCallbackInfo {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * void *userdata1
+     * {@snippet lang=c :
+     * void *userdata1
      * }
      */
     public static MemorySegment userdata1(MemorySegment struct) {
@@ -196,18 +212,20 @@ public class WGPUPopErrorScopeCallbackInfo {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * void *userdata1
+     * {@snippet lang=c :
+     * void *userdata1
      * }
      */
     public static void userdata1(MemorySegment struct, MemorySegment fieldValue) {
         struct.set(userdata1$LAYOUT, userdata1$OFFSET, fieldValue);
     }
 
-    private static final AddressLayout userdata2$LAYOUT = (AddressLayout) $LAYOUT.select(groupElement("userdata2"));
+    private static final AddressLayout userdata2$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("userdata2"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * void *userdata2
+     * {@snippet lang=c :
+     * void *userdata2
      * }
      */
     public static final AddressLayout userdata2$layout() {
@@ -218,7 +236,8 @@ public class WGPUPopErrorScopeCallbackInfo {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * void *userdata2
+     * {@snippet lang=c :
+     * void *userdata2
      * }
      */
     public static final long userdata2$offset() {
@@ -227,7 +246,8 @@ public class WGPUPopErrorScopeCallbackInfo {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * void *userdata2
+     * {@snippet lang=c :
+     * void *userdata2
      * }
      */
     public static MemorySegment userdata2(MemorySegment struct) {
@@ -236,7 +256,8 @@ public class WGPUPopErrorScopeCallbackInfo {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * void *userdata2
+     * {@snippet lang=c :
+     * void *userdata2
      * }
      */
     public static void userdata2(MemorySegment struct, MemorySegment fieldValue) {
@@ -244,10 +265,8 @@ public class WGPUPopErrorScopeCallbackInfo {
     }
 
     /**
-     * Obtains a slice of {@code arrayParam} which selects the array element at
-     * {@code index}.
-     * The returned segment has address
-     * {@code arrayParam.address() + index * layout().byteSize()}
+     * Obtains a slice of {@code arrayParam} which selects the array element at {@code index}.
+     * The returned segment has address {@code arrayParam.address() + index * layout().byteSize()}
      */
     public static MemorySegment asSlice(MemorySegment array, long index) {
         return array.asSlice(layout().byteSize() * index);
@@ -256,13 +275,10 @@ public class WGPUPopErrorScopeCallbackInfo {
     /**
      * The size (in bytes) of this struct
      */
-    public static long sizeof() {
-        return layout().byteSize();
-    }
+    public static long sizeof() { return layout().byteSize(); }
 
     /**
-     * Allocate a segment of size {@code layout().byteSize()} using
-     * {@code allocator}
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
      */
     public static MemorySegment allocate(SegmentAllocator allocator) {
         return allocator.allocate(layout());
@@ -277,8 +293,7 @@ public class WGPUPopErrorScopeCallbackInfo {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code layout().byteSize()}
      */
     public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
@@ -286,12 +301,11 @@ public class WGPUPopErrorScopeCallbackInfo {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code elementCount * layout().byteSize()}
      */
-    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena,
-            Consumer<MemorySegment> cleanup) {
+    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
         return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
     }
 }
+

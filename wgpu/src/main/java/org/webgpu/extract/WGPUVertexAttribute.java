@@ -12,9 +12,8 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c :
+ * {@snippet lang=c :
  * struct WGPUVertexAttribute {
- *     WGPUChainedStruct *nextInChain;
  *     WGPUVertexFormat format;
  *     uint64_t offset;
  *     uint32_t shaderLocation;
@@ -28,12 +27,12 @@ public class WGPUVertexAttribute {
     }
 
     private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
-            webgpu_h.C_POINTER.withName("nextInChain"),
-            webgpu_h.C_INT.withName("format"),
-            MemoryLayout.paddingLayout(4),
-            webgpu_h.C_LONG_LONG.withName("offset"),
-            webgpu_h.C_INT.withName("shaderLocation"),
-            MemoryLayout.paddingLayout(4)).withName("WGPUVertexAttribute");
+        webgpu_h.C_INT.withName("format"),
+        MemoryLayout.paddingLayout(4),
+        webgpu_h.C_LONG_LONG.withName("offset"),
+        webgpu_h.C_INT.withName("shaderLocation"),
+        MemoryLayout.paddingLayout(4)
+    ).withName("WGPUVertexAttribute");
 
     /**
      * The layout of this struct
@@ -42,62 +41,24 @@ public class WGPUVertexAttribute {
         return $LAYOUT;
     }
 
-    private static final AddressLayout nextInChain$LAYOUT = (AddressLayout) $LAYOUT.select(groupElement("nextInChain"));
+    private static final OfInt format$LAYOUT = (OfInt)$LAYOUT.select(groupElement("format"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
-     * }
-     */
-    public static final AddressLayout nextInChain$layout() {
-        return nextInChain$LAYOUT;
-    }
-
-    private static final long nextInChain$OFFSET = 0;
-
-    /**
-     * Offset for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
-     * }
-     */
-    public static final long nextInChain$offset() {
-        return nextInChain$OFFSET;
-    }
-
-    /**
-     * Getter for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
-     * }
-     */
-    public static MemorySegment nextInChain(MemorySegment struct) {
-        return struct.get(nextInChain$LAYOUT, nextInChain$OFFSET);
-    }
-
-    /**
-     * Setter for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
-     * }
-     */
-    public static void nextInChain(MemorySegment struct, MemorySegment fieldValue) {
-        struct.set(nextInChain$LAYOUT, nextInChain$OFFSET, fieldValue);
-    }
-
-    private static final OfInt format$LAYOUT = (OfInt) $LAYOUT.select(groupElement("format"));
-
-    /**
-     * Layout for field:
-     * {@snippet lang = c : * WGPUVertexFormat format
+     * {@snippet lang=c :
+     * WGPUVertexFormat format
      * }
      */
     public static final OfInt format$layout() {
         return format$LAYOUT;
     }
 
-    private static final long format$OFFSET = 8;
+    private static final long format$OFFSET = 0;
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUVertexFormat format
+     * {@snippet lang=c :
+     * WGPUVertexFormat format
      * }
      */
     public static final long format$offset() {
@@ -106,7 +67,8 @@ public class WGPUVertexAttribute {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUVertexFormat format
+     * {@snippet lang=c :
+     * WGPUVertexFormat format
      * }
      */
     public static int format(MemorySegment struct) {
@@ -115,29 +77,32 @@ public class WGPUVertexAttribute {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUVertexFormat format
+     * {@snippet lang=c :
+     * WGPUVertexFormat format
      * }
      */
     public static void format(MemorySegment struct, int fieldValue) {
         struct.set(format$LAYOUT, format$OFFSET, fieldValue);
     }
 
-    private static final OfLong offset$LAYOUT = (OfLong) $LAYOUT.select(groupElement("offset"));
+    private static final OfLong offset$LAYOUT = (OfLong)$LAYOUT.select(groupElement("offset"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * uint64_t offset
+     * {@snippet lang=c :
+     * uint64_t offset
      * }
      */
     public static final OfLong offset$layout() {
         return offset$LAYOUT;
     }
 
-    private static final long offset$OFFSET = 16;
+    private static final long offset$OFFSET = 8;
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * uint64_t offset
+     * {@snippet lang=c :
+     * uint64_t offset
      * }
      */
     public static final long offset$offset() {
@@ -146,7 +111,8 @@ public class WGPUVertexAttribute {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * uint64_t offset
+     * {@snippet lang=c :
+     * uint64_t offset
      * }
      */
     public static long offset(MemorySegment struct) {
@@ -155,29 +121,32 @@ public class WGPUVertexAttribute {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * uint64_t offset
+     * {@snippet lang=c :
+     * uint64_t offset
      * }
      */
     public static void offset(MemorySegment struct, long fieldValue) {
         struct.set(offset$LAYOUT, offset$OFFSET, fieldValue);
     }
 
-    private static final OfInt shaderLocation$LAYOUT = (OfInt) $LAYOUT.select(groupElement("shaderLocation"));
+    private static final OfInt shaderLocation$LAYOUT = (OfInt)$LAYOUT.select(groupElement("shaderLocation"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * uint32_t shaderLocation
+     * {@snippet lang=c :
+     * uint32_t shaderLocation
      * }
      */
     public static final OfInt shaderLocation$layout() {
         return shaderLocation$LAYOUT;
     }
 
-    private static final long shaderLocation$OFFSET = 24;
+    private static final long shaderLocation$OFFSET = 16;
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * uint32_t shaderLocation
+     * {@snippet lang=c :
+     * uint32_t shaderLocation
      * }
      */
     public static final long shaderLocation$offset() {
@@ -186,7 +155,8 @@ public class WGPUVertexAttribute {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * uint32_t shaderLocation
+     * {@snippet lang=c :
+     * uint32_t shaderLocation
      * }
      */
     public static int shaderLocation(MemorySegment struct) {
@@ -195,7 +165,8 @@ public class WGPUVertexAttribute {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * uint32_t shaderLocation
+     * {@snippet lang=c :
+     * uint32_t shaderLocation
      * }
      */
     public static void shaderLocation(MemorySegment struct, int fieldValue) {
@@ -203,10 +174,8 @@ public class WGPUVertexAttribute {
     }
 
     /**
-     * Obtains a slice of {@code arrayParam} which selects the array element at
-     * {@code index}.
-     * The returned segment has address
-     * {@code arrayParam.address() + index * layout().byteSize()}
+     * Obtains a slice of {@code arrayParam} which selects the array element at {@code index}.
+     * The returned segment has address {@code arrayParam.address() + index * layout().byteSize()}
      */
     public static MemorySegment asSlice(MemorySegment array, long index) {
         return array.asSlice(layout().byteSize() * index);
@@ -215,13 +184,10 @@ public class WGPUVertexAttribute {
     /**
      * The size (in bytes) of this struct
      */
-    public static long sizeof() {
-        return layout().byteSize();
-    }
+    public static long sizeof() { return layout().byteSize(); }
 
     /**
-     * Allocate a segment of size {@code layout().byteSize()} using
-     * {@code allocator}
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
      */
     public static MemorySegment allocate(SegmentAllocator allocator) {
         return allocator.allocate(layout());
@@ -236,8 +202,7 @@ public class WGPUVertexAttribute {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code layout().byteSize()}
      */
     public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
@@ -245,12 +210,11 @@ public class WGPUVertexAttribute {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code elementCount * layout().byteSize()}
      */
-    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena,
-            Consumer<MemorySegment> cleanup) {
+    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
         return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
     }
 }
+

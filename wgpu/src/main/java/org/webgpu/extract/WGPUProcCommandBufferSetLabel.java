@@ -12,8 +12,8 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c
- * : * typedef void (*WGPUProcCommandBufferSetLabel)(WGPUCommandBuffer, WGPUStringView)
+ * {@snippet lang=c :
+ * typedef void (*WGPUProcCommandBufferSetLabel)(WGPUCommandBuffer, WGPUStringView)
  * }
  */
 public class WGPUProcCommandBufferSetLabel {
@@ -30,8 +30,9 @@ public class WGPUProcCommandBufferSetLabel {
     }
 
     private static final FunctionDescriptor $DESC = FunctionDescriptor.ofVoid(
-            webgpu_h.C_POINTER,
-            WGPUStringView.layout());
+        webgpu_h.C_POINTER,
+        WGPUStringView.layout()
+    );
 
     /**
      * The descriptor of this function pointer
@@ -40,8 +41,7 @@ public class WGPUProcCommandBufferSetLabel {
         return $DESC;
     }
 
-    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcCommandBufferSetLabel.Function.class,
-            "apply", $DESC);
+    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcCommandBufferSetLabel.Function.class, "apply", $DESC);
 
     /**
      * Allocates a new upcall stub, whose implementation is defined by {@code fi}.
@@ -56,11 +56,12 @@ public class WGPUProcCommandBufferSetLabel {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr, MemorySegment commandBuffer, MemorySegment label) {
+    public static void invoke(MemorySegment funcPtr,MemorySegment commandBuffer, MemorySegment label) {
         try {
-            DOWN$MH.invokeExact(funcPtr, commandBuffer, label);
+             DOWN$MH.invokeExact(funcPtr, commandBuffer, label);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
     }
 }
+

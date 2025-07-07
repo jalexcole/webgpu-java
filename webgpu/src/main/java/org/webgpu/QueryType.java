@@ -3,7 +3,7 @@ package org.webgpu;
 import org.webgpu.extract.webgpu_h;
 
 public enum QueryType {
-    
+
     OCCLUSION(webgpu_h.WGPUQueryType_Occlusion()),
     TIMESTAMP(webgpu_h.WGPUQueryType_Timestamp()),
     FORCE32(webgpu_h.WGPUQueryType_Force32());
@@ -12,5 +12,9 @@ public enum QueryType {
 
     QueryType(int value) {
         this.value = value;
+    }
+
+    public int value() {
+        return value;
     }
 }

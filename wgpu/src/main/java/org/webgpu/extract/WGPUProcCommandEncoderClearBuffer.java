@@ -12,8 +12,8 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c
- * : * typedef void (*WGPUProcCommandEncoderClearBuffer)(WGPUCommandEncoder, WGPUBuffer, uint64_t, uint64_t)
+ * {@snippet lang=c :
+ * typedef void (*WGPUProcCommandEncoderClearBuffer)(WGPUCommandEncoder, WGPUBuffer, uint64_t, uint64_t)
  * }
  */
 public class WGPUProcCommandEncoderClearBuffer {
@@ -30,10 +30,11 @@ public class WGPUProcCommandEncoderClearBuffer {
     }
 
     private static final FunctionDescriptor $DESC = FunctionDescriptor.ofVoid(
-            webgpu_h.C_POINTER,
-            webgpu_h.C_POINTER,
-            webgpu_h.C_LONG_LONG,
-            webgpu_h.C_LONG_LONG);
+        webgpu_h.C_POINTER,
+        webgpu_h.C_POINTER,
+        webgpu_h.C_LONG_LONG,
+        webgpu_h.C_LONG_LONG
+    );
 
     /**
      * The descriptor of this function pointer
@@ -42,8 +43,7 @@ public class WGPUProcCommandEncoderClearBuffer {
         return $DESC;
     }
 
-    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcCommandEncoderClearBuffer.Function.class,
-            "apply", $DESC);
+    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcCommandEncoderClearBuffer.Function.class, "apply", $DESC);
 
     /**
      * Allocates a new upcall stub, whose implementation is defined by {@code fi}.
@@ -58,12 +58,12 @@ public class WGPUProcCommandEncoderClearBuffer {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr, MemorySegment commandEncoder, MemorySegment buffer, long offset,
-            long size) {
+    public static void invoke(MemorySegment funcPtr,MemorySegment commandEncoder, MemorySegment buffer, long offset, long size) {
         try {
-            DOWN$MH.invokeExact(funcPtr, commandEncoder, buffer, offset, size);
+             DOWN$MH.invokeExact(funcPtr, commandEncoder, buffer, offset, size);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
     }
 }
+

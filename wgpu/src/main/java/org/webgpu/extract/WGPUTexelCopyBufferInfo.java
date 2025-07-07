@@ -12,7 +12,7 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c :
+ * {@snippet lang=c :
  * struct WGPUTexelCopyBufferInfo {
  *     WGPUTexelCopyBufferLayout layout;
  *     WGPUBuffer buffer;
@@ -26,8 +26,9 @@ public class WGPUTexelCopyBufferInfo {
     }
 
     private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
-            WGPUTexelCopyBufferLayout.layout().withName("layout"),
-            webgpu_h.C_POINTER.withName("buffer")).withName("WGPUTexelCopyBufferInfo");
+        WGPUTexelCopyBufferLayout.layout().withName("layout"),
+        webgpu_h.C_POINTER.withName("buffer")
+    ).withName("WGPUTexelCopyBufferInfo");
 
     /**
      * The layout of this struct
@@ -36,11 +37,12 @@ public class WGPUTexelCopyBufferInfo {
         return $LAYOUT;
     }
 
-    private static final GroupLayout layout$LAYOUT = (GroupLayout) $LAYOUT.select(groupElement("layout"));
+    private static final GroupLayout layout$LAYOUT = (GroupLayout)$LAYOUT.select(groupElement("layout"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUTexelCopyBufferLayout layout
+     * {@snippet lang=c :
+     * WGPUTexelCopyBufferLayout layout
      * }
      */
     public static final GroupLayout layout$layout() {
@@ -51,7 +53,8 @@ public class WGPUTexelCopyBufferInfo {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUTexelCopyBufferLayout layout
+     * {@snippet lang=c :
+     * WGPUTexelCopyBufferLayout layout
      * }
      */
     public static final long layout$offset() {
@@ -60,7 +63,8 @@ public class WGPUTexelCopyBufferInfo {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUTexelCopyBufferLayout layout
+     * {@snippet lang=c :
+     * WGPUTexelCopyBufferLayout layout
      * }
      */
     public static MemorySegment layout(MemorySegment struct) {
@@ -69,18 +73,20 @@ public class WGPUTexelCopyBufferInfo {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUTexelCopyBufferLayout layout
+     * {@snippet lang=c :
+     * WGPUTexelCopyBufferLayout layout
      * }
      */
     public static void layout(MemorySegment struct, MemorySegment fieldValue) {
         MemorySegment.copy(fieldValue, 0L, struct, layout$OFFSET, layout$LAYOUT.byteSize());
     }
 
-    private static final AddressLayout buffer$LAYOUT = (AddressLayout) $LAYOUT.select(groupElement("buffer"));
+    private static final AddressLayout buffer$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("buffer"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUBuffer buffer
+     * {@snippet lang=c :
+     * WGPUBuffer buffer
      * }
      */
     public static final AddressLayout buffer$layout() {
@@ -91,7 +97,8 @@ public class WGPUTexelCopyBufferInfo {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUBuffer buffer
+     * {@snippet lang=c :
+     * WGPUBuffer buffer
      * }
      */
     public static final long buffer$offset() {
@@ -100,7 +107,8 @@ public class WGPUTexelCopyBufferInfo {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUBuffer buffer
+     * {@snippet lang=c :
+     * WGPUBuffer buffer
      * }
      */
     public static MemorySegment buffer(MemorySegment struct) {
@@ -109,7 +117,8 @@ public class WGPUTexelCopyBufferInfo {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUBuffer buffer
+     * {@snippet lang=c :
+     * WGPUBuffer buffer
      * }
      */
     public static void buffer(MemorySegment struct, MemorySegment fieldValue) {
@@ -117,10 +126,8 @@ public class WGPUTexelCopyBufferInfo {
     }
 
     /**
-     * Obtains a slice of {@code arrayParam} which selects the array element at
-     * {@code index}.
-     * The returned segment has address
-     * {@code arrayParam.address() + index * layout().byteSize()}
+     * Obtains a slice of {@code arrayParam} which selects the array element at {@code index}.
+     * The returned segment has address {@code arrayParam.address() + index * layout().byteSize()}
      */
     public static MemorySegment asSlice(MemorySegment array, long index) {
         return array.asSlice(layout().byteSize() * index);
@@ -129,13 +136,10 @@ public class WGPUTexelCopyBufferInfo {
     /**
      * The size (in bytes) of this struct
      */
-    public static long sizeof() {
-        return layout().byteSize();
-    }
+    public static long sizeof() { return layout().byteSize(); }
 
     /**
-     * Allocate a segment of size {@code layout().byteSize()} using
-     * {@code allocator}
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
      */
     public static MemorySegment allocate(SegmentAllocator allocator) {
         return allocator.allocate(layout());
@@ -150,8 +154,7 @@ public class WGPUTexelCopyBufferInfo {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code layout().byteSize()}
      */
     public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
@@ -159,12 +162,11 @@ public class WGPUTexelCopyBufferInfo {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code elementCount * layout().byteSize()}
      */
-    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena,
-            Consumer<MemorySegment> cleanup) {
+    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
         return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
     }
 }
+

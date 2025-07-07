@@ -12,7 +12,7 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c :
+ * {@snippet lang=c :
  * struct WGPUSurfaceSourceMetalLayer {
  *     WGPUChainedStruct chain;
  *     void *layer;
@@ -26,8 +26,9 @@ public class WGPUSurfaceSourceMetalLayer {
     }
 
     private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
-            WGPUChainedStruct.layout().withName("chain"),
-            webgpu_h.C_POINTER.withName("layer")).withName("WGPUSurfaceSourceMetalLayer");
+        WGPUChainedStruct.layout().withName("chain"),
+        webgpu_h.C_POINTER.withName("layer")
+    ).withName("WGPUSurfaceSourceMetalLayer");
 
     /**
      * The layout of this struct
@@ -36,11 +37,12 @@ public class WGPUSurfaceSourceMetalLayer {
         return $LAYOUT;
     }
 
-    private static final GroupLayout chain$LAYOUT = (GroupLayout) $LAYOUT.select(groupElement("chain"));
+    private static final GroupLayout chain$LAYOUT = (GroupLayout)$LAYOUT.select(groupElement("chain"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUChainedStruct chain
+     * {@snippet lang=c :
+     * WGPUChainedStruct chain
      * }
      */
     public static final GroupLayout chain$layout() {
@@ -51,7 +53,8 @@ public class WGPUSurfaceSourceMetalLayer {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUChainedStruct chain
+     * {@snippet lang=c :
+     * WGPUChainedStruct chain
      * }
      */
     public static final long chain$offset() {
@@ -60,7 +63,8 @@ public class WGPUSurfaceSourceMetalLayer {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUChainedStruct chain
+     * {@snippet lang=c :
+     * WGPUChainedStruct chain
      * }
      */
     public static MemorySegment chain(MemorySegment struct) {
@@ -69,18 +73,20 @@ public class WGPUSurfaceSourceMetalLayer {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUChainedStruct chain
+     * {@snippet lang=c :
+     * WGPUChainedStruct chain
      * }
      */
     public static void chain(MemorySegment struct, MemorySegment fieldValue) {
         MemorySegment.copy(fieldValue, 0L, struct, chain$OFFSET, chain$LAYOUT.byteSize());
     }
 
-    private static final AddressLayout layer$LAYOUT = (AddressLayout) $LAYOUT.select(groupElement("layer"));
+    private static final AddressLayout layer$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("layer"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * void *layer
+     * {@snippet lang=c :
+     * void *layer
      * }
      */
     public static final AddressLayout layer$layout() {
@@ -91,7 +97,8 @@ public class WGPUSurfaceSourceMetalLayer {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * void *layer
+     * {@snippet lang=c :
+     * void *layer
      * }
      */
     public static final long layer$offset() {
@@ -100,7 +107,8 @@ public class WGPUSurfaceSourceMetalLayer {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * void *layer
+     * {@snippet lang=c :
+     * void *layer
      * }
      */
     public static MemorySegment layer(MemorySegment struct) {
@@ -109,7 +117,8 @@ public class WGPUSurfaceSourceMetalLayer {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * void *layer
+     * {@snippet lang=c :
+     * void *layer
      * }
      */
     public static void layer(MemorySegment struct, MemorySegment fieldValue) {
@@ -117,10 +126,8 @@ public class WGPUSurfaceSourceMetalLayer {
     }
 
     /**
-     * Obtains a slice of {@code arrayParam} which selects the array element at
-     * {@code index}.
-     * The returned segment has address
-     * {@code arrayParam.address() + index * layout().byteSize()}
+     * Obtains a slice of {@code arrayParam} which selects the array element at {@code index}.
+     * The returned segment has address {@code arrayParam.address() + index * layout().byteSize()}
      */
     public static MemorySegment asSlice(MemorySegment array, long index) {
         return array.asSlice(layout().byteSize() * index);
@@ -129,13 +136,10 @@ public class WGPUSurfaceSourceMetalLayer {
     /**
      * The size (in bytes) of this struct
      */
-    public static long sizeof() {
-        return layout().byteSize();
-    }
+    public static long sizeof() { return layout().byteSize(); }
 
     /**
-     * Allocate a segment of size {@code layout().byteSize()} using
-     * {@code allocator}
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
      */
     public static MemorySegment allocate(SegmentAllocator allocator) {
         return allocator.allocate(layout());
@@ -150,8 +154,7 @@ public class WGPUSurfaceSourceMetalLayer {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code layout().byteSize()}
      */
     public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
@@ -159,12 +162,11 @@ public class WGPUSurfaceSourceMetalLayer {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code elementCount * layout().byteSize()}
      */
-    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena,
-            Consumer<MemorySegment> cleanup) {
+    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
         return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
     }
 }
+

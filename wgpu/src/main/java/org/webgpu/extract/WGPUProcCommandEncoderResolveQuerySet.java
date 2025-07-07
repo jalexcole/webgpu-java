@@ -12,8 +12,8 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c
- * : * typedef void (*WGPUProcCommandEncoderResolveQuerySet)(WGPUCommandEncoder, WGPUQuerySet, uint32_t, uint32_t, WGPUBuffer, uint64_t)
+ * {@snippet lang=c :
+ * typedef void (*WGPUProcCommandEncoderResolveQuerySet)(WGPUCommandEncoder, WGPUQuerySet, uint32_t, uint32_t, WGPUBuffer, uint64_t)
  * }
  */
 public class WGPUProcCommandEncoderResolveQuerySet {
@@ -26,17 +26,17 @@ public class WGPUProcCommandEncoderResolveQuerySet {
      * The function pointer signature, expressed as a functional interface
      */
     public interface Function {
-        void apply(MemorySegment commandEncoder, MemorySegment querySet, int firstQuery, int queryCount,
-                MemorySegment destination, long destinationOffset);
+        void apply(MemorySegment commandEncoder, MemorySegment querySet, int firstQuery, int queryCount, MemorySegment destination, long destinationOffset);
     }
 
     private static final FunctionDescriptor $DESC = FunctionDescriptor.ofVoid(
-            webgpu_h.C_POINTER,
-            webgpu_h.C_POINTER,
-            webgpu_h.C_INT,
-            webgpu_h.C_INT,
-            webgpu_h.C_POINTER,
-            webgpu_h.C_LONG_LONG);
+        webgpu_h.C_POINTER,
+        webgpu_h.C_POINTER,
+        webgpu_h.C_INT,
+        webgpu_h.C_INT,
+        webgpu_h.C_POINTER,
+        webgpu_h.C_LONG_LONG
+    );
 
     /**
      * The descriptor of this function pointer
@@ -45,8 +45,7 @@ public class WGPUProcCommandEncoderResolveQuerySet {
         return $DESC;
     }
 
-    private static final MethodHandle UP$MH = webgpu_h
-            .upcallHandle(WGPUProcCommandEncoderResolveQuerySet.Function.class, "apply", $DESC);
+    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcCommandEncoderResolveQuerySet.Function.class, "apply", $DESC);
 
     /**
      * Allocates a new upcall stub, whose implementation is defined by {@code fi}.
@@ -61,13 +60,12 @@ public class WGPUProcCommandEncoderResolveQuerySet {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr, MemorySegment commandEncoder, MemorySegment querySet,
-            int firstQuery, int queryCount, MemorySegment destination, long destinationOffset) {
+    public static void invoke(MemorySegment funcPtr,MemorySegment commandEncoder, MemorySegment querySet, int firstQuery, int queryCount, MemorySegment destination, long destinationOffset) {
         try {
-            DOWN$MH.invokeExact(funcPtr, commandEncoder, querySet, firstQuery, queryCount, destination,
-                    destinationOffset);
+             DOWN$MH.invokeExact(funcPtr, commandEncoder, querySet, firstQuery, queryCount, destination, destinationOffset);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
     }
 }
+

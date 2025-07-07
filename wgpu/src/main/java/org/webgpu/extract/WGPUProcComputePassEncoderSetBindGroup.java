@@ -12,8 +12,8 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c
- * : * typedef void (*WGPUProcComputePassEncoderSetBindGroup)(WGPUComputePassEncoder, uint32_t, WGPUBindGroup, size_t, const uint32_t *)
+ * {@snippet lang=c :
+ * typedef void (*WGPUProcComputePassEncoderSetBindGroup)(WGPUComputePassEncoder, uint32_t, WGPUBindGroup, size_t, const uint32_t *)
  * }
  */
 public class WGPUProcComputePassEncoderSetBindGroup {
@@ -26,16 +26,16 @@ public class WGPUProcComputePassEncoderSetBindGroup {
      * The function pointer signature, expressed as a functional interface
      */
     public interface Function {
-        void apply(MemorySegment computePassEncoder, int groupIndex, MemorySegment group, long dynamicOffsetCount,
-                MemorySegment dynamicOffsets);
+        void apply(MemorySegment computePassEncoder, int groupIndex, MemorySegment group, long dynamicOffsetCount, MemorySegment dynamicOffsets);
     }
 
     private static final FunctionDescriptor $DESC = FunctionDescriptor.ofVoid(
-            webgpu_h.C_POINTER,
-            webgpu_h.C_INT,
-            webgpu_h.C_POINTER,
-            webgpu_h.C_LONG,
-            webgpu_h.C_POINTER);
+        webgpu_h.C_POINTER,
+        webgpu_h.C_INT,
+        webgpu_h.C_POINTER,
+        webgpu_h.C_LONG,
+        webgpu_h.C_POINTER
+    );
 
     /**
      * The descriptor of this function pointer
@@ -44,8 +44,7 @@ public class WGPUProcComputePassEncoderSetBindGroup {
         return $DESC;
     }
 
-    private static final MethodHandle UP$MH = webgpu_h
-            .upcallHandle(WGPUProcComputePassEncoderSetBindGroup.Function.class, "apply", $DESC);
+    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcComputePassEncoderSetBindGroup.Function.class, "apply", $DESC);
 
     /**
      * Allocates a new upcall stub, whose implementation is defined by {@code fi}.
@@ -60,12 +59,12 @@ public class WGPUProcComputePassEncoderSetBindGroup {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr, MemorySegment computePassEncoder, int groupIndex,
-            MemorySegment group, long dynamicOffsetCount, MemorySegment dynamicOffsets) {
+    public static void invoke(MemorySegment funcPtr,MemorySegment computePassEncoder, int groupIndex, MemorySegment group, long dynamicOffsetCount, MemorySegment dynamicOffsets) {
         try {
-            DOWN$MH.invokeExact(funcPtr, computePassEncoder, groupIndex, group, dynamicOffsetCount, dynamicOffsets);
+             DOWN$MH.invokeExact(funcPtr, computePassEncoder, groupIndex, group, dynamicOffsetCount, dynamicOffsets);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
     }
 }
+

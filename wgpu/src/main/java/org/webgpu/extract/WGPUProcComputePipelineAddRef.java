@@ -12,8 +12,8 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c
- * : * typedef void (*WGPUProcComputePipelineAddRef)(WGPUComputePipeline)
+ * {@snippet lang=c :
+ * typedef void (*WGPUProcComputePipelineAddRef)(WGPUComputePipeline)
  * }
  */
 public class WGPUProcComputePipelineAddRef {
@@ -30,7 +30,8 @@ public class WGPUProcComputePipelineAddRef {
     }
 
     private static final FunctionDescriptor $DESC = FunctionDescriptor.ofVoid(
-            webgpu_h.C_POINTER);
+        webgpu_h.C_POINTER
+    );
 
     /**
      * The descriptor of this function pointer
@@ -39,8 +40,7 @@ public class WGPUProcComputePipelineAddRef {
         return $DESC;
     }
 
-    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcComputePipelineAddRef.Function.class,
-            "apply", $DESC);
+    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcComputePipelineAddRef.Function.class, "apply", $DESC);
 
     /**
      * Allocates a new upcall stub, whose implementation is defined by {@code fi}.
@@ -55,11 +55,12 @@ public class WGPUProcComputePipelineAddRef {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr, MemorySegment computePipeline) {
+    public static void invoke(MemorySegment funcPtr,MemorySegment computePipeline) {
         try {
-            DOWN$MH.invokeExact(funcPtr, computePipeline);
+             DOWN$MH.invokeExact(funcPtr, computePipeline);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
     }
 }
+

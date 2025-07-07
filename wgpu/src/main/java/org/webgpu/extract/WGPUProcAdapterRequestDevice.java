@@ -12,8 +12,8 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c
- * : * typedef WGPUFuture (*WGPUProcAdapterRequestDevice)(WGPUAdapter, const WGPUDeviceDescriptor *, WGPURequestDeviceCallbackInfo)
+ * {@snippet lang=c :
+ * typedef WGPUFuture (*WGPUProcAdapterRequestDevice)(WGPUAdapter, const WGPUDeviceDescriptor *, WGPURequestDeviceCallbackInfo)
  * }
  */
 public class WGPUProcAdapterRequestDevice {
@@ -30,10 +30,11 @@ public class WGPUProcAdapterRequestDevice {
     }
 
     private static final FunctionDescriptor $DESC = FunctionDescriptor.of(
-            WGPUFuture.layout(),
-            webgpu_h.C_POINTER,
-            webgpu_h.C_POINTER,
-            WGPURequestDeviceCallbackInfo.layout());
+        WGPUFuture.layout(),
+        webgpu_h.C_POINTER,
+        webgpu_h.C_POINTER,
+        WGPURequestDeviceCallbackInfo.layout()
+    );
 
     /**
      * The descriptor of this function pointer
@@ -42,8 +43,7 @@ public class WGPUProcAdapterRequestDevice {
         return $DESC;
     }
 
-    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcAdapterRequestDevice.Function.class,
-            "apply", $DESC);
+    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcAdapterRequestDevice.Function.class, "apply", $DESC);
 
     /**
      * Allocates a new upcall stub, whose implementation is defined by {@code fi}.
@@ -58,8 +58,7 @@ public class WGPUProcAdapterRequestDevice {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static MemorySegment invoke(MemorySegment funcPtr, SegmentAllocator alloc, MemorySegment adapter,
-            MemorySegment descriptor, MemorySegment callbackInfo) {
+    public static MemorySegment invoke(MemorySegment funcPtr, SegmentAllocator alloc,MemorySegment adapter, MemorySegment descriptor, MemorySegment callbackInfo) {
         try {
             return (MemorySegment) DOWN$MH.invokeExact(funcPtr, alloc, adapter, descriptor, callbackInfo);
         } catch (Throwable ex$) {
@@ -67,3 +66,4 @@ public class WGPUProcAdapterRequestDevice {
         }
     }
 }
+

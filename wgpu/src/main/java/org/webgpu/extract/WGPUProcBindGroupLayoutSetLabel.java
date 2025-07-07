@@ -12,8 +12,8 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c
- * : * typedef void (*WGPUProcBindGroupLayoutSetLabel)(WGPUBindGroupLayout, WGPUStringView)
+ * {@snippet lang=c :
+ * typedef void (*WGPUProcBindGroupLayoutSetLabel)(WGPUBindGroupLayout, WGPUStringView)
  * }
  */
 public class WGPUProcBindGroupLayoutSetLabel {
@@ -30,8 +30,9 @@ public class WGPUProcBindGroupLayoutSetLabel {
     }
 
     private static final FunctionDescriptor $DESC = FunctionDescriptor.ofVoid(
-            webgpu_h.C_POINTER,
-            WGPUStringView.layout());
+        webgpu_h.C_POINTER,
+        WGPUStringView.layout()
+    );
 
     /**
      * The descriptor of this function pointer
@@ -40,8 +41,7 @@ public class WGPUProcBindGroupLayoutSetLabel {
         return $DESC;
     }
 
-    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcBindGroupLayoutSetLabel.Function.class,
-            "apply", $DESC);
+    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcBindGroupLayoutSetLabel.Function.class, "apply", $DESC);
 
     /**
      * Allocates a new upcall stub, whose implementation is defined by {@code fi}.
@@ -56,11 +56,12 @@ public class WGPUProcBindGroupLayoutSetLabel {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr, MemorySegment bindGroupLayout, MemorySegment label) {
+    public static void invoke(MemorySegment funcPtr,MemorySegment bindGroupLayout, MemorySegment label) {
         try {
-            DOWN$MH.invokeExact(funcPtr, bindGroupLayout, label);
+             DOWN$MH.invokeExact(funcPtr, bindGroupLayout, label);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
     }
 }
+

@@ -12,9 +12,9 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c :
+ * {@snippet lang=c :
  * struct WGPUTextureBindingLayout {
- *     WGPUChainedStruct *nextInChain;
+ *     const WGPUChainedStruct *nextInChain;
  *     WGPUTextureSampleType sampleType;
  *     WGPUTextureViewDimension viewDimension;
  *     WGPUBool multisampled;
@@ -28,11 +28,12 @@ public class WGPUTextureBindingLayout {
     }
 
     private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
-            webgpu_h.C_POINTER.withName("nextInChain"),
-            webgpu_h.C_INT.withName("sampleType"),
-            webgpu_h.C_INT.withName("viewDimension"),
-            webgpu_h.C_INT.withName("multisampled"),
-            MemoryLayout.paddingLayout(4)).withName("WGPUTextureBindingLayout");
+        webgpu_h.C_POINTER.withName("nextInChain"),
+        webgpu_h.C_INT.withName("sampleType"),
+        webgpu_h.C_INT.withName("viewDimension"),
+        webgpu_h.C_INT.withName("multisampled"),
+        MemoryLayout.paddingLayout(4)
+    ).withName("WGPUTextureBindingLayout");
 
     /**
      * The layout of this struct
@@ -41,11 +42,12 @@ public class WGPUTextureBindingLayout {
         return $LAYOUT;
     }
 
-    private static final AddressLayout nextInChain$LAYOUT = (AddressLayout) $LAYOUT.select(groupElement("nextInChain"));
+    private static final AddressLayout nextInChain$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("nextInChain"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static final AddressLayout nextInChain$layout() {
@@ -56,7 +58,8 @@ public class WGPUTextureBindingLayout {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static final long nextInChain$offset() {
@@ -65,7 +68,8 @@ public class WGPUTextureBindingLayout {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static MemorySegment nextInChain(MemorySegment struct) {
@@ -74,18 +78,20 @@ public class WGPUTextureBindingLayout {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUChainedStruct *nextInChain
+     * {@snippet lang=c :
+     * const WGPUChainedStruct *nextInChain
      * }
      */
     public static void nextInChain(MemorySegment struct, MemorySegment fieldValue) {
         struct.set(nextInChain$LAYOUT, nextInChain$OFFSET, fieldValue);
     }
 
-    private static final OfInt sampleType$LAYOUT = (OfInt) $LAYOUT.select(groupElement("sampleType"));
+    private static final OfInt sampleType$LAYOUT = (OfInt)$LAYOUT.select(groupElement("sampleType"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUTextureSampleType sampleType
+     * {@snippet lang=c :
+     * WGPUTextureSampleType sampleType
      * }
      */
     public static final OfInt sampleType$layout() {
@@ -96,7 +102,8 @@ public class WGPUTextureBindingLayout {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUTextureSampleType sampleType
+     * {@snippet lang=c :
+     * WGPUTextureSampleType sampleType
      * }
      */
     public static final long sampleType$offset() {
@@ -105,7 +112,8 @@ public class WGPUTextureBindingLayout {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUTextureSampleType sampleType
+     * {@snippet lang=c :
+     * WGPUTextureSampleType sampleType
      * }
      */
     public static int sampleType(MemorySegment struct) {
@@ -114,18 +122,20 @@ public class WGPUTextureBindingLayout {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUTextureSampleType sampleType
+     * {@snippet lang=c :
+     * WGPUTextureSampleType sampleType
      * }
      */
     public static void sampleType(MemorySegment struct, int fieldValue) {
         struct.set(sampleType$LAYOUT, sampleType$OFFSET, fieldValue);
     }
 
-    private static final OfInt viewDimension$LAYOUT = (OfInt) $LAYOUT.select(groupElement("viewDimension"));
+    private static final OfInt viewDimension$LAYOUT = (OfInt)$LAYOUT.select(groupElement("viewDimension"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUTextureViewDimension viewDimension
+     * {@snippet lang=c :
+     * WGPUTextureViewDimension viewDimension
      * }
      */
     public static final OfInt viewDimension$layout() {
@@ -136,7 +146,8 @@ public class WGPUTextureBindingLayout {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUTextureViewDimension viewDimension
+     * {@snippet lang=c :
+     * WGPUTextureViewDimension viewDimension
      * }
      */
     public static final long viewDimension$offset() {
@@ -145,7 +156,8 @@ public class WGPUTextureBindingLayout {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUTextureViewDimension viewDimension
+     * {@snippet lang=c :
+     * WGPUTextureViewDimension viewDimension
      * }
      */
     public static int viewDimension(MemorySegment struct) {
@@ -154,18 +166,20 @@ public class WGPUTextureBindingLayout {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUTextureViewDimension viewDimension
+     * {@snippet lang=c :
+     * WGPUTextureViewDimension viewDimension
      * }
      */
     public static void viewDimension(MemorySegment struct, int fieldValue) {
         struct.set(viewDimension$LAYOUT, viewDimension$OFFSET, fieldValue);
     }
 
-    private static final OfInt multisampled$LAYOUT = (OfInt) $LAYOUT.select(groupElement("multisampled"));
+    private static final OfInt multisampled$LAYOUT = (OfInt)$LAYOUT.select(groupElement("multisampled"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUBool multisampled
+     * {@snippet lang=c :
+     * WGPUBool multisampled
      * }
      */
     public static final OfInt multisampled$layout() {
@@ -176,7 +190,8 @@ public class WGPUTextureBindingLayout {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUBool multisampled
+     * {@snippet lang=c :
+     * WGPUBool multisampled
      * }
      */
     public static final long multisampled$offset() {
@@ -185,7 +200,8 @@ public class WGPUTextureBindingLayout {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUBool multisampled
+     * {@snippet lang=c :
+     * WGPUBool multisampled
      * }
      */
     public static int multisampled(MemorySegment struct) {
@@ -194,7 +210,8 @@ public class WGPUTextureBindingLayout {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUBool multisampled
+     * {@snippet lang=c :
+     * WGPUBool multisampled
      * }
      */
     public static void multisampled(MemorySegment struct, int fieldValue) {
@@ -202,10 +219,8 @@ public class WGPUTextureBindingLayout {
     }
 
     /**
-     * Obtains a slice of {@code arrayParam} which selects the array element at
-     * {@code index}.
-     * The returned segment has address
-     * {@code arrayParam.address() + index * layout().byteSize()}
+     * Obtains a slice of {@code arrayParam} which selects the array element at {@code index}.
+     * The returned segment has address {@code arrayParam.address() + index * layout().byteSize()}
      */
     public static MemorySegment asSlice(MemorySegment array, long index) {
         return array.asSlice(layout().byteSize() * index);
@@ -214,13 +229,10 @@ public class WGPUTextureBindingLayout {
     /**
      * The size (in bytes) of this struct
      */
-    public static long sizeof() {
-        return layout().byteSize();
-    }
+    public static long sizeof() { return layout().byteSize(); }
 
     /**
-     * Allocate a segment of size {@code layout().byteSize()} using
-     * {@code allocator}
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
      */
     public static MemorySegment allocate(SegmentAllocator allocator) {
         return allocator.allocate(layout());
@@ -235,8 +247,7 @@ public class WGPUTextureBindingLayout {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code layout().byteSize()}
      */
     public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
@@ -244,12 +255,11 @@ public class WGPUTextureBindingLayout {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code elementCount * layout().byteSize()}
      */
-    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena,
-            Consumer<MemorySegment> cleanup) {
+    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
         return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
     }
 }
+

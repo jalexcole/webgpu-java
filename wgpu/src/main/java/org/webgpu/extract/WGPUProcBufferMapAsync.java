@@ -12,8 +12,8 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c
- * : * typedef WGPUFuture (*WGPUProcBufferMapAsync)(WGPUBuffer, WGPUMapMode, size_t, size_t, WGPUBufferMapCallbackInfo)
+ * {@snippet lang=c :
+ * typedef WGPUFuture (*WGPUProcBufferMapAsync)(WGPUBuffer, WGPUMapMode, size_t, size_t, WGPUBufferMapCallbackInfo)
  * }
  */
 public class WGPUProcBufferMapAsync {
@@ -30,12 +30,13 @@ public class WGPUProcBufferMapAsync {
     }
 
     private static final FunctionDescriptor $DESC = FunctionDescriptor.of(
-            WGPUFuture.layout(),
-            webgpu_h.C_POINTER,
-            webgpu_h.C_LONG_LONG,
-            webgpu_h.C_LONG,
-            webgpu_h.C_LONG,
-            WGPUBufferMapCallbackInfo.layout());
+        WGPUFuture.layout(),
+        webgpu_h.C_POINTER,
+        webgpu_h.C_LONG_LONG,
+        webgpu_h.C_LONG,
+        webgpu_h.C_LONG,
+        WGPUBufferMapCallbackInfo.layout()
+    );
 
     /**
      * The descriptor of this function pointer
@@ -44,8 +45,7 @@ public class WGPUProcBufferMapAsync {
         return $DESC;
     }
 
-    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcBufferMapAsync.Function.class, "apply",
-            $DESC);
+    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcBufferMapAsync.Function.class, "apply", $DESC);
 
     /**
      * Allocates a new upcall stub, whose implementation is defined by {@code fi}.
@@ -60,8 +60,7 @@ public class WGPUProcBufferMapAsync {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static MemorySegment invoke(MemorySegment funcPtr, SegmentAllocator alloc, MemorySegment buffer, long mode,
-            long offset, long size, MemorySegment callbackInfo) {
+    public static MemorySegment invoke(MemorySegment funcPtr, SegmentAllocator alloc,MemorySegment buffer, long mode, long offset, long size, MemorySegment callbackInfo) {
         try {
             return (MemorySegment) DOWN$MH.invokeExact(funcPtr, alloc, buffer, mode, offset, size, callbackInfo);
         } catch (Throwable ex$) {
@@ -69,3 +68,4 @@ public class WGPUProcBufferMapAsync {
         }
     }
 }
+

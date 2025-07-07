@@ -12,8 +12,8 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c
- * : * typedef void (*WGPUPopErrorScopeCallback)(WGPUPopErrorScopeStatus, WGPUErrorType, WGPUStringView, void *, void *)
+ * {@snippet lang=c :
+ * typedef void (*WGPUPopErrorScopeCallback)(WGPUPopErrorScopeStatus, WGPUErrorType, WGPUStringView, void *, void *)
  * }
  */
 public class WGPUPopErrorScopeCallback {
@@ -30,11 +30,12 @@ public class WGPUPopErrorScopeCallback {
     }
 
     private static final FunctionDescriptor $DESC = FunctionDescriptor.ofVoid(
-            webgpu_h.C_INT,
-            webgpu_h.C_INT,
-            WGPUStringView.layout(),
-            webgpu_h.C_POINTER,
-            webgpu_h.C_POINTER);
+        webgpu_h.C_INT,
+        webgpu_h.C_INT,
+        WGPUStringView.layout(),
+        webgpu_h.C_POINTER,
+        webgpu_h.C_POINTER
+    );
 
     /**
      * The descriptor of this function pointer
@@ -43,8 +44,7 @@ public class WGPUPopErrorScopeCallback {
         return $DESC;
     }
 
-    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUPopErrorScopeCallback.Function.class, "apply",
-            $DESC);
+    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUPopErrorScopeCallback.Function.class, "apply", $DESC);
 
     /**
      * Allocates a new upcall stub, whose implementation is defined by {@code fi}.
@@ -59,12 +59,12 @@ public class WGPUPopErrorScopeCallback {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr, int status, int type, MemorySegment message,
-            MemorySegment userdata1, MemorySegment userdata2) {
+    public static void invoke(MemorySegment funcPtr,int status, int type, MemorySegment message, MemorySegment userdata1, MemorySegment userdata2) {
         try {
-            DOWN$MH.invokeExact(funcPtr, status, type, message, userdata1, userdata2);
+             DOWN$MH.invokeExact(funcPtr, status, type, message, userdata1, userdata2);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
     }
 }
+

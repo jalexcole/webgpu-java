@@ -12,8 +12,8 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c
- * : * typedef void (*WGPUProcCommandEncoderWriteTimestamp)(WGPUCommandEncoder, WGPUQuerySet, uint32_t)
+ * {@snippet lang=c :
+ * typedef void (*WGPUProcCommandEncoderWriteTimestamp)(WGPUCommandEncoder, WGPUQuerySet, uint32_t)
  * }
  */
 public class WGPUProcCommandEncoderWriteTimestamp {
@@ -30,9 +30,10 @@ public class WGPUProcCommandEncoderWriteTimestamp {
     }
 
     private static final FunctionDescriptor $DESC = FunctionDescriptor.ofVoid(
-            webgpu_h.C_POINTER,
-            webgpu_h.C_POINTER,
-            webgpu_h.C_INT);
+        webgpu_h.C_POINTER,
+        webgpu_h.C_POINTER,
+        webgpu_h.C_INT
+    );
 
     /**
      * The descriptor of this function pointer
@@ -41,8 +42,7 @@ public class WGPUProcCommandEncoderWriteTimestamp {
         return $DESC;
     }
 
-    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcCommandEncoderWriteTimestamp.Function.class,
-            "apply", $DESC);
+    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcCommandEncoderWriteTimestamp.Function.class, "apply", $DESC);
 
     /**
      * Allocates a new upcall stub, whose implementation is defined by {@code fi}.
@@ -57,12 +57,12 @@ public class WGPUProcCommandEncoderWriteTimestamp {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr, MemorySegment commandEncoder, MemorySegment querySet,
-            int queryIndex) {
+    public static void invoke(MemorySegment funcPtr,MemorySegment commandEncoder, MemorySegment querySet, int queryIndex) {
         try {
-            DOWN$MH.invokeExact(funcPtr, commandEncoder, querySet, queryIndex);
+             DOWN$MH.invokeExact(funcPtr, commandEncoder, querySet, queryIndex);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
     }
 }
+

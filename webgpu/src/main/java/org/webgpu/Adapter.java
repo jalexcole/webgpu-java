@@ -6,6 +6,11 @@ import java.time.Instant;
 public class Adapter {
     private MemorySegment ptr;
 
+    @SuppressWarnings("preview")
+    public Adapter(MemorySegment ptr) {
+        this.ptr = ptr;
+    }
+
     /**
      * The features which can be used to create devices on this adapter.
      * 
@@ -69,6 +74,12 @@ public class Adapter {
      * @return
      */
     public Instant getPresentationTimestamp() {
+        
+
         throw new UnsupportedOperationException("Unimplemented method 'getPresentationTimestamp'");
+    }
+
+    public MemorySegment ptr() {
+        return this.ptr;
     }
 }

@@ -12,7 +12,7 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c :
+ * {@snippet lang=c :
  * struct WGPUStencilFaceState {
  *     WGPUCompareFunction compare;
  *     WGPUStencilOperation failOp;
@@ -28,10 +28,11 @@ public class WGPUStencilFaceState {
     }
 
     private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
-            webgpu_h.C_INT.withName("compare"),
-            webgpu_h.C_INT.withName("failOp"),
-            webgpu_h.C_INT.withName("depthFailOp"),
-            webgpu_h.C_INT.withName("passOp")).withName("WGPUStencilFaceState");
+        webgpu_h.C_INT.withName("compare"),
+        webgpu_h.C_INT.withName("failOp"),
+        webgpu_h.C_INT.withName("depthFailOp"),
+        webgpu_h.C_INT.withName("passOp")
+    ).withName("WGPUStencilFaceState");
 
     /**
      * The layout of this struct
@@ -40,11 +41,12 @@ public class WGPUStencilFaceState {
         return $LAYOUT;
     }
 
-    private static final OfInt compare$LAYOUT = (OfInt) $LAYOUT.select(groupElement("compare"));
+    private static final OfInt compare$LAYOUT = (OfInt)$LAYOUT.select(groupElement("compare"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUCompareFunction compare
+     * {@snippet lang=c :
+     * WGPUCompareFunction compare
      * }
      */
     public static final OfInt compare$layout() {
@@ -55,7 +57,8 @@ public class WGPUStencilFaceState {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUCompareFunction compare
+     * {@snippet lang=c :
+     * WGPUCompareFunction compare
      * }
      */
     public static final long compare$offset() {
@@ -64,7 +67,8 @@ public class WGPUStencilFaceState {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUCompareFunction compare
+     * {@snippet lang=c :
+     * WGPUCompareFunction compare
      * }
      */
     public static int compare(MemorySegment struct) {
@@ -73,18 +77,20 @@ public class WGPUStencilFaceState {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUCompareFunction compare
+     * {@snippet lang=c :
+     * WGPUCompareFunction compare
      * }
      */
     public static void compare(MemorySegment struct, int fieldValue) {
         struct.set(compare$LAYOUT, compare$OFFSET, fieldValue);
     }
 
-    private static final OfInt failOp$LAYOUT = (OfInt) $LAYOUT.select(groupElement("failOp"));
+    private static final OfInt failOp$LAYOUT = (OfInt)$LAYOUT.select(groupElement("failOp"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUStencilOperation failOp
+     * {@snippet lang=c :
+     * WGPUStencilOperation failOp
      * }
      */
     public static final OfInt failOp$layout() {
@@ -95,7 +101,8 @@ public class WGPUStencilFaceState {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUStencilOperation failOp
+     * {@snippet lang=c :
+     * WGPUStencilOperation failOp
      * }
      */
     public static final long failOp$offset() {
@@ -104,7 +111,8 @@ public class WGPUStencilFaceState {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUStencilOperation failOp
+     * {@snippet lang=c :
+     * WGPUStencilOperation failOp
      * }
      */
     public static int failOp(MemorySegment struct) {
@@ -113,18 +121,20 @@ public class WGPUStencilFaceState {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUStencilOperation failOp
+     * {@snippet lang=c :
+     * WGPUStencilOperation failOp
      * }
      */
     public static void failOp(MemorySegment struct, int fieldValue) {
         struct.set(failOp$LAYOUT, failOp$OFFSET, fieldValue);
     }
 
-    private static final OfInt depthFailOp$LAYOUT = (OfInt) $LAYOUT.select(groupElement("depthFailOp"));
+    private static final OfInt depthFailOp$LAYOUT = (OfInt)$LAYOUT.select(groupElement("depthFailOp"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUStencilOperation depthFailOp
+     * {@snippet lang=c :
+     * WGPUStencilOperation depthFailOp
      * }
      */
     public static final OfInt depthFailOp$layout() {
@@ -135,7 +145,8 @@ public class WGPUStencilFaceState {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUStencilOperation depthFailOp
+     * {@snippet lang=c :
+     * WGPUStencilOperation depthFailOp
      * }
      */
     public static final long depthFailOp$offset() {
@@ -144,7 +155,8 @@ public class WGPUStencilFaceState {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUStencilOperation depthFailOp
+     * {@snippet lang=c :
+     * WGPUStencilOperation depthFailOp
      * }
      */
     public static int depthFailOp(MemorySegment struct) {
@@ -153,18 +165,20 @@ public class WGPUStencilFaceState {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUStencilOperation depthFailOp
+     * {@snippet lang=c :
+     * WGPUStencilOperation depthFailOp
      * }
      */
     public static void depthFailOp(MemorySegment struct, int fieldValue) {
         struct.set(depthFailOp$LAYOUT, depthFailOp$OFFSET, fieldValue);
     }
 
-    private static final OfInt passOp$LAYOUT = (OfInt) $LAYOUT.select(groupElement("passOp"));
+    private static final OfInt passOp$LAYOUT = (OfInt)$LAYOUT.select(groupElement("passOp"));
 
     /**
      * Layout for field:
-     * {@snippet lang = c : * WGPUStencilOperation passOp
+     * {@snippet lang=c :
+     * WGPUStencilOperation passOp
      * }
      */
     public static final OfInt passOp$layout() {
@@ -175,7 +189,8 @@ public class WGPUStencilFaceState {
 
     /**
      * Offset for field:
-     * {@snippet lang = c : * WGPUStencilOperation passOp
+     * {@snippet lang=c :
+     * WGPUStencilOperation passOp
      * }
      */
     public static final long passOp$offset() {
@@ -184,7 +199,8 @@ public class WGPUStencilFaceState {
 
     /**
      * Getter for field:
-     * {@snippet lang = c : * WGPUStencilOperation passOp
+     * {@snippet lang=c :
+     * WGPUStencilOperation passOp
      * }
      */
     public static int passOp(MemorySegment struct) {
@@ -193,7 +209,8 @@ public class WGPUStencilFaceState {
 
     /**
      * Setter for field:
-     * {@snippet lang = c : * WGPUStencilOperation passOp
+     * {@snippet lang=c :
+     * WGPUStencilOperation passOp
      * }
      */
     public static void passOp(MemorySegment struct, int fieldValue) {
@@ -201,10 +218,8 @@ public class WGPUStencilFaceState {
     }
 
     /**
-     * Obtains a slice of {@code arrayParam} which selects the array element at
-     * {@code index}.
-     * The returned segment has address
-     * {@code arrayParam.address() + index * layout().byteSize()}
+     * Obtains a slice of {@code arrayParam} which selects the array element at {@code index}.
+     * The returned segment has address {@code arrayParam.address() + index * layout().byteSize()}
      */
     public static MemorySegment asSlice(MemorySegment array, long index) {
         return array.asSlice(layout().byteSize() * index);
@@ -213,13 +228,10 @@ public class WGPUStencilFaceState {
     /**
      * The size (in bytes) of this struct
      */
-    public static long sizeof() {
-        return layout().byteSize();
-    }
+    public static long sizeof() { return layout().byteSize(); }
 
     /**
-     * Allocate a segment of size {@code layout().byteSize()} using
-     * {@code allocator}
+     * Allocate a segment of size {@code layout().byteSize()} using {@code allocator}
      */
     public static MemorySegment allocate(SegmentAllocator allocator) {
         return allocator.allocate(layout());
@@ -234,8 +246,7 @@ public class WGPUStencilFaceState {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code layout().byteSize()}
      */
     public static MemorySegment reinterpret(MemorySegment addr, Arena arena, Consumer<MemorySegment> cleanup) {
@@ -243,12 +254,11 @@ public class WGPUStencilFaceState {
     }
 
     /**
-     * Reinterprets {@code addr} using target {@code arena} and
-     * {@code cleanupAction} (if any).
+     * Reinterprets {@code addr} using target {@code arena} and {@code cleanupAction} (if any).
      * The returned segment has size {@code elementCount * layout().byteSize()}
      */
-    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena,
-            Consumer<MemorySegment> cleanup) {
+    public static MemorySegment reinterpret(MemorySegment addr, long elementCount, Arena arena, Consumer<MemorySegment> cleanup) {
         return addr.reinterpret(layout().byteSize() * elementCount, arena, cleanup);
     }
 }
+

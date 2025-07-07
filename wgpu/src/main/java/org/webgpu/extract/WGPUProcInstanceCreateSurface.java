@@ -12,8 +12,8 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c
- * : * typedef WGPUSurface (*WGPUProcInstanceCreateSurface)(WGPUInstance, const WGPUSurfaceDescriptor *)
+ * {@snippet lang=c :
+ * typedef WGPUSurface (*WGPUProcInstanceCreateSurface)(WGPUInstance, const WGPUSurfaceDescriptor *)
  * }
  */
 public class WGPUProcInstanceCreateSurface {
@@ -30,9 +30,10 @@ public class WGPUProcInstanceCreateSurface {
     }
 
     private static final FunctionDescriptor $DESC = FunctionDescriptor.of(
-            webgpu_h.C_POINTER,
-            webgpu_h.C_POINTER,
-            webgpu_h.C_POINTER);
+        webgpu_h.C_POINTER,
+        webgpu_h.C_POINTER,
+        webgpu_h.C_POINTER
+    );
 
     /**
      * The descriptor of this function pointer
@@ -41,8 +42,7 @@ public class WGPUProcInstanceCreateSurface {
         return $DESC;
     }
 
-    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcInstanceCreateSurface.Function.class,
-            "apply", $DESC);
+    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcInstanceCreateSurface.Function.class, "apply", $DESC);
 
     /**
      * Allocates a new upcall stub, whose implementation is defined by {@code fi}.
@@ -57,7 +57,7 @@ public class WGPUProcInstanceCreateSurface {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static MemorySegment invoke(MemorySegment funcPtr, MemorySegment instance, MemorySegment descriptor) {
+    public static MemorySegment invoke(MemorySegment funcPtr,MemorySegment instance, MemorySegment descriptor) {
         try {
             return (MemorySegment) DOWN$MH.invokeExact(funcPtr, instance, descriptor);
         } catch (Throwable ex$) {
@@ -65,3 +65,4 @@ public class WGPUProcInstanceCreateSurface {
         }
     }
 }
+

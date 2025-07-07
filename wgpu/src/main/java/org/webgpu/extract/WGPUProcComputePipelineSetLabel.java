@@ -12,8 +12,8 @@ import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
- * {@snippet lang = c
- * : * typedef void (*WGPUProcComputePipelineSetLabel)(WGPUComputePipeline, WGPUStringView)
+ * {@snippet lang=c :
+ * typedef void (*WGPUProcComputePipelineSetLabel)(WGPUComputePipeline, WGPUStringView)
  * }
  */
 public class WGPUProcComputePipelineSetLabel {
@@ -30,8 +30,9 @@ public class WGPUProcComputePipelineSetLabel {
     }
 
     private static final FunctionDescriptor $DESC = FunctionDescriptor.ofVoid(
-            webgpu_h.C_POINTER,
-            WGPUStringView.layout());
+        webgpu_h.C_POINTER,
+        WGPUStringView.layout()
+    );
 
     /**
      * The descriptor of this function pointer
@@ -40,8 +41,7 @@ public class WGPUProcComputePipelineSetLabel {
         return $DESC;
     }
 
-    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcComputePipelineSetLabel.Function.class,
-            "apply", $DESC);
+    private static final MethodHandle UP$MH = webgpu_h.upcallHandle(WGPUProcComputePipelineSetLabel.Function.class, "apply", $DESC);
 
     /**
      * Allocates a new upcall stub, whose implementation is defined by {@code fi}.
@@ -56,11 +56,12 @@ public class WGPUProcComputePipelineSetLabel {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr, MemorySegment computePipeline, MemorySegment label) {
+    public static void invoke(MemorySegment funcPtr,MemorySegment computePipeline, MemorySegment label) {
         try {
-            DOWN$MH.invokeExact(funcPtr, computePipeline, label);
+             DOWN$MH.invokeExact(funcPtr, computePipeline, label);
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
     }
 }
+

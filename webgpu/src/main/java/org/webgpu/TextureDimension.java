@@ -14,4 +14,8 @@ public enum TextureDimension {
     TextureDimension(int value) {
         this.value = value;
     }
+
+    public int value() {
+        return value;
+    }
 }
