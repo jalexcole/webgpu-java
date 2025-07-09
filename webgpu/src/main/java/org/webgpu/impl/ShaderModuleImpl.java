@@ -1,0 +1,7 @@
+package org.webgpu.impl;
+
+import java.lang.foreign.MemorySegment;
+
+public record ShaderModuleImpl(MemorySegment ptr) {
+    
+}

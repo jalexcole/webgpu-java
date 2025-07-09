@@ -5,12 +5,21 @@ import java.lang.foreign.Linker;
 import java.lang.foreign.MemorySegment;
 import java.time.Duration;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.webgpu.extract.WGPUInstanceDescriptor;
+import org.webgpu.extract.WGPURequestAdapterCallback;
+import org.webgpu.extract.WGPURequestAdapterCallbackInfo;
+import org.webgpu.extract.WGPURequestAdapterOptions;
+import org.webgpu.extract.WGPURequestDeviceCallback;
 import org.webgpu.extract.webgpu_h;
+import org.webgpu.impl.AdapterImpl;
+import org.webgpu.impl.InstanceImpl;
 
 public class WGPU {
     @SuppressWarnings("preview")
@@ -27,18 +36,9 @@ public class WGPU {
 
     @SuppressWarnings("preview")
     public static Instance createInstance(@Nullable InstanceDescriptor descriptor) {
-        try (Arena arena = Arena.ofConfined()) {
-            if (descriptor == null) {
-                var instancePtr = webgpu_h.wgpuCreateInstance(MemorySegment.NULL);
-                return new Instance(instancePtr);
-            }
-
-            var wgpuDescriptor = arena.allocate(WGPUInstanceDescriptor.layout());
-
-            var instance = webgpu_h.wgpuCreateInstance(wgpuDescriptor);
-            return new Instance(instance);
-
-        }
+        return new InstanceImpl(
+                webgpu_h.wgpuCreateInstance(descriptor != null ? descriptor.address() : MemorySegment.NULL));
+        
     }
 
     public static void getInstanceFeatures(SupportedFeatures... features) {
@@ -51,13 +51,7 @@ public class WGPU {
     }
 
     public static boolean hasInstanceFeature(InstanceFeatureName feature) {
-        var result = webgpu_h.wgpuHasInstanceFeature(feature.value());
-
-        if (result != 0) {
-            return true;
-        }
-
-        return false;
+        throw new UnsupportedOperationException("Unimplemented method 'hasInstanceFeature'");
     }
 
     public static Proc getProgAddress(String procName) {
@@ -77,7 +71,7 @@ public class WGPU {
         throw new UnsupportedOperationException("Unimplemented method 'adapterGetLimits'");
     }
 
-    public static boolean adapterHasFeature(@NonNull Adapter adapter, FeatureName feature) {
+    public static boolean adapterHasFeature(@NonNull AdapterImpl adapter, FeatureName feature) {
         var result = webgpu_h.wgpuAdapterHasFeature(adapter.ptr(), feature.value());
 
         if (result != 0) {
@@ -88,16 +82,16 @@ public class WGPU {
 
     }
 
-    public static CompletableFuture<Device> adapterRequestDevice(@NonNull Adapter adapter,
+    public static CompletableFuture<Device> adapterRequestDevice(@NonNull AdapterImpl adapter,
             @NonNull final DeviceDescriptor[] descriptors) {
         throw new UnsupportedOperationException("Unimplemented method 'adapterRequestDevice'");
     }
 
-    public static void adapterAddRef(@NonNull Adapter adapter) {
+    public static void adapterAddRef(@NonNull AdapterImpl adapter) {
         webgpu_h.wgpuAdapterAddRef(adapter.ptr());
     }
 
-    public static void adapterRelease(@NonNull Adapter adapter) {
+    public static void adapterRelease(@NonNull AdapterImpl adapter) {
         webgpu_h.wgpuAdapterRelease(adapter.ptr());
     }
 
@@ -154,7 +148,7 @@ public class WGPU {
     }
 
     public static final int bufferReadMappedRange(@NonNull Buffer buffer, long offset, byte[] data, long size) {
-        return webgpu_h.wgpuBufferReadMappedRange(buffer.ptr(), offset, MemorySegment.ofArray(data), size);
+        throw new UnsupportedOperationException("Unimplemented method 'bufferReadMappedRange'");
     }
 
     public static final void bufferSetLabel(@NonNull Buffer buffer, String label) {
@@ -166,13 +160,7 @@ public class WGPU {
     }
 
     public static final Status bufferWriteMappedRange(@NonNull Buffer buffer, long offset, byte[] data, long size) {
-        var statusCode = (webgpu_h.wgpuBufferWriteMappedRange(buffer.ptr(), offset, MemorySegment.ofArray(data), size));
-
-        if (statusCode == Status.Success.value()) {
-            return Status.Success;
-        } else {
-            return Status.Error;
-        }
+        throw new UnsupportedOperationException("Unimplemented method 'bufferWriteMappedRange'");
     }
 
     public static final void bufferAddRef(@NonNull Buffer buffer) {
@@ -305,6 +293,7 @@ public class WGPU {
         webgpu_h.wgpuComputePassEncoderPushDebugGroup(computePassEncoder.ptr(), new StringView(groupLabel).ptr());
     }
 
+    @SuppressWarnings("preview")
     public static final void computePassEncoderSetBindGroup(@NonNull ComputePassEncoder computePassEncoder,
             int groupIndex,
             @NonNull BindGroup group, long dynamicOffsetCount, int... dynamicOffsets) {
@@ -421,13 +410,7 @@ public class WGPU {
     }
 
     public static final Status deviceGetAdapterInfo(@NonNull Device device, @NonNull AdapterInfo adapterInfo) {
-        var statusCode = (webgpu_h.wgpuDeviceGetAdapterInfo(device.ptr(), adapterInfo.ptr()));
-
-        if (statusCode == Status.Success.value()) {
-            return Status.Success;
-        } else {
-            return Status.Error;
-        }
+        throw new UnsupportedOperationException("Unimplemented method 'deviceGetAdapterInfo'");
     }
 
     public static void deviceGetFeatures(@NonNull Device device, @NonNull SupportedFeatures features) {
@@ -477,7 +460,8 @@ public class WGPU {
         webgpu_h.wgpuDeviceRelease(device.ptr());
     }
 
-    public static Surface instanceCreateSurface(@NonNull Instance instance,
+    @SuppressWarnings("preview")
+    public static Surface instanceCreateSurface(@NonNull InstanceImpl instance,
             @Nullable SurfaceDescriptor descriptor) {
 
         if (descriptor == null) {
@@ -486,7 +470,7 @@ public class WGPU {
         return new Surface(webgpu_h.wgpuInstanceCreateSurface(instance.ptr(), descriptor.ptr()));
     }
 
-    public static Status instanceGetWGSLLanguageFeatures(@NonNull Instance instance,
+    public static Status instanceGetWGSLLanguageFeatures(@NonNull InstanceImpl instance,
             @NonNull SupportedWGSLLanguageFeatures features) {
         var statusCode = (webgpu_h.wgpuInstanceGetWGSLLanguageFeatures(instance.ptr(), features.ptr()));
 
@@ -497,18 +481,68 @@ public class WGPU {
         }
     }
 
-    public static boolean instanceHasWGSLLanguageFeature(@NonNull Instance instance,
+    public static boolean instanceHasWGSLLanguageFeature(@NonNull InstanceImpl instance,
             @NonNull WGSLLanguageFeatureName feature) {
         var hasFeature = webgpu_h.wgpuInstanceHasWGSLLanguageFeature(instance.ptr(), feature.value());
         return hasFeature != 0;
     }
 
-    public static void instanceProcessEvents(@NonNull Instance instance) {
+    public static void instanceProcessEvents(@NonNull InstanceImpl instance) {
         webgpu_h.wgpuInstanceProcessEvents(instance.ptr());
     }
 
-    public static Future<Adapter> instanceRequestAdapter(@NonNull Instance instance) {
-        throw new UnsupportedOperationException("Unimplemented method 'instanceRequestAdapter'");
+    public static Future<Adapter> instanceRequestAdapter(@NonNull InstanceImpl instance, @Nullable RequestAdapterOptions options) {
+
+        if (options == null) {
+            options = new RequestAdapterOptions();
+        }
+
+        try (Arena arena = Arena.ofShared()) {
+
+            var requestAdapterCallbackInfoPtr = WGPURequestAdapterCallbackInfo.allocate(arena);
+
+            WGPURequestAdapterCallbackInfo.callback(requestAdapterCallbackInfoPtr, null);
+
+            MemorySegment futurePtr = webgpu_h.wgpuInstanceRequestAdapter(arena, instance.ptr(), options.ptr(),
+                    MemorySegment.NULL);
+
+            return new Future<Adapter>() {
+
+                @Override
+                public boolean cancel(boolean mayInterruptIfRunning) {
+                    // TODO Auto-generated method stub
+                    throw new UnsupportedOperationException("Unimplemented method 'cancel'");
+                }
+
+                @Override
+                public boolean isCancelled() {
+                    // TODO Auto-generated method stub
+                    throw new UnsupportedOperationException("Unimplemented method 'isCancelled'");
+                }
+
+                @Override
+                public boolean isDone() {
+                    
+                    // TODO Auto-generated method stub
+                    throw new UnsupportedOperationException("Unimplemented method 'isDone'");
+                }
+
+                @Override
+                public Adapter get() throws InterruptedException, ExecutionException {
+                    // TODO Auto-generated method stub
+                    throw new UnsupportedOperationException("Unimplemented method 'get'");
+                }
+
+                @Override
+                public Adapter get(long timeout, TimeUnit unit)
+                        throws InterruptedException, ExecutionException, TimeoutException {
+                    // TODO Auto-generated method stub
+                    throw new UnsupportedOperationException("Unimplemented method 'get'");
+                }
+
+            };
+        }
+
     }
 
     public static WaitStatus instanceWaitAny(@NonNull Instance instance, @NonNull Future<?>[] futures,
@@ -516,11 +550,11 @@ public class WGPU {
         throw new UnsupportedOperationException("Unimplemented method 'instanceWaitAny'");
     }
 
-    public static void instanceAddRef(@NonNull Instance instance) {
+    public static void instanceAddRef(@NonNull InstanceImpl instance) {
         webgpu_h.wgpuInstanceAddRef(instance.ptr());
     }
 
-    public static void instanceRelease(@NonNull Instance instance) {
+    public static void instanceRelease(@NonNull InstanceImpl instance) {
         webgpu_h.wgpuInstanceRelease(instance.ptr());
     }
 
@@ -575,11 +609,13 @@ public class WGPU {
         webgpu_h.wgpuQueueSubmit(queue.ptr(), commands.length, commands[0].ptr());
     }
 
+    @SuppressWarnings("preview")
     public static void queueWriteBuffer(@NonNull Queue queue, @NonNull Buffer buffer, long offset,
             @NonNull byte[] data) {
         webgpu_h.wgpuQueueWriteBuffer(queue.ptr(), buffer.ptr(), offset, MemorySegment.ofArray(data), data.length);
     }
 
+    @SuppressWarnings("preview")
     public static void queueWriteTexture(@NonNull Queue queue, @NonNull TexelCopyTextureInfo destination,
             @NonNull byte[] data, TexelCopyBufferLayout dataLayout, final Extend3D writeSize) {
         webgpu_h.wgpuQueueWriteTexture(queue.ptr(), destination.ptr(), MemorySegment.ofArray(data), (long) data.length,
@@ -648,6 +684,7 @@ public class WGPU {
         webgpu_h.wgpuRenderBundleEncoderPushDebugGroup(renderBundleEncoder.ptr(), new StringView(groupLabel).ptr());
     }
 
+    @SuppressWarnings("preview")
     public static void renderBundleEncoderSetBindGroup(@NonNull RenderBundleEncoder renderBundleEncoder,
             int groupIndex, @NonNull BindGroup bindGroup, int dynamicOffsetCount, int[] dynamicOffsets) {
         webgpu_h.wgpuRenderBundleEncoderSetBindGroup(renderBundleEncoder.ptr(), groupIndex, bindGroup.ptr(),
@@ -733,6 +770,7 @@ public class WGPU {
         webgpu_h.wgpuRenderPassEncoderPushDebugGroup(renderPassEncoder.ptr(), new StringView(groupLabel).ptr());
     }
 
+    @SuppressWarnings("preview")
     public static void renderPassEncoderSetBindGroup(@NonNull RenderPassEncoder renderPassEncoder, int groupIndex,
             @NonNull BindGroup bindGroup, int dynamicOffsetCount, int[] dynamicOffsets) {
         webgpu_h.wgpuRenderPassEncoderSetBindGroup(renderPassEncoder.ptr(), groupIndex, bindGroup.ptr(),
@@ -838,7 +876,7 @@ public class WGPU {
 
     public static void supportedInstanceFeaturesFreeMembers(
             @NonNull SupportedInstanceFeatures supportedInstanceFeatures) {
-        webgpu_h.wgpuSupportedInstanceFeaturesFreeMembers(supportedInstanceFeatures.ptr());
+        throw new UnsupportedOperationException("Unimplemented method 'supportedInstanceFeaturesFreeMembers'");
     }
 
     public static void supportedWGSLLLanguageFeatureFreeMembers(
@@ -850,7 +888,7 @@ public class WGPU {
         webgpu_h.wgpuSurfaceConfigure(surface.ptr(), configuration.ptr());
     }
 
-    public static Status surfaceGetCapabilities(@NonNull Surface surface, @NonNull Adapter adapter,
+    public static Status surfaceGetCapabilities(@NonNull Surface surface, @NonNull AdapterImpl adapter,
             @NonNull SurfaceCapabilities capabilities) {
         final int statusCode = (webgpu_h.wgpuSurfaceGetCapabilities(surface.ptr(), adapter.ptr(), capabilities.ptr()));
 
@@ -972,6 +1010,11 @@ public class WGPU {
 
     public static void textureViewAddRef(@NonNull TextureView textureView) {
         webgpu_h.wgpuTextureViewAddRef(textureView.ptr());
+    }
+
+    public static void hasInstanceFeature(Instance instance, Object object) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'hasInstanceFeature'");
     }
 
 }

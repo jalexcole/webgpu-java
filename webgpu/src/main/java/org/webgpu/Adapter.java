@@ -3,49 +3,36 @@ package org.webgpu;
 import java.lang.foreign.MemorySegment;
 import java.time.Instant;
 
-public class Adapter {
-    private MemorySegment ptr;
+import org.webgpu.extract.webgpu_h;
 
-    @SuppressWarnings("preview")
-    public Adapter(MemorySegment ptr) {
-        this.ptr = ptr;
-    }
-
+public interface Adapter {
     /**
      * The features which can be used to create devices on this adapter.
      * 
      * @return
      */
-    public Features features() {
-        throw new UnsupportedOperationException("Unimplemented method 'features'");
-    }
+    public Features features();
     
     /**
      * The best limits which can be used to create devices on this adapter.
      * 
      * @return
      */
-    public Limits limits() {
-        throw new UnsupportedOperationException("Unimplemented method 'limits'");
-    }
+    public Limits limits();
 
     /**
      * Get info about the adapter itself.
      * 
      * @return
      */
-    public AdapterInfo getInfo() {
-        throw new UnsupportedOperationException("Unimplemented method 'getInfo'");
-    }
+    public AdapterInfo getInfo();
     
     /**
      * Get info about the adapter itself.
      * 
      * @return
      */
-    public DownlevelCapabilities getDownlevelCapabilities() {
-        throw new UnsupportedOperationException("Unimplemented method 'getDownlevelCapabilities'");
-    }
+    public DownlevelCapabilities getDownlevelCapabilities();
 
     /**
      * Returns the features supported for a given texture format by this adapter.
@@ -57,9 +44,7 @@ public class Adapter {
      * @param format
      * @return
      */
-    public TextureFormatFeatures getTextureFormatFeatures(TextureFormat format) {
-        throw new UnsupportedOperationException("Unimplemented method 'getTextureFormatFeatures'");
-    }
+    public TextureFormatFeatures getTextureFormatFeatures(TextureFormat format);
     
     /**
      * Generates a timestamp using the clock used by the presentation engine.
@@ -73,13 +58,6 @@ public class Adapter {
      * 
      * @return
      */
-    public Instant getPresentationTimestamp() {
-        
+    public Instant getPresentationTimestamp();
 
-        throw new UnsupportedOperationException("Unimplemented method 'getPresentationTimestamp'");
-    }
-
-    public MemorySegment ptr() {
-        return this.ptr;
-    }
 }

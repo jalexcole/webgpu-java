@@ -12,14 +12,6 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <properties>
-
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <build>
         <plugins>
             <plugin>
@@ -28,24 +20,72 @@
                 <version>1.1.1</version>
                 <executions>
                     <execution>
-                        <id>rust-build-id</id>
+                        <id>rust-build-aarch64-apple-darwin</id>
+                        <phase>compile</phase>
                         <goals>
                             <goal>build</goal>
                         </goals>
                         <configuration>
                             <path>${project.basedir}/wgpu-native</path>
                             <release>true</release>
-
-                            <verbosity>-v</verbosity>
-                            <!-- <copyWithPlatformDir>true</copyWithPlatformDir> -->
+                            <target>aarch64-apple-darwin</target>
+                            <!-- <verbosity>-v</verbosity> -->
+                            <copyWithPlatformDir>true</copyWithPlatformDir>
+                            <copyTo>${project.build.directory}/native/</copyTo>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
             <!-- Package the native shared library into the JAR -->
-            <plugin>
+            <!-- <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
+            </plugin> -->
 
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.5.1</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>jextract</executable>
+                    <!-- optional -->
+
+                    <arguments>
+                        <argument>--output</argument>
+                        <argument>${project.build.directory}/generated-sources/jextract</argument>
+                        <argument>--target-package</argument>
+                        <argument>org.webgpu.extract</argument>
+                        <argument>${project.basedir}/wgpu-native/ffi/webgpu-headers/webgpu.h</argument>
+                    </arguments>
+
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.6.0</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/jextract</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <!-- Copy Rust shared library into desired location -->
@@ -63,7 +103,9 @@
                             <outputDirectory>${project.build.outputDirectory}/native</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${project.build.outputDirectory}/rust-maven-plugin/${artifactId}/release</directory> <!-- or
+                                    <directory>
+                                        ${project.build.outputDirectory}/rust-maven-plugin/${artifactId}/release</directory> <!--
+                                    or
                                     release -->
                                     <includes>
                                         <include>libyourlib.so</include>

@@ -1,31 +1,58 @@
 package org.webgpu;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
+import org.webgpu.extract.WGPUColor;
+
 public class Color implements ObjectBase {
-    public float r;
-    public float g;
-    public float b;
-    public float a;
+    private MemorySegment colorPtr;
 
     public Color() {
-        this.r = 0;
-        this.g = 0;
-        this.b = 0;
-        this.a = 0;
+        try (Arena arena = Arena.ofConfined()) {
+            colorPtr = WGPUColor.allocate(arena);
+        }
     }
     
     public Color(float r, float g, float b, float a) {
-        this.r = r;
-        this.g = g;
-        this.b = b;
-        this.a = a;
+        try (Arena arena = Arena.ofConfined()) {
+            colorPtr = WGPUColor.allocate(arena);
+        }
+        WGPUColor.r(ptr(), r);
+        WGPUColor.g(ptr(), g);
+        WGPUColor.b(ptr(), b);
+        WGPUColor.a(ptr(), a);
+    }
+
+    public float r() {
+        return (float) WGPUColor.r(ptr());
+    }
+    
+    public float g() {
+        return (float) WGPUColor.g(ptr());
+    }
+    
+    public float b() {
+        return (float) WGPUColor.b(ptr());
+    }
+    
+    public float a() {
+        return (float) WGPUColor.a(ptr());
     }
 
     @Override
     public MemorySegment ptr() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'ptr'");
+        return colorPtr;
+    }
+
+    @Override
+    public String toString() {
+        return "Color{" +
+                "r=" + r() +
+                ", g=" + g() +
+                ", b=" + b() +
+                ", a=" + a() +
+                '}';
     }
 
     

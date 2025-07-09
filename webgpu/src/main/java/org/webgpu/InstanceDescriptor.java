@@ -40,31 +40,7 @@ public class InstanceDescriptor {
         WGPUInstanceDescriptor.nextInChain(descriptorPtr, fieldValue);
     }
 
-    public long requiredFeatureCount() {
-        return WGPUInstanceDescriptor.requiredFeatureCount(descriptorPtr);
-    }
-
-    public void requiredFeatureCount(long fieldValue) {
-        WGPUInstanceDescriptor.requiredFeatureCount(descriptorPtr, fieldValue);
-    }
-
-    @SuppressWarnings("preview")
-    public MemorySegment requiredFeatures() {
-        return WGPUInstanceDescriptor.requiredFeatures(descriptorPtr);
-    }
-
-    public void requiredFeatures(@SuppressWarnings("preview") MemorySegment fieldValue) {
-        WGPUInstanceDescriptor.requiredFeatures(descriptorPtr, fieldValue);
-    }
-
-    @SuppressWarnings("preview")
-    public MemorySegment requiredLimits() {
-        return WGPUInstanceDescriptor.requiredLimits(descriptorPtr);
-    }
-
-    public void requiredLimits(@SuppressWarnings("preview") MemorySegment fieldValue) {
-        WGPUInstanceDescriptor.requiredLimits(descriptorPtr, fieldValue);
-    }
+    
     
 
 }

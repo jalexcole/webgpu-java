@@ -27,8 +27,9 @@ class StringView {
     }
 
     public String string() {
-        var stringData = WGPUStringView.data(StringViewPtr);
-        return stringData.getUtf8String(WGPUStringView.length(StringViewPtr));
+        MemorySegment stringData = WGPUStringView.data(StringViewPtr);
+        var charArray = stringData.asByteBuffer();
+        return new String(charArray.array());
     }
 
     @SuppressWarnings("preview")
