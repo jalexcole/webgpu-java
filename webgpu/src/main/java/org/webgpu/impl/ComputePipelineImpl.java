@@ -2,6 +2,8 @@ package org.webgpu.impl;
 
 import java.lang.foreign.MemorySegment;
 
-public record ComputePipelineImpl(MemorySegment ptr) {
+import org.webgpu.api.ComputePipeline;
+
+public record ComputePipelineImpl(MemorySegment ptr) implements ComputePipeline {
     
 }

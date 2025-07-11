@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Test;
+import org.webgpu.api.WebGPU;
 
 public class WebGPUTest {
     

@@ -2,6 +2,8 @@ package org.webgpu.impl;
 
 import java.lang.foreign.MemorySegment;
 
-public record TextureImpl(MemorySegment ptr) {
+import org.webgpu.api.Texture;
+
+public record TextureImpl(MemorySegment ptr) implements Texture {
     
 }

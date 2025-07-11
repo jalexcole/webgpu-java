@@ -2,6 +2,8 @@ package org.webgpu.impl;
 
 import java.lang.foreign.MemorySegment;
 
-public record PipelineLayoutImpl(MemorySegment ptr) {
+import org.webgpu.api.PipelineLayout;
+
+public record PipelineLayoutImpl(MemorySegment ptr) implements PipelineLayout {
     
 }

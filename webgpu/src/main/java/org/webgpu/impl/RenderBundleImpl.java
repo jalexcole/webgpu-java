@@ -2,6 +2,8 @@ package org.webgpu.impl;
 
 import java.lang.foreign.MemorySegment;
 
-public record RenderBundleImpl(MemorySegment ptr) {
+import org.webgpu.api.RenderBundle;
+
+public record RenderBundleImpl(MemorySegment ptr) implements RenderBundle {
     
 }

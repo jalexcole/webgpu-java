@@ -2,6 +2,8 @@ package org.webgpu.impl;
 
 import java.lang.foreign.MemorySegment;
 
-public record QueueImpl(MemorySegment ptr) {
+import org.webgpu.api.Queue;
+
+public record QueueImpl(MemorySegment ptr) implements Queue {
     
 }

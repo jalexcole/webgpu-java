@@ -2,6 +2,8 @@ package org.webgpu.impl;
 
 import java.lang.foreign.MemorySegment;
 
-public record TextureViewImpl(MemorySegment ptr) {
+import org.webgpu.api.TextureView;
+
+public record TextureViewImpl(MemorySegment ptr) implements TextureView {
     
 }

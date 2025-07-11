@@ -2,7 +2,9 @@ package org.webgpu.impl;
 
 import java.lang.foreign.MemorySegment;
 
-public record CommandBufferImpl(MemorySegment ptr) {
+import org.webgpu.api.CommandBuffer;
+
+public record CommandBufferImpl(MemorySegment ptr) implements CommandBuffer{
 
     
 }

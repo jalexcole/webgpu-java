@@ -2,6 +2,8 @@ package org.webgpu.impl;
 
 import java.lang.foreign.MemorySegment;
 
-public record BufferImpl(MemorySegment ptr) {
+import org.webgpu.api.Buffer;
+
+public record BufferImpl(MemorySegment ptr) implements Buffer {
     
 }

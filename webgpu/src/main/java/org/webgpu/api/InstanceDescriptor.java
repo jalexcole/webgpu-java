@@ -1,0 +1,50 @@
+package org.webgpu.api;
+
+import java.lang.foreign.Arena;
+import java.lang.foreign.MemorySegment;
+
+import org.webgpu.extract.WGPUInstanceDescriptor;
+
+public class InstanceDescriptor {
+
+    @SuppressWarnings("preview")
+    private MemorySegment descriptorPtr;
+
+    public InstanceDescriptor() {
+
+        try {
+            @SuppressWarnings("preview")
+            Arena arena = Arena.ofAuto();
+            descriptorPtr = WGPUInstanceDescriptor.allocate(arena);
+
+        } finally {
+
+        }
+    }
+
+    @SuppressWarnings("preview")
+    MemorySegment address() {
+        return descriptorPtr;
+    }
+
+    @SuppressWarnings("preview")
+    public MemorySegment getSegment() {
+        return descriptorPtr;
+    }
+
+    // Convenience methods operating on the wrapped segment
+    @SuppressWarnings("preview")
+    public MemorySegment nextInChain() {
+        return WGPUInstanceDescriptor.nextInChain(descriptorPtr);
+    }
+
+    public void nextInChain(@SuppressWarnings("preview") MemorySegment fieldValue) {
+        WGPUInstanceDescriptor.nextInChain(descriptorPtr, fieldValue);
+    }
+
+    @Override
+    public String toString() {
+        return "InstanceDescriptor [descriptorPtr=" + descriptorPtr + "]";
+    }
+
+}

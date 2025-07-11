@@ -2,6 +2,8 @@ package org.webgpu.impl;
 
 import java.lang.foreign.MemorySegment;
 
-public record QuerySetImpl(MemorySegment ptr) {
+import org.webgpu.api.QuerySet;
+
+public record QuerySetImpl(MemorySegment ptr) implements QuerySet {
     
 }

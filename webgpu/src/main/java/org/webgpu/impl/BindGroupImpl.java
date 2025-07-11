@@ -2,6 +2,8 @@ package org.webgpu.impl;
 
 import java.lang.foreign.MemorySegment;
 
-public record BindGroupImpl(MemorySegment ptr) {
+import org.webgpu.api.BindGroup;
+
+public record BindGroupImpl(MemorySegment ptr) implements BindGroup {
     
 }

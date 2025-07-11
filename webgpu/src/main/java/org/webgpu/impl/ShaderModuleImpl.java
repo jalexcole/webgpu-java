@@ -2,6 +2,8 @@ package org.webgpu.impl;
 
 import java.lang.foreign.MemorySegment;
 
-public record ShaderModuleImpl(MemorySegment ptr) {
+import org.webgpu.api.ShaderModule;
+
+public record ShaderModuleImpl(MemorySegment ptr) implements ShaderModule {
     
 }

@@ -2,6 +2,8 @@ package org.webgpu.impl;
 
 import java.lang.foreign.MemorySegment;
 
-public record ComputePassEncoderImpl(MemorySegment ptr) {
+import org.webgpu.api.ComputePassEncoder;
+
+public record ComputePassEncoderImpl(MemorySegment ptr) implements ComputePassEncoder {
     
 }

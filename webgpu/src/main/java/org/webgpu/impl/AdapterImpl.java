@@ -1,25 +1,26 @@
 package org.webgpu.impl;
 
 import java.lang.foreign.MemorySegment;
-import java.time.Instant;
+import java.util.concurrent.Future;
 
 import org.jspecify.annotations.NonNull;
-
-import org.webgpu.Adapter;
-import org.webgpu.AdapterInfo;
-import org.webgpu.DownlevelCapabilities;
-import org.webgpu.Features;
-import org.webgpu.Limits;
-import org.webgpu.TextureFormat;
-import org.webgpu.TextureFormatFeatures;
-import org.webgpu.WGPU;
+import org.webgpu.api.Adapter;
+import org.webgpu.api.AdapterInfo;
+import org.webgpu.api.Device;
+import org.webgpu.api.DeviceDescriptor;
+import org.webgpu.api.DownlevelCapabilities;
+import org.webgpu.api.FeatureName;
+import org.webgpu.api.Limits;
+import org.webgpu.api.TextureFormat;
+import org.webgpu.api.TextureFormatFeatures;
+import org.webgpu.extract.webgpu_h;
 
 public record AdapterImpl(@NonNull MemorySegment ptr) implements Adapter, AutoCloseable {
 
 	@Override
-	public Features features() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'features'");
+    public FeatureName[] features() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'features'");
 	}
 
 	@Override
@@ -46,15 +47,22 @@ public record AdapterImpl(@NonNull MemorySegment ptr) implements Adapter, AutoCl
 		throw new UnsupportedOperationException("Unimplemented method 'getTextureFormatFeatures'");
 	}
 
-	@Override
-	public Instant getPresentationTimestamp() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getPresentationTimestamp'");
-	}
+	
 
 	@Override
 	public void close() throws Exception {
-		WGPU.adapterRelease(this);
+		release();
 	}
+
+    @Override
+    public Future<Device> requestDevice(@NonNull DeviceDescriptor descriptor) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'requestDevice'");
+    }
+
+    @Override
+    public void release() {
+        webgpu_h.wgpuAdapterRelease(this.ptr);
+    }
     
 }
