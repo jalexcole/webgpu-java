@@ -32,6 +32,8 @@ jobs:
         curl -s "https://get.sdkman.io" | bash
         source "$HOME/.sdkman/bin/sdkman-init.sh"
         sdk version
+        source "/home/runner/.sdkman/bin/sdkman-init.sh"
+        sdk install jextract
     - name: Install JExtract!
       run: sdk install jextract
     - name: Set up JDK 21
