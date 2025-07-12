@@ -3,7 +3,7 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.webgpu</groupId>
-    <artifactId>wgpu-native</artifactId>
+    <artifactId>webgpu-sys</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <parent>
@@ -62,7 +62,11 @@
                         <argument>${project.build.directory}/generated-sources/jextract</argument>
                         <argument>--target-package</argument>
                         <argument>org.webgpu.extract</argument>
-                        <argument>${project.basedir}/wgpu-native/ffi/webgpu-headers/webgpu.h</argument>
+                        <argument>--include-dir</argument>
+                        <argument>${project.basedir}/wgpu-native/ffi/webgpu-headers/</argument>
+                        <argument>--header-class-name</argument>
+                        <argument>webgpu_h</argument>
+                        <argument>${project.basedir}/wgpu-native/ffi/wgpu.h</argument>
                     </arguments>
 
                 </configuration>
@@ -119,6 +123,39 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.6.0</version>
+                <executions>
+                    <execution>
+                        <id>package-macos-natives</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>${project.artifactId}-natives-macos-arm64</finalName>
+                            <verbose>true</verbose>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <descriptors>
+                                <descriptor>src/assembly/natives-macos-arm64.xml</descriptor>
+                            </descriptors>
+
+                            <archive>
+                                <manifest>
+                                    <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                    <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                                </manifest>
+                                <manifestEntries>
+                                    <Platform>macos</Platform>
+                                    <Arch>aarch64</Arch>
+                                </manifestEntries>
+                              </archive>
+                        </configuration>
+                    </execution>
+                </executions>
+              </plugin> -->
         </plugins>
     </build>
 </project>

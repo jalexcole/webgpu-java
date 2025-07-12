@@ -19,12 +19,7 @@ public class WebGPU {
         }
     }
 
-    private WebGPU() {
-       var descriptor = webgpu_h.wgpuCreateInstance$descriptor();
-
-       
-
-    }
+    private WebGPU() {}
 
     public static WebGPUInstance createInstance() {
         return new WebGPUInstance(webgpu_h.wgpuCreateInstance(MemorySegment.NULL));

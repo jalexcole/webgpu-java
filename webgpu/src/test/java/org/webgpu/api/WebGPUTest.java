@@ -1,4 +1,4 @@
-package org.webgpu;
+package org.webgpu.api;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

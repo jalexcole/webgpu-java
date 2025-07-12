@@ -1,4 +1,4 @@
-package org.webgpu;
+package org.webgpu.api;
 
 import org.junit.jupiter.api.Test;
 

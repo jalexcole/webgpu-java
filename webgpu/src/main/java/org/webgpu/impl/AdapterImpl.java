@@ -1,5 +1,6 @@
 package org.webgpu.impl;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.util.concurrent.Future;
 
@@ -13,6 +14,7 @@ import org.webgpu.api.FeatureName;
 import org.webgpu.api.Limits;
 import org.webgpu.api.TextureFormat;
 import org.webgpu.api.TextureFormatFeatures;
+import org.webgpu.extract.WGPUAdapterInfo;
 import org.webgpu.extract.webgpu_h;
 
 public record AdapterImpl(@NonNull MemorySegment ptr) implements Adapter, AutoCloseable {
@@ -31,6 +33,14 @@ public record AdapterImpl(@NonNull MemorySegment ptr) implements Adapter, AutoCl
 
 	@Override
 	public AdapterInfo getInfo() {
+		try {
+			Arena arena = Arena.ofAuto();
+			var adapterInfo = WGPUAdapterInfo.allocate(arena);
+			webgpu_h.wgpuAdapterGetInfo(this.ptr, adapterInfo);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'getInfo'");
 	}

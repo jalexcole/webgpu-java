@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import org.webgpu.extract.WGPUBufferDescriptor;
 
-public class BufferDescriptor {
+public class BufferDescriptor{
     private MemorySegment descriptorPtr;
 
     // public Optional<String> label() {
@@ -14,8 +14,11 @@ public class BufferDescriptor {
     // }
 
     public BufferDescriptor() {
-        try (Arena arena = Arena.ofConfined()) {
+        try  {
+            Arena arena = Arena.ofAuto();
             descriptorPtr = WGPUBufferDescriptor.allocate(arena);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

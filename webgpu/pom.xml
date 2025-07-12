@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>org.webgpu</groupId>
-            <artifactId>wgpu-native</artifactId>
+            <artifactId>webgpu-sys</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->

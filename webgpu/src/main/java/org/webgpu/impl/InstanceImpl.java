@@ -3,13 +3,14 @@ package org.webgpu.impl;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
-import java.util.Timer;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
-import java.util.logging.Logger;
+
 
 import org.jspecify.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.webgpu.api.Adapter;
 import org.webgpu.api.Instance;
 import org.webgpu.api.RequestAdapterOptions;
@@ -19,7 +20,7 @@ import org.webgpu.extract.webgpu_h;
 import org.webgpu.util.StringView;
 public record InstanceImpl(MemorySegment ptr, Arena arena) implements Instance {
 
-    private static final Logger logger = Logger.getLogger(InstanceImpl.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(InstanceImpl.class);
     
     @Override
     public void close() throws Exception {
@@ -74,7 +75,7 @@ public record InstanceImpl(MemorySegment ptr, Arena arena) implements Instance {
                 CompletableFuture<Adapter> targetFuture = pendingAdapterRequests.remove(completedRequestId);
 
                 if (targetFuture == null) {
-                    logger.warning("Received callback for unknown request ID: " + completedRequestId);
+                    logger.warn("Received callback for unknown request ID: " + completedRequestId);
                     // This could happen if the future was already cancelled or completed by other means.
                     return;
                 }
@@ -92,19 +93,19 @@ public record InstanceImpl(MemorySegment ptr, Arena arena) implements Instance {
                          message = new StringView(messagePtr).string(); // Or use your StringView directly if it handles char*
                      }
                 } catch (Exception e) {
-                    logger.severe("Error converting native message to String: " + e.getMessage());
+                    logger.error("Error converting native message to String: " + e.getMessage());
                     message = "Error decoding message: " + e.getMessage();
                 }
 
 
                 if (status == 0) { // Assuming 0 means success for WGPUStatus
-                    logger.fine("Adapter successfully requested! Message: " + message);
+                    logger.debug("Adapter successfully requested! Message: " + message);
                     // Wrap the native adapter pointer in your Java Adapter object
                     Adapter adapter = new AdapterImpl(adapterPtr); // Assuming Adapter constructor takes MemorySegment
                     targetFuture.complete(adapter); // Complete the Future successfully
                 } else {
                     String errorMessage = "Failed to request adapter: " + message;
-                    logger.severe(errorMessage);
+                    logger.error(errorMessage);
                     targetFuture.completeExceptionally(new RuntimeException(errorMessage)); // Complete the Future with an error
                 }
             };

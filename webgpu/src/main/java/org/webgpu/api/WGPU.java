@@ -9,7 +9,7 @@ import org.webgpu.impl.InstanceImpl;
 
 public class WGPU {
 
-    private static Arena arena = null;
+    public static Arena arena = Arena.ofConfined();
 
     @SuppressWarnings("preview")
     static final Linker NATIVE_LINKER = Linker.nativeLinker();

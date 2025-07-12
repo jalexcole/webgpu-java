@@ -1,11 +1,11 @@
-package org.webgpu;
+package org.webgpu.api;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.webgpu.api.Color;
+
 
 public class ColorTest {
     

@@ -1,6 +1,6 @@
 package org.webgpu.api;
 
 
-public interface ComputePipeline {
+public interface ComputePipeline extends PipelineBase, ObjectBase {
     
 }
