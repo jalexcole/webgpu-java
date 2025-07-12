@@ -34,8 +34,7 @@ jobs:
         sdk version
         source "/home/runner/.sdkman/bin/sdkman-init.sh"
         sdk install jextract
-    - name: Install JExtract!
-      run: sdk install jextract
+   
     - name: Set up JDK 21
       uses: actions/setup-java@v4
       with:
