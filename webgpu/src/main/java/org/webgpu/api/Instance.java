@@ -20,5 +20,5 @@ public interface Instance extends AutoCloseable {
      * @return Adapter
      * @throws RequestAdaptorError
      */
-    public Future<Adapter> requestAdapter(@Nullable RequestAdapterOptions options);
+    public Future<Adapter> requestAdapter(@Nullable RequestAdapterOptions options) throws RequestAdaptorError;
 }

@@ -2,6 +2,6 @@ package org.webgpu.api;
 
 import java.lang.foreign.MemorySegment;
 
-public interface RenderBundleEncoder extends ObjectBase {
+public interface RenderBundleEncoder extends ObjectBase, EncoderBase {
 
 }

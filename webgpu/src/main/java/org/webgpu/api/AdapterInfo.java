@@ -14,8 +14,11 @@ public class AdapterInfo {
     }
 
     public AdapterInfo() {
-        try (Arena allocator = Arena.ofConfined()) {
+        try  {
+            Arena allocator = Arena.ofAuto();
             adapterInfoPtr = WGPUAdapterInfo.allocate(allocator);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

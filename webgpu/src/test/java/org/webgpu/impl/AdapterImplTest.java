@@ -1,9 +1,12 @@
 package org.webgpu.impl;
 
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.junit.jupiter.api.Test;
 import org.webgpu.api.WGPU;
+import org.webgpu.exceptions.RequestAdaptorError;
 
 public class AdapterImplTest {
     @Test
@@ -16,58 +19,53 @@ public class AdapterImplTest {
     }
 
     @Test
-    void testFeatures() throws InterruptedException, ExecutionException {
-        WGPU.createInstance(null).requestAdapter(null).get().features();
+    void testFeatures() throws InterruptedException, ExecutionException, RequestAdaptorError, TimeoutException {
+        WGPU.createInstance(null).requestAdapter(null).get(1000, TimeUnit.MICROSECONDS).features();
     }
 
     @Test
-    void testGetDownlevelCapabilities() throws InterruptedException, ExecutionException {
+    void testGetDownlevelCapabilities() throws InterruptedException, ExecutionException, RequestAdaptorError {
         WGPU.createInstance(null).requestAdapter(null).get().getDownlevelCapabilities();
     }
 
     @Test
-    void testGetInfo() throws InterruptedException, ExecutionException {
+    void testGetInfo() throws InterruptedException, ExecutionException, RequestAdaptorError {
         WGPU.createInstance(null).requestAdapter(null).get().getInfo();
 
     }
 
     @Test
-    void testGetTextureFormatFeatures() throws InterruptedException, ExecutionException {
+    void testGetTextureFormatFeatures() throws InterruptedException, ExecutionException, RequestAdaptorError {
         WGPU.createInstance(null).requestAdapter(null).get().getTextureFormatFeatures(null);
 
     }
 
     @Test
-    void testHashCode() throws InterruptedException, ExecutionException {
+    void testHashCode() throws InterruptedException, ExecutionException, RequestAdaptorError {
         WGPU.createInstance(null).requestAdapter(null).get().hashCode();
 
     }
 
     @Test
-    void testLimits() throws InterruptedException, ExecutionException {
+    void testLimits() throws InterruptedException, ExecutionException, RequestAdaptorError {
         WGPU.createInstance(null).requestAdapter(null).get().limits();
 
     }
 
     @Test
-    void testPtr() {
-
-    }
-
-    @Test
-    void testRelease() throws InterruptedException, ExecutionException {
+    void testRelease() throws InterruptedException, ExecutionException, RequestAdaptorError {
         WGPU.createInstance(null).requestAdapter(null).get().release();
 
     }
 
     @Test
-    void testRequestDevice() throws InterruptedException, ExecutionException {
+    void testRequestDevice() throws InterruptedException, ExecutionException, RequestAdaptorError {
         WGPU.createInstance(null).requestAdapter(null).get().requestDevice(null).get();
 
     }
 
     @Test
-    void testToString() throws InterruptedException, ExecutionException {
+    void testToString() throws InterruptedException, ExecutionException, RequestAdaptorError {
         WGPU.createInstance(null).requestAdapter(null).get().toString();
 
     }

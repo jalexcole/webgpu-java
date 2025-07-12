@@ -27,7 +27,7 @@
                         </goals>
                         <configuration>
                             <path>${project.basedir}/wgpu-native</path>
-                            <release>true</release>
+                            <release>false</release>
                             <target>aarch64-apple-darwin</target>
                             <!-- <verbosity>-v</verbosity> -->
                             <copyWithPlatformDir>true</copyWithPlatformDir>

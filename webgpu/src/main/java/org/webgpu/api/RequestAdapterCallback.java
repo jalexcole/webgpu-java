@@ -1,0 +1,8 @@
+package org.webgpu.api;
+
+import org.webgpu.extract.WGPURequestAdapterCallback;
+
+@FunctionalInterface
+public interface RequestAdapterCallback  {
+    void apply(Status status, Adapter adapter, String message, Object userdata1, Object userdata2);
+}

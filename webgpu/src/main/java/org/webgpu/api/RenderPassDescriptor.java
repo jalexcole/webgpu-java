@@ -2,7 +2,7 @@ package org.webgpu.api;
 
 import java.lang.foreign.MemorySegment;
 
-public class RenderPassDescriptor {
+public class RenderPassDescriptor implements DescriptorBase{
 private MemorySegment ptr;
 
 public MemorySegment ptr() {
