@@ -6,12 +6,22 @@ import java.util.TimerTask;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.webgpu.api.BackendType;
 import org.webgpu.api.Instance;
+import org.webgpu.api.RequestAdapterOptions;
 import org.webgpu.api.WGPU;
 
 public class InstanceImplTest {
     private static final Logger logger = Logger.getLogger(InstanceImplTest.class.getName());
+
+    @BeforeAll
+    static void beforeAll() {
+        System.setProperty("WGPU_LOG", "debug");
+        System.setProperty("WGPU_BACKEND", "opengl"); // or vulkan / dx12
+    }
+
     @Test
     void testClose() {
         try (Instance instance = WGPU.createInstance(null)) {
@@ -34,25 +44,27 @@ public class InstanceImplTest {
     @Test
     void testRequestAdapter() throws InterruptedException {
         try (Instance instance = WGPU.createInstance(null)) {
-            var adapterFuture = instance.requestAdapter(null);
-            
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    try {
-                        var features = adapterFuture.get().features();
-                        logger.info(Arrays.asList(features).toString());
-                    } catch (InterruptedException | ExecutionException e) {
-                        e.printStackTrace();
-                        throw new RuntimeException(e);
-                    }
-                }
-            }, 1);
+            instance.requestAdapter(null).get();
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        Thread.sleep(5);
-        
-        logger.info("done");
+
+    }
+
+    @Test
+    void testRequestAdapterWithOptions() {
+        RequestAdapterOptions options = new RequestAdapterOptions();
+            options.forceFallbackAdapter(true);
+            options.backendType(BackendType.WEBGPU);
+            String string = options.toString();
+        try (Instance instance = WGPU.createInstance(null)) {
+            
+
+            instance.requestAdapter(options).get();
+        } catch (Exception e) {
+            System.err.println(options);
+            throw new RuntimeException(e);
+        }
     }
 }

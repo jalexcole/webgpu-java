@@ -15,7 +15,7 @@ public class WGPU {
     static final Linker NATIVE_LINKER = Linker.nativeLinker();
     static {
         try {
-            System.load("/Users/alex/dev/webgpu-java/webgpu/src/main/resources/libwgpu_native.dylib");
+            System.load("/Users/alex/dev/webgpu-java/webgpu/src/test/resources/libwgpu_native.dylib");
         } catch (SecurityException e) {
             System.out.println(e.getMessage());
         } catch (final UnsatisfiedLinkError e) {

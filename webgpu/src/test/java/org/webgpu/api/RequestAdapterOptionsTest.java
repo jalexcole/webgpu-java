@@ -1,12 +1,12 @@
 package org.webgpu.api;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import java.lang.foreign.MemorySegment;
 
 import org.junit.jupiter.api.Test;
-import org.webgpu.api.RequestAdapterOptions;
+
 
 public class RequestAdapterOptionsTest {
     @Test
@@ -18,126 +18,55 @@ public class RequestAdapterOptionsTest {
 
     @Test
     void testBackendType() {
-        
+        var adapterOptions = new RequestAdapterOptions();
+        adapterOptions.backendType();
+
     }
 
-    @Test
-    void testBackendType2() {
-        
+    void testSetBackendType() {
+        var adapterOptions = new RequestAdapterOptions();
+        adapterOptions.backendType(BackendType.Vulkan);
     }
 
     @Test
     void testCompatibleSurface() {
-        
+        var adapterOptions = new RequestAdapterOptions();
+        adapterOptions.compatibleSurface();
     }
 
-    @Test
-    void testCompatibleSurface2() {
-        
-    }
+    
 
     @Test
     void testFeatureLevel() {
-        
+        var adapterOptions = new RequestAdapterOptions();
+        adapterOptions.featureLevel();
     }
 
-    @Test
-    void testFeatureLevel2() {
-        
-    }
+    
 
     @Test
     void testForceFallbackAdapter() {
-        
+        var adapterOptions = new RequestAdapterOptions();
+        adapterOptions.forceFallbackAdapter();
     }
 
-    @Test
-    void testForceFallbackAdapter2() {
-        
-    }
+    
 
     @Test
     void testNextInChain() {
-        
+        var adapterOptions = new RequestAdapterOptions();
+        adapterOptions.nextInChain();
     }
 
     @Test
     void testPowerPreference() {
-        
-    }
-
-    @Test
-    void testPowerPreference2() {
-        
+        var adapterOptions = new RequestAdapterOptions();
+        adapterOptions.powerPreference();
     }
 
     @Test
     void testToString() {
-        
-    }
-
-    @Test
-    void testBackendType3() {
-        
-    }
-
-    @Test
-    void testBackendType4() {
-        
-    }
-
-    @Test
-    void testCompatibleSurface3() {
-        
-    }
-
-    @Test
-    void testCompatibleSurface4() {
-        
-    }
-
-    @Test
-    void testFeatureLevel3() {
-        
-    }
-
-    @Test
-    void testFeatureLevel4() {
-        
-    }
-
-    @Test
-    void testForceFallbackAdapter3() {
-        
-    }
-
-    @Test
-    void testForceFallbackAdapter4() {
-        
-    }
-
-    @Test
-    void testNextInChain2() {
-        
-    }
-
-    @Test
-    void testPowerPreference3() {
-        
-    }
-
-    @Test
-    void testPowerPreference4() {
-        
-    }
-
-    @Test
-    void testPtr2() {
-        
-    }
-
-    @Test
-    void testToString2() {
-        
+        var adapterOptions = new RequestAdapterOptions();
+        adapterOptions.toString();
     }
 }

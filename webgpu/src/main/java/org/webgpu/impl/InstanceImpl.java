@@ -25,7 +25,8 @@ public record InstanceImpl(@SuppressWarnings("preview") MemorySegment ptr, @Supp
         implements Instance {
 
     private static final Logger logger = Logger.getLogger(InstanceImpl.class.getName());
-
+            // Shared map to track pending adapter requests by requestId
+    private static final ConcurrentHashMap<Long, CompletableFuture<Adapter>> pendingAdapterRequests = new ConcurrentHashMap<>();
     @Override
     public void close() throws Exception {
         webgpu_h.wgpuInstanceRelease(this.ptr());
@@ -37,107 +38,60 @@ public record InstanceImpl(@SuppressWarnings("preview") MemorySegment ptr, @Supp
         if (options == null) {
             options = new RequestAdapterOptions();
         }
-        final ConcurrentHashMap<Long, CompletableFuture<Adapter>> pendingAdapterRequests = new ConcurrentHashMap<>();
 
-        // Create a CompletableFuture that will be completed by the native callback
         CompletableFuture<Adapter> futureAdapter = new CompletableFuture<>();
-        
-        try { // This arena is for the setup of the request.
+        long requestId = System.nanoTime(); // Generate unique request ID
+        pendingAdapterRequests.put(requestId, futureAdapter);
 
-            // Generate a unique ID to link the callback to this specific Future
-            long requestId = System.nanoTime(); // Simple unique ID, or use UUID.randomUUID().getMostSignificantBits()
+        try {
+            // Arena must outlive the request — allocated from instance's lifetime arena
+            MemorySegment userData1Segment = arena.allocate(ValueLayout.JAVA_LONG);
+            userData1Segment.set(ValueLayout.JAVA_LONG, 0, requestId);
 
-            // Store the future in our map, associated with the unique ID
-            pendingAdapterRequests.put(requestId, futureAdapter);
-
-            WGPURequestAdapterCallback.Function myAdapterCallback = (status, adapterPtr, messagePtr, userData1,
-                    userData2) -> {
-
-                @SuppressWarnings("preview")
-                long completedRequestId = userData1.get(ValueLayout.JAVA_LONG, 0); // Read the long from the
-                                                                                   // MemorySegment
-
-                // Remove the future from the map as it's being completed
+            WGPURequestAdapterCallback.Function callback = (status, adapterPtr, messagePtr, userData1, userData2) -> {
+                long completedRequestId = userData1.get(ValueLayout.JAVA_LONG, 0);
                 CompletableFuture<Adapter> targetFuture = pendingAdapterRequests.remove(completedRequestId);
 
                 if (targetFuture == null) {
-                    logger.severe("Received callback for unknown request ID: " + completedRequestId);
-                    // This could happen if the future was already cancelled or completed by other
-                    // means.
+                    logger.severe("Unknown request ID: " + completedRequestId);
                     return;
                 }
 
-                String message = "";
-
-                try (@SuppressWarnings("preview")
-                Arena arena = Arena.ofConfined()) {
-                    message = new StringView(messagePtr).string();
+                String message;
+                try (Arena callbackArena = Arena.ofConfined()) {
+                    message = (messagePtr != null && messagePtr.address() != 0)
+                            ? new StringView(messagePtr).string()
+                            : "(no message from native)";
                 }
 
-                if (status == 0) { // Assuming 0 means success for WGPUStatus
-                    logger.fine("Adapter successfully requested! Message: " + message);
-                    // Wrap the native adapter pointer in your Java Adapter object
-                    Adapter adapter = new AdapterImpl(adapterPtr); // Assuming Adapter constructor takes MemorySegment
-                    targetFuture.complete(adapter); // Complete the Future successfully
+                if (status == 0) {
+                    logger.info("Adapter received: " + message);
+                    targetFuture.complete(new AdapterImpl(adapterPtr));
                 } else {
-                    String errorMessage = "Failed to request adapter: " + message;
-                    logger.severe(errorMessage);
-                    targetFuture.completeExceptionally(new RequestAdaptorError(errorMessage)); // Complete the Future with
-                                                                                               // an error
+                    String err = "Failed to request adapter: " + message;
+                    logger.severe(err);
+                    targetFuture.completeExceptionally(new RequestAdaptorError(err));
                 }
             };
 
-            // 2. Allocate the native stub for our Java callback within the request setup
-            // arena
-            @SuppressWarnings("preview")
-            MemorySegment nativeCallbackPtr = WGPURequestAdapterCallback.allocate(myAdapterCallback, arena);
-            System.out.println("Allocated native callback pointer: " + nativeCallbackPtr);
+            MemorySegment nativeCallback = WGPURequestAdapterCallback.allocate(callback, arena);
+            MemorySegment callbackInfo = WGPURequestAdapterCallbackInfo.allocate(arena);
 
-            // 3. Allocate space for the WGPURequestAdapterCallbackInfo struct
-            @SuppressWarnings("preview")
-            MemorySegment callbackInfoStruct = WGPURequestAdapterCallbackInfo.allocate(arena);
-            System.out.println("Allocated WGPURequestAdapterCallbackInfo struct at: " + callbackInfoStruct);
+            WGPURequestAdapterCallbackInfo.nextInChain(callbackInfo, MemorySegment.NULL);
+            WGPURequestAdapterCallbackInfo.mode(callbackInfo, 0); // 0 = WGPUCallbackMode_Asynchronous
+            WGPURequestAdapterCallbackInfo.callback(callbackInfo, nativeCallback);
+            WGPURequestAdapterCallbackInfo.userdata1(callbackInfo, userData1Segment);
+            WGPURequestAdapterCallbackInfo.userdata2(callbackInfo, MemorySegment.NULL);
 
-            // 4. Set the fields of the WGPURequestAdapterCallbackInfo struct
+            webgpu_h.wgpuInstanceRequestAdapter(arena, this.ptr, options.ptr(), callbackInfo);
 
-            // For 'nextInChain', typically NULL if not chaining structs
-            WGPURequestAdapterCallbackInfo.nextInChain(callbackInfoStruct, MemorySegment.NULL);
-            System.out.println("Set nextInChain to NULL.");
-
-            // Set the 'mode' (WGPUCallbackMode_Asynchronous is usually 0)
-            int WGPUCallbackMode_Asynchronous = 0; // Placeholder value, use actual enum if available
-            WGPURequestAdapterCallbackInfo.mode(callbackInfoStruct, WGPUCallbackMode_Asynchronous);
-            System.out.println("Set mode to " + WGPUCallbackMode_Asynchronous);
-
-            // Set the 'callback' field with our native callback pointer
-            WGPURequestAdapterCallbackInfo.callback(callbackInfoStruct, nativeCallbackPtr);
-            System.out.println("Set callback field with our native pointer.");
-
-            // Set 'userdata1' to pass the requestId.
-            // We need to allocate a MemorySegment to hold this long.
-            @SuppressWarnings("preview")
-            MemorySegment userData1Segment = arena.allocate(ValueLayout.JAVA_LONG);
-            userData1Segment.set(ValueLayout.JAVA_LONG, 0, requestId);
-            WGPURequestAdapterCallbackInfo.userdata1(callbackInfoStruct, userData1Segment);
-            System.out.println("Set userdata1 (requestId) to: " + requestId + " at " + userData1Segment);
-
-            // Set 'userdata2' to NULL or another relevant context
-            WGPURequestAdapterCallbackInfo.userdata2(callbackInfoStruct, MemorySegment.NULL);
-            System.out.println("Set userdata2 to NULL.");
-
-            
-            webgpu_h.wgpuInstanceRequestAdapter(arena, this.ptr, options.ptr(), callbackInfoStruct);
-            System.out.println("Called wgpuInstanceRequestAdapter natively.");
-
-            
             return futureAdapter;
 
         } catch (Exception e) {
-            // If an error occurs during the setup of the native call, complete the Future
-            // exceptionally.
+            pendingAdapterRequests.remove(requestId);
             futureAdapter.completeExceptionally(
                     new RuntimeException("Failed to setup native adapter request: " + e.getMessage(), e));
-            return futureAdapter; // Return the now-completed-exceptionally future
+            return futureAdapter;
         }
 
     }

@@ -1,5 +1,7 @@
 package org.webgpu.api;
 
+import java.util.Arrays;
+
 import org.webgpu.extract.webgpu_h;
 
 public enum BackendType {
@@ -21,5 +23,14 @@ public enum BackendType {
 
     public int value() {
         return value;
+    }
+
+    public static BackendType fromValue(int value) {
+        for (BackendType level : BackendType.values()) {
+            if (level.value == value) {
+                return level;
+            }
+        }
+        throw new IllegalArgumentException("Invalid value: " + value + ". Must be one of: " + Arrays.toString(BackendType.values()));
     }
 }

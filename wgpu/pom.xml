@@ -28,10 +28,13 @@
                         <configuration>
                             <path>${project.basedir}/wgpu-native</path>
                             <release>false</release>
-                            <target>aarch64-apple-darwin</target>
+                            <!-- <target>aarch64-apple-darwin</target> -->
                             <!-- <verbosity>-v</verbosity> -->
                             <copyWithPlatformDir>true</copyWithPlatformDir>
                             <copyTo>${project.build.directory}/native/</copyTo>
+                            <features>
+                                <feature>metal</feature>
+                            </features>
                         </configuration>
                     </execution>
                 </executions>

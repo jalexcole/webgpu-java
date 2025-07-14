@@ -96,6 +96,13 @@
             <version>2.0.17</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.lwjgl</groupId>
+            <artifactId>lwjgl-opengl</artifactId>
+            <version>3.3.6</version>
+            <classifier>${lwjgl.natives}</classifier>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>

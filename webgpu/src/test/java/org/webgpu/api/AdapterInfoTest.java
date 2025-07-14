@@ -8,6 +8,7 @@ public class AdapterInfoTest {
     @Test
     void testAdapter() {
         AdapterInfo adapterInfo = new AdapterInfo();
+        
     }
 
     @Test
