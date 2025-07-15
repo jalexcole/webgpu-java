@@ -1,5 +1,7 @@
 package org.webgpu.api;
 
+import java.util.Arrays;
+
 import org.webgpu.extract.webgpu_h;
 
 public enum WGSLLanguageFeatureName {
@@ -16,5 +18,14 @@ public enum WGSLLanguageFeatureName {
 
     public int value() {
         return value;
+    }
+
+    public static WGSLLanguageFeatureName fromValue(int value) {
+        for (WGSLLanguageFeatureName level : WGSLLanguageFeatureName.values()) {
+            if (level.value == value) {
+                return level;
+            }
+        }
+        throw new IllegalArgumentException("Invalid value: " + value + ". Must be one of: " + Arrays.toString(WGSLLanguageFeatureName.values()));
     }
 }

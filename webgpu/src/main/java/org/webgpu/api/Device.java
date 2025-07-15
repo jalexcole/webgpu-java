@@ -1,6 +1,5 @@
 package org.webgpu.api;
 
-import java.lang.foreign.MemorySegment;
 import java.util.concurrent.Future;
 
 import org.jspecify.annotations.Nullable;

@@ -14,4 +14,17 @@ public enum VertexStepMode {
     VertexStepMode(int value) {
         this.value = value;
     }
+
+    public int value() {
+        return value;
+    }
+
+    public static VertexStepMode fromValue(int value) {
+        for (VertexStepMode mode : values()) {
+            if (mode.value == value) {
+                return mode;
+            }
+        }
+        throw new IllegalArgumentException("Invalid value: " + value);
+    }
 }

@@ -104,4 +104,17 @@ public enum TextureFormat {
     TextureFormat(int value) {
         this.value = value;
     }
+
+    public int value() {
+        return value;
+    }
+
+    public static TextureFormat fromValue(int value) {
+        for (TextureFormat format : values()) {
+            if (format.value == value) {
+                return format;
+            }
+        }
+        throw new IllegalArgumentException("Invalid value: " + value);
+    }
 }

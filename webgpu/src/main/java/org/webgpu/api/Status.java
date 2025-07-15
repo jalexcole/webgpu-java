@@ -16,4 +16,13 @@ public enum Status {
     public int value() {
         return value;
     }
+
+    public static Status fromValue(int value) {
+        for (Status status : values()) {
+            if (status.value == value) {
+                return status;
+            }
+        }
+        throw new IllegalArgumentException("Invalid value: " + value);
+    }
 }

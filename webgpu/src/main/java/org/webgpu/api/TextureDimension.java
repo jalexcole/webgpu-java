@@ -18,4 +18,13 @@ public enum TextureDimension {
     public int value() {
         return value;
     }
+
+    public static TextureDimension fromValue(int value) {
+        for (TextureDimension dimension : values()) {
+            if (dimension.value == value) {
+                return dimension;
+            }
+        }
+        throw new IllegalArgumentException("Invalid value: " + value);
+    }
 }

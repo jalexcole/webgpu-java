@@ -16,4 +16,17 @@ public enum TextureViewDimension {
     TextureViewDimension(int value) {
         this.value = value;
     }
+
+    public int value() {
+        return value;
+    }
+
+    public static TextureViewDimension fromValue(int value) {
+        for (TextureViewDimension dimension : values()) {
+            if (dimension.value == value) {
+                return dimension;
+            }
+        }
+        throw new IllegalArgumentException("Invalid value: " + value);
+    }
 }

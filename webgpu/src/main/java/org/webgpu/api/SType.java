@@ -19,4 +19,17 @@ public enum SType {
     SType(int value) {
         this.value = value;
     }
+
+    public int value() {
+        return value;
+    }
+
+    public static SType fromValue(int value) {
+        for (SType type : values()) {
+            if (type.value == value) {
+                return type;
+            }
+        }
+        throw new IllegalArgumentException("Invalid value: " + value);
+    }
 }

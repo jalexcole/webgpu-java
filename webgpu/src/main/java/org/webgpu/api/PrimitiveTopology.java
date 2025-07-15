@@ -1,5 +1,7 @@
 package org.webgpu.api;
 
+import java.util.Arrays;
+
 import org.webgpu.extract.webgpu_h;
 
 public enum PrimitiveTopology {
@@ -15,5 +17,18 @@ public enum PrimitiveTopology {
 
     PrimitiveTopology(int value) {
         this.value = value;
+    }
+
+    public int value() {
+        return value;
+    }
+
+    public static PrimitiveTopology fromValue(int value) {
+        for (PrimitiveTopology level : PrimitiveTopology.values()) {
+            if (level.value == value) {
+                return level;
+            }
+        }
+        throw new IllegalArgumentException("Invalid value: " + value + ". Must be one of: " + Arrays.toString(PrimitiveTopology.values()));
     }
 }

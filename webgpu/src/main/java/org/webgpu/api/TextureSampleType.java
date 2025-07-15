@@ -17,4 +17,17 @@ public enum TextureSampleType {
     TextureSampleType(int value) {
         this.value = value;
     }
+
+    public int value() {
+        return value;
+    }
+
+    public static TextureSampleType fromValue(int value) {
+        for (TextureSampleType sampleType : values()) {
+            if (sampleType.value == value) {
+                return sampleType;
+            }
+        }
+        throw new IllegalArgumentException("Invalid value: " + value);
+    }
 }

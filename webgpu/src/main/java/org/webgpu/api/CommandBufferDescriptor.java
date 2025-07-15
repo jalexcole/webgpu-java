@@ -1,12 +1,37 @@
 package org.webgpu.api;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
+import java.util.Optional;
 
-public class CommandBufferDescriptor {
+import org.webgpu.extract.WGPUCommandBufferDescriptor;
+import org.webgpu.util.StringView;
 
-    public MemorySegment ptr() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'ptr'");
+public class CommandBufferDescriptor implements DescriptorBase {
+
+    private MemorySegment ptr;
+
+	public MemorySegment ptr() {
+        return ptr;
     }
 
+    public CommandBufferDescriptor() {
+        Arena arena = Arena.ofAuto();
+        ptr = WGPUCommandBufferDescriptor.allocate(arena);
+    }
+
+    public String label() {
+        return new StringView(WGPUCommandBufferDescriptor.label(ptr)).toString();
+    }
+
+    public void setLabel(String label) {
+        try (Arena arena = Arena.ofConfined()) {
+            var stringView = StringView.of(arena, label);
+            WGPUCommandBufferDescriptor.label(ptr, stringView);
+        }
+    }
+
+    public Optional<ChainedStruct> nextInChain() {
+        return Optional.of(new ChainedStruct(WGPUCommandBufferDescriptor.nextInChain(ptr)));
+    }
 }

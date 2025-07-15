@@ -15,4 +15,22 @@ public enum StorageTextureAccess {
     StorageTextureAccess(int value) {
         this.value = value;
     }
+
+    public static StorageTextureAccess fromValue(int value) {
+        for (StorageTextureAccess access : values()) {
+            if (access.value == value) {
+                return access;
+            }
+        }
+        throw new IllegalArgumentException("Invalid value: " + value);
+    }
+
+    public static StorageTextureAccess fromValue(String value) {
+        for (StorageTextureAccess access : values()) {
+            if (access.name().equals(value)) {
+                return access;
+            }
+        }
+        throw new IllegalArgumentException("Invalid value: " + value);
+    }
 }

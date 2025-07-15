@@ -54,4 +54,13 @@ public enum VertexFormat {
     public int value() {
         return value;
     }
+
+    public static VertexFormat fromValue(int value) {
+        for (VertexFormat format : VertexFormat.values()) {
+            if (format.value == value) {
+                return format;
+            }
+        }
+        return null;
+    }
 }

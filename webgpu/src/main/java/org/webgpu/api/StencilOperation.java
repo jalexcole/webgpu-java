@@ -19,4 +19,17 @@ public enum StencilOperation {
     StencilOperation(int value) {
         this.value = value;
     }
+
+    public int value() {
+        return value;
+    }
+
+    public static StencilOperation fromValue(int value) {
+        for (StencilOperation operation : values()) {
+            if (operation.value == value) {
+                return operation;
+            }
+        }
+        throw new IllegalArgumentException("Invalid value: " + value);
+    }
 }
