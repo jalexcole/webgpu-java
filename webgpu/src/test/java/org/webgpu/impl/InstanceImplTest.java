@@ -1,9 +1,6 @@
 package org.webgpu.impl;
 
-import java.util.Arrays;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.ExecutionException;
+
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.BeforeAll;

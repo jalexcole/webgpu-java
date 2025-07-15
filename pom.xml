@@ -14,7 +14,6 @@
     </properties>
 
     <modules>
-        <module>wgpu</module>
         <module>webgpu</module>
     </modules>
 

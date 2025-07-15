@@ -1,3 +1,6 @@
 [submodule "wgpu/wgpu-native"]
 	path = wgpu/wgpu-native
 	url = https://github.com/gfx-rs/wgpu-native.git
+[submodule "webgpu-headers"]
+	path = webgpu-headers
+	url = https://github.com/webgpu-native/webgpu-headers.git

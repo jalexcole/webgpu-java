@@ -11,6 +11,12 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <profiles>
         <profile>
             <id>lwjgl-natives-linux-amd64</id>
@@ -70,7 +76,8 @@
             <artifactId>webgpu-sys</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+        <!--
+        https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -111,6 +118,145 @@
                 <directory>src/main/resources</directory>
             </resource>
         </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.5.1</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>jextract</executable>
+                    <!-- optional -->
+
+                    <arguments>
+                        <argument>--output</argument>
+                        <argument>${project.build.directory}/generated-sources/jextract1</argument>
+                        <argument>--target-package</argument>
+                        <argument>org.webgpu.extract</argument>
+                        <argument>--header-class-name</argument>
+                        <argument>webgpu_h</argument>
+                        <argument>${project.basedir}/../webgpu-headers/webgpu.h</argument>
+                    </arguments>
+
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.6.0</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/jextract1</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>download-files</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <parallel><!-- download file -->
+                                    <mkdir dir="${project.build.directory}/downloads/" />
+                                    <get
+                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-android-aarch64-${wgpu.native.build}.zip"
+                                        dest="${project.build.directory}/downloads/"
+                                        verbose="false"
+                                        usetimestamp="true" />
+                                    <get
+                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-android-armv7-${wgpu.native.build}.zip"
+                                        dest="${project.build.directory}/downloads/"
+                                        verbose="false"
+                                        usetimestamp="true" />
+                                    <get
+                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-android-i686-${wgpu.native.build}.zip"
+                                        dest="${project.build.directory}/downloads/"
+                                        verbose="false"
+                                        usetimestamp="true" />
+                                    <get
+                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-android-x86_64-${wgpu.native.build}.zip"
+                                        dest="${project.build.directory}/downloads/"
+                                        verbose="false"
+                                        usetimestamp="true" />
+                                    <get
+                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-ios-aarch64-${wgpu.native.build}.zip"
+                                        dest="${project.build.directory}/downloads/"
+                                        verbose="false"
+                                        usetimestamp="true" />
+                                    <get
+                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-ios-aarch64-simulator-${wgpu.native.build}.zip"
+                                        dest="${project.build.directory}/downloads/"
+                                        verbose="false"
+                                        usetimestamp="true" />
+                                    <get
+                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-ios-x86_64-simulator-${wgpu.native.build}.zip"
+                                        dest="${project.build.directory}/downloads/"
+                                        verbose="false"
+                                        usetimestamp="true" />
+                                    <get
+                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-linux-aarch64-${wgpu.native.build}.zip"
+                                        dest="${project.build.directory}/downloads/"
+                                        verbose="false"
+                                        usetimestamp="true" />
+                                    <get
+                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-linux-x86_64-${wgpu.native.build}.zip"
+                                        dest="${project.build.directory}/downloads/"
+                                        verbose="false"
+                                        usetimestamp="true" />
+                                    <get
+                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-macos-aarch64-${wgpu.native.build}.zip"
+                                        dest="${project.build.directory}/downloads/"
+                                        verbose="false"
+                                        usetimestamp="true" />
+                                    <get
+                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-macos-x86_64-${wgpu.native.build}.zip"
+                                        dest="${project.build.directory}/downloads/"
+                                        verbose="false"
+                                        usetimestamp="true" />
+                                    <get
+                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-windows-aarch64-msvc-${wgpu.native.build}.zip"
+                                        dest="${project.build.directory}/downloads/"
+                                        verbose="false"
+                                        usetimestamp="true" />
+                                    <get
+                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-windows-i686-msvc-${wgpu.native.build}.zip"
+                                        dest="${project.build.directory}/downloads/"
+                                        verbose="false"
+                                        usetimestamp="true" />
+                                    <get
+                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-windows-x86_64-msvc-${wgpu.native.build}.zip"
+                                        dest="${project.build.directory}/downloads/"
+                                        verbose="false"
+                                        usetimestamp="true" />
+                                </parallel>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 
 </project>
