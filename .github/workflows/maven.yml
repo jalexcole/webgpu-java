@@ -35,7 +35,7 @@ jobs:
         source "/home/runner/.sdkman/bin/sdkman-init.sh"
         sdk install jextract
         sdk install maven
-        yes | sdk install java 21.0.2-open
+        yes | sdk install java 24-open
         mvn -B package --file pom.xml
         
 
