@@ -12,9 +12,8 @@
     </parent>
 
     <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <wgpu.native.build>debug</wgpu.native.build>
+        <wgpu.native.version>v25.0.2.1</wgpu.native.version>
     </properties>
 
     <profiles>
@@ -169,7 +168,7 @@
                 <executions>
                     <execution>
                         <id>download-files</id>
-                        <phase>prepare-package</phase>
+                        <phase>validate</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
