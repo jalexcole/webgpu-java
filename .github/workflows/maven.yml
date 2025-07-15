@@ -22,11 +22,7 @@ jobs:
     steps:
     
     - uses: actions/checkout@v4
-    - name: Install Rust toolchain
-      uses: actions-rs/toolchain@v1
-      with:
-        toolchain: stable
-        override: true
+    
     - name: Install SDKMAN!
       run: |
         curl -s "https://get.sdkman.io" | bash
@@ -34,13 +30,16 @@ jobs:
         sdk version
         source "/home/runner/.sdkman/bin/sdkman-init.sh"
         sdk install jextract
+        sdk install maven
+        sdk install java 21-open
+
    
-    - name: Set up JDK 21
-      uses: actions/setup-java@v4
-      with:
-        java-version: '21'
-        distribution: 'temurin'
-        cache: maven
+    # - name: Set up JDK 21
+    #   uses: actions/setup-java@v4
+    #   with:
+    #     java-version: '21'
+    #     distribution: 'temurin'
+    #     cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
