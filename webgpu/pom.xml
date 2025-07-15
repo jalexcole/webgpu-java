@@ -71,11 +71,6 @@
     </profiles>
 
     <dependencies>
-        <dependency>
-            <groupId>org.webgpu</groupId>
-            <artifactId>webgpu-sys</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
         <!--
         https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
         <dependency>
@@ -137,11 +132,13 @@
 
                     <arguments>
                         <argument>--output</argument>
-                        <argument>${project.build.directory}/generated-sources/jextract1</argument>
+                        <argument>${project.build.directory}/generated-sources/jextract</argument>
                         <argument>--target-package</argument>
                         <argument>org.webgpu.extract</argument>
                         <argument>--header-class-name</argument>
                         <argument>webgpu_h</argument>
+                        <argument>--include-dir</argument>
+                        <argument>${project.basedir}/../webgpu-headers/</argument>
                         <argument>${project.basedir}/../webgpu-headers/webgpu.h</argument>
                     </arguments>
 
@@ -160,7 +157,7 @@
                         </goals>
                         <configuration>
                             <sources>
-                                <source>${project.build.directory}/generated-sources/jextract1</source>
+                                <source>${project.build.directory}/generated-sources/jextract</source>
                             </sources>
                         </configuration>
                     </execution>
