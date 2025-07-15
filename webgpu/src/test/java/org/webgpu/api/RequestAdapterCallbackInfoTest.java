@@ -7,12 +7,6 @@ import org.junit.jupiter.api.Test;
 
 public class RequestAdapterCallbackInfoTest {
 
-/*************  ✨ Windsurf Command ⭐  *************/
-    /**
-     * Test that the constructor for RequestAdapterCallbackInfo doesn't throw an
-     * exception.
-     */
-/*******  33f54e77-93e5-41cb-83c4-702eb15e7bcd  *******/
     @Test
     void testRequestAdapterCallbackInfo() {
         var requestAdapterCallbackInfo = new RequestAdapterCallbackInfo();
