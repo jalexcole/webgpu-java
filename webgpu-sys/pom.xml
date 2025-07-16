@@ -146,17 +146,42 @@
                                         dest="${project.build.directory}/downloads/"
                                         verbose="false"
                                         usetimestamp="true" />
-                                    <get
+                                    <!-- <get
                                         src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-windows-i686-msvc-${wgpu.native.build}.zip"
                                         dest="${project.build.directory}/downloads/"
                                         verbose="false"
-                                        usetimestamp="true" />
+                                        usetimestamp="true" /> -->
                                     <get
                                         src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-windows-x86_64-msvc-${wgpu.native.build}.zip"
                                         dest="${project.build.directory}/downloads/"
                                         verbose="false"
                                         usetimestamp="true" />
                                 </parallel>
+                                
+                                <unzip
+                                    src="${project.build.directory}/downloads/wgpu-linux-aarch64-${wgpu.native.build}.zip"
+                                    dest="${project.build.directory}/downloads-unzipped/linux-aarch64/"
+                                />
+                                <unzip
+                                    src="${project.build.directory}/downloads/wgpu-linux-x86_64-${wgpu.native.build}.zip"
+                                    dest="${project.build.directory}/downloads-unzipped/linux-x86_64/"
+                                />
+                                <unzip
+                                    src="${project.build.directory}/downloads/wgpu-macos-aarch64-${wgpu.native.build}.zip"
+                                    dest="${project.build.directory}/downloads-unzipped/macos-aarch64/"
+                                />
+                                <unzip
+                                    src="${project.build.directory}/downloads/wgpu-macos-x86_64-${wgpu.native.build}.zip"
+                                    dest="${project.build.directory}/downloads-unzipped/macos-x86_64/"
+                                />
+                                <unzip
+                                    src="${project.build.directory}/downloads/wgpu-windows-aarch64-msvc-${wgpu.native.build}.zip"
+                                    dest="${project.build.directory}/downloads-unzipped/windows-aarch64/"
+                                />
+                                <unzip
+                                    src="${project.build.directory}/downloads/wgpu-windows-x86_64-msvc-${wgpu.native.build}.zip"
+                                    dest="${project.build.directory}/downloads-unzipped/windows-x86_64/"
+                                />
                             </target>
                         </configuration>
                     </execution>
