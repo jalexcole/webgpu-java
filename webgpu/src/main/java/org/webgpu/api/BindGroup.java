@@ -1,8 +1,16 @@
 package org.webgpu.api;
 
-import java.lang.foreign.MemorySegment;
+
 
 public interface BindGroup {
+    public String label();
 
+    public void setLabel(String label);
+    
+    public void addRef();
+
+    public void release();
+
+    
 
 }

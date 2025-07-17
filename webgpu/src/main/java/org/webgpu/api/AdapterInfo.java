@@ -7,22 +7,25 @@ import org.webgpu.extract.WGPUAdapterInfo;
 import org.webgpu.util.StringView;
 
 public class AdapterInfo {
-    private MemorySegment adapterInfoPtr;
+    @SuppressWarnings("preview")
+	private MemorySegment adapterInfoPtr;
 
-    AdapterInfo(MemorySegment adapterInfoPtr) {
+    AdapterInfo(@SuppressWarnings("preview") MemorySegment adapterInfoPtr) {
         this.adapterInfoPtr = adapterInfoPtr;
     }
 
     public AdapterInfo() {
         try  {
-            Arena allocator = Arena.ofAuto();
+            @SuppressWarnings("preview")
+			Arena allocator = Arena.ofAuto();
             adapterInfoPtr = WGPUAdapterInfo.allocate(allocator);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public MemorySegment ptr() {
+    @SuppressWarnings("preview")
+	public MemorySegment ptr() {
         return adapterInfoPtr;
     }
 

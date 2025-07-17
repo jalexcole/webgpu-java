@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.lwjgl.vulkan.VK;
 import org.webgpu.api.BackendType;
 import org.webgpu.api.Instance;
 import org.webgpu.api.RequestAdapterOptions;

@@ -1,5 +1,7 @@
 package org.webgpu.api;
 
+import java.util.Arrays;
+
 import org.webgpu.extract.webgpu_h;
 
 public enum PresentMode {
@@ -42,5 +44,18 @@ public enum PresentMode {
 
     PresentMode(int value) {
         this.value = value;
+    }
+
+    public int value() {
+        return value;
+    }
+
+    public static PresentMode fromValue(int value) {
+        for (PresentMode level : PresentMode.values()) {
+            if (level.value == value) {
+                return level;
+            }
+        }
+        throw new IllegalArgumentException("Invalid value: " + value + ". Must be one of: " + Arrays.toString(PresentMode.values()));
     }
 }
