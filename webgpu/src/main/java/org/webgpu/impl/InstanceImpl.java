@@ -1,11 +1,13 @@
 package org.webgpu.impl;
 
+import static org.webgpu.extract.webgpu_h.wgpuInstanceRelease;
+import static org.webgpu.extract.webgpu_h.wgpuInstanceRequestAdapter;
+
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
@@ -14,11 +16,9 @@ import org.jspecify.annotations.Nullable;
 import org.webgpu.api.Adapter;
 import org.webgpu.api.Instance;
 import org.webgpu.api.RequestAdapterOptions;
-import org.webgpu.api.WGPU;
 import org.webgpu.exceptions.RequestAdaptorError;
 import org.webgpu.extract.WGPURequestAdapterCallback;
 import org.webgpu.extract.WGPURequestAdapterCallbackInfo;
-import org.webgpu.extract.webgpu_h;
 import org.webgpu.util.StringView;
 
 public record InstanceImpl(@SuppressWarnings("preview") MemorySegment ptr, @SuppressWarnings("preview") Arena arena)
@@ -29,7 +29,7 @@ public record InstanceImpl(@SuppressWarnings("preview") MemorySegment ptr, @Supp
     private static final ConcurrentHashMap<Long, CompletableFuture<Adapter>> pendingAdapterRequests = new ConcurrentHashMap<>();
     @Override
     public void close() throws Exception {
-        webgpu_h.wgpuInstanceRelease(this.ptr());
+        wgpuInstanceRelease(this.ptr());
     }
 
     @SuppressWarnings("preview")
@@ -83,7 +83,7 @@ public record InstanceImpl(@SuppressWarnings("preview") MemorySegment ptr, @Supp
             WGPURequestAdapterCallbackInfo.userdata1(callbackInfo, userData1Segment);
             WGPURequestAdapterCallbackInfo.userdata2(callbackInfo, MemorySegment.NULL);
 
-            webgpu_h.wgpuInstanceRequestAdapter(arena, this.ptr, options.ptr(), callbackInfo);
+            wgpuInstanceRequestAdapter(arena, this.ptr, options.ptr(), callbackInfo);
 
             return futureAdapter;
 
@@ -95,11 +95,4 @@ public record InstanceImpl(@SuppressWarnings("preview") MemorySegment ptr, @Supp
         }
 
     }
-    
-    public static void main(String[] args) throws RequestAdaptorError, InterruptedException, ExecutionException {
-        var instance = WGPU.createInstance(null);
-        var adapterFuture = instance.requestAdapter(null);
-        adapterFuture.get();
-    }
-
 }

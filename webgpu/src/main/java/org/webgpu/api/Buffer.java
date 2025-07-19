@@ -1,7 +1,13 @@
 package org.webgpu.api;
 
-import java.lang.foreign.MemorySegment;
+
 
 public interface Buffer {
     
+    public void destroy();
+
+    public BufferMapState getMapState();
+    public int getSize();
+
+    public BufferUsage getUsage();
 }

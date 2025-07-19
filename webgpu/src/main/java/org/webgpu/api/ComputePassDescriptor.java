@@ -5,11 +5,18 @@ import java.lang.foreign.MemorySegment;
 import org.webgpu.extract.WGPUComputePassDescriptor;
 import org.webgpu.util.StringView;
 
-public class ComputePassDescriptor {
+public class ComputePassDescriptor implements DescriptorBase {
+    @SuppressWarnings("preview")
     private MemorySegment ptr;
 
-    ComputePassDescriptor(MemorySegment ptr) {
+    ComputePassDescriptor(@SuppressWarnings("preview") MemorySegment ptr) {
         this.ptr = ptr;
+    }
+
+    public ComputePassDescriptor() {
+        @SuppressWarnings("preview")
+        final Arena arena = Arena.ofAuto();
+        this.ptr = WGPUComputePassDescriptor.allocate(arena);
     }
 
     public String label() {
@@ -17,12 +24,14 @@ public class ComputePassDescriptor {
     }
 
     public void setLabel(String label) {
-        try (Arena arena = Arena.ofConfined()) {
+        try (@SuppressWarnings("preview")
+        Arena arena = Arena.ofConfined()) {
             var stringView = StringView.of(arena, label);
             WGPUComputePassDescriptor.label(ptr, stringView);
         }
     }
 
+    @SuppressWarnings("preview")
     public MemorySegment ptr() {
         return this.ptr;
     }

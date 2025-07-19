@@ -2,7 +2,7 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.webgpu</groupId>
-    <artifactId>sys</artifactId>
+    <artifactId>panama</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <parent>
@@ -46,6 +46,8 @@
                         <argument>org.webgpu.extract</argument>
                         <argument>--header-class-name</argument>
                         <argument>webgpu_h</argument>
+                        <argument>--library</argument>
+                        <argument>wgpu_native</argument>
                         <argument>--include-dir</argument>
                         <argument>${project.basedir}/../webgpu-headers/</argument>
                         <argument>${project.basedir}/../webgpu-headers/webgpu.h</argument>
@@ -60,7 +62,7 @@
                 <executions>
                     <execution>
                         <id>add-source</id>
-                        <phase>generate-sources</phase>
+                        <phase>process-sources</phase>
                         <goals>
                             <goal>add-source</goal>
                         </goals>
@@ -72,7 +74,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
+            <!-- <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
@@ -84,43 +86,8 @@
                         </goals>
                         <configuration>
                             <target>
-                                <parallel><!-- download file -->
+                                <parallel>
                                     <mkdir dir="${project.build.directory}/downloads/" />
-                                    <!-- <get
-                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-android-aarch64-${wgpu.native.build}.zip"
-                                        dest="${project.build.directory}/downloads/"
-                                        verbose="false"
-                                        usetimestamp="true" />
-                                    <get
-                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-android-armv7-${wgpu.native.build}.zip"
-                                        dest="${project.build.directory}/downloads/"
-                                        verbose="false"
-                                        usetimestamp="true" />
-                                    <get
-                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-android-i686-${wgpu.native.build}.zip"
-                                        dest="${project.build.directory}/downloads/"
-                                        verbose="false"
-                                        usetimestamp="true" />
-                                    <get
-                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-android-x86_64-${wgpu.native.build}.zip"
-                                        dest="${project.build.directory}/downloads/"
-                                        verbose="false"
-                                        usetimestamp="true" />
-                                    <get
-                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-ios-aarch64-${wgpu.native.build}.zip"
-                                        dest="${project.build.directory}/downloads/"
-                                        verbose="false"
-                                        usetimestamp="true" />
-                                    <get
-                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-ios-aarch64-simulator-${wgpu.native.build}.zip"
-                                        dest="${project.build.directory}/downloads/"
-                                        verbose="false"
-                                        usetimestamp="true" />
-                                    <get
-                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-ios-x86_64-simulator-${wgpu.native.build}.zip"
-                                        dest="${project.build.directory}/downloads/"
-                                        verbose="false"
-                                        usetimestamp="true" /> -->
                                     <get
                                         src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-linux-aarch64-${wgpu.native.build}.zip"
                                         dest="${project.build.directory}/downloads/"
@@ -146,11 +113,6 @@
                                         dest="${project.build.directory}/downloads/"
                                         verbose="false"
                                         usetimestamp="true" />
-                                    <!-- <get
-                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-windows-i686-msvc-${wgpu.native.build}.zip"
-                                        dest="${project.build.directory}/downloads/"
-                                        verbose="false"
-                                        usetimestamp="true" /> -->
                                     <get
                                         src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-windows-x86_64-msvc-${wgpu.native.build}.zip"
                                         dest="${project.build.directory}/downloads/"
@@ -186,7 +148,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin> -->
         </plugins>
     </build>
 </project>

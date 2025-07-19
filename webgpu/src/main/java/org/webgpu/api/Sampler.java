@@ -1,11 +1,11 @@
 package org.webgpu.api;
 
-import java.lang.foreign.MemorySegment;
-
-public interface Sampler {
+public interface Sampler extends ObjectBase {
     
-
+    public void setLabel(String label);
     
-
+    public void addRef();
+    
+    public void release();
     
 }

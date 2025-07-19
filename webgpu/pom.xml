@@ -69,7 +69,7 @@
     <dependencies>
         <dependency>
             <groupId>org.webgpu</groupId>
-            <artifactId>sys</artifactId>
+            <artifactId>panama</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <!--
