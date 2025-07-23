@@ -22,9 +22,11 @@ import org.webgpu.extract.WGPUSupportedFeatures;
 import org.webgpu.extract.webgpu_h;
 
 @SuppressWarnings("preview")
-public record AdapterImpl(@NonNull MemorySegment ptr) implements Adapter, AutoCloseable {
+public record AdapterImpl(@NonNull MemorySegment ptr, Arena arena) implements Adapter, AutoCloseable {
 
-	@Override
+	
+
+    @Override
 	public FeatureName[] features() {
 
 		try (@SuppressWarnings("preview")

@@ -16,12 +16,73 @@
         <wgpu.native.version>v25.0.2.1</wgpu.native.version>
     </properties>
 
+    <profiles>
+        <profile>
+            <id>lwjgl-natives-linux-amd64</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                    <name>linux</name>
+                    <arch>amd64</arch>
+                </os>
+            </activation>
+            <properties>
+                <wgpu.native>linux-x86_64</wgpu.native>
+                <lwjgl.natives>natives-linux</lwjgl.natives>
+            </properties>
+        </profile>
+        <profile>
+            <id>lwjgl-natives-linux-aarch64</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                    <name>linux</name>
+                    <arch>aarch64</arch>
+                </os>
+            </activation>
+            <properties>
+                <wgpu.native>linux-aarch64</wgpu.native>
+                <lwjgl.natives>natives-linux-arm64</lwjgl.natives>
+            </properties>
+        </profile>
+        <profile>
+            <id>lwjgl-natives-macos-x86_64</id>
+            <activation>
+                <os>
+                    <family>mac</family>
+                    <arch>x86_64</arch>
+                </os>
+            </activation>
+            <properties>
+                <wgpu.native>macos-x86_64</wgpu.native>
+                <lwjgl.natives>natives-macos</lwjgl.natives>
+            </properties>
+        </profile>
+        <profile>
+            <id>lwjgl-natives-macos-aarch64</id>
+            <activation>
+                <os>
+                    <family>mac</family>
+                    <arch>aarch64</arch>
+                </os>
+            </activation>
+            <properties>
+                <wgpu.native>macos-aarch64</wgpu.native>
+                <lwjgl.natives>natives-macos-arm64</lwjgl.natives>
+            </properties>
+        </profile>
+    </profiles>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.13.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
     <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -49,8 +110,8 @@
                         <argument>--library</argument>
                         <argument>wgpu_native</argument>
                         <argument>--include-dir</argument>
-                        <argument>${project.basedir}/../webgpu-headers/</argument>
-                        <argument>${project.basedir}/../webgpu-headers/webgpu.h</argument>
+                        <argument>${project.build.directory}/downloads-unzipped/include/webgpu</argument>
+                        <argument>${project.build.directory}/downloads-unzipped/include/webgpu/wgpu.h</argument>
                     </arguments>
 
                 </configuration>
@@ -74,6 +135,56 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>download-single-file</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <mkdir dir="${project.build.directory}/downloads/" />
+                                <get
+                                    src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-${wgpu.native}-${wgpu.native.build}.zip"
+                                    dest="${project.build.directory}/downloads/"
+                                    verbose="false"
+                                    usetimestamp="true" />
+                                <unzip
+                                    src="${project.build.directory}/downloads/wgpu-${wgpu.native}-${wgpu.native.build}.zip"
+                                    dest="${project.build.directory}/downloads-unzipped/"
+                                />
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.6.0</version>
+                <executions>
+                    <execution>
+                        <id>add-resources</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>add-resource</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>${project.build.directory}/downloads-unzipped/lib</directory>
+                                    <targetPath>resources/natives</targetPath>
+                                    <excludes><exclude>*.a</exclude></excludes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
@@ -89,32 +200,32 @@
                                 <parallel>
                                     <mkdir dir="${project.build.directory}/downloads/" />
                                     <get
-                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-linux-aarch64-${wgpu.native.build}.zip"
+            src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-linux-aarch64-${wgpu.native.build}.zip"
                                         dest="${project.build.directory}/downloads/"
                                         verbose="false"
                                         usetimestamp="true" />
                                     <get
-                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-linux-x86_64-${wgpu.native.build}.zip"
+            src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-linux-x86_64-${wgpu.native.build}.zip"
                                         dest="${project.build.directory}/downloads/"
                                         verbose="false"
                                         usetimestamp="true" />
                                     <get
-                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-macos-aarch64-${wgpu.native.build}.zip"
+            src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-macos-aarch64-${wgpu.native.build}.zip"
                                         dest="${project.build.directory}/downloads/"
                                         verbose="false"
                                         usetimestamp="true" />
                                     <get
-                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-macos-x86_64-${wgpu.native.build}.zip"
+            src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-macos-x86_64-${wgpu.native.build}.zip"
                                         dest="${project.build.directory}/downloads/"
                                         verbose="false"
                                         usetimestamp="true" />
                                     <get
-                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-windows-aarch64-msvc-${wgpu.native.build}.zip"
+            src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-windows-aarch64-msvc-${wgpu.native.build}.zip"
                                         dest="${project.build.directory}/downloads/"
                                         verbose="false"
                                         usetimestamp="true" />
                                     <get
-                                        src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-windows-x86_64-msvc-${wgpu.native.build}.zip"
+            src="https://github.com/gfx-rs/wgpu-native/releases/download/${wgpu.native.version}/wgpu-windows-x86_64-msvc-${wgpu.native.build}.zip"
                                         dest="${project.build.directory}/downloads/"
                                         verbose="false"
                                         usetimestamp="true" />

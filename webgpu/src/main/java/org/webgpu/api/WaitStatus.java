@@ -5,7 +5,7 @@ import org.webgpu.extract.webgpu_h;
 public enum WaitStatus {
     SUCCESS(webgpu_h.WGPUWaitStatus_Success()),
     TIMED_OUT(webgpu_h.WGPUWaitStatus_TimedOut()),
-    ERROR(webgpu_h.WGPUWaitStatus_Error());
+    UNSUPPORTED_COUNT(webgpu_h.WGPUWaitStatus_UnsupportedCount());
 
     private final int value;
 

@@ -5,7 +5,7 @@ import java.util.Arrays;
 import org.webgpu.extract.webgpu_h;
 
 public enum FeatureLevel {
-    UNDEFINED(webgpu_h.WGPUFeatureLevel_Undefined()),
+    UNDEFINED(0),
     COMPATIBILITY(webgpu_h.WGPUFeatureLevel_Compatibility()),
     CORE(webgpu_h.WGPUFeatureLevel_Core()),
     FORCE32(webgpu_h.WGPUFeatureLevel_Force32());

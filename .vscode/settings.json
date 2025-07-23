@@ -18,7 +18,8 @@
     ], 
     "java.test.config": {
         "env": {"WGPU_LOG": "debug"},
-        "console": "integratedTerminal"
+        "console": "integratedTerminal",
+        
     },
     "java.test.output": "both",
     "java.test.log.level": "verbose"

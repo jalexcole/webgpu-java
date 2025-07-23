@@ -20,53 +20,53 @@ public class AdapterImplTest {
 
     @Test
     void testFeatures() throws InterruptedException, ExecutionException, RequestAdaptorError, TimeoutException {
-        WGPU.createInstance(null).requestAdapter(null).get(1000, TimeUnit.MICROSECONDS).features();
+        WGPU.createInstance(null).requestAdapterAsync(null).get(1000, TimeUnit.MICROSECONDS).features();
     }
 
     @Test
     void testGetDownlevelCapabilities() throws InterruptedException, ExecutionException, RequestAdaptorError {
-        WGPU.createInstance(null).requestAdapter(null).get().getDownlevelCapabilities();
+        WGPU.createInstance(null).requestAdapterAsync(null).get().getDownlevelCapabilities();
     }
 
     @Test
     void testGetInfo() throws InterruptedException, ExecutionException, RequestAdaptorError {
-        WGPU.createInstance(null).requestAdapter(null).get().getInfo();
+        WGPU.createInstance(null).requestAdapterAsync(null).get().getInfo();
 
     }
 
     @Test
     void testGetTextureFormatFeatures() throws InterruptedException, ExecutionException, RequestAdaptorError {
-        WGPU.createInstance(null).requestAdapter(null).get().getTextureFormatFeatures(null);
+        WGPU.createInstance(null).requestAdapterAsync(null).get().getTextureFormatFeatures(null);
 
     }
 
     @Test
     void testHashCode() throws InterruptedException, ExecutionException, RequestAdaptorError {
-        WGPU.createInstance(null).requestAdapter(null).get().hashCode();
+        WGPU.createInstance(null).requestAdapterAsync(null).get().hashCode();
 
     }
 
     @Test
     void testLimits() throws InterruptedException, ExecutionException, RequestAdaptorError {
-        WGPU.createInstance(null).requestAdapter(null).get().limits();
+        WGPU.createInstance(null).requestAdapterAsync(null).get().limits();
 
     }
 
     @Test
     void testRelease() throws InterruptedException, ExecutionException, RequestAdaptorError {
-        WGPU.createInstance(null).requestAdapter(null).get().release();
+        WGPU.createInstance(null).requestAdapterAsync(null).get().release();
 
     }
 
     @Test
     void testRequestDevice() throws InterruptedException, ExecutionException, RequestAdaptorError {
-        WGPU.createInstance(null).requestAdapter(null).get().requestDevice(null).get();
+        WGPU.createInstance(null).requestAdapterAsync(null).get().requestDevice(null).get();
 
     }
 
     @Test
     void testToString() throws InterruptedException, ExecutionException, RequestAdaptorError {
-        WGPU.createInstance(null).requestAdapter(null).get().toString();
+        WGPU.createInstance(null).requestAdapterAsync(null).get().toString();
 
     }
 }

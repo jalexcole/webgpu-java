@@ -20,4 +20,10 @@ public class ChainedStruct {
     public SType sType() {
         return SType.values()[WGPUChainedStruct.sType(this.chainedStructPtr)];
     }
+
+
+    public MemorySegment ptr() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'ptr'");
+    }
 }

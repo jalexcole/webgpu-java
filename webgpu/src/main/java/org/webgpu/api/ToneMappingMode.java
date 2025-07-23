@@ -1,10 +1,8 @@
 package org.webgpu.api;
 
-import org.webgpu.extract.webgpu_h;
-
 public enum ToneMappingMode {
-    STANDARD(webgpu_h.WGPUToneMappingMode_Standard()),
-    EXTENDED(webgpu_h.WGPUToneMappingMode_Extended());
+    STANDARD(0),
+    EXTENDED(1);
 
     private final int value;
 

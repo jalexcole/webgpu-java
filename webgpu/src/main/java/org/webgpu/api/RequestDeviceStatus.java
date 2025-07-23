@@ -7,7 +7,7 @@ import org.webgpu.extract.webgpu_h;
 public enum RequestDeviceStatus {
     SUCCESS(webgpu_h.WGPURequestDeviceStatus_Success()),
     // INSTANCE_DROPPED(webgpu_h.WGPURequestDeviceStatus_InstanceDropped()),
-    CALLBACK_CANCELLED(webgpu_h.WGPURequestDeviceStatus_CallbackCancelled()),
+    INSTANCE_DROPPED(webgpu_h.WGPURequestDeviceStatus_InstanceDropped()),
     ERROR(webgpu_h.WGPURequestDeviceStatus_Error()),
     // UNKNOWN(webgpu_h.WGPURequestDeviceStatus_()),
                     

@@ -9,13 +9,13 @@ import org.webgpu.impl.InstanceImpl;
 
 public class WGPU {
 
-    public static Arena arena = Arena.ofConfined();
+    public static Arena arena = Arena.ofShared();
 
     @SuppressWarnings("preview")
     static final Linker NATIVE_LINKER = Linker.nativeLinker();
     static {
         try {
-            
+
             System.load("/Users/alex/dev/webgpu-java/webgpu/src/test/resources/libwgpu_native.dylib");
         } catch (SecurityException e) {
             System.out.println(e.getMessage());
@@ -27,9 +27,12 @@ public class WGPU {
     @SuppressWarnings("preview")
     public static Instance createInstance(@Nullable InstanceDescriptor descriptor) {
         if (WGPU.arena == null) {
-            try (@SuppressWarnings("preview")
-            Arena arena = Arena.ofShared()) {
+            try {
+                @SuppressWarnings("preview")
+                Arena arena = Arena.ofShared();
                 WGPU.arena = arena;
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         }
 
