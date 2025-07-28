@@ -8,7 +8,6 @@ import org.webgpu.api.BackendType;
 import org.webgpu.api.Instance;
 import org.webgpu.api.RequestAdapterOptions;
 import org.webgpu.api.WGPU;
-import org.webgpu.exceptions.RequestAdaptorError;
 
 public class InstanceImplTest {
     private static final Logger logger = Logger.getLogger(InstanceImplTest.class.getName());
@@ -32,7 +31,7 @@ public class InstanceImplTest {
     @Test
     void testRequestAdapterFuture() {
         try (Instance instance = WGPU.createInstance(null)) {
-            instance.requestAdapterAsync(null);
+            instance.requestAdapter(null);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -41,7 +40,7 @@ public class InstanceImplTest {
     @Test
     void testRequestAdapter() throws InterruptedException {
         try (Instance instance = WGPU.createInstance(null)) {
-            instance.requestAdapterAsync(null).get();
+            instance.requestAdapter(null).get();
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -55,23 +54,14 @@ public class InstanceImplTest {
         options.forceFallbackAdapter(false);
         options.backendType(BackendType.UNDEFINED);
         String string = options.toString();
+
+        logger.info(string);
         try (Instance instance = WGPU.createInstance(null)) {
 
-            instance.requestAdapterAsync(options).get();
+            var adapter = instance.requestAdapter(options).get();
         } catch (Exception e) {
             System.err.println(options);
             throw new RuntimeException(e);
         }
-    }
-
-    @Test
-    void testRequestAdapter2() throws RequestAdaptorError {
-        var instance = (InstanceImpl) WGPU.createInstance(null);
-
-        var requestAdapterOptions = new RequestAdapterOptions();
-        requestAdapterOptions.forceFallbackAdapter(true);
-        requestAdapterOptions.backendType(BackendType.WEBGPU);
-
-        instance.requestAdapter(requestAdapterOptions);
     }
 }

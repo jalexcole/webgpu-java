@@ -1,5 +1,7 @@
 package org.webgpu.impl;
 
+import static org.webgpu.extract.webgpu_h.WGPUAdapter;
+import static org.webgpu.extract.webgpu_h.WGPURequestAdapterStatus_Success;
 import static org.webgpu.extract.webgpu_h.wgpuCreateInstance;
 import static org.webgpu.extract.webgpu_h.wgpuInstanceCreateSurface;
 import static org.webgpu.extract.webgpu_h.wgpuInstanceRelease;
@@ -10,6 +12,7 @@ import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
@@ -17,7 +20,10 @@ import org.jspecify.annotations.Nullable;
 import org.lwjgl.system.Pointer;
 import org.webgpu.api.Adapter;
 import org.webgpu.api.Instance;
+import org.webgpu.api.PowerPreference;
 import org.webgpu.api.RequestAdapterOptions;
+import org.webgpu.api.RequestAdapterStatus;
+import org.webgpu.api.WGPU;
 import org.webgpu.exceptions.RequestAdaptorError;
 import org.webgpu.extract.WGPUChainedStruct;
 import org.webgpu.extract.WGPUInstanceDescriptor;
@@ -42,37 +48,37 @@ public record InstanceImpl(@SuppressWarnings("preview") MemorySegment ptr, @Supp
 
     @SuppressWarnings("preview")
     @Override
-    public Future<Adapter> requestAdapterAsync(@Nullable final RequestAdapterOptions options)
+    public Future<Adapter> requestAdapter(@Nullable final RequestAdapterOptions options)
             throws RequestAdaptorError {
 
-        CompletableFuture<Adapter> futureAdapter = new CompletableFuture<>();
-        
-        long requestId = System.nanoTime(); // Generate unique request ID
+        final CompletableFuture<Adapter> futureAdapter = new CompletableFuture<>();
+        final long requestId = java.util.concurrent.ThreadLocalRandom.current().nextLong();
         pendingAdapterRequests.put(requestId, futureAdapter);
 
         try {
-            // Arena must outlive the request — allocated from instance's lifetime arena
+            // Allocate userData1 in the instance's lifetime arena
             MemorySegment userData1Segment = arena.allocate(ValueLayout.JAVA_LONG);
             userData1Segment.set(ValueLayout.JAVA_LONG, 0, requestId);
 
             WGPURequestAdapterCallback.Function callback = (status, adapterPtr, messagePtr, userData1, userData2) -> {
-                long completedRequestId = userData1.get(ValueLayout.JAVA_LONG, 0);
-                CompletableFuture<Adapter> targetFuture = pendingAdapterRequests.remove(completedRequestId);
+                final long completedRequestId = userData1.get(ValueLayout.JAVA_LONG, 0);
+                final CompletableFuture<Adapter> targetFuture = pendingAdapterRequests.remove(completedRequestId);
 
                 if (targetFuture == null) {
                     logger.severe("Unknown request ID: " + completedRequestId);
                     return;
                 }
 
-                final String message;
+                String message;
                 try (Arena callbackArena = Arena.ofConfined()) {
                     message = (messagePtr != null && messagePtr.address() != 0)
                             ? new StringView(messagePtr).string()
                             : "(no message from native)";
-
+                } catch (Exception ex) {
+                    message = "(failed to extract message: " + ex.getMessage() + ")";
                 }
 
-                if (status == 0) {
+                if (status == WGPURequestAdapterStatus_Success()) {
                     logger.info("Adapter received: " + message);
                     targetFuture.complete(new AdapterImpl(adapterPtr, arena));
                 } else {
@@ -91,7 +97,10 @@ public record InstanceImpl(@SuppressWarnings("preview") MemorySegment ptr, @Supp
             WGPURequestAdapterCallbackInfo.userdata1(callbackInfo, userData1Segment);
             WGPURequestAdapterCallbackInfo.userdata2(callbackInfo, MemorySegment.NULL);
 
-            wgpuInstanceRequestAdapter(arena, this.ptr, options != null ? options.ptr() : MemorySegment.NULL,
+            wgpuInstanceRequestAdapter(
+                    arena,
+                    this.ptr,
+                    options != null ? options.ptr() : MemorySegment.NULL,
                     callbackInfo);
 
             return futureAdapter;
@@ -104,27 +113,5 @@ public record InstanceImpl(@SuppressWarnings("preview") MemorySegment ptr, @Supp
         }
 
     }
-    
-    public Adapter requestAdapter(@Nullable final RequestAdapterOptions options) throws RequestAdaptorError {
-        
-        final Adapter adapter;
-        final int statusOutput;
-        WGPURequestAdapterCallback.Function callback = (status, adapterPtr, messagePtr, userData1, userData2) -> {
-            // adapter = new AdapterImpl(adapterPtr, arena);
-            // statusOutput = status;
-            
-            
-        
-        };
 
-        MemorySegment nativeCallback = WGPURequestAdapterCallback.allocate(callback, arena);
-        MemorySegment callbackInfo = WGPURequestAdapterCallbackInfo.allocate(arena);
-
-        var future = wgpuInstanceRequestAdapter(arena, this.ptr, options != null ? options.ptr() : MemorySegment.NULL,
-                callbackInfo);
-
-        
-
-        return null;
-    }
 }

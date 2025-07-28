@@ -4,56 +4,55 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.logging.Logger;
 
 import org.jspecify.annotations.NonNull;
 import org.webgpu.extract.WGPUStringView;
 
-public class StringView {
-    @SuppressWarnings("preview")
-    private final MemorySegment stringViewPtr; // Pointer to the native WGPUStringView struct
+public record StringView(MemorySegment stringViewPtr) {
 
-    public StringView(@NonNull @SuppressWarnings("preview") MemorySegment ptr) {
-        stringViewPtr = ptr;
-    }
+    private static final Logger logger = Logger.getLogger(StringView.class.getName());
 
     public static MemorySegment of(@NonNull @SuppressWarnings("preview") Arena arena, @NonNull String string) {
         // Step 1: Convert the Java String to UTF-8 bytes
         byte[] utf8Bytes = string.getBytes(StandardCharsets.UTF_8);
-        System.out.println("String '" + string + "' converts to " + utf8Bytes.length + " UTF-8 bytes.");
+        logger.info("String '" + string + "' converts to " + utf8Bytes.length + " UTF-8 bytes.");
 
         // Step 2: Allocate the native memory for the string data (UTF-8 bytes)
         // This is off-heap memory, and its lifecycle is tied to the 'arena'.
         @SuppressWarnings("preview")
         MemorySegment nativeStringData = arena.allocate(utf8Bytes.length);
-        System.out.println("Allocated nativeStringData (off-heap) of size: " + nativeStringData.byteSize()
+        logger.info("Allocated nativeStringData (off-heap) of size: " + nativeStringData.byteSize()
                 + " bytes at: " + nativeStringData);
 
         // Step 3: Copy the content from the on-heap utf8Bytes array into the off-heap
         // nativeStringData segment.
         nativeStringData.copyFrom(MemorySegment.ofArray(utf8Bytes)); // <-- CORRECTED LINE HERE
-        System.out.println("Copied UTF-8 bytes from on-heap array to off-heap nativeStringData.");
+        logger.info("Copied UTF-8 bytes from on-heap array to off-heap nativeStringData. NativeStringData: " + nativeStringData.toString());
 
         // Step 4: Allocate the WGPUStringView struct itself using the provided Arena
         @SuppressWarnings("preview")
         MemorySegment stringViewPtr = WGPUStringView.allocate(arena);
-        System.out.println("Allocated WGPUStringView struct (off-heap) at: " + stringViewPtr);
+        logger.info("Allocated WGPUStringView struct (off-heap) at: " + stringViewPtr);
 
         // Step 5: Set the data pointer and length in the native WGPUStringView struct
         WGPUStringView.data(stringViewPtr, nativeStringData);
         WGPUStringView.length(stringViewPtr, utf8Bytes.length);
-        System.out.println("Set data pointer and length in WGPUStringView struct. Length: " + utf8Bytes.length);
+       logger.info("Set data pointer and length in WGPUStringView struct. Length: " + utf8Bytes.length);
 
         return stringViewPtr;
     }
 
     public String string() {
-        if (stringViewPtr == null) {
+        if (stringViewPtr == null || stringViewPtr.equals(MemorySegment.NULL)) {
             throw new IllegalStateException("StringView is null");
         }
 
         MemorySegment stringData = WGPUStringView.data(stringViewPtr);
+        logger.info("String Data memory segment: " + stringData.toString());
         long length = WGPUStringView.length(stringViewPtr); // Get the *actual* byte length
-
+        logger.info("String Data length: " + length);
         // Defensive checks
         // if (!stringData.()) {
         // throw new IllegalStateException("Native string data segment is already
@@ -83,7 +82,7 @@ public class StringView {
         }
 
         byte[] charArray = new byte[(int) length]; // Create a byte array of the correct size
-
+        logger.info("Empty Char Array: " + Arrays.toString(charArray));
         // Copy the contents from the native MemorySegment into the on-heap byte array
         // You need to explicitly specify the layout for the copy.
         // Use ValueLayout.JAVA_BYTE to copy byte by byte.
@@ -91,6 +90,8 @@ public class StringView {
         for (int i = 0; i < length; i++) {
             charArray[i] = stringData.get(ValueLayout.JAVA_BYTE, i);
         }
+
+        logger.info("Filled Char Array: " + Arrays.toString(charArray));
 
         // Or, a more efficient way to copy the entire segment (if it fits in an
         // int-sized array):
@@ -108,7 +109,7 @@ public class StringView {
     }
 
     public long length() {
-        if (stringViewPtr == null) {
+        if (stringViewPtr == null || stringViewPtr.equals(MemorySegment.NULL)) {
             throw new IllegalStateException("StringView is null");
         }
         return WGPUStringView.length(stringViewPtr);

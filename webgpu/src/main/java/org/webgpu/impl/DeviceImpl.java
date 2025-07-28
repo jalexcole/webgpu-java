@@ -5,7 +5,6 @@ import java.lang.foreign.MemorySegment;
 import java.util.concurrent.Future;
 
 import org.jspecify.annotations.Nullable;
-import org.webgpu.api.AdapterInfo;
 import org.webgpu.api.BindGroup;
 import org.webgpu.api.BindGroupDescriptor;
 import org.webgpu.api.BindGroupLayout;
@@ -61,7 +60,7 @@ public record DeviceImpl(MemorySegment ptr) implements Device {
     }
 
     @Override
-    public AdapterInfo adapterInfo() {
+    public AdapterInfoImpl adapterInfo() {
         try  {
             Arena arena = Arena.ofAuto();
             var adapterInfo = WGPUAdapterInfo.allocate(arena);

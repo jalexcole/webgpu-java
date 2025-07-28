@@ -11,7 +11,7 @@ public enum FeatureLevel {
     FORCE32(webgpu_h.WGPUFeatureLevel_Force32());
     
 
-    private int value;
+    private final int value;
 
     FeatureLevel(int value) {
         this.value = value;
@@ -21,7 +21,7 @@ public enum FeatureLevel {
         return this.value;
     }
     
-    private static FeatureLevel fromValue(int value) {
+    public static FeatureLevel fromValue(int value) {
         for (FeatureLevel level : FeatureLevel.values()) {
             if (level.value == value) {
                 return level;

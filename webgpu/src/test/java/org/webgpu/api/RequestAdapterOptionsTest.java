@@ -6,9 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import java.lang.foreign.MemorySegment;
 
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class RequestAdapterOptionsTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(RequestAdapterOptionsTest.class);
     @Test
     void testPtr() {
         var adapterOptions = new RequestAdapterOptions();
@@ -67,6 +71,6 @@ public class RequestAdapterOptionsTest {
     @Test
     void testToString() {
         var adapterOptions = new RequestAdapterOptions();
-        adapterOptions.toString();
+        logger.info(adapterOptions.toString());
     }
 }

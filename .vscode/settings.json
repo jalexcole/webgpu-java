@@ -23,4 +23,6 @@
     },
     "java.test.output": "both",
     "java.test.log.level": "verbose"
+
+    
 }

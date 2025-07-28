@@ -3,6 +3,7 @@ package org.webgpu.api;
 import java.util.concurrent.Future;
 
 import org.jspecify.annotations.Nullable;
+import org.webgpu.impl.AdapterInfoImpl;
 
 /**
  * A GPUDevice encapsulates a device and exposes the functionality of that
@@ -27,7 +28,7 @@ public interface Device extends ObjectBase {
 
    // readonly attribute
 
-    AdapterInfo adapterInfo();
+    AdapterInfoImpl adapterInfo();
 
     // [SameObject]
 

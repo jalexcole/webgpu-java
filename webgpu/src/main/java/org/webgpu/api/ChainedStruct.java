@@ -8,7 +8,7 @@ public class ChainedStruct {
     @SuppressWarnings("preview")
     private MemorySegment chainedStructPtr;
 
-    ChainedStruct(MemorySegment chainedStructPtr) {
+    public ChainedStruct(MemorySegment chainedStructPtr) {
         this.chainedStructPtr = chainedStructPtr;
     }
 

@@ -12,14 +12,10 @@ public class InstanceDescriptor {
 
     public InstanceDescriptor() {
 
-        try {
-            @SuppressWarnings("preview")
-            Arena arena = Arena.ofAuto();
-            descriptorPtr = WGPUInstanceDescriptor.allocate(arena);
+        @SuppressWarnings("preview")
+        Arena arena = Arena.ofAuto();
+        descriptorPtr = WGPUInstanceDescriptor.allocate(arena);
 
-        } finally {
-
-        }
     }
 
     @SuppressWarnings("preview")

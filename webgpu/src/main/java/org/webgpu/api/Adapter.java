@@ -3,6 +3,7 @@ package org.webgpu.api;
 import java.util.concurrent.Future;
 
 import org.jspecify.annotations.NonNull;
+import org.webgpu.impl.AdapterInfoImpl;
 
 public interface Adapter {
 
@@ -39,26 +40,8 @@ public interface Adapter {
      * 
      * @return
      */
-    public AdapterInfo getInfo();
+    public AdapterInfoImpl getInfo();
     
-    /**
-     * Get info about the adapter itself.
-     * 
-     * @return
-     */
-    public DownlevelCapabilities getDownlevelCapabilities();
-
-    /**
-     * Returns the features supported for a given texture format by this adapter.
-     * 
-     * @apiNote Note that the WebGPU spec further restricts the available usages/features. To
-     * disable these restrictions on a device, request the
-     * {@code Features#TEXTURE_ADAPTER_SPECIFIC_FORMAT_FEATURES} feature
-     * 
-     * @param format
-     * @return
-     */
-    public TextureFormatFeatures getTextureFormatFeatures(TextureFormat format);
     
     public void release();
 
