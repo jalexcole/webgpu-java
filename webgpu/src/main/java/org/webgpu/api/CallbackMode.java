@@ -38,7 +38,7 @@ public enum CallbackMode {
                 "Invalid mode: " + mode + ". Must consist of: " + Arrays.toString(CallbackMode.values()));
     }
 
-    int value() {
+    public int value() {
         return this.value;
     }
 

@@ -39,5 +39,9 @@ public class DeviceDescriptor {
         return WGPUDeviceDescriptor.requiredFeatureCount(ptr);
     }
 
+    public MemorySegment ptr() {
+        return ptr;
+    }
+
     
 }

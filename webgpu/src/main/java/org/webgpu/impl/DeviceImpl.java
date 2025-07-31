@@ -36,26 +36,31 @@ import org.webgpu.api.SupportedLimits;
 import org.webgpu.api.Texture;
 import org.webgpu.api.TextureDescriptor;
 import org.webgpu.extract.WGPUAdapterInfo;
+import org.webgpu.extract.WGPUSupportedFeatures;
 import org.webgpu.extract.webgpu_h;
 
-public record DeviceImpl(MemorySegment ptr) implements Device {
+public record DeviceImpl(MemorySegment ptr, Arena arena) implements Device {
 
     @Override
     public void attribute() {
-
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'attribute'");
     }
 
     @Override
     public SupportedFeatures features() {
+        Arena arena = Arena.ofAuto();
+        MemorySegment featuresSegment = WGPUSupportedFeatures.allocate(arena);
+
+        webgpu_h.wgpuAdapterGetFeatures(ptr, featuresSegment);
+
+        
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'features'");
     }
 
     @Override
     public SupportedLimits limits() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'limits'");
     }
 
@@ -69,12 +74,11 @@ public record DeviceImpl(MemorySegment ptr) implements Device {
             Arena autoArena = Arena.ofAuto();
             var output = WGPUAdapterInfo.allocate(autoArena);
             
-            // return new AdapterInfo()
+            return new AdapterInfoImpl(adapterInfo);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'adapterInfo'");
+        
     }
 
     @Override
@@ -84,14 +88,18 @@ public record DeviceImpl(MemorySegment ptr) implements Device {
 
     @Override
     public void destroy() {
+        webgpu_h.wgpuDeviceRelease(this.ptr);
+        
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'destroy'");
     }
 
     @Override
     public Buffer createBuffer(BufferDescriptor descriptor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createBuffer'");
+        var bufferPtr = webgpu_h.wgpuDeviceCreateBuffer(this.ptr, descriptor.ptr());
+
+        return new BufferImpl(bufferPtr);
+        
     }
 
     @Override
