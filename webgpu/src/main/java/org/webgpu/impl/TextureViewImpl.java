@@ -3,6 +3,7 @@ package org.webgpu.impl;
 import java.lang.foreign.MemorySegment;
 
 import org.webgpu.api.TextureView;
+import org.webgpu.extract.webgpu_h;
 
 public record TextureViewImpl(MemorySegment ptr) implements TextureView {
 
@@ -14,14 +15,12 @@ public record TextureViewImpl(MemorySegment ptr) implements TextureView {
 
     @Override
     public void addRef() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addRef'");
+        webgpu_h.wgpuTextureViewAddRef(ptr);
     }
 
     @Override
     public void release() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'release'");
+        webgpu_h.wgpuTextureViewRelease(ptr);
     }
     
 }

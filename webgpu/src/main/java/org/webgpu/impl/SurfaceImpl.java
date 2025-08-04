@@ -1,5 +1,6 @@
 package org.webgpu.impl;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.webgpu.api.Adapter;
@@ -7,33 +8,44 @@ import org.webgpu.api.Status;
 import org.webgpu.api.Surface;
 import org.webgpu.api.SurfaceCapabilities;
 import org.webgpu.api.SurfaceConfiguration;
+import org.webgpu.api.SurfaceTexture;
 import org.webgpu.api.Texture;
+import org.webgpu.api.WGPU;
 import org.webgpu.exceptions.WebGPUException;
+import org.webgpu.extract.WGPUSurfaceCapabilities;
+import org.webgpu.extract.webgpu_h;
 
 public record SurfaceImpl(@SuppressWarnings("preview") MemorySegment ptr) implements Surface {
 
     @Override
     public void configure(SurfaceConfiguration config) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'configure'");
+        webgpu_h.wgpuSurfaceConfigure(ptr, config.ptr());
     }
 
     @Override
     public SurfaceCapabilities getCapabilities(Adapter adapter) throws WebGPUException {
-        // TODO Auto-generated method stub
+        Arena arena = Arena.ofAuto();
+
+        var surfaceCapabilitiesPtr = arena.allocate(WGPUSurfaceCapabilities.layout());
+        var returnStatus = webgpu_h.wgpuSurfaceGetCapabilities(ptr, ((AdapterImpl) adapter).ptr(), surfaceCapabilitiesPtr);
+
+        if (returnStatus != Status.SUCCESS.value()) {
+            throw new WebGPUException("Failed to get surface capabilities: " + Status.fromValue(returnStatus));
+        }
+
         throw new UnsupportedOperationException("Unimplemented method 'getCapabilities'");
     }
 
     @Override
-    public Texture getCurrentTexture() {
+    public SurfaceTexture getCurrentTexture() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getCurrentTexture'");
     }
 
     @Override
     public Status present() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'present'");
+        int statusValue = webgpu_h.wgpuSurfacePresent(ptr);
+        return Status.fromValue(statusValue);
     }
 
     @Override
@@ -44,14 +56,12 @@ public record SurfaceImpl(@SuppressWarnings("preview") MemorySegment ptr) implem
 
     @Override
     public void unconfigure() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'unconfigure'");
+        webgpu_h.wgpuSurfaceUnconfigure(ptr);
     }
 
     @Override
     public void addRef() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addRef'");
+        webgpu_h.wgpuSurfaceAddRef(ptr);
     }
     
 }

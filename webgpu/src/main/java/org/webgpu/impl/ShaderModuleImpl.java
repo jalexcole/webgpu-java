@@ -5,6 +5,7 @@ import java.util.concurrent.Future;
 
 import org.webgpu.api.CompilationInfo;
 import org.webgpu.api.ShaderModule;
+import org.webgpu.extract.webgpu_h;
 
 public record ShaderModuleImpl(MemorySegment ptr) implements ShaderModule {
 
@@ -22,14 +23,12 @@ public record ShaderModuleImpl(MemorySegment ptr) implements ShaderModule {
 
     @Override
     public void addRef() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addRef'");
+        webgpu_h.wgpuShaderModuleAddRef(ptr);
     }
 
     @Override
     public void release() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'release'");
+        webgpu_h.wgpuShaderModuleRelease(ptr);
     }
     
 }

@@ -1,3 +1,9 @@
 target/
 .idea/
 .vscode/
+webgpu/.settings/org.eclipse.core.resources.prefs
+webgpu/.settings/org.eclipse.jdt.apt.core.prefs
+webgpu/.settings/org.eclipse.jdt.core.prefs
+webgpu/.settings/org.eclipse.m2e.core.prefs
+.settings/org.eclipse.core.resources.prefs
+.settings/org.eclipse.m2e.core.prefs

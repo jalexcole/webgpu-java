@@ -4,25 +4,24 @@ import java.lang.foreign.MemorySegment;
 
 import org.webgpu.api.QuerySet;
 import org.webgpu.api.QueryType;
+import org.webgpu.extract.webgpu_h;
 
 public record QuerySetImpl(MemorySegment ptr) implements QuerySet {
 
     @Override
     public void destroy() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'destroy'");
+        webgpu_h.wgpuQuerySetRelease(ptr);
     }
 
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCount'");
+        return webgpu_h.wgpuQuerySetGetCount(ptr);
     }
 
     @Override
     public QueryType getType() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getType'");
+        int queryTypeValue = webgpu_h.wgpuQuerySetGetType(ptr);
+        return QueryType.fromValue(queryTypeValue);
     }
 
     @Override
@@ -33,14 +32,12 @@ public record QuerySetImpl(MemorySegment ptr) implements QuerySet {
 
     @Override
     public void addRef() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addRef'");
+        webgpu_h.wgpuQuerySetAddRef(ptr);
     }
 
     @Override
     public void release() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'release'");
+        webgpu_h.wgpuQuerySetRelease(ptr);
     }
     
 }

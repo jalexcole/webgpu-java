@@ -47,8 +47,7 @@ public record QueueImpl(MemorySegment ptr) implements Queue {
 
     @Override
     public void release() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'release'");
+        webgpu_h.wgpuQueueRelease(ptr);
     }
 
     @Override

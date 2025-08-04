@@ -3,6 +3,7 @@ package org.webgpu.impl;
 import java.lang.foreign.MemorySegment;
 
 import org.webgpu.api.PipelineLayout;
+import org.webgpu.extract.webgpu_h;
 
 public record PipelineLayoutImpl(MemorySegment ptr) implements PipelineLayout {
 
@@ -14,14 +15,12 @@ public record PipelineLayoutImpl(MemorySegment ptr) implements PipelineLayout {
 
     @Override
     public void addRef() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addRef'");
+        webgpu_h.wgpuPipelineLayoutAddRef(ptr);
     }
 
     @Override
     public void release() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'release'");
+        webgpu_h.wgpuPipelineLayoutRelease(ptr);
     }
     
 }

@@ -143,13 +143,13 @@ public record AdapterImpl(@NonNull MemorySegment ptr, Arena arena) implements Ad
 				// return new DeviceImpl(device, arena);
 
 				if (status == WGPURequestAdapterStatus_Success()) {
-                    logger.info("Adapter received: " + message);
-                    targetFuture.complete(new DeviceImpl(device, arena));
-                } else {
-                    String err = "Failed to request adapter: " + message;
-                    logger.severe(err);
-                    targetFuture.completeExceptionally(new RequestAdaptorError(err));
-                }
+					logger.info("Adapter received: " + message);
+					targetFuture.complete(new DeviceImpl(device, arena));
+				} else {
+					String err = "Failed to request adapter: " + message;
+					logger.severe(err);
+					targetFuture.completeExceptionally(new RequestAdaptorError(err));
+				}
 			};
 
 			MemorySegment nativeCallback = WGPURequestDeviceCallback.allocate(callback, arena);

@@ -7,7 +7,10 @@ public interface Buffer {
     public void destroy();
 
     public BufferMapState getMapState();
-    public int getSize();
+    public long getSize();
 
     public BufferUsage getUsage();
+
+    public void unmap();
+    
 }

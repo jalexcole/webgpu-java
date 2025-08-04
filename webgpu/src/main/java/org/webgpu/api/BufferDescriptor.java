@@ -6,24 +6,21 @@ import java.util.Optional;
 
 import org.webgpu.extract.WGPUBufferDescriptor;
 
-public class BufferDescriptor{
-    private MemorySegment descriptorPtr;
+public class BufferDescriptor implements DescriptorBase{
+    private final MemorySegment ptr;
 
-    // public Optional<String> label() {
-
-    // }
 
     public BufferDescriptor() {
         try  {
             Arena arena = Arena.ofAuto();
-            descriptorPtr = WGPUBufferDescriptor.allocate(arena);
+            ptr = WGPUBufferDescriptor.allocate(arena);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     public Optional<ChainedStruct> nextInChain() {
-        return Optional.of(new ChainedStruct(WGPUBufferDescriptor.nextInChain(descriptorPtr)));
+        return Optional.of(new ChainedStruct(WGPUBufferDescriptor.nextInChain(ptr)));
     }
 
     public String label() {
@@ -31,19 +28,19 @@ public class BufferDescriptor{
     }
 
     public long usage() {
-        throw new UnsupportedOperationException("Unimplemented method 'usage'");
+        return WGPUBufferDescriptor.usage(ptr);
     }
 
     public long size() {
-        throw new UnsupportedOperationException("Unimplemented method 'size'");
+        return WGPUBufferDescriptor.size(ptr);
     }
 
-    public int mappedAtCreation() {
-        throw new UnsupportedOperationException("Unimplemented method 'mappedAtCreation'");
+    public boolean mappedAtCreation() {
+        final var value = WGPUBufferDescriptor.mappedAtCreation(ptr);
+        return value == 1;
     }
 
     public MemorySegment ptr() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'ptr'");
+        return ptr;
     }
 }

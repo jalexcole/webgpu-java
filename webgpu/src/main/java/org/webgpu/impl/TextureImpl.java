@@ -7,6 +7,7 @@ import org.webgpu.api.TextureFormat;
 import org.webgpu.api.TextureUsage;
 import org.webgpu.api.TextureView;
 import org.webgpu.api.TextureViewDescriptor;
+import org.webgpu.extract.webgpu_h;
 
 public record TextureImpl(MemorySegment ptr) implements Texture {
 
@@ -18,56 +19,49 @@ public record TextureImpl(MemorySegment ptr) implements Texture {
 
     @Override
     public void destroy() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'destroy'");
+        webgpu_h.wgpuTextureRelease(this.ptr);
     }
 
     @Override
     public int getDepthOrArrayLayers() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDepthOrArrayLayers'");
+        return webgpu_h.wgpuTextureGetDepthOrArrayLayers(ptr);
     }
 
     @Override
     public int getDimension() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDimension'");
+        return webgpu_h.wgpuTextureGetDimension(ptr);
     }
 
     @Override
     public TextureFormat getFormat() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getFormat'");
+        int formatValue = webgpu_h.wgpuTextureGetFormat(ptr);
+        return TextureFormat.fromValue(formatValue);
     }
 
     @Override
     public int getHeight() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getHeight'");
+        return webgpu_h.wgpuTextureGetHeight(ptr);
     }
 
     @Override
     public int getMipLevelCount() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getMipLevelCount'");
+        return webgpu_h.wgpuTextureGetMipLevelCount(ptr);
     }
 
     @Override
     public int getSampleCount() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getSampleCount'");
+        return webgpu_h.wgpuTextureGetSampleCount(ptr);
     }
 
     @Override
     public TextureUsage getUsage() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getUsage'");
+        final long usageValue = webgpu_h.wgpuTextureGetUsage(ptr);
+        return TextureUsage.fromValue(usageValue);
     }
 
     @Override
     public int getWidth() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getWidth'");
+        return webgpu_h.wgpuTextureGetWidth(ptr);
     }
 
     @Override
@@ -78,14 +72,12 @@ public record TextureImpl(MemorySegment ptr) implements Texture {
 
     @Override
     public void addRef() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addRef'");
+        webgpu_h.wgpuTextureAddRef(ptr);
     }
 
     @Override
     public void release() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'release'");
+        webgpu_h.wgpuTextureRelease(ptr);
     }
     
 }

@@ -17,8 +17,7 @@ import org.webgpu.impl.AdapterInfoImpl;
  */
 public interface Device extends ObjectBase {
 
-    // [SameObject]
-    void attribute();
+    
 
     SupportedFeatures features();// [SameObject]
 

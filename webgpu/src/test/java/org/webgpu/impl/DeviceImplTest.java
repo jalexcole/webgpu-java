@@ -7,6 +7,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Test;
+import org.webgpu.api.BufferDescriptor;
 import org.webgpu.api.WGPU;
 import org.webgpu.exceptions.RequestAdaptorError;
 
@@ -23,16 +24,6 @@ public class DeviceImplTest {
                 .requestDevice(null)
                 .get()
                 .adapterInfo();
-
-    }
-
-    @Test
-    void testAttribute() throws InterruptedException, ExecutionException, RequestAdaptorError {
-        WGPU.createInstance(null)
-                .requestAdapter(null)
-                .get()
-                .requestDevice(null)
-                .get().attribute();
     }
 
     @Test
@@ -55,11 +46,13 @@ public class DeviceImplTest {
 
     @Test
     void testCreateBuffer() throws InterruptedException, ExecutionException, RequestAdaptorError {
+
+        
         WGPU.createInstance(null)
                 .requestAdapter(null)
                 .get()
                 .requestDevice(null)
-                .get().createBuffer(null);
+                .get().createBuffer(new BufferDescriptor());
     }
 
     @Test

@@ -42,12 +42,6 @@ import org.webgpu.extract.webgpu_h;
 public record DeviceImpl(MemorySegment ptr, Arena arena) implements Device {
 
     @Override
-    public void attribute() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'attribute'");
-    }
-
-    @Override
     public SupportedFeatures features() {
         Arena arena = Arena.ofAuto();
         MemorySegment featuresSegment = WGPUSupportedFeatures.allocate(arena);
@@ -61,6 +55,9 @@ public record DeviceImpl(MemorySegment ptr, Arena arena) implements Device {
 
     @Override
     public SupportedLimits limits() {
+        Arena arena = Arena.ofAuto();
+        
+        webgpu_h.wgpuDeviceGetLimits(ptr, null);
         throw new UnsupportedOperationException("Unimplemented method 'limits'");
     }
 
@@ -89,14 +86,11 @@ public record DeviceImpl(MemorySegment ptr, Arena arena) implements Device {
     @Override
     public void destroy() {
         webgpu_h.wgpuDeviceRelease(this.ptr);
-        
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'destroy'");
     }
 
     @Override
     public Buffer createBuffer(BufferDescriptor descriptor) {
-        var bufferPtr = webgpu_h.wgpuDeviceCreateBuffer(this.ptr, descriptor.ptr());
+        var bufferPtr = webgpu_h.wgpuDeviceCreateBuffer(this.ptr, descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
 
         return new BufferImpl(bufferPtr);
         
@@ -104,56 +98,65 @@ public record DeviceImpl(MemorySegment ptr, Arena arena) implements Device {
 
     @Override
     public Texture createTexture(TextureDescriptor descriptor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createTexture'");
+        final var texturePtr = webgpu_h.wgpuDeviceCreateTexture(this.ptr, descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
+
+        return new TextureImpl(texturePtr);
     }
 
     @Override
     public Sampler createSampler(@Nullable SamplerDescriptor descriptor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createSampler'");
+        final var samplerPtr = webgpu_h.wgpuDeviceCreateSampler(this.ptr, descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
+
+        return new SamplerImpl(samplerPtr);
     }
 
     @Override
     public ExternalTexture importExternalTexture(ExternalTextureDescriptor descriptor) {
-        // TODO Auto-generated method stub
+
+
         throw new UnsupportedOperationException("Unimplemented method 'importExternalTexture'");
     }
 
     @Override
     public BindGroupLayout createBindGroupLayout(BindGroupLayoutDescriptor descriptor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createBindGroupLayout'");
+        final var bindGroupLayoutPtr = webgpu_h.wgpuDeviceCreateBindGroupLayout(this.ptr, descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
+
+        return new BindGroupLayoutImpl(bindGroupLayoutPtr);
     }
 
     @Override
     public PipelineLayout createPipelineLayout(PipelineLayoutDescriptor descriptor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createPipelineLayout'");
+        final var pipelineLayoutPtr = webgpu_h.wgpuDeviceCreatePipelineLayout(this.ptr, descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
+
+        return new PipelineLayoutImpl(pipelineLayoutPtr);
     }
 
     @Override
     public BindGroup createBindGroup(BindGroupDescriptor descriptor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createBindGroup'");
+        final var bindGroupPtr = webgpu_h.wgpuDeviceCreateBindGroup(this.ptr,
+                descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
+        return new BindGroupImpl(bindGroupPtr);
     }
 
     @Override
     public ShaderModule createShaderModule(ShaderModuleDescriptor descriptor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createShaderModule'");
+        final var shaderModulePtr = webgpu_h.wgpuDeviceCreateShaderModule(this.ptr, descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
+
+        return new ShaderModuleImpl(shaderModulePtr);
     }
 
     @Override
     public ComputePipeline createComputePipeline(ComputePipelineDescriptor descriptor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createComputePipeline'");
+        final var computePipelinePtr = webgpu_h.wgpuDeviceCreateComputePipeline(this.ptr, descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
+
+        return new ComputePipelineImpl(computePipelinePtr);
     }
 
     @Override
     public RenderPipeline createRenderPipeline(RenderPipelineDescriptor descriptor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createRenderPipeline'");
+        final var renderPipelinePtr = webgpu_h.wgpuDeviceCreateRenderPipeline(this.ptr, descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
+
+        return new RenderPipelineImpl(renderPipelinePtr);
     }
 
     @Override
@@ -170,20 +173,23 @@ public record DeviceImpl(MemorySegment ptr, Arena arena) implements Device {
 
     @Override
     public CommandEncoder createCommandEncoder(@Nullable CommandEncoderDescriptor descriptor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createCommandEncoder'");
+        final var commandEncoderPtr = webgpu_h.wgpuDeviceCreateCommandEncoder(this.ptr, descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
+
+        return new CommandEncoder(commandEncoderPtr);
     }
 
     @Override
     public RenderBundleEncoder createRenderBundleEncoder(RenderBundleEncoderDescriptor descriptor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createRenderBundleEncoder'");
+        final var renderBundleEncoderPtr = webgpu_h.wgpuDeviceCreateRenderBundleEncoder(this.ptr, descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
+
+        return new RenderBundleEncoderImpl(renderBundleEncoderPtr);
     }
 
     @Override
     public QuerySet createQuerySet(QuerySetDescriptor descriptor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createQuerySet'");
+        final MemorySegment querySetPtr = webgpu_h.wgpuDeviceCreateQuerySet(this.ptr, descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
+
+        return new QuerySetImpl(querySetPtr);
     }
 
 }

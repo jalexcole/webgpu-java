@@ -14,7 +14,7 @@ public enum BufferMapState {
         this.value = value;
     }
 
-    public static BufferMapState set(int value) {
+    public static BufferMapState fromValue(int value) {
         for (BufferMapState state : BufferMapState.values()) {
             if (state.value == value) {
                 return state;

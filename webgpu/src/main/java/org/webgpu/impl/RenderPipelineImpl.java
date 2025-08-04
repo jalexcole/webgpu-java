@@ -19,14 +19,12 @@ public record RenderPipelineImpl(MemorySegment ptr) implements RenderPipeline {
 
     @Override
     public void addRef() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addRef'");
+        webgpu_h.wgpuRenderPipelineAddRef(ptr);
     }
 
     @Override
     public void release() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'release'");
+        webgpu_h.wgpuRenderPipelineRelease(ptr);
     }
     
 }

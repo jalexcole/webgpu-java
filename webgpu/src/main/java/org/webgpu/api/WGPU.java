@@ -29,7 +29,7 @@ public class WGPU {
         if (WGPU.arena == null) {
             try {
                 @SuppressWarnings("preview")
-                Arena arena = Arena.ofShared();
+                Arena arena = Arena.ofAuto();
                 WGPU.arena = arena;
             } catch (Exception e) {
                 throw new RuntimeException(e);

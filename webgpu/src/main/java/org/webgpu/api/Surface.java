@@ -8,7 +8,7 @@ public interface Surface {
 
     public SurfaceCapabilities getCapabilities(Adapter adapter) throws WebGPUException;
 
-    public Texture getCurrentTexture();
+    public SurfaceTexture getCurrentTexture();
 
     public Status present();
 

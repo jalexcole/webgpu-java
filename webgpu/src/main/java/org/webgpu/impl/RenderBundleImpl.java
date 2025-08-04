@@ -3,6 +3,7 @@ package org.webgpu.impl;
 import java.lang.foreign.MemorySegment;
 
 import org.webgpu.api.RenderBundle;
+import org.webgpu.extract.webgpu_h;
 
 public record RenderBundleImpl(MemorySegment ptr) implements RenderBundle {
 
@@ -14,14 +15,12 @@ public record RenderBundleImpl(MemorySegment ptr) implements RenderBundle {
 
     @Override
     public void addRef() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addRef'");
+        webgpu_h.wgpuRenderBundleAddRef(ptr);
     }
 
     @Override
     public void release() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'release'");
+        webgpu_h.wgpuRenderBundleRelease(ptr);
     }
     
 }

@@ -5,6 +5,7 @@ import java.lang.foreign.MemorySegment;
 import java.util.Optional;
 
 import org.webgpu.extract.WGPUBindGroupDescriptor;
+import org.webgpu.impl.BindGroupLayoutImpl;
 import org.webgpu.util.StringView;
 
 public class BindGroupDescriptor {
@@ -34,8 +35,32 @@ public class BindGroupDescriptor {
         WGPUBindGroupDescriptor.label(ptr, stringView);
     }
 
-    public MemorySegment ptr() {
-        return this.ptr;   
+    public BindGroupLayout layout() {
+        return new BindGroupLayoutImpl(WGPUBindGroupDescriptor.layout(ptr));
     }
-    
+
+    public void setLayout(BindGroupLayout layout) {
+        WGPUBindGroupDescriptor.layout(ptr, ((BindGroupLayoutImpl) layout).ptr());
+    }
+
+    public long entryCount() {
+        return WGPUBindGroupDescriptor.entryCount(ptr);
+    }
+
+    public void setEntryCount(long count) {
+        WGPUBindGroupDescriptor.entryCount(ptr, count);
+    }
+
+    public BindGroupEntry[] entries() {
+        throw new UnsupportedOperationException("Unimplemented method 'entries'");
+    }
+
+    public void setEntries(BindGroupEntry... entries) {
+        throw new UnsupportedOperationException("Unimplemented method 'setEntries'");
+    }
+
+    public MemorySegment ptr() {
+        return this.ptr;
+    }
+
 }

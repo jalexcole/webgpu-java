@@ -9,7 +9,7 @@ import org.webgpu.impl.ComputePassEncoderImpl;
 public class CommandEncoder {
     private final MemorySegment ptr;
 
-    CommandEncoder(MemorySegment ptr) {
+    public CommandEncoder(MemorySegment ptr) {
         this.ptr = ptr;
     }
 
@@ -18,7 +18,7 @@ public class CommandEncoder {
     }
 
     public ComputePassEncoder beginComputePass(ComputePassDescriptor descriptor) {
-        return new ComputePassEncoderImpl(wgpuCommandEncoderBeginComputePass(this.ptr, descriptor.ptr()));
+        return new ComputePassEncoderImpl(wgpuCommandEncoderBeginComputePass(this.ptr, descriptor != null ? descriptor.ptr() : MemorySegment.NULL));
     }
 
 }

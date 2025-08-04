@@ -15,8 +15,6 @@ public interface Adapter {
      * 
      * @param descriptor
      * @return
-     * 
-     * 
      */
     public Future<Device> requestDevice(@NonNull DeviceDescriptor descriptor);
 
@@ -27,7 +25,7 @@ public interface Adapter {
      * @return
      */
     public FeatureName[] features();
-    
+
     /**
      * The best limits which can be used to create devices on this adapter.
      * 
@@ -41,8 +39,7 @@ public interface Adapter {
      * @return
      */
     public AdapterInfoImpl getInfo();
-    
-    
+
     public void release();
 
 }

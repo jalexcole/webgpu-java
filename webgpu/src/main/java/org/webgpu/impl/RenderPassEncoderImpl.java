@@ -9,49 +9,43 @@ import org.webgpu.api.IndexFormat;
 import org.webgpu.api.RenderBundle;
 import org.webgpu.api.RenderPassEncoder;
 import org.webgpu.api.RenderPipeline;
+import org.webgpu.extract.webgpu_h;
 
 public record RenderPassEncoderImpl(MemorySegment ptr) implements RenderPassEncoder {
 
     @Override
     public void beginOcclusionQuery(int queryIndex) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'beginOcclusionQuery'");
+        webgpu_h.wgpuRenderPassEncoderBeginOcclusionQuery(ptr, queryIndex);
     }
 
     @Override
     public void draw(int vertex_count, int instance_count, int first_vertex, int first_instance) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'draw'");
+        webgpu_h.wgpuRenderPassEncoderDraw(ptr, vertex_count, instance_count, first_vertex, first_instance);
     }
 
     @Override
     public void drawIndexed(int index_count, int instance_count, int first_index, int base_vertex, int first_instance) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'drawIndexed'");
+        webgpu_h.wgpuRenderPassEncoderDrawIndexed(ptr, index_count, instance_count, first_index, base_vertex, first_instance);
     }
 
     @Override
     public void drawIndexedIndirect(Buffer indirect_buffer, long indirect_offset) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'drawIndexedIndirect'");
+        webgpu_h.wgpuRenderPassEncoderDrawIndexedIndirect(ptr, ((BufferImpl) indirect_buffer).ptr(), indirect_offset);
     }
 
     @Override
     public void drawIndirect(Buffer indirect_buffer, long indirect_offset) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'drawIndirect'");
+        webgpu_h.wgpuRenderPassEncoderDrawIndirect(ptr, ((BufferImpl) indirect_buffer).ptr(), indirect_offset);
     }
 
     @Override
     public void end() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'end'");
+        webgpu_h.wgpuRenderPassEncoderEnd(ptr);
     }
 
     @Override
     public void endOcclusionQuery() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'endOcclusionQuery'");
+        webgpu_h.wgpuRenderPassEncoderEndOcclusionQuery(ptr);
     }
 
     @Override
@@ -68,8 +62,7 @@ public record RenderPassEncoderImpl(MemorySegment ptr) implements RenderPassEnco
 
     @Override
     public void popDebugGroup() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'popDebugGroup'");
+        webgpu_h.wgpuRenderPassEncoderPopDebugGroup(ptr);
     }
 
     @Override
@@ -80,14 +73,13 @@ public record RenderPassEncoderImpl(MemorySegment ptr) implements RenderPassEnco
 
     @Override
     public void setBindGroup(int groupIndex, BindGroup group, int[] dynamicOffsets) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setBindGroup'");
+        var dynamicOffsetsSegment = MemorySegment.ofArray(dynamicOffsets);
+        webgpu_h.wgpuRenderPassEncoderSetBindGroup(ptr, groupIndex, ((BindGroupImpl) group).ptr(),dynamicOffsets.length, dynamicOffsetsSegment);
     }
 
     @Override
     public void setBlendConstant(Color color) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setBlendConstant'");
+        webgpu_h.wgpuRenderPassEncoderSetBlendConstant(ptr, color.ptr());
     }
 
     @Override
@@ -104,44 +96,37 @@ public record RenderPassEncoderImpl(MemorySegment ptr) implements RenderPassEnco
 
     @Override
     public void setPipeline(RenderPipeline pipeline) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setPipeline'");
+        webgpu_h.wgpuRenderPassEncoderSetPipeline(ptr, ((RenderPipelineImpl) pipeline).ptr());
     }
 
     @Override
     public void setScissorRect(int x, int y, int width, int height) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setScissorRect'");
+        webgpu_h.wgpuRenderPassEncoderSetScissorRect(ptr, x, y, width, height);
     }
 
     @Override
     public void setStencilReference(int reference) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setStencilReference'");
+        webgpu_h.wgpuRenderPassEncoderSetStencilReference(ptr, reference);
     }
 
     @Override
     public void setVertexBuffer(int slot, Buffer buffer) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'setVertexBuffer'");
     }
 
     @Override
     public void setViewport(float x, float y, float width, float height, float minDepth, float maxDepth) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setViewport'");
+        webgpu_h.wgpuRenderPassEncoderSetViewport(ptr, x, y, width, height, minDepth, maxDepth);
     }
 
     @Override
     public void addRef() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addRef'");
+        webgpu_h.wgpuRenderPassEncoderAddRef(ptr);
     }
 
     @Override
     public void release() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'release'");
+        webgpu_h.wgpuRenderPassEncoderRelease(ptr);
     }
     
 }

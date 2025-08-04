@@ -1,11 +1,28 @@
 package org.webgpu.impl;
 
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Logger;
+
 import org.junit.jupiter.api.Test;
+import org.webgpu.api.BufferDescriptor;
+import org.webgpu.api.WGPU;
+import org.webgpu.exceptions.RequestAdaptorError;
 
 public class BufferImplTest {
-    @Test
-    void testDestroy() {
 
+    private static final Logger logger = Logger.getLogger(BufferImplTest.class.getName());
+    @Test
+    void testDestroy() throws InterruptedException, ExecutionException, RequestAdaptorError {
+        final var instance = WGPU.createInstance(null);
+        var adapter = instance.requestAdapter(null).get();
+        var device = adapter.requestDevice(null).get();
+        var bufferDescriptor = new BufferDescriptor();
+
+        logger.info("Creating buffer...: " + bufferDescriptor);
+        var buffer = device.createBuffer(bufferDescriptor);
+        logger.info("Buffer created: " + buffer);
+
+        buffer.destroy();
     }
 
     @Test
@@ -14,23 +31,63 @@ public class BufferImplTest {
     }
 
     @Test
-    void testGetMapState() {
+    void testGetMapState() throws InterruptedException, ExecutionException, RequestAdaptorError {
+        final var instance = WGPU.createInstance(null);
+        var adapter = instance.requestAdapter(null).get();
+        var device = adapter.requestDevice(null).get();
+        var bufferDescriptor = new BufferDescriptor();
 
+        logger.info("Creating buffer...: " + bufferDescriptor);
+        var buffer = device.createBuffer(bufferDescriptor);
+        logger.info("Buffer created: " + buffer);
+
+        var mapState = buffer.getMapState();
+        logger.info("Buffer map state: " + mapState);
     }
 
     @Test
-    void testGetSize() {
+    void testGetSize() throws InterruptedException, ExecutionException, RequestAdaptorError {
+        final var instance = WGPU.createInstance(null);
+        var adapter = instance.requestAdapter(null).get();
+        var device = adapter.requestDevice(null).get();
+        var bufferDescriptor = new BufferDescriptor();
 
+        logger.info("Creating buffer...: " + bufferDescriptor);
+        var buffer = device.createBuffer(bufferDescriptor);
+        logger.info("Buffer created: " + buffer);
+
+        var size = buffer.getSize();
+        logger.info("Buffer size: " + size);
     }
 
     @Test
-    void testGetUsage() {
+    void testGetUsage() throws InterruptedException, ExecutionException, RequestAdaptorError {
+        final var instance = WGPU.createInstance(null);
+        var adapter = instance.requestAdapter(null).get();
+        var device = adapter.requestDevice(null).get();
+        var bufferDescriptor = new BufferDescriptor();
 
+        logger.info("Creating buffer...: " + bufferDescriptor);
+        var buffer = device.createBuffer(bufferDescriptor);
+        logger.info("Buffer created: " + buffer);
+
+        var usage = buffer.getUsage();
+        logger.info("Buffer usage: " + usage);
     }
 
     @Test
-    void testHashCode() {
+    void testHashCode() throws InterruptedException, ExecutionException, RequestAdaptorError {
+        final var instance = WGPU.createInstance(null);
+        var adapter = instance.requestAdapter(null).get();
+        var device = adapter.requestDevice(null).get();
+        var bufferDescriptor = new BufferDescriptor();
 
+        logger.info("Creating buffer...: " + bufferDescriptor);
+        var buffer = device.createBuffer(bufferDescriptor);
+        logger.info("Buffer created: " + buffer);
+
+        int hashCode = buffer.hashCode();
+        logger.info("Buffer hash code: " + hashCode);
     }
 
     @Test
@@ -39,7 +96,17 @@ public class BufferImplTest {
     }
 
     @Test
-    void testToString() {
+    void testToString() throws InterruptedException, ExecutionException, RequestAdaptorError {
+        final var instance = WGPU.createInstance(null);
+        var adapter = instance.requestAdapter(null).get();
+        var device = adapter.requestDevice(null).get();
+        var bufferDescriptor = new BufferDescriptor();
 
+        logger.info("Creating buffer...: " + bufferDescriptor);
+        var buffer = device.createBuffer(bufferDescriptor);
+        logger.info("Buffer created: " + buffer);
+
+        String str = buffer.toString();
+        logger.info("Buffer toString: " + str);
     }
 }

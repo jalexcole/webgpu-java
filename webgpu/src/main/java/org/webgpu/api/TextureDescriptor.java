@@ -35,15 +35,24 @@ public class TextureDescriptor {
         }
     }
 
-    public TextureDescriptor usage() {
-        throw new UnsupportedOperationException("Unimplemented method 'usage'");
+    public TextureUsage usage() {
+        return TextureUsage.fromValue(WGPUTextureDescriptor.usage(ptr));
     }
 
-    public TextureDescriptor dimension() {
-        throw new UnsupportedOperationException("Unimplemented method 'dimension'");
+    public void setUsage(TextureUsage usage) {
+        WGPUTextureDescriptor.usage(ptr, usage.value());
+    }
+
+    public TextureDimension dimension() {
+        return TextureDimension.fromValue(WGPUTextureDescriptor.dimension(ptr));
+    }
+
+    public void setDimension(TextureDimension dimension) {
+        WGPUTextureDescriptor.dimension(ptr, dimension.value());
     }
 
     public Extent3D size() {
+        
         throw new UnsupportedOperationException("Unimplemented method 'size'");
     }
 
