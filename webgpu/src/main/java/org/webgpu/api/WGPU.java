@@ -3,12 +3,14 @@ package org.webgpu.api;
 import java.lang.foreign.Arena;
 import java.lang.foreign.Linker;
 import java.lang.foreign.MemorySegment;
+import java.util.logging.Logger;
+
 import org.jspecify.annotations.Nullable;
 import org.webgpu.extract.webgpu_h;
 import org.webgpu.impl.InstanceImpl;
 
 public class WGPU {
-
+    private static final Logger logger = Logger.getLogger(WGPU.class.getName());
     public static Arena arena = Arena.ofShared();
 
     @SuppressWarnings("preview")
@@ -16,11 +18,13 @@ public class WGPU {
     static {
         try {
 
-            System.load("/Users/alex/dev/webgpu-java/webgpu/src/test/resources/libwgpu_native.dylib");
+            System.load("/home/alex/Downloads/webgpu-java/webgpu-panama/target/downloads-unzipped/lib/libwgpu_native.so");
         } catch (SecurityException e) {
-            System.out.println(e.getMessage());
+            logger.severe(e.getMessage());
         } catch (final UnsatisfiedLinkError e) {
-            System.out.println(e.getMessage());
+            logger.severe(e.getMessage());
+        } catch(final Exception e) {
+            logger.severe(e.getMessage());
         }
     }
 
