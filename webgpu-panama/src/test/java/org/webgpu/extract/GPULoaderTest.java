@@ -1,4 +1,4 @@
-package org.webgpu.extract;
+package org.webgpu.foriegn;
 
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package org.webgpu.extract;
+package org.webgpu.foriegn;
 
 import java.io.File;
 import java.io.FileOutputStream;

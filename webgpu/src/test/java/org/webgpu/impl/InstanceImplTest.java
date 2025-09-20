@@ -9,7 +9,7 @@ import org.webgpu.api.Instance;
 import org.webgpu.api.RequestAdapterOptions;
 import org.webgpu.api.WGPU;
 
-public class InstanceImplTest {
+class InstanceImplTest {
     private static final Logger logger = Logger.getLogger(InstanceImplTest.class.getName());
 
     @BeforeAll
