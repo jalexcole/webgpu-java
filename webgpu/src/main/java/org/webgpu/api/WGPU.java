@@ -6,19 +6,19 @@ import java.lang.foreign.MemorySegment;
 import java.util.logging.Logger;
 
 import org.jspecify.annotations.Nullable;
-import org.webgpu.extract.webgpu_h;
+import org.webgpu.foriegn.webgpu_h;
 import org.webgpu.impl.InstanceImpl;
 
 public class WGPU {
-    private static final Logger logger = Logger.getLogger(WGPU.class.getName());
-    public static Arena arena = Arena.ofShared();
 
+    public static Arena arena = Arena.global();
+    private static final Logger logger = Logger.getLogger(WGPU.class.getName());
     @SuppressWarnings("preview")
     static final Linker NATIVE_LINKER = Linker.nativeLinker();
     static {
         try {
 
-            System.load("/home/alex/Downloads/webgpu-java/webgpu-panama/target/downloads-unzipped/lib/libwgpu_native.so");
+            System.load("libwgpu_native.dylib");
         } catch (SecurityException e) {
             logger.severe(e.getMessage());
         } catch (final UnsatisfiedLinkError e) {
@@ -33,7 +33,7 @@ public class WGPU {
         if (WGPU.arena == null) {
             try {
                 @SuppressWarnings("preview")
-                Arena arena = Arena.ofAuto();
+                Arena arena = Arena.global();
                 WGPU.arena = arena;
             } catch (Exception e) {
                 throw new RuntimeException(e);

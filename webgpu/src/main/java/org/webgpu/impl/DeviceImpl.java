@@ -4,6 +4,7 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.util.concurrent.Future;
 
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.webgpu.api.BindGroup;
 import org.webgpu.api.BindGroupDescriptor;
@@ -89,7 +90,7 @@ public record DeviceImpl(MemorySegment ptr, Arena arena) implements Device {
     }
 
     @Override
-    public Buffer createBuffer(BufferDescriptor descriptor) {
+    public Buffer createBuffer(@NonNull BufferDescriptor descriptor) {
         var bufferPtr = webgpu_h.wgpuDeviceCreateBuffer(this.ptr, descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
 
         return new BufferImpl(bufferPtr);

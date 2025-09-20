@@ -4,6 +4,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Test;
+import org.webgpu.api.Buffer;
 import org.webgpu.api.BufferDescriptor;
 import org.webgpu.api.WGPU;
 import org.webgpu.exceptions.RequestAdaptorError;
@@ -17,12 +18,17 @@ public class BufferImplTest {
         var adapter = instance.requestAdapter(null).get();
         var device = adapter.requestDevice(null).get();
         var bufferDescriptor = new BufferDescriptor();
-
+        bufferDescriptor.mappedAtCreation();
         logger.info("Creating buffer...: " + bufferDescriptor);
-        var buffer = device.createBuffer(bufferDescriptor);
+        Buffer buffer = device.createBuffer(bufferDescriptor);
         logger.info("Buffer created: " + buffer);
 
-        buffer.destroy();
+        try {buffer.destroy();} catch (Exception e) {
+            logger.severe("Failed to destroy buffer: " + e.getMessage());
+        } finally {
+            throw new RuntimeException("Test exception");
+        }
+        // logger.info("Buffer destroyed: " + buffer);
     }
 
     @Test

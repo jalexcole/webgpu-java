@@ -36,7 +36,7 @@ jobs:
         sdk install jextract
         sdk install maven
         yes | sdk install java 24-open
-        ./mvnw install
+        mvn install
         
 
    
