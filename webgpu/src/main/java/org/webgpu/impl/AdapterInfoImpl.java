@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 import org.webgpu.api.AdapterInfo;
 import org.webgpu.api.AdapterType;
 import org.webgpu.api.BackendType;
-import org.webgpu.extract.WGPUAdapterInfo;
+import org.webgpu.foreign.WGPUAdapterInfo;
 import org.webgpu.util.StringView;
 
 public record AdapterInfoImpl(MemorySegment ptr) implements AdapterInfo {

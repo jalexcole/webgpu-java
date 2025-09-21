@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.webgpu.api.ChainedStruct;
 import org.webgpu.api.Limits;
-import org.webgpu.extract.WGPULimits;
+import org.webgpu.foreign.WGPULimits;
 
 public record LimitsImpl(MemorySegment ptr) implements Limits {
 

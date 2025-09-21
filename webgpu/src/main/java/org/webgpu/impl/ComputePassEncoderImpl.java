@@ -1,9 +1,9 @@
 package org.webgpu.impl;
 
-import static org.webgpu.extract.webgpu_h.wgpuComputePassEncoderDispatchWorkgroups;
-import static org.webgpu.extract.webgpu_h.wgpuComputePassEncoderDispatchWorkgroupsIndirect;
-import static org.webgpu.extract.webgpu_h.wgpuComputePassEncoderEnd;
-import static org.webgpu.extract.webgpu_h.wgpuComputePassEncoderSetPipeline;
+import static org.webgpu.foreign.webgpu_h.wgpuComputePassEncoderDispatchWorkgroups;
+import static org.webgpu.foreign.webgpu_h.wgpuComputePassEncoderDispatchWorkgroupsIndirect;
+import static org.webgpu.foreign.webgpu_h.wgpuComputePassEncoderEnd;
+import static org.webgpu.foreign.webgpu_h.wgpuComputePassEncoderSetPipeline;
 
 import java.lang.foreign.MemorySegment;
 

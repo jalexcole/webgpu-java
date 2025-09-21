@@ -1,7 +1,8 @@
 package org.webgpu.impl;
 
-import static org.webgpu.extract.webgpu_h.C_INT;
-import static org.webgpu.extract.webgpu_h.WGPURequestAdapterStatus_Success;
+import static org.webgpu.foreign.webgpu_h.C_INT;
+import static org.webgpu.foreign.webgpu_h.WGPURequestAdapterStatus_Success;
+
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
@@ -19,12 +20,12 @@ import org.webgpu.api.DeviceDescriptor;
 import org.webgpu.api.FeatureName;
 import org.webgpu.api.Limits;
 import org.webgpu.exceptions.RequestAdaptorError;
-import org.webgpu.extract.WGPUAdapterInfo;
-import org.webgpu.extract.WGPULimits;
-import org.webgpu.extract.WGPURequestDeviceCallback;
-import org.webgpu.extract.WGPURequestDeviceCallbackInfo;
-import org.webgpu.extract.WGPUSupportedFeatures;
-import org.webgpu.extract.webgpu_h;
+import org.webgpu.foreign.WGPUAdapterInfo;
+import org.webgpu.foreign.WGPULimits;
+import org.webgpu.foreign.WGPURequestDeviceCallback;
+import org.webgpu.foreign.WGPURequestDeviceCallbackInfo;
+import org.webgpu.foreign.WGPUSupportedFeatures;
+import org.webgpu.foreign.webgpu_h;
 import org.webgpu.util.StringView;
 
 @SuppressWarnings("preview")

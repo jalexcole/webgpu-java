@@ -1,12 +1,12 @@
 package org.webgpu.api;
 
-import static org.webgpu.extract.webgpu_h.WGPUBool;
+import static org.webgpu.foreign.webgpu_h.WGPUBool;
 
 import java.lang.foreign.MemorySegment;
 import java.util.Optional;
 
-import org.webgpu.extract.WGPUMultisampleState;
-import org.webgpu.extract.webgpu_h;
+import org.webgpu.foreign.WGPUMultisampleState;
+import org.webgpu.foreign.webgpu_h;
 
 public class MultisampleState {
     private final MemorySegment ptr;

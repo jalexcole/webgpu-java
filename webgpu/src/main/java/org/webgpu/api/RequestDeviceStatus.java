@@ -2,7 +2,7 @@ package org.webgpu.api;
 
 import java.util.Arrays;
 
-import org.webgpu.extract.webgpu_h;
+import org.webgpu.foreign.webgpu_h;
 
 public enum RequestDeviceStatus {
     SUCCESS(webgpu_h.WGPURequestDeviceStatus_Success()),

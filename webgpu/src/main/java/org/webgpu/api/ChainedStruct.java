@@ -2,7 +2,7 @@ package org.webgpu.api;
 
 import java.lang.foreign.MemorySegment;
 
-import org.webgpu.extract.WGPUChainedStruct;
+import org.webgpu.foreign.WGPUChainedStruct;
 
 public class ChainedStruct {
     @SuppressWarnings("preview")

@@ -2,7 +2,7 @@ package org.webgpu.api;
 
 import java.lang.foreign.MemorySegment;
 
-import org.webgpu.extract.WGPUSupportedWGSLLanguageFeatures;
+import org.webgpu.foreign.WGPUSupportedWGSLLanguageFeatures;
 
 public class SupportedWGSLLanguageFeatures {
     private MemorySegment ptr;

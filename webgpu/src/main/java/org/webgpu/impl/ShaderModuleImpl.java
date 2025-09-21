@@ -5,7 +5,7 @@ import java.util.concurrent.Future;
 
 import org.webgpu.api.CompilationInfo;
 import org.webgpu.api.ShaderModule;
-import org.webgpu.extract.webgpu_h;
+import org.webgpu.foreign.webgpu_h;
 
 public record ShaderModuleImpl(MemorySegment ptr) implements ShaderModule {
 

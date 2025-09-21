@@ -3,7 +3,7 @@ package org.webgpu.api;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
-import org.webgpu.extract.WGPUColor;
+import org.webgpu.foreign.WGPUColor;
 
 public class Color implements ObjectBase {
     private MemorySegment colorPtr;

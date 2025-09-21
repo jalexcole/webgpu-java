@@ -1,6 +1,6 @@
 package org.webgpu.api;
 
-import org.webgpu.extract.webgpu_h;
+import org.webgpu.foreign.webgpu_h;
 
 public enum TextureSampleType {
     BINDING_NOT_USED(webgpu_h.WGPUTextureSampleType_BindingNotUsed()),

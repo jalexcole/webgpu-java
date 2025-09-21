@@ -4,11 +4,11 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.util.Optional;
 
-import org.webgpu.extract.WGPUBindGroupDescriptor;
+import org.webgpu.foreign.WGPUBindGroupDescriptor;
 import org.webgpu.impl.BindGroupLayoutImpl;
 import org.webgpu.util.StringView;
 
-public class BindGroupDescriptor {
+public final class BindGroupDescriptor implements DescriptorBase {
 
     private final MemorySegment ptr;
 

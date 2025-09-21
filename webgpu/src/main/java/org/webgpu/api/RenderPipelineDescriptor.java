@@ -4,7 +4,7 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.util.Optional;
 
-import org.webgpu.extract.WGPURenderPipelineDescriptor;
+import org.webgpu.foreign.WGPURenderPipelineDescriptor;
 import org.webgpu.impl.PipelineLayoutImpl;
 import org.webgpu.util.StringView;
 

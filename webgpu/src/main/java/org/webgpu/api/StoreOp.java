@@ -1,6 +1,6 @@
 package org.webgpu.api;
 
-import org.webgpu.extract.webgpu_h;
+import org.webgpu.foreign.webgpu_h;
 
 public enum StoreOp {
     UNDEFINED(webgpu_h.WGPUStoreOp_Undefined()),

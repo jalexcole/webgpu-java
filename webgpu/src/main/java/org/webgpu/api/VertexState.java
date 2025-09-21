@@ -4,7 +4,7 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.util.Optional;
 
-import org.webgpu.extract.WGPUVertexState;
+import org.webgpu.foreign.WGPUVertexState;
 import org.webgpu.impl.ShaderModuleImpl;
 import org.webgpu.util.StringView;
 

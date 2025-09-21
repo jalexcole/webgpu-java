@@ -13,7 +13,7 @@
 
     <properties>
         <wgpu.native.build>debug</wgpu.native.build>
-        <wgpu.native.version>v25.0.2.1</wgpu.native.version>
+        <wgpu.native.version>v25.0.2.2</wgpu.native.version>
     </properties>
 
     <profiles>

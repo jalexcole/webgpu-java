@@ -4,9 +4,9 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.util.Optional;
 
-import org.webgpu.extract.WGPUBufferDescriptor;
+import org.webgpu.foreign.WGPUBufferDescriptor;
 
-public class BufferDescriptor implements DescriptorBase {
+public final class BufferDescriptor implements DescriptorBase {
     private final MemorySegment ptr;
 
 

@@ -4,7 +4,7 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.util.Optional;
 
-import org.webgpu.extract.WGPUDeviceDescriptor;
+import org.webgpu.foreign.WGPUDeviceDescriptor;
 import org.webgpu.util.StringView;
 
 public class DeviceDescriptor {

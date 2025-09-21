@@ -3,7 +3,7 @@ package org.webgpu.api;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
-import org.webgpu.extract.WGPUInstanceDescriptor;
+import org.webgpu.foreign.WGPUInstanceDescriptor;
 
 public class InstanceDescriptor {
 

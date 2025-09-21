@@ -5,7 +5,7 @@ import java.lang.foreign.MemorySegment;
 
 import org.webgpu.api.BindGroupLayout;
 import org.webgpu.api.ComputePipeline;
-import org.webgpu.extract.webgpu_h;
+import org.webgpu.foreign.webgpu_h;
 import org.webgpu.util.StringView;
 
 public record ComputePipelineImpl(MemorySegment ptr) implements ComputePipeline {

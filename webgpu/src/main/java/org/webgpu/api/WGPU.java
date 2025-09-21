@@ -6,7 +6,7 @@ import java.lang.foreign.MemorySegment;
 import java.util.logging.Logger;
 
 import org.jspecify.annotations.Nullable;
-import org.webgpu.foriegn.webgpu_h;
+import org.webgpu.foreign.webgpu_h;
 import org.webgpu.impl.InstanceImpl;
 
 public class WGPU {
@@ -18,7 +18,7 @@ public class WGPU {
     static {
         try {
 
-            System.load("libwgpu_native.dylib");
+            System.load("/Users/alex/dev/webgpu-java/webgpu/src/test/resources/libwgpu_native.dylib");
         } catch (SecurityException e) {
             logger.severe(e.getMessage());
         } catch (final UnsatisfiedLinkError e) {

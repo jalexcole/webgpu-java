@@ -36,9 +36,9 @@ import org.webgpu.api.SupportedFeatures;
 import org.webgpu.api.SupportedLimits;
 import org.webgpu.api.Texture;
 import org.webgpu.api.TextureDescriptor;
-import org.webgpu.extract.WGPUAdapterInfo;
-import org.webgpu.extract.WGPUSupportedFeatures;
-import org.webgpu.extract.webgpu_h;
+import org.webgpu.foreign.WGPUAdapterInfo;
+import org.webgpu.foreign.WGPUSupportedFeatures;
+import org.webgpu.foreign.webgpu_h;
 
 public record DeviceImpl(MemorySegment ptr, Arena arena) implements Device {
 

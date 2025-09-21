@@ -1,8 +1,8 @@
 package org.webgpu.impl;
 
-import static org.webgpu.extract.webgpu_h.WGPURequestAdapterStatus_Success;
-import static org.webgpu.extract.webgpu_h.wgpuInstanceRelease;
-import static org.webgpu.extract.webgpu_h.wgpuInstanceRequestAdapter;
+import static org.webgpu.foreign.webgpu_h.WGPURequestAdapterStatus_Success;
+import static org.webgpu.foreign.webgpu_h.wgpuInstanceRelease;
+import static org.webgpu.foreign.webgpu_h.wgpuInstanceRequestAdapter;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
@@ -17,8 +17,8 @@ import org.webgpu.api.Adapter;
 import org.webgpu.api.Instance;
 import org.webgpu.api.RequestAdapterOptions;
 import org.webgpu.exceptions.RequestAdaptorError;
-import org.webgpu.extract.WGPURequestAdapterCallback;
-import org.webgpu.extract.WGPURequestAdapterCallbackInfo;
+import org.webgpu.foreign.WGPURequestAdapterCallback;
+import org.webgpu.foreign.WGPURequestAdapterCallbackInfo;
 import org.webgpu.util.StringView;
 
 public record InstanceImpl(@SuppressWarnings("preview") MemorySegment ptr, @SuppressWarnings("preview") Arena arena)

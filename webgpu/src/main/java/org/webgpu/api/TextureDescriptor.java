@@ -4,7 +4,7 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.util.Optional;
 
-import org.webgpu.extract.WGPUTextureDescriptor;
+import org.webgpu.foreign.WGPUTextureDescriptor;
 import org.webgpu.util.StringView;
 
 public class TextureDescriptor {

@@ -2,7 +2,7 @@ package org.webgpu.api;
 
 import java.util.Arrays;
 
-import org.webgpu.extract.webgpu_h;
+import org.webgpu.foreign.webgpu_h;
 
 public enum WGSLLanguageFeatureName {
     ReadonlyAndReadwriteStorageTextures(webgpu_h.WGPUWGSLLanguageFeatureName_ReadonlyAndReadwriteStorageTextures()),

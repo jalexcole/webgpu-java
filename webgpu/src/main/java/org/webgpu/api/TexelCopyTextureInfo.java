@@ -3,7 +3,7 @@ package org.webgpu.api;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
-import org.webgpu.extract.WGPUTexelCopyTextureInfo;
+import org.webgpu.foreign.WGPUTexelCopyTextureInfo;
 import org.webgpu.impl.TextureImpl;
 
 public class TexelCopyTextureInfo {

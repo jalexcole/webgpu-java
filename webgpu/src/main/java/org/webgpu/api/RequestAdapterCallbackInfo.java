@@ -4,7 +4,7 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.util.Optional;
 
-import org.webgpu.extract.WGPURequestAdapterCallbackInfo;
+import org.webgpu.foreign.WGPURequestAdapterCallbackInfo;
 
 public class RequestAdapterCallbackInfo {
     private MemorySegment ptr;

@@ -6,7 +6,7 @@ import org.webgpu.api.Buffer;
 import org.webgpu.api.RenderBundle;
 import org.webgpu.api.RenderBundleDescriptor;
 import org.webgpu.api.RenderBundleEncoder;
-import org.webgpu.extract.webgpu_h;
+import org.webgpu.foreign.webgpu_h;
 
 public record RenderBundleEncoderImpl(MemorySegment ptr) implements RenderBundleEncoder {
 

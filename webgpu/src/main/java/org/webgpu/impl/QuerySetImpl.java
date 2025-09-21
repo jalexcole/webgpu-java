@@ -4,7 +4,7 @@ import java.lang.foreign.MemorySegment;
 
 import org.webgpu.api.QuerySet;
 import org.webgpu.api.QueryType;
-import org.webgpu.extract.webgpu_h;
+import org.webgpu.foreign.webgpu_h;
 
 public record QuerySetImpl(MemorySegment ptr) implements QuerySet {
 

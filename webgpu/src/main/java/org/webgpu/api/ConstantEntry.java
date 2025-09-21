@@ -3,7 +3,7 @@ package org.webgpu.api;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
-import org.webgpu.extract.WGPUConstantEntry;
+import org.webgpu.foreign.WGPUConstantEntry;
 import org.webgpu.util.StringView;
 
 public class ConstantEntry {

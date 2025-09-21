@@ -12,8 +12,8 @@ import org.webgpu.api.SurfaceTexture;
 import org.webgpu.api.Texture;
 import org.webgpu.api.WGPU;
 import org.webgpu.exceptions.WebGPUException;
-import org.webgpu.extract.WGPUSurfaceCapabilities;
-import org.webgpu.extract.webgpu_h;
+import org.webgpu.foreign.WGPUSurfaceCapabilities;
+import org.webgpu.foreign.webgpu_h;
 
 public record SurfaceImpl(@SuppressWarnings("preview") MemorySegment ptr) implements Surface {
 

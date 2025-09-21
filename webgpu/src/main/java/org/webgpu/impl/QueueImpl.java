@@ -10,7 +10,7 @@ import org.webgpu.api.Queue;
 import org.webgpu.api.QueueWorkDone;
 import org.webgpu.api.TexelCopyBufferLayout;
 import org.webgpu.api.TexelCopyTextureInfo;
-import org.webgpu.extract.webgpu_h;
+import org.webgpu.foreign.webgpu_h;
 
 public record QueueImpl(MemorySegment ptr) implements Queue {
 

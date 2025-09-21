@@ -4,7 +4,7 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.util.Optional;
 
-import org.webgpu.extract.WGPUShaderModuleDescriptor;
+import org.webgpu.foreign.WGPUShaderModuleDescriptor;
 import org.webgpu.util.StringView;
 
 public class ShaderModuleDescriptor {

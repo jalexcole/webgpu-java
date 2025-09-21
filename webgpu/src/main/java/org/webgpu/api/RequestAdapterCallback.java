@@ -1,6 +1,6 @@
 package org.webgpu.api;
 
-import org.webgpu.extract.WGPURequestAdapterCallback;
+import org.webgpu.foreign.WGPURequestAdapterCallback;
 
 @FunctionalInterface
 public interface RequestAdapterCallback  {

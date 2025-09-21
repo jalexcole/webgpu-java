@@ -1,9 +1,11 @@
 package org.webgpu.impl;
 
 import java.util.concurrent.ExecutionException;
-import java.util.logging.Logger;
+
 
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.webgpu.api.Buffer;
 import org.webgpu.api.BufferDescriptor;
 import org.webgpu.api.WGPU;
@@ -11,7 +13,7 @@ import org.webgpu.exceptions.RequestAdaptorError;
 
 public class BufferImplTest {
 
-    private static final Logger logger = Logger.getLogger(BufferImplTest.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(BufferImplTest.class);
     @Test
     void testDestroy() throws InterruptedException, ExecutionException, RequestAdaptorError {
         final var instance = WGPU.createInstance(null);
@@ -24,7 +26,7 @@ public class BufferImplTest {
         logger.info("Buffer created: " + buffer);
 
         try {buffer.destroy();} catch (Exception e) {
-            logger.severe("Failed to destroy buffer: " + e.getMessage());
+            logger.error("Failed to destroy buffer: " + e.getMessage());
         } finally {
             throw new RuntimeException("Test exception");
         }
@@ -94,11 +96,6 @@ public class BufferImplTest {
 
         int hashCode = buffer.hashCode();
         logger.info("Buffer hash code: " + hashCode);
-    }
-
-    @Test
-    void testPtr() {
-
     }
 
     @Test

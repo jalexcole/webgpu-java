@@ -7,7 +7,7 @@ import org.webgpu.api.TextureFormat;
 import org.webgpu.api.TextureUsage;
 import org.webgpu.api.TextureView;
 import org.webgpu.api.TextureViewDescriptor;
-import org.webgpu.extract.webgpu_h;
+import org.webgpu.foreign.webgpu_h;
 
 public record TextureImpl(MemorySegment ptr) implements Texture {
 

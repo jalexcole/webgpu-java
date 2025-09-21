@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.logging.Logger;
 
 import org.jspecify.annotations.NonNull;
-import org.webgpu.extract.WGPUStringView;
+import org.webgpu.foreign.WGPUStringView;
 
 public record StringView(MemorySegment stringViewPtr) {
 

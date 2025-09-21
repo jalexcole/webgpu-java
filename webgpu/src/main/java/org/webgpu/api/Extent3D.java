@@ -3,7 +3,7 @@ package org.webgpu.api;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
-import org.webgpu.extract.WGPUExtent3D;
+import org.webgpu.foreign.WGPUExtent3D;
 
 public class Extent3D {
      private MemorySegment ptr;

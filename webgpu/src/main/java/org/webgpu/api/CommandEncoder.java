@@ -1,6 +1,6 @@
 package org.webgpu.api;
 
-import static org.webgpu.extract.webgpu_h.wgpuCommandEncoderBeginComputePass;
+import static org.webgpu.foreign.webgpu_h.wgpuCommandEncoderBeginComputePass;
 
 import java.lang.foreign.MemorySegment;
 

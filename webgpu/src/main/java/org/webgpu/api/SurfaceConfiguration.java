@@ -4,7 +4,7 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 
-import org.webgpu.extract.WGPUSurfaceConfiguration;
+import org.webgpu.foreign.WGPUSurfaceConfiguration;
 import org.webgpu.impl.DeviceImpl;
 
 public final class SurfaceConfiguration {

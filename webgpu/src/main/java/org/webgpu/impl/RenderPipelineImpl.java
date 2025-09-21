@@ -4,7 +4,7 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.webgpu.api.RenderPipeline;
-import org.webgpu.extract.webgpu_h;
+import org.webgpu.foreign.webgpu_h;
 import org.webgpu.util.StringView;
 
 public record RenderPipelineImpl(MemorySegment ptr) implements RenderPipeline {

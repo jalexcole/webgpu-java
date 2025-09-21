@@ -3,7 +3,7 @@ package org.webgpu.api;
 import java.security.InvalidParameterException;
 import java.util.Arrays;
 
-import org.webgpu.extract.webgpu_h;
+import org.webgpu.foreign.webgpu_h;
 
 /**
  * The callback mode controls how a callback for an asynchronous operation may

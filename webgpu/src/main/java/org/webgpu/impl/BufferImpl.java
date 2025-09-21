@@ -5,7 +5,7 @@ import java.lang.foreign.MemorySegment;
 import org.webgpu.api.Buffer;
 import org.webgpu.api.BufferMapState;
 import org.webgpu.api.BufferUsage;
-import org.webgpu.extract.webgpu_h;
+import org.webgpu.foreign.webgpu_h;
 
 public record BufferImpl(MemorySegment ptr) implements Buffer {
 

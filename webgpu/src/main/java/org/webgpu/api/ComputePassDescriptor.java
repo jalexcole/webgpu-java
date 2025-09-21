@@ -2,10 +2,11 @@ package org.webgpu.api;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
-import org.webgpu.extract.WGPUComputePassDescriptor;
+
+import org.webgpu.foreign.WGPUComputePassDescriptor;
 import org.webgpu.util.StringView;
 
-public class ComputePassDescriptor implements DescriptorBase {
+public final class ComputePassDescriptor implements DescriptorBase {
     @SuppressWarnings("preview")
     private MemorySegment ptr;
 

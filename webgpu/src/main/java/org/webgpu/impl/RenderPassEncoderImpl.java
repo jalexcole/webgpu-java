@@ -9,7 +9,7 @@ import org.webgpu.api.IndexFormat;
 import org.webgpu.api.RenderBundle;
 import org.webgpu.api.RenderPassEncoder;
 import org.webgpu.api.RenderPipeline;
-import org.webgpu.extract.webgpu_h;
+import org.webgpu.foreign.webgpu_h;
 
 public record RenderPassEncoderImpl(MemorySegment ptr) implements RenderPassEncoder {
 

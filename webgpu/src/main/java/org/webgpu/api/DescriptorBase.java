@@ -1,5 +1,5 @@
 package org.webgpu.api;
 
-public interface DescriptorBase {
+public sealed interface DescriptorBase permits BufferDescriptor, BindGroupDescriptor, ComputePassDescriptor, CommandBufferDescriptor, RenderPassDescriptor {
 
 }

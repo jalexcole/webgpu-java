@@ -4,10 +4,10 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.util.Optional;
 
-import org.webgpu.extract.WGPUCommandBufferDescriptor;
+import org.webgpu.foreign.WGPUCommandBufferDescriptor;
 import org.webgpu.util.StringView;
 
-public class CommandBufferDescriptor implements DescriptorBase {
+public final class CommandBufferDescriptor implements DescriptorBase {
 
     private MemorySegment ptr;
 
