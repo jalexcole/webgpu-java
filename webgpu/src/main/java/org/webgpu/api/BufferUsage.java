@@ -2,7 +2,7 @@ package org.webgpu.api;
 
 import java.util.Arrays;
 
-import org.webgpu.foreign.webgpu_h;
+import org.webgpu.panama.foreign.webgpu_h;
 
 public enum BufferUsage {
     NONE(0L),
@@ -16,7 +16,7 @@ public enum BufferUsage {
     STORAGE(80L),
     INDIRECT(100L),
     QUERY_RESOLVE(200L);
-            
+
     private final long value;
 
     BufferUsage(long value) {
@@ -33,6 +33,7 @@ public enum BufferUsage {
                 return level;
             }
         }
-        throw new IllegalArgumentException("Invalid value: " + value + ". Must be one of: " + Arrays.toString(BufferUsage.values()));
+        throw new IllegalArgumentException(
+                "Invalid value: " + value + ". Must be one of: " + Arrays.toString(BufferUsage.values()));
     }
 }

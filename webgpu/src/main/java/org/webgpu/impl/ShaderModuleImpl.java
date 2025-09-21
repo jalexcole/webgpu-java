@@ -5,7 +5,7 @@ import java.util.concurrent.Future;
 
 import org.webgpu.api.CompilationInfo;
 import org.webgpu.api.ShaderModule;
-import org.webgpu.foreign.webgpu_h;
+import org.webgpu.panama.foreign.webgpu_h;
 
 public record ShaderModuleImpl(MemorySegment ptr) implements ShaderModule {
 
@@ -30,5 +30,5 @@ public record ShaderModuleImpl(MemorySegment ptr) implements ShaderModule {
     public void release() {
         webgpu_h.wgpuShaderModuleRelease(ptr);
     }
-    
+
 }

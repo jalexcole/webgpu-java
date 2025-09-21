@@ -6,7 +6,7 @@ import org.webgpu.api.Buffer;
 import org.webgpu.api.RenderBundle;
 import org.webgpu.api.RenderBundleDescriptor;
 import org.webgpu.api.RenderBundleEncoder;
-import org.webgpu.foreign.webgpu_h;
+import org.webgpu.panama.foreign.webgpu_h;
 
 public record RenderBundleEncoderImpl(MemorySegment ptr) implements RenderBundleEncoder {
 
@@ -17,7 +17,8 @@ public record RenderBundleEncoderImpl(MemorySegment ptr) implements RenderBundle
 
     @Override
     public void drawIndexed(int index_count, int instance_count, int first_index, int base_vertex, int first_instance) {
-        webgpu_h.wgpuRenderBundleEncoderDrawIndexed(ptr, index_count, instance_count, first_index, base_vertex, first_instance);
+        webgpu_h.wgpuRenderBundleEncoderDrawIndexed(ptr, index_count, instance_count, first_index, base_vertex,
+                first_instance);
     }
 
     @Override
@@ -27,7 +28,7 @@ public record RenderBundleEncoderImpl(MemorySegment ptr) implements RenderBundle
 
     @Override
     public void drawIndexedIndirect(Buffer indirect_buffer, long indirect_offset) {
-        webgpu_h.wgpuRenderBundleEncoderDrawIndexedIndirect(ptr,((BufferImpl) indirect_buffer).ptr(), indirect_offset);
+        webgpu_h.wgpuRenderBundleEncoderDrawIndexedIndirect(ptr, ((BufferImpl) indirect_buffer).ptr(), indirect_offset);
     }
 
     @Override
@@ -42,5 +43,5 @@ public record RenderBundleEncoderImpl(MemorySegment ptr) implements RenderBundle
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'insertDebugMarker'");
     }
-    
+
 }

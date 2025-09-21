@@ -36,9 +36,9 @@ import org.webgpu.api.SupportedFeatures;
 import org.webgpu.api.SupportedLimits;
 import org.webgpu.api.Texture;
 import org.webgpu.api.TextureDescriptor;
-import org.webgpu.foreign.WGPUAdapterInfo;
-import org.webgpu.foreign.WGPUSupportedFeatures;
-import org.webgpu.foreign.webgpu_h;
+import org.webgpu.panama.foreign.WGPUAdapterInfo;
+import org.webgpu.panama.foreign.WGPUSupportedFeatures;
+import org.webgpu.panama.foreign.webgpu_h;
 
 public record DeviceImpl(MemorySegment ptr, Arena arena) implements Device {
 
@@ -49,7 +49,6 @@ public record DeviceImpl(MemorySegment ptr, Arena arena) implements Device {
 
         webgpu_h.wgpuAdapterGetFeatures(ptr, featuresSegment);
 
-        
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'features'");
     }
@@ -57,26 +56,26 @@ public record DeviceImpl(MemorySegment ptr, Arena arena) implements Device {
     @Override
     public SupportedLimits limits() {
         Arena arena = Arena.ofAuto();
-        
+
         webgpu_h.wgpuDeviceGetLimits(ptr, null);
         throw new UnsupportedOperationException("Unimplemented method 'limits'");
     }
 
     @Override
     public AdapterInfoImpl adapterInfo() {
-        try  {
+        try {
             Arena arena = Arena.ofAuto();
             var adapterInfo = WGPUAdapterInfo.allocate(arena);
             webgpu_h.wgpuAdapterGetInfo(this.ptr, adapterInfo);
 
             Arena autoArena = Arena.ofAuto();
             var output = WGPUAdapterInfo.allocate(autoArena);
-            
+
             return new AdapterInfoImpl(adapterInfo);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        
+
     }
 
     @Override
@@ -91,22 +90,25 @@ public record DeviceImpl(MemorySegment ptr, Arena arena) implements Device {
 
     @Override
     public Buffer createBuffer(@NonNull BufferDescriptor descriptor) {
-        var bufferPtr = webgpu_h.wgpuDeviceCreateBuffer(this.ptr, descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
+        var bufferPtr = webgpu_h.wgpuDeviceCreateBuffer(this.ptr,
+                descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
 
         return new BufferImpl(bufferPtr);
-        
+
     }
 
     @Override
     public Texture createTexture(TextureDescriptor descriptor) {
-        final var texturePtr = webgpu_h.wgpuDeviceCreateTexture(this.ptr, descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
+        final var texturePtr = webgpu_h.wgpuDeviceCreateTexture(this.ptr,
+                descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
 
         return new TextureImpl(texturePtr);
     }
 
     @Override
     public Sampler createSampler(@Nullable SamplerDescriptor descriptor) {
-        final var samplerPtr = webgpu_h.wgpuDeviceCreateSampler(this.ptr, descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
+        final var samplerPtr = webgpu_h.wgpuDeviceCreateSampler(this.ptr,
+                descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
 
         return new SamplerImpl(samplerPtr);
     }
@@ -114,20 +116,21 @@ public record DeviceImpl(MemorySegment ptr, Arena arena) implements Device {
     @Override
     public ExternalTexture importExternalTexture(ExternalTextureDescriptor descriptor) {
 
-
         throw new UnsupportedOperationException("Unimplemented method 'importExternalTexture'");
     }
 
     @Override
     public BindGroupLayout createBindGroupLayout(BindGroupLayoutDescriptor descriptor) {
-        final var bindGroupLayoutPtr = webgpu_h.wgpuDeviceCreateBindGroupLayout(this.ptr, descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
+        final var bindGroupLayoutPtr = webgpu_h.wgpuDeviceCreateBindGroupLayout(this.ptr,
+                descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
 
         return new BindGroupLayoutImpl(bindGroupLayoutPtr);
     }
 
     @Override
     public PipelineLayout createPipelineLayout(PipelineLayoutDescriptor descriptor) {
-        final var pipelineLayoutPtr = webgpu_h.wgpuDeviceCreatePipelineLayout(this.ptr, descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
+        final var pipelineLayoutPtr = webgpu_h.wgpuDeviceCreatePipelineLayout(this.ptr,
+                descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
 
         return new PipelineLayoutImpl(pipelineLayoutPtr);
     }
@@ -141,21 +144,24 @@ public record DeviceImpl(MemorySegment ptr, Arena arena) implements Device {
 
     @Override
     public ShaderModule createShaderModule(ShaderModuleDescriptor descriptor) {
-        final var shaderModulePtr = webgpu_h.wgpuDeviceCreateShaderModule(this.ptr, descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
+        final var shaderModulePtr = webgpu_h.wgpuDeviceCreateShaderModule(this.ptr,
+                descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
 
         return new ShaderModuleImpl(shaderModulePtr);
     }
 
     @Override
     public ComputePipeline createComputePipeline(ComputePipelineDescriptor descriptor) {
-        final var computePipelinePtr = webgpu_h.wgpuDeviceCreateComputePipeline(this.ptr, descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
+        final var computePipelinePtr = webgpu_h.wgpuDeviceCreateComputePipeline(this.ptr,
+                descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
 
         return new ComputePipelineImpl(computePipelinePtr);
     }
 
     @Override
     public RenderPipeline createRenderPipeline(RenderPipelineDescriptor descriptor) {
-        final var renderPipelinePtr = webgpu_h.wgpuDeviceCreateRenderPipeline(this.ptr, descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
+        final var renderPipelinePtr = webgpu_h.wgpuDeviceCreateRenderPipeline(this.ptr,
+                descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
 
         return new RenderPipelineImpl(renderPipelinePtr);
     }
@@ -174,21 +180,24 @@ public record DeviceImpl(MemorySegment ptr, Arena arena) implements Device {
 
     @Override
     public CommandEncoder createCommandEncoder(@Nullable CommandEncoderDescriptor descriptor) {
-        final var commandEncoderPtr = webgpu_h.wgpuDeviceCreateCommandEncoder(this.ptr, descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
+        final var commandEncoderPtr = webgpu_h.wgpuDeviceCreateCommandEncoder(this.ptr,
+                descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
 
         return new CommandEncoder(commandEncoderPtr);
     }
 
     @Override
     public RenderBundleEncoder createRenderBundleEncoder(RenderBundleEncoderDescriptor descriptor) {
-        final var renderBundleEncoderPtr = webgpu_h.wgpuDeviceCreateRenderBundleEncoder(this.ptr, descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
+        final var renderBundleEncoderPtr = webgpu_h.wgpuDeviceCreateRenderBundleEncoder(this.ptr,
+                descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
 
         return new RenderBundleEncoderImpl(renderBundleEncoderPtr);
     }
 
     @Override
     public QuerySet createQuerySet(QuerySetDescriptor descriptor) {
-        final MemorySegment querySetPtr = webgpu_h.wgpuDeviceCreateQuerySet(this.ptr, descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
+        final MemorySegment querySetPtr = webgpu_h.wgpuDeviceCreateQuerySet(this.ptr,
+                descriptor != null ? descriptor.ptr() : MemorySegment.NULL);
 
         return new QuerySetImpl(querySetPtr);
     }

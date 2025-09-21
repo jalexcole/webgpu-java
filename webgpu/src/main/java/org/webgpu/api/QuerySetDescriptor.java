@@ -3,7 +3,7 @@ import java.lang.foreign.MemorySegment;
 
 
 
-public class QuerySetDescriptor {
+public non-sealed class QuerySetDescriptor implements DescriptorBase {
 
     private MemorySegment ptr;
 

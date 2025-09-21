@@ -4,7 +4,7 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.webgpu.api.RenderPipeline;
-import org.webgpu.foreign.webgpu_h;
+import org.webgpu.panama.foreign.webgpu_h;
 import org.webgpu.util.StringView;
 
 public record RenderPipelineImpl(MemorySegment ptr) implements RenderPipeline {
@@ -26,5 +26,5 @@ public record RenderPipelineImpl(MemorySegment ptr) implements RenderPipeline {
     public void release() {
         webgpu_h.wgpuRenderPipelineRelease(ptr);
     }
-    
+
 }

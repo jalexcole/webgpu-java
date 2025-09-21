@@ -5,7 +5,7 @@ import java.lang.foreign.MemorySegment;
 
 import org.webgpu.api.BindGroupLayout;
 import org.webgpu.api.ComputePipeline;
-import org.webgpu.foreign.webgpu_h;
+import org.webgpu.panama.foreign.webgpu_h;
 import org.webgpu.util.StringView;
 
 public record ComputePipelineImpl(MemorySegment ptr) implements ComputePipeline {
@@ -13,7 +13,7 @@ public record ComputePipelineImpl(MemorySegment ptr) implements ComputePipeline 
     @Override
     public BindGroupLayout getBindGroupLayout(int groupIndex) {
         final var bindGroupLayoutPtr = webgpu_h.wgpuComputePipelineGetBindGroupLayout(ptr, groupIndex);
-       
+
         return new BindGroupLayoutImpl(bindGroupLayoutPtr);
     }
 
@@ -37,5 +37,5 @@ public record ComputePipelineImpl(MemorySegment ptr) implements ComputePipeline 
     public void release() {
         webgpu_h.wgpuComputePipelineRelease(ptr);
     }
-    
+
 }

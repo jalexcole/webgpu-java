@@ -4,7 +4,7 @@ import java.lang.foreign.MemorySegment;
 
 import org.webgpu.api.QuerySet;
 import org.webgpu.api.QueryType;
-import org.webgpu.foreign.webgpu_h;
+import org.webgpu.panama.foreign.webgpu_h;
 
 public record QuerySetImpl(MemorySegment ptr) implements QuerySet {
 
@@ -39,5 +39,5 @@ public record QuerySetImpl(MemorySegment ptr) implements QuerySet {
     public void release() {
         webgpu_h.wgpuQuerySetRelease(ptr);
     }
-    
+
 }

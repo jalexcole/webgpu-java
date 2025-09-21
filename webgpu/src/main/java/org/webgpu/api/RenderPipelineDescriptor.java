@@ -4,11 +4,11 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.util.Optional;
 
-import org.webgpu.foreign.WGPURenderPipelineDescriptor;
+import org.webgpu.panama.foreign.WGPURenderPipelineDescriptor;
 import org.webgpu.impl.PipelineLayoutImpl;
 import org.webgpu.util.StringView;
 
-public class RenderPipelineDescriptor {
+public non-sealed class RenderPipelineDescriptor implements DescriptorBase {
     private final MemorySegment ptr;
 
     public RenderPipelineDescriptor() {

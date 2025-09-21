@@ -4,10 +4,10 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.util.Optional;
 
-import org.webgpu.foreign.WGPUShaderModuleDescriptor;
+import org.webgpu.panama.foreign.WGPUShaderModuleDescriptor;
 import org.webgpu.util.StringView;
 
-public class ShaderModuleDescriptor {
+public non-sealed class ShaderModuleDescriptor implements DescriptorBase {
     private final MemorySegment ptr;
 
     public ShaderModuleDescriptor() {
@@ -27,7 +27,6 @@ public class ShaderModuleDescriptor {
         return new StringView(WGPUShaderModuleDescriptor.label(ptr)).string();
     }
 
-
     public MemorySegment ptr() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'ptr'");
@@ -37,7 +36,5 @@ public class ShaderModuleDescriptor {
     public String toString() {
         return "ShaderModuleDescriptor [nextInChain()=" + nextInChain() + ", label()=" + label() + "]";
     }
-
-    
 
 }

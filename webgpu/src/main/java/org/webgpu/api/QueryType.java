@@ -2,7 +2,7 @@ package org.webgpu.api;
 
 import java.util.Arrays;
 
-import org.webgpu.foreign.webgpu_h;
+import org.webgpu.panama.foreign.webgpu_h;
 
 public enum QueryType {
 
@@ -26,6 +26,7 @@ public enum QueryType {
                 return level;
             }
         }
-        throw new IllegalArgumentException("Invalid value: " + value + ". Must be one of: " + Arrays.toString(QueryType.values()));
+        throw new IllegalArgumentException(
+                "Invalid value: " + value + ". Must be one of: " + Arrays.toString(QueryType.values()));
     }
 }

@@ -4,7 +4,7 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.util.Optional;
 
-import org.webgpu.foreign.WGPUBindGroupDescriptor;
+import org.webgpu.panama.foreign.WGPUBindGroupDescriptor;
 import org.webgpu.impl.BindGroupLayoutImpl;
 import org.webgpu.util.StringView;
 

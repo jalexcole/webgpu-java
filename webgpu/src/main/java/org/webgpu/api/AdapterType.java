@@ -1,6 +1,6 @@
 package org.webgpu.api;
 
-import org.webgpu.foreign.webgpu_h;
+import org.webgpu.panama.foreign.webgpu_h;
 
 public enum AdapterType {
     DISCRETE_GPU(webgpu_h.WGPUAdapterType_DiscreteGPU()),

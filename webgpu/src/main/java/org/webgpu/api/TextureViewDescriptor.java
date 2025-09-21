@@ -4,10 +4,10 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.util.Optional;
 
-import org.webgpu.foreign.WGPUTextureViewDescriptor;
+import org.webgpu.panama.foreign.WGPUTextureViewDescriptor;
 import org.webgpu.util.StringView;
 
-public class TextureViewDescriptor {
+public non-sealed class TextureViewDescriptor implements DescriptorBase {
     private final MemorySegment ptr;
 
     public TextureViewDescriptor() {

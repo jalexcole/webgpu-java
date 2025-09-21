@@ -1,8 +1,8 @@
 package org.webgpu.impl;
 
-import static org.webgpu.foreign.webgpu_h.wgpuSamplerAddRef;
-import static org.webgpu.foreign.webgpu_h.wgpuSamplerRelease;
-import static org.webgpu.foreign.webgpu_h.wgpuSamplerSetLabel;
+import static org.webgpu.panama.foreign.webgpu_h.wgpuSamplerAddRef;
+import static org.webgpu.panama.foreign.webgpu_h.wgpuSamplerRelease;
+import static org.webgpu.panama.foreign.webgpu_h.wgpuSamplerSetLabel;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;

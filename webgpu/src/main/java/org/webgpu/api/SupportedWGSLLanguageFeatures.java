@@ -2,7 +2,7 @@ package org.webgpu.api;
 
 import java.lang.foreign.MemorySegment;
 
-import org.webgpu.foreign.WGPUSupportedWGSLLanguageFeatures;
+import org.webgpu.panama.foreign.WGPUSupportedWGSLLanguageFeatures;
 
 public class SupportedWGSLLanguageFeatures {
     private MemorySegment ptr;
@@ -10,7 +10,7 @@ public class SupportedWGSLLanguageFeatures {
     SupportedWGSLLanguageFeatures(MemorySegment ptr) {
         this.ptr = ptr;
     }
-    
+
     MemorySegment ptr() {
         return ptr;
     }

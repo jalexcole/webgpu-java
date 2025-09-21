@@ -1,6 +1,6 @@
 package org.webgpu.api;
 
-import org.webgpu.foreign.webgpu_h;
+import org.webgpu.panama.foreign.webgpu_h;
 
 public enum TextureViewDimension {
     UNDEFINED(webgpu_h.WGPUTextureViewDimension_Undefined()),

@@ -4,10 +4,10 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.util.Optional;
 
-import org.webgpu.foreign.WGPUTextureDescriptor;
+import org.webgpu.panama.foreign.WGPUTextureDescriptor;
 import org.webgpu.util.StringView;
 
-public class TextureDescriptor {
+public non-sealed class TextureDescriptor implements DescriptorBase {
 
     @SuppressWarnings("preview")
     private final MemorySegment ptr;
@@ -52,7 +52,7 @@ public class TextureDescriptor {
     }
 
     public Extent3D size() {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'size'");
     }
 
@@ -84,7 +84,5 @@ public class TextureDescriptor {
                 + ", mipLevelCount()=" + mipLevelCount() + ", sampleCount()=" + sampleCount() + ", viewFormatCount()="
                 + viewFormatCount() + "]";
     }
-
-    
 
 }

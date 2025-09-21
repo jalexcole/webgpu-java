@@ -4,9 +4,8 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.util.Optional;
 
-import org.webgpu.foreign.WGPURequestAdapterOptions;
+import org.webgpu.panama.foreign.WGPURequestAdapterOptions;
 import org.webgpu.impl.SurfaceImpl;
-
 
 public class RequestAdapterOptions {
     private MemorySegment ptr;
@@ -30,7 +29,7 @@ public class RequestAdapterOptions {
         if (chainedStructPtr.equals(MemorySegment.NULL)) {
             return Optional.empty();
         }
-        
+
         return Optional.of(new ChainedStruct(WGPURequestAdapterOptions.nextInChain(ptr)));
     }
 
@@ -74,8 +73,6 @@ public class RequestAdapterOptions {
         WGPURequestAdapterOptions.compatibleSurface(ptr, ((SurfaceImpl) compatibleSurface).ptr());
     }
 
-
-
     @Override
     public String toString() {
         return "RequestAdapterOptions [nextInChain()=" + nextInChain() + ", featureLevel()=" + featureLevel()
@@ -83,5 +80,4 @@ public class RequestAdapterOptions {
                 + ", backendType()=" + backendType() + ", compatibleSurface()=" + compatibleSurface() + "]";
     }
 
-    
 }

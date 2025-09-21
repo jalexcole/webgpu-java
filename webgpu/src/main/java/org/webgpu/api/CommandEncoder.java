@@ -1,6 +1,6 @@
 package org.webgpu.api;
 
-import static org.webgpu.foreign.webgpu_h.wgpuCommandEncoderBeginComputePass;
+import static org.webgpu.panama.foreign.webgpu_h.wgpuCommandEncoderBeginComputePass;
 
 import java.lang.foreign.MemorySegment;
 
@@ -18,7 +18,8 @@ public class CommandEncoder {
     }
 
     public ComputePassEncoder beginComputePass(ComputePassDescriptor descriptor) {
-        return new ComputePassEncoderImpl(wgpuCommandEncoderBeginComputePass(this.ptr, descriptor != null ? descriptor.ptr() : MemorySegment.NULL));
+        return new ComputePassEncoderImpl(wgpuCommandEncoderBeginComputePass(this.ptr,
+                descriptor != null ? descriptor.ptr() : MemorySegment.NULL));
     }
 
 }

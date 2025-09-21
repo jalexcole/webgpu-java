@@ -2,7 +2,7 @@ package org.webgpu.api;
 
 import java.lang.foreign.MemorySegment;
 
-import org.webgpu.foreign.WGPUChainedStruct;
+import org.webgpu.panama.foreign.WGPUChainedStruct;
 
 public class ChainedStruct {
     @SuppressWarnings("preview")
@@ -12,7 +12,6 @@ public class ChainedStruct {
         this.chainedStructPtr = chainedStructPtr;
     }
 
-    
     public ChainedStruct nextInChain() {
         return new ChainedStruct(WGPUChainedStruct.next(chainedStructPtr));
     }
@@ -20,7 +19,6 @@ public class ChainedStruct {
     public SType sType() {
         return SType.values()[WGPUChainedStruct.sType(this.chainedStructPtr)];
     }
-
 
     public MemorySegment ptr() {
         // TODO Auto-generated method stub

@@ -9,7 +9,7 @@ import org.webgpu.api.IndexFormat;
 import org.webgpu.api.RenderBundle;
 import org.webgpu.api.RenderPassEncoder;
 import org.webgpu.api.RenderPipeline;
-import org.webgpu.foreign.webgpu_h;
+import org.webgpu.panama.foreign.webgpu_h;
 
 public record RenderPassEncoderImpl(MemorySegment ptr) implements RenderPassEncoder {
 
@@ -25,7 +25,8 @@ public record RenderPassEncoderImpl(MemorySegment ptr) implements RenderPassEnco
 
     @Override
     public void drawIndexed(int index_count, int instance_count, int first_index, int base_vertex, int first_instance) {
-        webgpu_h.wgpuRenderPassEncoderDrawIndexed(ptr, index_count, instance_count, first_index, base_vertex, first_instance);
+        webgpu_h.wgpuRenderPassEncoderDrawIndexed(ptr, index_count, instance_count, first_index, base_vertex,
+                first_instance);
     }
 
     @Override
@@ -74,7 +75,8 @@ public record RenderPassEncoderImpl(MemorySegment ptr) implements RenderPassEnco
     @Override
     public void setBindGroup(int groupIndex, BindGroup group, int[] dynamicOffsets) {
         var dynamicOffsetsSegment = MemorySegment.ofArray(dynamicOffsets);
-        webgpu_h.wgpuRenderPassEncoderSetBindGroup(ptr, groupIndex, ((BindGroupImpl) group).ptr(),dynamicOffsets.length, dynamicOffsetsSegment);
+        webgpu_h.wgpuRenderPassEncoderSetBindGroup(ptr, groupIndex, ((BindGroupImpl) group).ptr(),
+                dynamicOffsets.length, dynamicOffsetsSegment);
     }
 
     @Override
@@ -128,5 +130,5 @@ public record RenderPassEncoderImpl(MemorySegment ptr) implements RenderPassEnco
     public void release() {
         webgpu_h.wgpuRenderPassEncoderRelease(ptr);
     }
-    
+
 }

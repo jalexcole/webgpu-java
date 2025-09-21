@@ -3,7 +3,7 @@ package org.webgpu.api;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
-import org.webgpu.foreign.WGPUComputePassDescriptor;
+import org.webgpu.panama.foreign.WGPUComputePassDescriptor;
 import org.webgpu.util.StringView;
 
 public final class ComputePassDescriptor implements DescriptorBase {

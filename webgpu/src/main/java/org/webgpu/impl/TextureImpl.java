@@ -7,7 +7,7 @@ import org.webgpu.api.TextureFormat;
 import org.webgpu.api.TextureUsage;
 import org.webgpu.api.TextureView;
 import org.webgpu.api.TextureViewDescriptor;
-import org.webgpu.foreign.webgpu_h;
+import org.webgpu.panama.foreign.webgpu_h;
 
 public record TextureImpl(MemorySegment ptr) implements Texture {
 
@@ -79,5 +79,5 @@ public record TextureImpl(MemorySegment ptr) implements Texture {
     public void release() {
         webgpu_h.wgpuTextureRelease(ptr);
     }
-    
+
 }

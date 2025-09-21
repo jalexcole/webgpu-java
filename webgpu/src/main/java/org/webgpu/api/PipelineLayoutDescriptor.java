@@ -2,7 +2,7 @@ package org.webgpu.api;
 
 import java.lang.foreign.MemorySegment;
 
-public class PipelineLayoutDescriptor {
+public non-sealed class PipelineLayoutDescriptor implements DescriptorBase {
 
     public MemorySegment ptr() {
         // TODO Auto-generated method stub

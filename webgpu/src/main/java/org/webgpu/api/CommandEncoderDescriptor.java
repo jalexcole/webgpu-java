@@ -9,7 +9,7 @@ public class CommandEncoderDescriptor {
     public CommandEncoderDescriptor() {
         try {
             Arena arena = Arena.ofAuto();
-            ptr = org.webgpu.foreign.WGPUCommandEncoderDescriptor.allocate(arena);
+            ptr = org.webgpu.panama.foreign.WGPUCommandEncoderDescriptor.allocate(arena);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -4,14 +4,14 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.util.Optional;
 
-import org.webgpu.foreign.WGPUCommandBufferDescriptor;
+import org.webgpu.panama.foreign.WGPUCommandBufferDescriptor;
 import org.webgpu.util.StringView;
 
 public final class CommandBufferDescriptor implements DescriptorBase {
 
     private MemorySegment ptr;
 
-	public MemorySegment ptr() {
+    public MemorySegment ptr() {
         return ptr;
     }
 

@@ -2,7 +2,7 @@ package org.webgpu.api;
 
 import java.lang.foreign.MemorySegment;
 
-public class RenderBundleEncoderDescriptor {
+public non-sealed class RenderBundleEncoderDescriptor implements DescriptorBase {
 private MemorySegment ptr;
 
 public MemorySegment ptr() {

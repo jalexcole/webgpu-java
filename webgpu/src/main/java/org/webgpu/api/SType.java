@@ -1,6 +1,6 @@
 package org.webgpu.api;
 
-import org.webgpu.foreign.webgpu_h;
+import org.webgpu.panama.foreign.webgpu_h;
 
 public enum SType {
     SHADER_SOURCE_SPIRV(webgpu_h.WGPUSType_ShaderSourceSPIRV()),

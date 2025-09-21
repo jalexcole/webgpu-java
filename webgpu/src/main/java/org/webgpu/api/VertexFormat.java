@@ -1,11 +1,11 @@
 package org.webgpu.api;
 
-import org.webgpu.foreign.webgpu_h;
+import org.webgpu.panama.foreign.webgpu_h;
 
 /**
  * The {@link VertexFormat} of a vertex attribute indicates how data from a
- * vertex buffer will be interpreted and exposed to the shader. The name of the 
- * format specifies the order of components, bits per component, and vertex 
+ * vertex buffer will be interpreted and exposed to the shader. The name of the
+ * format specifies the order of components, bits per component, and vertex
  * data type for the component
  */
 public enum VertexFormat {

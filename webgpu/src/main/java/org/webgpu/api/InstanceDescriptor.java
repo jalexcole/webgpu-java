@@ -3,9 +3,9 @@ package org.webgpu.api;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
-import org.webgpu.foreign.WGPUInstanceDescriptor;
+import org.webgpu.panama.foreign.WGPUInstanceDescriptor;
 
-public class InstanceDescriptor {
+public final class InstanceDescriptor implements DescriptorBase {
 
     @SuppressWarnings("preview")
     private MemorySegment descriptorPtr;

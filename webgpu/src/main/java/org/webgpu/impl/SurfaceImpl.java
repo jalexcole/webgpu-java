@@ -12,8 +12,8 @@ import org.webgpu.api.SurfaceTexture;
 import org.webgpu.api.Texture;
 import org.webgpu.api.WGPU;
 import org.webgpu.exceptions.WebGPUException;
-import org.webgpu.foreign.WGPUSurfaceCapabilities;
-import org.webgpu.foreign.webgpu_h;
+import org.webgpu.panama.foreign.WGPUSurfaceCapabilities;
+import org.webgpu.panama.foreign.webgpu_h;
 
 public record SurfaceImpl(@SuppressWarnings("preview") MemorySegment ptr) implements Surface {
 
@@ -27,7 +27,8 @@ public record SurfaceImpl(@SuppressWarnings("preview") MemorySegment ptr) implem
         Arena arena = Arena.ofAuto();
 
         var surfaceCapabilitiesPtr = arena.allocate(WGPUSurfaceCapabilities.layout());
-        var returnStatus = webgpu_h.wgpuSurfaceGetCapabilities(ptr, ((AdapterImpl) adapter).ptr(), surfaceCapabilitiesPtr);
+        var returnStatus = webgpu_h.wgpuSurfaceGetCapabilities(ptr, ((AdapterImpl) adapter).ptr(),
+                surfaceCapabilitiesPtr);
 
         if (returnStatus != Status.SUCCESS.value()) {
             throw new WebGPUException("Failed to get surface capabilities: " + Status.fromValue(returnStatus));
@@ -63,5 +64,5 @@ public record SurfaceImpl(@SuppressWarnings("preview") MemorySegment ptr) implem
     public void addRef() {
         webgpu_h.wgpuSurfaceAddRef(ptr);
     }
-    
+
 }

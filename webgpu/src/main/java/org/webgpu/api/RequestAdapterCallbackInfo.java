@@ -4,7 +4,7 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.util.Optional;
 
-import org.webgpu.foreign.WGPURequestAdapterCallbackInfo;
+import org.webgpu.panama.foreign.WGPURequestAdapterCallbackInfo;
 
 public class RequestAdapterCallbackInfo {
     private MemorySegment ptr;
@@ -24,7 +24,7 @@ public class RequestAdapterCallbackInfo {
         if (chainedStructPtr.equals(MemorySegment.NULL)) {
             return Optional.empty();
         }
-        
+
         return Optional.of(new ChainedStruct(WGPURequestAdapterCallbackInfo.nextInChain(ptr)));
     }
 
@@ -46,7 +46,7 @@ public class RequestAdapterCallbackInfo {
     }
 
     public MemorySegment userdata1() {
-        
+
         return WGPURequestAdapterCallbackInfo.userdata1(ptr);
     }
 
@@ -73,5 +73,5 @@ public class RequestAdapterCallbackInfo {
         var callbackInfo = new RequestAdapterCallbackInfo();
         System.out.println(callbackInfo);
     }
-    
+
 }

@@ -4,7 +4,7 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.util.Optional;
 
-import org.webgpu.foreign.WGPUComputePipelineDescriptor;
+import org.webgpu.panama.foreign.WGPUComputePipelineDescriptor;
 import org.webgpu.impl.PipelineLayoutImpl;
 import org.webgpu.util.StringView;
 
@@ -35,19 +35,18 @@ public class ComputePipelineDescriptor implements PipelineDescriptorBase {
         return new StringView(WGPUComputePipelineDescriptor.label(ptr)).string();
     }
 
-
     public PipelineLayout layout() {
         return new PipelineLayoutImpl(WGPUComputePipelineDescriptor.layout(ptr));
     }
+
     /**
      * Describes the compute shader entry point of the pipeline.
      * 
      * @return
-     * {@see https://www.w3.org/TR/webgpu/#dictdef-gpucomputepipelinedescriptor}
+     *         {@see https://www.w3.org/TR/webgpu/#dictdef-gpucomputepipelinedescriptor}
      */
     public ComputeState compute() {
-        
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'compute'");
     }
 

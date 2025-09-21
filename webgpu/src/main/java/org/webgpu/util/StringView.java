@@ -5,16 +5,17 @@ import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.logging.Logger;
 
 import org.jspecify.annotations.NonNull;
-import org.webgpu.foreign.WGPUStringView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.webgpu.panama.foreign.WGPUStringView;
 
 public record StringView(MemorySegment stringViewPtr) {
 
-    private static final Logger logger = Logger.getLogger(StringView.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(StringView.class);
 
-    public static MemorySegment of(@NonNull @SuppressWarnings("preview") Arena arena, @NonNull String string) {
+    public static MemorySegment of(@NonNull Arena arena, @NonNull String string) {
         // Step 1: Convert the Java String to UTF-8 bytes
         byte[] utf8Bytes = string.getBytes(StandardCharsets.UTF_8);
         logger.info("String '" + string + "' converts to " + utf8Bytes.length + " UTF-8 bytes.");
@@ -29,7 +30,8 @@ public record StringView(MemorySegment stringViewPtr) {
         // Step 3: Copy the content from the on-heap utf8Bytes array into the off-heap
         // nativeStringData segment.
         nativeStringData.copyFrom(MemorySegment.ofArray(utf8Bytes)); // <-- CORRECTED LINE HERE
-        logger.info("Copied UTF-8 bytes from on-heap array to off-heap nativeStringData. NativeStringData: " + nativeStringData.toString());
+        logger.info("Copied UTF-8 bytes from on-heap array to off-heap nativeStringData. NativeStringData: "
+                + nativeStringData.toString());
 
         // Step 4: Allocate the WGPUStringView struct itself using the provided Arena
         @SuppressWarnings("preview")
@@ -39,7 +41,7 @@ public record StringView(MemorySegment stringViewPtr) {
         // Step 5: Set the data pointer and length in the native WGPUStringView struct
         WGPUStringView.data(stringViewPtr, nativeStringData);
         WGPUStringView.length(stringViewPtr, utf8Bytes.length);
-       logger.info("Set data pointer and length in WGPUStringView struct. Length: " + utf8Bytes.length);
+        logger.info("Set data pointer and length in WGPUStringView struct. Length: " + utf8Bytes.length);
 
         return stringViewPtr;
     }

@@ -10,7 +10,7 @@ import org.webgpu.api.Queue;
 import org.webgpu.api.QueueWorkDone;
 import org.webgpu.api.TexelCopyBufferLayout;
 import org.webgpu.api.TexelCopyTextureInfo;
-import org.webgpu.foreign.webgpu_h;
+import org.webgpu.panama.foreign.webgpu_h;
 
 public record QueueImpl(MemorySegment ptr) implements Queue {
 
@@ -55,14 +55,13 @@ public record QueueImpl(MemorySegment ptr) implements Queue {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'submitForIndex'");
     }
-    
 
     static Queue getQueue(DeviceImpl device) {
         return new QueueImpl(webgpu_h.wgpuDeviceGetQueue(device.ptr()));
     }
 
     private static MemorySegment onSubmittedWorkDone(QueueImpl queue, QueueWorkDone callback) {
-        
+
         throw new UnsupportedOperationException("Unimplemented method 'onSubmittedWorkDone'");
     }
 }

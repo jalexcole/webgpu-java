@@ -3,10 +3,10 @@ package org.webgpu.api;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
-import org.webgpu.foreign.WGPUVertexBufferLayout;
+import org.webgpu.panama.foreign.WGPUVertexBufferLayout;
 
 public class VertexBufferLayout {
-    
+
     private final MemorySegment ptr;
 
     public VertexBufferLayout() {

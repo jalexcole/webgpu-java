@@ -84,7 +84,7 @@
 
     <build>
         <plugins>
-            <plugin>
+            <!-- <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.5.1</version>
@@ -98,24 +98,24 @@
                 </executions>
                 <configuration>
                     <executable>jextract</executable>
-                    <!-- optional -->
+                    
 
                     <arguments>
-                        <argument>--output</argument>
+                        <argument>-o</argument>
                         <argument>${project.build.directory}/generated-sources/jextract</argument>
-                        <argument>--target-package</argument>
-                        <argument>org.webgpu.extract</argument>
-                        <argument>--header-class-name</argument>
+                        <argument>-t</argument>
+                        <argument>org.webgpu.panama.foriegn</argument>
+                        <argument>header-class-name</argument>
                         <argument>webgpu_h</argument>
-                        <argument>--library</argument>
+                        <argument>library</argument>
                         <argument>wgpu_native</argument>
-                        <argument>--include-dir</argument>
+                        <argument>include-dir</argument>
                         <argument>${project.build.directory}/downloads-unzipped/include/webgpu</argument>
                         <argument>${project.build.directory}/downloads-unzipped/include/webgpu/wgpu.h</argument>
                     </arguments>
 
                 </configuration>
-            </plugin>
+            </plugin> -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>

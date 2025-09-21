@@ -4,10 +4,10 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.util.Optional;
 
-import org.webgpu.foreign.WGPUSurfaceDescriptor;
+import org.webgpu.panama.foreign.WGPUSurfaceDescriptor;
 import org.webgpu.util.StringView;
 
-public class SurfaceDescriptor {
+public non-sealed class SurfaceDescriptor implements DescriptorBase {
 
     @SuppressWarnings("preview")
     private final MemorySegment ptr;

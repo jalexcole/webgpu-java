@@ -2,7 +2,7 @@ package org.webgpu.api;
 
 import java.lang.foreign.MemorySegment;
 
-import org.webgpu.foreign.webgpu_h;
+import org.webgpu.panama.foreign.webgpu_h;
 
 public enum SampleBindingType {
     BINDING_NOT_USED(webgpu_h.WGPUSamplerBindingType_BindingNotUsed()),
@@ -30,5 +30,5 @@ public enum SampleBindingType {
         }
         throw new IllegalArgumentException("Invalid value: " + value);
     }
-    
+
 }

@@ -15,11 +15,11 @@
     
 
     <dependencies>
-        <!-- <dependency>
+        <dependency>
             <groupId>org.webgpu</groupId>
             <artifactId>panama</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-        </dependency> -->
+        </dependency>
         <!--
         https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
         <dependency>

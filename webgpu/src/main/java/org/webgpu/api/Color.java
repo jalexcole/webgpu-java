@@ -3,7 +3,7 @@ package org.webgpu.api;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
-import org.webgpu.foreign.WGPUColor;
+import org.webgpu.panama.foreign.WGPUColor;
 
 public class Color implements ObjectBase {
     private MemorySegment colorPtr;
@@ -15,18 +15,17 @@ public class Color implements ObjectBase {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-            
-        
+
     }
-    
+
     public Color(float r, float g, float b, float a) {
-        try  {
+        try {
             Arena arena = Arena.ofAuto();
             colorPtr = WGPUColor.allocate(arena);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        
+
         WGPUColor.r(ptr(), r);
         WGPUColor.g(ptr(), g);
         WGPUColor.b(ptr(), b);
@@ -36,15 +35,15 @@ public class Color implements ObjectBase {
     public float r() {
         return (float) WGPUColor.r(ptr());
     }
-    
+
     public float g() {
         return (float) WGPUColor.g(ptr());
     }
-    
+
     public float b() {
         return (float) WGPUColor.b(ptr());
     }
-    
+
     public float a() {
         return (float) WGPUColor.a(ptr());
     }
@@ -64,5 +63,4 @@ public class Color implements ObjectBase {
                 '}';
     }
 
-    
 }

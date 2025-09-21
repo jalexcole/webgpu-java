@@ -3,7 +3,7 @@ package org.webgpu.impl;
 import java.lang.foreign.MemorySegment;
 
 import org.webgpu.api.PipelineLayout;
-import org.webgpu.foreign.webgpu_h;
+import org.webgpu.panama.foreign.webgpu_h;
 
 public record PipelineLayoutImpl(MemorySegment ptr) implements PipelineLayout {
 
@@ -22,5 +22,5 @@ public record PipelineLayoutImpl(MemorySegment ptr) implements PipelineLayout {
     public void release() {
         webgpu_h.wgpuPipelineLayoutRelease(ptr);
     }
-    
+
 }

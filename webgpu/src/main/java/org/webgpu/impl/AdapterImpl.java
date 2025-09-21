@@ -1,7 +1,7 @@
 package org.webgpu.impl;
 
-import static org.webgpu.foreign.webgpu_h.C_INT;
-import static org.webgpu.foreign.webgpu_h.WGPURequestAdapterStatus_Success;
+import static org.webgpu.panama.foreign.webgpu_h.C_INT;
+import static org.webgpu.panama.foreign.webgpu_h.WGPURequestAdapterStatus_Success;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
@@ -20,15 +20,15 @@ import org.webgpu.api.DeviceDescriptor;
 import org.webgpu.api.FeatureName;
 import org.webgpu.api.Limits;
 import org.webgpu.exceptions.RequestAdaptorError;
-import org.webgpu.foreign.WGPUAdapterInfo;
-import org.webgpu.foreign.WGPULimits;
-import org.webgpu.foreign.WGPURequestDeviceCallback;
-import org.webgpu.foreign.WGPURequestDeviceCallbackInfo;
-import org.webgpu.foreign.WGPUSupportedFeatures;
-import org.webgpu.foreign.webgpu_h;
+import org.webgpu.panama.foreign.WGPUAdapterInfo;
+import org.webgpu.panama.foreign.WGPULimits;
+import org.webgpu.panama.foreign.WGPURequestDeviceCallback;
+import org.webgpu.panama.foreign.WGPURequestDeviceCallbackInfo;
+import org.webgpu.panama.foreign.WGPUSupportedFeatures;
+import org.webgpu.panama.foreign.webgpu_h;
 import org.webgpu.util.StringView;
 
-@SuppressWarnings("preview")
+
 public record AdapterImpl(@NonNull MemorySegment ptr, Arena arena) implements Adapter, AutoCloseable {
 
 	private static final Logger logger = Logger.getLogger(AdapterImpl.class.getName());
@@ -38,7 +38,7 @@ public record AdapterImpl(@NonNull MemorySegment ptr, Arena arena) implements Ad
 	@Override
 	public FeatureName[] features() {
 
-		try (@SuppressWarnings("preview")
+		try (
 		Arena arena = Arena.ofConfined()) {
 
 			// 1. Allocate a MemorySegment for the WGPUSupportedFeatures struct.

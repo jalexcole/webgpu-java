@@ -3,7 +3,7 @@ package org.webgpu.impl;
 import java.lang.foreign.MemorySegment;
 
 import org.webgpu.api.TextureView;
-import org.webgpu.foreign.webgpu_h;
+import org.webgpu.panama.foreign.webgpu_h;
 
 public record TextureViewImpl(MemorySegment ptr) implements TextureView {
 
@@ -22,5 +22,5 @@ public record TextureViewImpl(MemorySegment ptr) implements TextureView {
     public void release() {
         webgpu_h.wgpuTextureViewRelease(ptr);
     }
-    
+
 }

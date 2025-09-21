@@ -4,7 +4,7 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.util.Optional;
 
-import org.webgpu.foreign.WGPUVertexState;
+import org.webgpu.panama.foreign.WGPUVertexState;
 import org.webgpu.impl.ShaderModuleImpl;
 import org.webgpu.util.StringView;
 
@@ -15,7 +15,7 @@ public class VertexState {
         Arena arena = Arena.ofAuto();
         this.ptr = WGPUVertexState.allocate(arena);
     }
-    
+
     public final Optional<ChainedStruct> nextInChain() {
         final var chainedStructPtr = WGPUVertexState.nextInChain(ptr);
 
@@ -84,6 +84,5 @@ public class VertexState {
     public final void setBuffers(VertexBufferLayout[] buffers) {
         throw new UnsupportedOperationException("Method not implemented yet: setBuffers()");
     }
-
 
 }

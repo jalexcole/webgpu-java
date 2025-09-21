@@ -6,7 +6,7 @@ import java.lang.foreign.MemorySegment;
 import java.util.logging.Logger;
 
 import org.jspecify.annotations.Nullable;
-import org.webgpu.foreign.webgpu_h;
+import org.webgpu.panama.foreign.webgpu_h;
 import org.webgpu.impl.InstanceImpl;
 
 public class WGPU {
@@ -23,7 +23,7 @@ public class WGPU {
             logger.severe(e.getMessage());
         } catch (final UnsatisfiedLinkError e) {
             logger.severe(e.getMessage());
-        } catch(final Exception e) {
+        } catch (final Exception e) {
             logger.severe(e.getMessage());
         }
     }

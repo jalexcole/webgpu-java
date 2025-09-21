@@ -2,7 +2,7 @@ package org.webgpu.api;
 
 import java.util.Arrays;
 
-import org.webgpu.foreign.webgpu_h;
+import org.webgpu.panama.foreign.webgpu_h;
 
 public enum RequestDeviceStatus {
     SUCCESS(webgpu_h.WGPURequestDeviceStatus_Success()),
@@ -10,7 +10,7 @@ public enum RequestDeviceStatus {
     INSTANCE_DROPPED(webgpu_h.WGPURequestDeviceStatus_InstanceDropped()),
     ERROR(webgpu_h.WGPURequestDeviceStatus_Error()),
     // UNKNOWN(webgpu_h.WGPURequestDeviceStatus_()),
-                    
+
     FORCE32(webgpu_h.WGPURequestDeviceStatus_Force32());
 
     private final int value;
@@ -29,6 +29,7 @@ public enum RequestDeviceStatus {
                 return level;
             }
         }
-        throw new IllegalArgumentException("Invalid value: " + value + ". Must be one of: " + Arrays.toString(RequestDeviceStatus.values()));
+        throw new IllegalArgumentException(
+                "Invalid value: " + value + ". Must be one of: " + Arrays.toString(RequestDeviceStatus.values()));
     }
 }

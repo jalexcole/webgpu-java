@@ -3,7 +3,7 @@ package org.webgpu.impl;
 import java.lang.foreign.MemorySegment;
 
 import org.webgpu.api.RenderBundle;
-import org.webgpu.foreign.webgpu_h;
+import org.webgpu.panama.foreign.webgpu_h;
 
 public record RenderBundleImpl(MemorySegment ptr) implements RenderBundle {
 
@@ -22,5 +22,5 @@ public record RenderBundleImpl(MemorySegment ptr) implements RenderBundle {
     public void release() {
         webgpu_h.wgpuRenderBundleRelease(ptr);
     }
-    
+
 }
