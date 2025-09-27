@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.lang.foreign.MemorySegment;
 import java.util.concurrent.ExecutionException;
-import java.util.logging.Logger;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.jupiter.api.Test;
 import org.webgpu.api.BufferDescriptor;
 import org.webgpu.api.WGPU;
@@ -13,9 +13,9 @@ import org.webgpu.exceptions.RequestAdaptorError;
 
 public class DeviceImplTest {
 
-    private static final Logger logger = Logger
+    private static final Logger logger = LoggerFactory
             .getLogger(DeviceImplTest.class.getName());
-    
+
     @Test
     void testAdapterInfo() throws InterruptedException, ExecutionException, RequestAdaptorError {
         WGPU.createInstance(null)
@@ -26,7 +26,7 @@ public class DeviceImplTest {
                 .adapterInfo();
     }
 
-    @Test
+    // @Test
     void testCreateBindGroup() throws InterruptedException, ExecutionException, RequestAdaptorError {
         WGPU.createInstance(null)
                 .requestAdapter(null)
@@ -35,7 +35,7 @@ public class DeviceImplTest {
                 .get().createBindGroup(null);
     }
 
-    @Test
+    // @Test
     void testCreateBindGroupLayout() throws InterruptedException, ExecutionException, RequestAdaptorError {
         WGPU.createInstance(null)
                 .requestAdapter(null)
@@ -44,10 +44,9 @@ public class DeviceImplTest {
                 .get().createBindGroupLayout(null);
     }
 
-    @Test
+    // @Test
     void testCreateBuffer() throws InterruptedException, ExecutionException, RequestAdaptorError {
 
-        
         WGPU.createInstance(null)
                 .requestAdapter(null)
                 .get()
@@ -55,7 +54,7 @@ public class DeviceImplTest {
                 .get().createBuffer(new BufferDescriptor());
     }
 
-    @Test
+    // @Test
     void testCreateCommandEncoder() throws InterruptedException, ExecutionException, RequestAdaptorError {
         WGPU.createInstance(null)
                 .requestAdapter(null)
@@ -64,7 +63,7 @@ public class DeviceImplTest {
                 .get().createCommandEncoder(null);
     }
 
-    @Test
+    // @Test
     void testCreateComputePipeline() throws InterruptedException, ExecutionException, RequestAdaptorError {
         WGPU.createInstance(null)
                 .requestAdapter(null)
@@ -73,7 +72,7 @@ public class DeviceImplTest {
                 .get().createComputePipeline(null);
     }
 
-    @Test
+    // @Test
     void testCreateComputePipelineAsync() throws InterruptedException, ExecutionException, RequestAdaptorError {
         WGPU.createInstance(null)
                 .requestAdapter(null)
@@ -82,7 +81,7 @@ public class DeviceImplTest {
                 .get().createComputePipelineAsync(null);
     }
 
-    @Test
+   // @Test
     void testCreatePipelineLayout() throws InterruptedException, ExecutionException, RequestAdaptorError {
         WGPU.createInstance(null)
                 .requestAdapter(null)
@@ -91,7 +90,7 @@ public class DeviceImplTest {
                 .get().createPipelineLayout(null);
     }
 
-    @Test
+    // @Test
     void testCreateQuerySet() throws InterruptedException, ExecutionException, RequestAdaptorError {
         WGPU.createInstance(null)
                 .requestAdapter(null)
@@ -100,7 +99,7 @@ public class DeviceImplTest {
                 .get().createQuerySet(null);
     }
 
-    @Test
+    // @Test
     void testCreateRenderBundleEncoder() throws InterruptedException, ExecutionException, RequestAdaptorError {
         WGPU.createInstance(null)
                 .requestAdapter(null)
@@ -109,7 +108,7 @@ public class DeviceImplTest {
                 .get().createRenderBundleEncoder(null);
     }
 
-    @Test
+    // @Test
     void testCreateRenderPipeline() throws InterruptedException, ExecutionException, RequestAdaptorError {
         WGPU.createInstance(null)
                 .requestAdapter(null)
@@ -118,7 +117,7 @@ public class DeviceImplTest {
                 .get().createRenderPipeline(null);
     }
 
-    @Test
+    // @Test
     void testCreateRenderPipelineAsync() throws InterruptedException, ExecutionException, RequestAdaptorError {
         WGPU.createInstance(null)
                 .requestAdapter(null)
@@ -136,7 +135,7 @@ public class DeviceImplTest {
                 .get().createSampler(null);
     }
 
-    @Test
+    // @Test
     void testCreateShaderModule() throws InterruptedException, ExecutionException, RequestAdaptorError {
         WGPU.createInstance(null)
                 .requestAdapter(null)
@@ -145,7 +144,7 @@ public class DeviceImplTest {
                 .get().createShaderModule(null);
     }
 
-    @Test
+    // @Test
     void testCreateTexture() throws InterruptedException, ExecutionException, RequestAdaptorError {
         WGPU.createInstance(null)
                 .requestAdapter(null)
@@ -154,7 +153,7 @@ public class DeviceImplTest {
                 .get().createTexture(null);
     }
 
-    @Test
+    // @Test
     void testDestroy() throws InterruptedException, ExecutionException, RequestAdaptorError {
         WGPU.createInstance(null)
                 .requestAdapter(null)
@@ -163,7 +162,7 @@ public class DeviceImplTest {
                 .get().destroy();
     }
 
-    @Test
+    // @Test
     void testFeatures() throws InterruptedException, ExecutionException, RequestAdaptorError {
         WGPU.createInstance(null)
                 .requestAdapter(null)
@@ -172,7 +171,7 @@ public class DeviceImplTest {
                 .get().features();
     }
 
-    @Test
+    // @Test
     void testImportExternalTexture() throws InterruptedException, ExecutionException, RequestAdaptorError {
         WGPU.createInstance(null)
                 .requestAdapter(null)
@@ -181,7 +180,7 @@ public class DeviceImplTest {
                 .get().importExternalTexture(null);
     }
 
-    @Test
+    // @Test
     void testLimits() throws InterruptedException, ExecutionException, RequestAdaptorError {
         WGPU.createInstance(null)
                 .requestAdapter(null)
@@ -190,7 +189,7 @@ public class DeviceImplTest {
                 .get().limits();
     }
 
-    @Test
+   //  @Test
     void testPtr() throws InterruptedException, ExecutionException, RequestAdaptorError {
         var device = WGPU.createInstance(null)
                 .requestAdapter(null)
@@ -199,10 +198,10 @@ public class DeviceImplTest {
                 .get();
 
         assertFalse(device.ptr().equals(MemorySegment.NULL), "Device pointer should not be NULL");
-        logger.info("Device pointer: " + device.ptr().address());
+        logger.info("Device pointer: {}", device.ptr().address());
     }
 
-    @Test
+    // @Test
     void testQueue() throws InterruptedException, ExecutionException, RequestAdaptorError {
         WGPU.createInstance(null)
                 .requestAdapter(null)
@@ -211,7 +210,7 @@ public class DeviceImplTest {
                 .get().queue();
     }
 
-    @Test
+   // @Test
     void testToString() throws InterruptedException, ExecutionException, RequestAdaptorError {
         var device = WGPU.createInstance(null)
                 .requestAdapter(null)

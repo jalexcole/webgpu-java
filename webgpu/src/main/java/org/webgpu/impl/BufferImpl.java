@@ -8,7 +8,7 @@ import org.webgpu.api.BufferUsage;
 import org.webgpu.panama.foreign.webgpu_h;
 
 public record BufferImpl(MemorySegment ptr) implements Buffer {
-
+    
     @Override
     public void destroy() {
         webgpu_h.wgpuBufferDestroy(ptr);

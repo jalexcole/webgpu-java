@@ -5,7 +5,7 @@ import java.util.concurrent.Future;
 import org.jspecify.annotations.NonNull;
 import org.webgpu.impl.AdapterInfoImpl;
 
-public interface Adapter {
+public interface Adapter extends ObjectBase {
 
     /**
      * Requests a device from the adapter.

@@ -21,7 +21,7 @@ public final class ComputePassDescriptor implements DescriptorBase {
     }
 
     public String label() {
-        return new StringView(WGPUComputePassDescriptor.label(ptr)).string();
+        return StringView.map(WGPUComputePassDescriptor.label(ptr));
     }
 
     public void setLabel(String label) {

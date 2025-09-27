@@ -1,8 +1,8 @@
 package org.webgpu.impl;
 
 import java.lang.foreign.MemorySegment;
-import java.util.logging.Logger;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.webgpu.api.AdapterInfo;
 import org.webgpu.api.AdapterType;
 import org.webgpu.api.BackendType;
@@ -11,7 +11,7 @@ import org.webgpu.util.StringView;
 
 public record AdapterInfoImpl(MemorySegment ptr) implements AdapterInfo {
 
-    private static final Logger logger = Logger.getLogger(AdapterInfoImpl.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(AdapterInfoImpl.class.getName());
 
     @SuppressWarnings("preview")
     public MemorySegment ptr() {
@@ -21,25 +21,25 @@ public record AdapterInfoImpl(MemorySegment ptr) implements AdapterInfo {
     @Override
     public String vendor() {
 
-        return new StringView(WGPUAdapterInfo.vendor(ptr)).string();
+        return StringView.map(WGPUAdapterInfo.vendor(ptr));
     }
 
     @Override
     public String architecture() {
         var architecture = WGPUAdapterInfo.architecture(this.ptr);
 
-        logger.info("Architecture raw: " + architecture);
-        return new StringView(WGPUAdapterInfo.architecture(ptr)).string();
+        logger.info("Architecture raw: {}", architecture);
+        return StringView.map(WGPUAdapterInfo.architecture(ptr));
     }
 
     @Override
     public String device() {
-        return new StringView(WGPUAdapterInfo.device(ptr)).string();
+        return StringView.map(WGPUAdapterInfo.device(ptr));
     }
 
     @Override
     public String description() {
-        return new StringView(WGPUAdapterInfo.description(ptr)).string();
+        return StringView.map(WGPUAdapterInfo.description(ptr));
     }
 
     @Override

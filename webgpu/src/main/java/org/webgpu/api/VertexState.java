@@ -38,7 +38,7 @@ public class VertexState {
     }
 
     public final String entryPoint() {
-        return new StringView(WGPUVertexState.entryPoint(ptr)).string();
+        return StringView.map(WGPUVertexState.entryPoint(ptr));
     }
 
     public final void setEntryPoint(String entryPoint) {

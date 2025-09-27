@@ -25,7 +25,7 @@ public class DeviceDescriptor {
     }
 
     public String label() {
-        return new StringView(WGPUDeviceDescriptor.label(ptr)).string();
+        return StringView.map(WGPUDeviceDescriptor.label(ptr));
     }
 
     public void setLabel(String label) {

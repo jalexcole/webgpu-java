@@ -27,7 +27,7 @@ public non-sealed class SurfaceDescriptor implements DescriptorBase {
     }
 
     public String label() {
-        return new StringView(WGPUSurfaceDescriptor.label(ptr)).string();
+        return StringView.map(WGPUSurfaceDescriptor.label(ptr));
     }
 
     @SuppressWarnings("preview")

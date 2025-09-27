@@ -10,8 +10,8 @@ import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
-import java.util.logging.Logger;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jspecify.annotations.NonNull;
 import org.webgpu.api.Adapter;
 import org.webgpu.api.CallbackMode;
@@ -28,10 +28,9 @@ import org.webgpu.panama.foreign.WGPUSupportedFeatures;
 import org.webgpu.panama.foreign.webgpu_h;
 import org.webgpu.util.StringView;
 
-
 public record AdapterImpl(@NonNull MemorySegment ptr, Arena arena) implements Adapter, AutoCloseable {
 
-	private static final Logger logger = Logger.getLogger(AdapterImpl.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(AdapterImpl.class.getName());
 
 	private static final ConcurrentHashMap<Long, CompletableFuture<Device>> pendingAdapterRequests = new ConcurrentHashMap<>();
 
@@ -39,7 +38,7 @@ public record AdapterImpl(@NonNull MemorySegment ptr, Arena arena) implements Ad
 	public FeatureName[] features() {
 
 		try (
-		Arena arena = Arena.ofConfined()) {
+				Arena arena = Arena.ofConfined()) {
 
 			// 1. Allocate a MemorySegment for the WGPUSupportedFeatures struct.
 			// You'll need the MemoryLayout for WGPUSupportedFeatures.
@@ -48,25 +47,25 @@ public record AdapterImpl(@NonNull MemorySegment ptr, Arena arena) implements Ad
 
 			// 2. Call the native function to populate the featuresSegment
 			webgpu_h.wgpuAdapterGetFeatures(ptr, featuresSegment);
-			logger.fine("AdapterImpl.features() called, featuresSegment: " + featuresSegment);
+			logger.trace("AdapterImpl.features() called, featuresSegment: " + featuresSegment);
 			// 3. Get the count of features
 			// Assuming an accessor for 'featureCount' like
 			// WGPUSupportedFeatures.featureCount$get()
 			long featureCount = WGPUSupportedFeatures.featureCount(featuresSegment);
-			logger.fine("AdapterImpl.features() featureCount: " + featureCount);
+			logger.trace("AdapterImpl.features() featureCount: " + featureCount);
 			var features = WGPUSupportedFeatures.features(featuresSegment);
-			logger.fine("AdapterImpl.features() features: " + features);
+			logger.trace("AdapterImpl.features() features: " + features);
 			int[] featureNames = new int[(int) featureCount];
 			FeatureName[] featureNamesArray = new FeatureName[(int) featureCount];
 			for (int i = 0; i < featureCount; i++) {
 				featureNames[i] = features.getAtIndex(C_INT, i);
 			}
-			logger.fine("AdapterImpl.features() featureNames: " + Arrays.toString(featureNames));
+			logger.trace("AdapterImpl.features() featureNames: " + Arrays.toString(featureNames));
 			for (int i = 0; i < featureNames.length; i++) {
 				try {
 					featureNamesArray[i] = FeatureName.fromValue(featureNames[i]);
 				} catch (IllegalArgumentException e) {
-					logger.warning("Unknown feature name value: " + featureNames[i]);
+					logger.warn("Unknown feature name value: " + featureNames[i]);
 					featureNamesArray[i] = FeatureName.FORCE32;
 				}
 
@@ -84,7 +83,7 @@ public record AdapterImpl(@NonNull MemorySegment ptr, Arena arena) implements Ad
 			Arena arena = Arena.ofAuto();
 			MemorySegment ptr = WGPULimits.allocate(arena);
 			var status = webgpu_h.wgpuAdapterGetLimits(this.ptr, ptr);
-			logger.fine("AdapterImpl.limits() called, status: " + status);
+			logger.trace("AdapterImpl.limits() called, status: " + status);
 			return new LimitsImpl(ptr);
 		} catch (Exception e) {
 			throw new RuntimeException("Failed to get adapter limits", e);
@@ -122,10 +121,10 @@ public record AdapterImpl(@NonNull MemorySegment ptr, Arena arena) implements Ad
 		pendingAdapterRequests.put(requestId, futureDevice);
 
 		try {
-			MemorySegment userData1Segment = arena.allocate(ValueLayout.JAVA_LONG);
+			final MemorySegment userData1Segment = arena.allocate(ValueLayout.JAVA_LONG);
 			userData1Segment.set(ValueLayout.JAVA_LONG, 0, requestId);
 
-			var requestDeviceCallbackInfo = WGPURequestDeviceCallbackInfo.allocate(arena);
+			final var requestDeviceCallbackInfo = WGPURequestDeviceCallbackInfo.allocate(arena);
 
 			WGPURequestDeviceCallback.Function callback = (int status, MemorySegment device, MemorySegment message,
 					MemorySegment userData1, MemorySegment userData2) -> {
@@ -133,28 +132,28 @@ public record AdapterImpl(@NonNull MemorySegment ptr, Arena arena) implements Ad
 				final CompletableFuture<Device> targetFuture = pendingAdapterRequests.remove(completedRequestId);
 
 				if (targetFuture == null) {
-					logger.severe("Unknown request ID: " + completedRequestId);
+					logger.error("Unknown request ID: {}", completedRequestId);
 					return;
 				}
 				if (status != webgpu_h.WGPUStatus_Success()) {
-					throw new RuntimeException("Failed to request device. Status: " + status);
+					throw new RuntimeException("Failed to request device. Status: {}" + status);
 				}
 
-				logger.info("DeviceMessage: " + new StringView(message).string());
+				logger.info("DeviceMessage: {}", StringView.map(message));
 				// return new DeviceImpl(device, arena);
 
 				if (status == WGPURequestAdapterStatus_Success()) {
-					logger.info("Adapter received: " + message);
+					logger.info("Adapter received: {}", message);
 					targetFuture.complete(new DeviceImpl(device, arena));
 				} else {
 					String err = "Failed to request adapter: " + message;
-					logger.severe(err);
+					logger.error(err);
 					targetFuture.completeExceptionally(new RequestAdaptorError(err));
 				}
 			};
 
-			MemorySegment nativeCallback = WGPURequestDeviceCallback.allocate(callback, arena);
-			MemorySegment callbackInfo = WGPURequestDeviceCallbackInfo.allocate(arena);
+			final MemorySegment nativeCallback = WGPURequestDeviceCallback.allocate(callback, arena);
+			final MemorySegment callbackInfo = WGPURequestDeviceCallbackInfo.allocate(arena);
 
 			WGPURequestDeviceCallbackInfo.nextInChain(callbackInfo, MemorySegment.NULL);
 			WGPURequestDeviceCallbackInfo.mode(callbackInfo, CallbackMode.ALLOW_SPONTANEOUS.value()); // 0 =

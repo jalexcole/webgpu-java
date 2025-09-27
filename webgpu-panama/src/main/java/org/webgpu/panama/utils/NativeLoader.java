@@ -8,6 +8,11 @@ import java.io.InputStream;
 public class NativeLoader {
     public static void loadLibraryFromResources(String resourcePath) {
         try {
+
+            String osName = System.getProperty("os.name").toLowerCase();
+            String arch = System.getProperty("os.arch").toLowerCase();
+
+            
             // Get the resource as a stream
             InputStream in = NativeLoader.class.getResourceAsStream(resourcePath);
             if (in == null) {

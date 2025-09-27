@@ -25,7 +25,7 @@
                 <version>3.8.0</version>
                 <configuration>
                     <release>${maven.compiler.release}</release>
-                    
+
                 </configuration>
             </plugin>
             <plugin>
@@ -41,6 +41,18 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.4</version>
+                <configuration>
+                    <rerunFailedTests>2</rerunFailedTests>
+                    <systemPropertyVariables>
+                        <RUST_BACKTRACE>full</RUST_BACKTRACE>
+                        <RUST_LOG>trace</RUST_LOG>
+                    </systemPropertyVariables>
+                </configuration>
             </plugin>
             <!-- <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

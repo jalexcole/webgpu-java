@@ -19,7 +19,7 @@ public class ConstantEntry {
     }
 
     public final String key() {
-        return new StringView(WGPUConstantEntry.key(ptr)).string();
+        return StringView.map(WGPUConstantEntry.key(ptr));
     }
 
     public final void setKey(String key) {

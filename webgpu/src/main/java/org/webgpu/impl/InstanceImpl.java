@@ -10,8 +10,8 @@ import java.lang.foreign.ValueLayout;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
-import java.util.logging.Logger;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jspecify.annotations.Nullable;
 import org.webgpu.api.Adapter;
 import org.webgpu.api.Instance;
@@ -24,7 +24,7 @@ import org.webgpu.util.StringView;
 public record InstanceImpl(@SuppressWarnings("preview") MemorySegment ptr, @SuppressWarnings("preview") Arena arena)
         implements Instance {
 
-    private static final Logger logger = Logger.getLogger(InstanceImpl.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(InstanceImpl.class);
     // Shared map to track pending adapter requests by requestId
     private static final ConcurrentHashMap<Long, CompletableFuture<Adapter>> pendingAdapterRequests = new ConcurrentHashMap<>();
 
@@ -52,14 +52,14 @@ public record InstanceImpl(@SuppressWarnings("preview") MemorySegment ptr, @Supp
                 final CompletableFuture<Adapter> targetFuture = pendingAdapterRequests.remove(completedRequestId);
 
                 if (targetFuture == null) {
-                    logger.severe("Unknown request ID: " + completedRequestId);
+                    logger.error("Unknown request ID: " + completedRequestId);
                     return;
                 }
 
                 String message;
                 try (Arena callbackArena = Arena.ofConfined()) {
                     message = (messagePtr != null && messagePtr.address() != 0)
-                            ? new StringView(messagePtr).string()
+                            ? StringView.map(messagePtr)
                             : "(no message from native)";
                 } catch (Exception ex) {
                     message = "(failed to extract message: " + ex.getMessage() + ")";
@@ -70,7 +70,7 @@ public record InstanceImpl(@SuppressWarnings("preview") MemorySegment ptr, @Supp
                     targetFuture.complete(new AdapterImpl(adapterPtr, arena));
                 } else {
                     String err = "Failed to request adapter: " + message;
-                    logger.severe(err);
+                    logger.error(err);
                     targetFuture.completeExceptionally(new RequestAdaptorError(err));
                 }
             };

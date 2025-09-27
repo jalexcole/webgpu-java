@@ -3,8 +3,8 @@ package org.webgpu.api;
 import java.lang.foreign.Arena;
 import java.lang.foreign.Linker;
 import java.lang.foreign.MemorySegment;
-import java.util.logging.Logger;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jspecify.annotations.Nullable;
 import org.webgpu.panama.foreign.webgpu_h;
 import org.webgpu.impl.InstanceImpl;
@@ -12,7 +12,7 @@ import org.webgpu.impl.InstanceImpl;
 public class WGPU {
 
     public static Arena arena = Arena.global();
-    private static final Logger logger = Logger.getLogger(WGPU.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(WGPU.class.getName());
     @SuppressWarnings("preview")
     static final Linker NATIVE_LINKER = Linker.nativeLinker();
     static {
@@ -20,11 +20,11 @@ public class WGPU {
 
             System.load("/Users/alex/dev/webgpu-java/webgpu/src/test/resources/libwgpu_native.dylib");
         } catch (SecurityException e) {
-            logger.severe(e.getMessage());
+            logger.error(e.getMessage());
         } catch (final UnsatisfiedLinkError e) {
-            logger.severe(e.getMessage());
+            logger.error(e.getMessage());
         } catch (final Exception e) {
-            logger.severe(e.getMessage());
+            logger.error(e.getMessage());
         }
     }
 

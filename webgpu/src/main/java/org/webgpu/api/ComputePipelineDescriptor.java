@@ -32,7 +32,7 @@ public class ComputePipelineDescriptor implements PipelineDescriptorBase {
     }
 
     public String label() {
-        return new StringView(WGPUComputePipelineDescriptor.label(ptr)).string();
+        return StringView.map(WGPUComputePipelineDescriptor.label(ptr));
     }
 
     public PipelineLayout layout() {

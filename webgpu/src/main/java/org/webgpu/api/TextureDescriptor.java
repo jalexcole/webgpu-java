@@ -24,7 +24,7 @@ public non-sealed class TextureDescriptor implements DescriptorBase {
     }
 
     public String label() {
-        return new StringView(WGPUTextureDescriptor.label(ptr)).string();
+        return StringView.map(WGPUTextureDescriptor.label(ptr));
     }
 
     public void setLabel(String label) {

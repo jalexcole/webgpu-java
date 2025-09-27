@@ -2,8 +2,6 @@ package org.webgpu.api;
 
 import java.util.Arrays;
 
-import org.webgpu.panama.foreign.webgpu_h;
-
 public enum BufferUsage {
     NONE(0L),
     MAP_READ(1L),

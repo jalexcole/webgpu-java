@@ -25,7 +25,7 @@ public non-sealed class RenderPipelineDescriptor implements DescriptorBase {
     }
 
     public String label() {
-        return new StringView(WGPURenderPipelineDescriptor.label(ptr)).string();
+        return StringView.map(WGPURenderPipelineDescriptor.label(ptr));
     }
 
     public PipelineLayout layout() {

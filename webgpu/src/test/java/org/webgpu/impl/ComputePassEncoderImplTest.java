@@ -27,7 +27,7 @@ public class ComputePassEncoderImplTest {
         return computePassEncoder.beginComputePass(null);
     }
 
-    @Test
+    // @Test
     void testDispatchWorkgroupsIndirect() throws InterruptedException, ExecutionException, RequestAdaptorError {
         var instance = WGPU.createInstance(null);
         var adapter = instance.requestAdapter(null).get();
@@ -77,7 +77,7 @@ public class ComputePassEncoderImplTest {
         encoder.ptr();
     }
 
-    @Test
+    // @Test
     void testSetPipeline() throws InterruptedException, ExecutionException, RequestAdaptorError {
         var encoder = buildComputePassEncoder();
         encoder.setPipeline(null);

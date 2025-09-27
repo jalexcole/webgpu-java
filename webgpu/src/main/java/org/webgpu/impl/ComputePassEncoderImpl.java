@@ -11,7 +11,7 @@ import org.webgpu.api.Buffer;
 import org.webgpu.api.ComputePassEncoder;
 import org.webgpu.api.ComputePipeline;
 
-public record ComputePassEncoderImpl(@SuppressWarnings("preview") MemorySegment ptr) implements ComputePassEncoder {
+public record ComputePassEncoderImpl(MemorySegment ptr) implements ComputePassEncoder {
 
     @Override
     public void setPipeline(ComputePipeline pipeline) {

@@ -1,7 +1,7 @@
 package org.webgpu.impl;
 
-import java.util.logging.Logger;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.webgpu.api.BackendType;
@@ -10,12 +10,12 @@ import org.webgpu.api.RequestAdapterOptions;
 import org.webgpu.api.WGPU;
 
 class InstanceImplTest {
-    private static final Logger logger = Logger.getLogger(InstanceImplTest.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(InstanceImplTest.class.getName());
 
     @BeforeAll
     static void beforeAll() {
         System.setProperty("WGPU_LOG", "debug");
-        System.setProperty("WGPU_BACKEND", "opengl"); // or vulkan / dx12
+        // System.setProperty("WGPU_BACKEND", "opengl"); // or vulkan / dx12
     }
 
     @Test

@@ -24,7 +24,7 @@ public non-sealed class ShaderModuleDescriptor implements DescriptorBase {
     }
 
     public String label() {
-        return new StringView(WGPUShaderModuleDescriptor.label(ptr)).string();
+        return StringView.map(WGPUShaderModuleDescriptor.label(ptr));
     }
 
     public MemorySegment ptr() {

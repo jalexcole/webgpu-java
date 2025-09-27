@@ -6,12 +6,12 @@ import org.webgpu.api.WGPU;
 import org.webgpu.exceptions.RequestAdaptorError;
 
 import java.util.concurrent.ExecutionException;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AdapterInfoImplTest {
-    private static final Logger logger = Logger.getLogger(
-            AdapterInfoImplTest.class.getName()
-    );
+    private static final Logger logger = LoggerFactory.getLogger(
+            AdapterInfoImplTest.class.getName());
 
     @Test
     void testAdapter() throws RequestAdaptorError, ExecutionException, InterruptedException {
@@ -19,7 +19,7 @@ public class AdapterInfoImplTest {
         var adapter = instance.requestAdapter(null).get();
 
         AdapterInfo adapterInfo = adapter.getInfo();
-        
+
     }
 
     @Test
@@ -34,7 +34,7 @@ public class AdapterInfoImplTest {
     }
 
     @Test
-    void testArchitecture() throws RequestAdaptorError, ExecutionException, InterruptedException{
+    void testArchitecture() throws RequestAdaptorError, ExecutionException, InterruptedException {
         var instance = WGPU.createInstance(null);
         var adapter = instance.requestAdapter(null).get();
 
@@ -44,7 +44,7 @@ public class AdapterInfoImplTest {
     }
 
     @Test
-    void testBackendType() throws RequestAdaptorError, ExecutionException, InterruptedException{
+    void testBackendType() throws RequestAdaptorError, ExecutionException, InterruptedException {
         var instance = WGPU.createInstance(null);
         var adapter = instance.requestAdapter(null).get();
 
@@ -54,7 +54,7 @@ public class AdapterInfoImplTest {
     }
 
     @Test
-    void testDescription() throws RequestAdaptorError, ExecutionException, InterruptedException{
+    void testDescription() throws RequestAdaptorError, ExecutionException, InterruptedException {
         var instance = WGPU.createInstance(null);
         var adapter = instance.requestAdapter(null).get();
 
@@ -64,7 +64,7 @@ public class AdapterInfoImplTest {
     }
 
     @Test
-    void testDevice() throws RequestAdaptorError, ExecutionException, InterruptedException{
+    void testDevice() throws RequestAdaptorError, ExecutionException, InterruptedException {
         var instance = WGPU.createInstance(null);
         var adapter = instance.requestAdapter(null).get();
 
@@ -75,7 +75,7 @@ public class AdapterInfoImplTest {
     }
 
     @Test
-    void testDeviceId() throws RequestAdaptorError, ExecutionException, InterruptedException{
+    void testDeviceId() throws RequestAdaptorError, ExecutionException, InterruptedException {
         var instance = WGPU.createInstance(null);
         var adapter = instance.requestAdapter(null).get();
 
@@ -85,9 +85,8 @@ public class AdapterInfoImplTest {
         logger.info("DeviceId: " + deviceId);
     }
 
-
     @Test
-    void testVendor() throws RequestAdaptorError, ExecutionException, InterruptedException{
+    void testVendor() throws RequestAdaptorError, ExecutionException, InterruptedException {
         var instance = WGPU.createInstance(null);
         var adapter = instance.requestAdapter(null).get();
 
@@ -98,7 +97,7 @@ public class AdapterInfoImplTest {
     }
 
     @Test
-    void testVendorId() throws RequestAdaptorError, ExecutionException, InterruptedException{
+    void testVendorId() throws RequestAdaptorError, ExecutionException, InterruptedException {
         var instance = WGPU.createInstance(null);
         var adapter = instance.requestAdapter(null).get();
 
