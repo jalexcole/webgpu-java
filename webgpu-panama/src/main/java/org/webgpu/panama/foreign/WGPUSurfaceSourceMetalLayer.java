@@ -50,7 +50,7 @@ public class WGPUSurfaceSourceMetalLayer {
         return chain$LAYOUT;
     }
 
-    private static final long chain$OFFSET = 0;
+    private static final long chain$OFFSET = $LAYOUT.byteOffset(groupElement("chain"));
 
     /**
      * Offset for field:
@@ -94,7 +94,7 @@ public class WGPUSurfaceSourceMetalLayer {
         return layer$LAYOUT;
     }
 
-    private static final long layer$OFFSET = 16;
+    private static final long layer$OFFSET = $LAYOUT.byteOffset(groupElement("layer"));
 
     /**
      * Offset for field:

@@ -10,7 +10,7 @@ import org.webgpu.api.TextureViewDescriptor;
 import org.webgpu.panama.foreign.webgpu_h;
 
 public record TextureImpl(MemorySegment ptr) implements Texture {
-
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TextureImpl.class);
     @Override
     public TextureView createView(TextureViewDescriptor descriptor) {
         // TODO Auto-generated method stub

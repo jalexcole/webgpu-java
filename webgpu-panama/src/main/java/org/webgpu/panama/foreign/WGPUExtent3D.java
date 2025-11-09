@@ -52,7 +52,7 @@ public class WGPUExtent3D {
         return width$LAYOUT;
     }
 
-    private static final long width$OFFSET = 0;
+    private static final long width$OFFSET = $LAYOUT.byteOffset(groupElement("width"));
 
     /**
      * Offset for field:
@@ -96,7 +96,7 @@ public class WGPUExtent3D {
         return height$LAYOUT;
     }
 
-    private static final long height$OFFSET = 4;
+    private static final long height$OFFSET = $LAYOUT.byteOffset(groupElement("height"));
 
     /**
      * Offset for field:
@@ -140,7 +140,7 @@ public class WGPUExtent3D {
         return depthOrArrayLayers$LAYOUT;
     }
 
-    private static final long depthOrArrayLayers$OFFSET = 8;
+    private static final long depthOrArrayLayers$OFFSET = $LAYOUT.byteOffset(groupElement("depthOrArrayLayers"));
 
     /**
      * Offset for field:

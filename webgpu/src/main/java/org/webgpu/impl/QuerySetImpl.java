@@ -7,7 +7,7 @@ import org.webgpu.api.QueryType;
 import org.webgpu.panama.foreign.webgpu_h;
 
 public record QuerySetImpl(MemorySegment ptr) implements QuerySet {
-
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(QuerySetImpl.class);
     @Override
     public void destroy() {
         webgpu_h.wgpuQuerySetRelease(ptr);

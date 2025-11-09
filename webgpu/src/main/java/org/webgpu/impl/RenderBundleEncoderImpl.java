@@ -9,7 +9,7 @@ import org.webgpu.api.RenderBundleEncoder;
 import org.webgpu.panama.foreign.webgpu_h;
 
 public record RenderBundleEncoderImpl(MemorySegment ptr) implements RenderBundleEncoder {
-
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(RenderBundleEncoderImpl.class);
     @Override
     public void draw(int vertex_count, int instance_count, int first_vertex, int first_instance) {
         webgpu_h.wgpuRenderBundleEncoderDraw(ptr, vertex_count, instance_count, first_vertex, first_instance);

@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcRenderBundleEncoderSetLabel)(WGPURenderBundleEncoder, WGPUStringView)
  * }
  */
-public class WGPUProcRenderBundleEncoderSetLabel {
+public final class WGPUProcRenderBundleEncoderSetLabel {
 
-    WGPUProcRenderBundleEncoderSetLabel() {
+    private WGPUProcRenderBundleEncoderSetLabel() {
         // Should not be called directly
     }
 
@@ -57,9 +57,11 @@ public class WGPUProcRenderBundleEncoderSetLabel {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment renderBundleEncoder, MemorySegment label) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment renderBundleEncoder, MemorySegment label) {
         try {
              DOWN$MH.invokeExact(funcPtr, renderBundleEncoder, label);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

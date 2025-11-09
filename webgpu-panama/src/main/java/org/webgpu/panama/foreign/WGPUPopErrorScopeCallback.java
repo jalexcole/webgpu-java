@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUPopErrorScopeCallback)(WGPUPopErrorScopeStatus, WGPUErrorType, WGPUStringView, void *, void *)
  * }
  */
-public class WGPUPopErrorScopeCallback {
+public final class WGPUPopErrorScopeCallback {
 
-    WGPUPopErrorScopeCallback() {
+    private WGPUPopErrorScopeCallback() {
         // Should not be called directly
     }
 
@@ -60,9 +60,11 @@ public class WGPUPopErrorScopeCallback {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,int status, int type, MemorySegment message, MemorySegment userdata1, MemorySegment userdata2) {
+    public static void invoke(MemorySegment funcPtr, int status, int type, MemorySegment message, MemorySegment userdata1, MemorySegment userdata2) {
         try {
              DOWN$MH.invokeExact(funcPtr, status, type, message, userdata1, userdata2);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

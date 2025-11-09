@@ -52,7 +52,7 @@ public class WGPUOrigin3D {
         return x$LAYOUT;
     }
 
-    private static final long x$OFFSET = 0;
+    private static final long x$OFFSET = $LAYOUT.byteOffset(groupElement("x"));
 
     /**
      * Offset for field:
@@ -96,7 +96,7 @@ public class WGPUOrigin3D {
         return y$LAYOUT;
     }
 
-    private static final long y$OFFSET = 4;
+    private static final long y$OFFSET = $LAYOUT.byteOffset(groupElement("y"));
 
     /**
      * Offset for field:
@@ -140,7 +140,7 @@ public class WGPUOrigin3D {
         return z$LAYOUT;
     }
 
-    private static final long z$OFFSET = 8;
+    private static final long z$OFFSET = $LAYOUT.byteOffset(groupElement("z"));
 
     /**
      * Offset for field:

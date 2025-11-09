@@ -64,7 +64,7 @@ public class WGPURenderPassDepthStencilAttachment {
         return view$LAYOUT;
     }
 
-    private static final long view$OFFSET = 0;
+    private static final long view$OFFSET = $LAYOUT.byteOffset(groupElement("view"));
 
     /**
      * Offset for field:
@@ -108,7 +108,7 @@ public class WGPURenderPassDepthStencilAttachment {
         return depthLoadOp$LAYOUT;
     }
 
-    private static final long depthLoadOp$OFFSET = 8;
+    private static final long depthLoadOp$OFFSET = $LAYOUT.byteOffset(groupElement("depthLoadOp"));
 
     /**
      * Offset for field:
@@ -152,7 +152,7 @@ public class WGPURenderPassDepthStencilAttachment {
         return depthStoreOp$LAYOUT;
     }
 
-    private static final long depthStoreOp$OFFSET = 12;
+    private static final long depthStoreOp$OFFSET = $LAYOUT.byteOffset(groupElement("depthStoreOp"));
 
     /**
      * Offset for field:
@@ -196,7 +196,7 @@ public class WGPURenderPassDepthStencilAttachment {
         return depthClearValue$LAYOUT;
     }
 
-    private static final long depthClearValue$OFFSET = 16;
+    private static final long depthClearValue$OFFSET = $LAYOUT.byteOffset(groupElement("depthClearValue"));
 
     /**
      * Offset for field:
@@ -240,7 +240,7 @@ public class WGPURenderPassDepthStencilAttachment {
         return depthReadOnly$LAYOUT;
     }
 
-    private static final long depthReadOnly$OFFSET = 20;
+    private static final long depthReadOnly$OFFSET = $LAYOUT.byteOffset(groupElement("depthReadOnly"));
 
     /**
      * Offset for field:
@@ -284,7 +284,7 @@ public class WGPURenderPassDepthStencilAttachment {
         return stencilLoadOp$LAYOUT;
     }
 
-    private static final long stencilLoadOp$OFFSET = 24;
+    private static final long stencilLoadOp$OFFSET = $LAYOUT.byteOffset(groupElement("stencilLoadOp"));
 
     /**
      * Offset for field:
@@ -328,7 +328,7 @@ public class WGPURenderPassDepthStencilAttachment {
         return stencilStoreOp$LAYOUT;
     }
 
-    private static final long stencilStoreOp$OFFSET = 28;
+    private static final long stencilStoreOp$OFFSET = $LAYOUT.byteOffset(groupElement("stencilStoreOp"));
 
     /**
      * Offset for field:
@@ -372,7 +372,7 @@ public class WGPURenderPassDepthStencilAttachment {
         return stencilClearValue$LAYOUT;
     }
 
-    private static final long stencilClearValue$OFFSET = 32;
+    private static final long stencilClearValue$OFFSET = $LAYOUT.byteOffset(groupElement("stencilClearValue"));
 
     /**
      * Offset for field:
@@ -416,7 +416,7 @@ public class WGPURenderPassDepthStencilAttachment {
         return stencilReadOnly$LAYOUT;
     }
 
-    private static final long stencilReadOnly$OFFSET = 36;
+    private static final long stencilReadOnly$OFFSET = $LAYOUT.byteOffset(groupElement("stencilReadOnly"));
 
     /**
      * Offset for field:

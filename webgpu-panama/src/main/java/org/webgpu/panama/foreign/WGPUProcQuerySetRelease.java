@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcQuerySetRelease)(WGPUQuerySet)
  * }
  */
-public class WGPUProcQuerySetRelease {
+public final class WGPUProcQuerySetRelease {
 
-    WGPUProcQuerySetRelease() {
+    private WGPUProcQuerySetRelease() {
         // Should not be called directly
     }
 
@@ -56,9 +56,11 @@ public class WGPUProcQuerySetRelease {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment querySet) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment querySet) {
         try {
              DOWN$MH.invokeExact(funcPtr, querySet);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

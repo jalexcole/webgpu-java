@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef WGPUQueue (*WGPUProcDeviceGetQueue)(WGPUDevice)
  * }
  */
-public class WGPUProcDeviceGetQueue {
+public final class WGPUProcDeviceGetQueue {
 
-    WGPUProcDeviceGetQueue() {
+    private WGPUProcDeviceGetQueue() {
         // Should not be called directly
     }
 
@@ -57,9 +57,11 @@ public class WGPUProcDeviceGetQueue {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static MemorySegment invoke(MemorySegment funcPtr,MemorySegment device) {
+    public static MemorySegment invoke(MemorySegment funcPtr, MemorySegment device) {
         try {
             return (MemorySegment) DOWN$MH.invokeExact(funcPtr, device);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

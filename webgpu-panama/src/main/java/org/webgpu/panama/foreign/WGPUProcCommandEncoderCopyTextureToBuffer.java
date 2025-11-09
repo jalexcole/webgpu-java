@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcCommandEncoderCopyTextureToBuffer)(WGPUCommandEncoder, const WGPUTexelCopyTextureInfo *, const WGPUTexelCopyBufferInfo *, const WGPUExtent3D *)
  * }
  */
-public class WGPUProcCommandEncoderCopyTextureToBuffer {
+public final class WGPUProcCommandEncoderCopyTextureToBuffer {
 
-    WGPUProcCommandEncoderCopyTextureToBuffer() {
+    private WGPUProcCommandEncoderCopyTextureToBuffer() {
         // Should not be called directly
     }
 
@@ -59,9 +59,11 @@ public class WGPUProcCommandEncoderCopyTextureToBuffer {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment commandEncoder, MemorySegment source, MemorySegment destination, MemorySegment copySize) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment commandEncoder, MemorySegment source, MemorySegment destination, MemorySegment copySize) {
         try {
              DOWN$MH.invokeExact(funcPtr, commandEncoder, source, destination, copySize);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

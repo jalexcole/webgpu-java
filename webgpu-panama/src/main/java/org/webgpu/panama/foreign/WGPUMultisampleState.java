@@ -55,7 +55,7 @@ public class WGPUMultisampleState {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -99,7 +99,7 @@ public class WGPUMultisampleState {
         return count$LAYOUT;
     }
 
-    private static final long count$OFFSET = 8;
+    private static final long count$OFFSET = $LAYOUT.byteOffset(groupElement("count"));
 
     /**
      * Offset for field:
@@ -143,7 +143,7 @@ public class WGPUMultisampleState {
         return mask$LAYOUT;
     }
 
-    private static final long mask$OFFSET = 12;
+    private static final long mask$OFFSET = $LAYOUT.byteOffset(groupElement("mask"));
 
     /**
      * Offset for field:
@@ -187,7 +187,7 @@ public class WGPUMultisampleState {
         return alphaToCoverageEnabled$LAYOUT;
     }
 
-    private static final long alphaToCoverageEnabled$OFFSET = 16;
+    private static final long alphaToCoverageEnabled$OFFSET = $LAYOUT.byteOffset(groupElement("alphaToCoverageEnabled"));
 
     /**
      * Offset for field:

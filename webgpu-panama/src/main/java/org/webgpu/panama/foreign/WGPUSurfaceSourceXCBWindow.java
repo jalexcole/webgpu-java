@@ -53,7 +53,7 @@ public class WGPUSurfaceSourceXCBWindow {
         return chain$LAYOUT;
     }
 
-    private static final long chain$OFFSET = 0;
+    private static final long chain$OFFSET = $LAYOUT.byteOffset(groupElement("chain"));
 
     /**
      * Offset for field:
@@ -97,7 +97,7 @@ public class WGPUSurfaceSourceXCBWindow {
         return connection$LAYOUT;
     }
 
-    private static final long connection$OFFSET = 16;
+    private static final long connection$OFFSET = $LAYOUT.byteOffset(groupElement("connection"));
 
     /**
      * Offset for field:
@@ -141,7 +141,7 @@ public class WGPUSurfaceSourceXCBWindow {
         return window$LAYOUT;
     }
 
-    private static final long window$OFFSET = 24;
+    private static final long window$OFFSET = $LAYOUT.byteOffset(groupElement("window"));
 
     /**
      * Offset for field:

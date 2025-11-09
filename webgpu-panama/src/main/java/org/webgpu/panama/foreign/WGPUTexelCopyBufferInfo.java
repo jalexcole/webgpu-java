@@ -50,7 +50,7 @@ public class WGPUTexelCopyBufferInfo {
         return layout$LAYOUT;
     }
 
-    private static final long layout$OFFSET = 0;
+    private static final long layout$OFFSET = $LAYOUT.byteOffset(groupElement("layout"));
 
     /**
      * Offset for field:
@@ -94,7 +94,7 @@ public class WGPUTexelCopyBufferInfo {
         return buffer$LAYOUT;
     }
 
-    private static final long buffer$OFFSET = 16;
+    private static final long buffer$OFFSET = $LAYOUT.byteOffset(groupElement("buffer"));
 
     /**
      * Offset for field:

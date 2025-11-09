@@ -11,7 +11,7 @@ import org.webgpu.api.Sampler;
 import org.webgpu.util.StringView;
 
 public record SamplerImpl(MemorySegment ptr) implements Sampler {
-
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(SamplerImpl.class);
     @Override
     public void setLabel(String label) {
 

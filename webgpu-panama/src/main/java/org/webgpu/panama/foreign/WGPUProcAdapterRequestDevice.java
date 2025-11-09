@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef WGPUFuture (*WGPUProcAdapterRequestDevice)(WGPUAdapter, const WGPUDeviceDescriptor *, WGPURequestDeviceCallbackInfo)
  * }
  */
-public class WGPUProcAdapterRequestDevice {
+public final class WGPUProcAdapterRequestDevice {
 
-    WGPUProcAdapterRequestDevice() {
+    private WGPUProcAdapterRequestDevice() {
         // Should not be called directly
     }
 
@@ -59,9 +59,11 @@ public class WGPUProcAdapterRequestDevice {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static MemorySegment invoke(MemorySegment funcPtr, SegmentAllocator alloc,MemorySegment adapter, MemorySegment descriptor, MemorySegment callbackInfo) {
+    public static MemorySegment invoke(MemorySegment funcPtr, SegmentAllocator alloc, MemorySegment adapter, MemorySegment descriptor, MemorySegment callbackInfo) {
         try {
             return (MemorySegment) DOWN$MH.invokeExact(funcPtr, alloc, adapter, descriptor, callbackInfo);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

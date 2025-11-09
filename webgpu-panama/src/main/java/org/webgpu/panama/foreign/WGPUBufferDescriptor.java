@@ -57,7 +57,7 @@ public class WGPUBufferDescriptor {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -101,7 +101,7 @@ public class WGPUBufferDescriptor {
         return label$LAYOUT;
     }
 
-    private static final long label$OFFSET = 8;
+    private static final long label$OFFSET = $LAYOUT.byteOffset(groupElement("label"));
 
     /**
      * Offset for field:
@@ -145,7 +145,7 @@ public class WGPUBufferDescriptor {
         return usage$LAYOUT;
     }
 
-    private static final long usage$OFFSET = 24;
+    private static final long usage$OFFSET = $LAYOUT.byteOffset(groupElement("usage"));
 
     /**
      * Offset for field:
@@ -189,7 +189,7 @@ public class WGPUBufferDescriptor {
         return size$LAYOUT;
     }
 
-    private static final long size$OFFSET = 32;
+    private static final long size$OFFSET = $LAYOUT.byteOffset(groupElement("size"));
 
     /**
      * Offset for field:
@@ -233,7 +233,7 @@ public class WGPUBufferDescriptor {
         return mappedAtCreation$LAYOUT;
     }
 
-    private static final long mappedAtCreation$OFFSET = 40;
+    private static final long mappedAtCreation$OFFSET = $LAYOUT.byteOffset(groupElement("mappedAtCreation"));
 
     /**
      * Offset for field:

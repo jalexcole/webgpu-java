@@ -56,7 +56,7 @@ public class WGPUBindGroupDescriptor {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -100,7 +100,7 @@ public class WGPUBindGroupDescriptor {
         return label$LAYOUT;
     }
 
-    private static final long label$OFFSET = 8;
+    private static final long label$OFFSET = $LAYOUT.byteOffset(groupElement("label"));
 
     /**
      * Offset for field:
@@ -144,7 +144,7 @@ public class WGPUBindGroupDescriptor {
         return layout$LAYOUT;
     }
 
-    private static final long layout$OFFSET = 24;
+    private static final long layout$OFFSET = $LAYOUT.byteOffset(groupElement("layout"));
 
     /**
      * Offset for field:
@@ -188,7 +188,7 @@ public class WGPUBindGroupDescriptor {
         return entryCount$LAYOUT;
     }
 
-    private static final long entryCount$OFFSET = 32;
+    private static final long entryCount$OFFSET = $LAYOUT.byteOffset(groupElement("entryCount"));
 
     /**
      * Offset for field:
@@ -232,7 +232,7 @@ public class WGPUBindGroupDescriptor {
         return entries$LAYOUT;
     }
 
-    private static final long entries$OFFSET = 40;
+    private static final long entries$OFFSET = $LAYOUT.byteOffset(groupElement("entries"));
 
     /**
      * Offset for field:

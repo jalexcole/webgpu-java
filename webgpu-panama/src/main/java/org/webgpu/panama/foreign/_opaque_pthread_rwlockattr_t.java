@@ -50,7 +50,7 @@ public class _opaque_pthread_rwlockattr_t {
         return __sig$LAYOUT;
     }
 
-    private static final long __sig$OFFSET = 0;
+    private static final long __sig$OFFSET = $LAYOUT.byteOffset(groupElement("__sig"));
 
     /**
      * Offset for field:
@@ -94,7 +94,7 @@ public class _opaque_pthread_rwlockattr_t {
         return __opaque$LAYOUT;
     }
 
-    private static final long __opaque$OFFSET = 8;
+    private static final long __opaque$OFFSET = $LAYOUT.byteOffset(groupElement("__opaque"));
 
     /**
      * Offset for field:

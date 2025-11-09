@@ -52,7 +52,7 @@ public class WGPUSurfaceSourceWaylandSurface {
         return chain$LAYOUT;
     }
 
-    private static final long chain$OFFSET = 0;
+    private static final long chain$OFFSET = $LAYOUT.byteOffset(groupElement("chain"));
 
     /**
      * Offset for field:
@@ -96,7 +96,7 @@ public class WGPUSurfaceSourceWaylandSurface {
         return display$LAYOUT;
     }
 
-    private static final long display$OFFSET = 16;
+    private static final long display$OFFSET = $LAYOUT.byteOffset(groupElement("display"));
 
     /**
      * Offset for field:
@@ -140,7 +140,7 @@ public class WGPUSurfaceSourceWaylandSurface {
         return surface$LAYOUT;
     }
 
-    private static final long surface$OFFSET = 24;
+    private static final long surface$OFFSET = $LAYOUT.byteOffset(groupElement("surface"));
 
     /**
      * Offset for field:

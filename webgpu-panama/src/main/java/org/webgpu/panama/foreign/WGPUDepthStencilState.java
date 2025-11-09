@@ -68,7 +68,7 @@ public class WGPUDepthStencilState {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -112,7 +112,7 @@ public class WGPUDepthStencilState {
         return format$LAYOUT;
     }
 
-    private static final long format$OFFSET = 8;
+    private static final long format$OFFSET = $LAYOUT.byteOffset(groupElement("format"));
 
     /**
      * Offset for field:
@@ -156,7 +156,7 @@ public class WGPUDepthStencilState {
         return depthWriteEnabled$LAYOUT;
     }
 
-    private static final long depthWriteEnabled$OFFSET = 12;
+    private static final long depthWriteEnabled$OFFSET = $LAYOUT.byteOffset(groupElement("depthWriteEnabled"));
 
     /**
      * Offset for field:
@@ -200,7 +200,7 @@ public class WGPUDepthStencilState {
         return depthCompare$LAYOUT;
     }
 
-    private static final long depthCompare$OFFSET = 16;
+    private static final long depthCompare$OFFSET = $LAYOUT.byteOffset(groupElement("depthCompare"));
 
     /**
      * Offset for field:
@@ -244,7 +244,7 @@ public class WGPUDepthStencilState {
         return stencilFront$LAYOUT;
     }
 
-    private static final long stencilFront$OFFSET = 20;
+    private static final long stencilFront$OFFSET = $LAYOUT.byteOffset(groupElement("stencilFront"));
 
     /**
      * Offset for field:
@@ -288,7 +288,7 @@ public class WGPUDepthStencilState {
         return stencilBack$LAYOUT;
     }
 
-    private static final long stencilBack$OFFSET = 36;
+    private static final long stencilBack$OFFSET = $LAYOUT.byteOffset(groupElement("stencilBack"));
 
     /**
      * Offset for field:
@@ -332,7 +332,7 @@ public class WGPUDepthStencilState {
         return stencilReadMask$LAYOUT;
     }
 
-    private static final long stencilReadMask$OFFSET = 52;
+    private static final long stencilReadMask$OFFSET = $LAYOUT.byteOffset(groupElement("stencilReadMask"));
 
     /**
      * Offset for field:
@@ -376,7 +376,7 @@ public class WGPUDepthStencilState {
         return stencilWriteMask$LAYOUT;
     }
 
-    private static final long stencilWriteMask$OFFSET = 56;
+    private static final long stencilWriteMask$OFFSET = $LAYOUT.byteOffset(groupElement("stencilWriteMask"));
 
     /**
      * Offset for field:
@@ -420,7 +420,7 @@ public class WGPUDepthStencilState {
         return depthBias$LAYOUT;
     }
 
-    private static final long depthBias$OFFSET = 60;
+    private static final long depthBias$OFFSET = $LAYOUT.byteOffset(groupElement("depthBias"));
 
     /**
      * Offset for field:
@@ -464,7 +464,7 @@ public class WGPUDepthStencilState {
         return depthBiasSlopeScale$LAYOUT;
     }
 
-    private static final long depthBiasSlopeScale$OFFSET = 64;
+    private static final long depthBiasSlopeScale$OFFSET = $LAYOUT.byteOffset(groupElement("depthBiasSlopeScale"));
 
     /**
      * Offset for field:
@@ -508,7 +508,7 @@ public class WGPUDepthStencilState {
         return depthBiasClamp$LAYOUT;
     }
 
-    private static final long depthBiasClamp$OFFSET = 68;
+    private static final long depthBiasClamp$OFFSET = $LAYOUT.byteOffset(groupElement("depthBiasClamp"));
 
     /**
      * Offset for field:

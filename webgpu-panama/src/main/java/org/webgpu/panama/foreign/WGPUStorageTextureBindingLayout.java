@@ -55,7 +55,7 @@ public class WGPUStorageTextureBindingLayout {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -99,7 +99,7 @@ public class WGPUStorageTextureBindingLayout {
         return access$LAYOUT;
     }
 
-    private static final long access$OFFSET = 8;
+    private static final long access$OFFSET = $LAYOUT.byteOffset(groupElement("access"));
 
     /**
      * Offset for field:
@@ -143,7 +143,7 @@ public class WGPUStorageTextureBindingLayout {
         return format$LAYOUT;
     }
 
-    private static final long format$OFFSET = 12;
+    private static final long format$OFFSET = $LAYOUT.byteOffset(groupElement("format"));
 
     /**
      * Offset for field:
@@ -187,7 +187,7 @@ public class WGPUStorageTextureBindingLayout {
         return viewDimension$LAYOUT;
     }
 
-    private static final long viewDimension$OFFSET = 16;
+    private static final long viewDimension$OFFSET = $LAYOUT.byteOffset(groupElement("viewDimension"));
 
     /**
      * Offset for field:

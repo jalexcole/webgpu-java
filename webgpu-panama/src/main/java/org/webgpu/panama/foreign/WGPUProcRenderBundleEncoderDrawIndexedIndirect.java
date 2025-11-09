@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcRenderBundleEncoderDrawIndexedIndirect)(WGPURenderBundleEncoder, WGPUBuffer, uint64_t)
  * }
  */
-public class WGPUProcRenderBundleEncoderDrawIndexedIndirect {
+public final class WGPUProcRenderBundleEncoderDrawIndexedIndirect {
 
-    WGPUProcRenderBundleEncoderDrawIndexedIndirect() {
+    private WGPUProcRenderBundleEncoderDrawIndexedIndirect() {
         // Should not be called directly
     }
 
@@ -58,9 +58,11 @@ public class WGPUProcRenderBundleEncoderDrawIndexedIndirect {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment renderBundleEncoder, MemorySegment indirectBuffer, long indirectOffset) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment renderBundleEncoder, MemorySegment indirectBuffer, long indirectOffset) {
         try {
              DOWN$MH.invokeExact(funcPtr, renderBundleEncoder, indirectBuffer, indirectOffset);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

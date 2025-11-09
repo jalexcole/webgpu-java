@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcComputePassEncoderDispatchWorkgroupsIndirect)(WGPUComputePassEncoder, WGPUBuffer, uint64_t)
  * }
  */
-public class WGPUProcComputePassEncoderDispatchWorkgroupsIndirect {
+public final class WGPUProcComputePassEncoderDispatchWorkgroupsIndirect {
 
-    WGPUProcComputePassEncoderDispatchWorkgroupsIndirect() {
+    private WGPUProcComputePassEncoderDispatchWorkgroupsIndirect() {
         // Should not be called directly
     }
 
@@ -58,9 +58,11 @@ public class WGPUProcComputePassEncoderDispatchWorkgroupsIndirect {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment computePassEncoder, MemorySegment indirectBuffer, long indirectOffset) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment computePassEncoder, MemorySegment indirectBuffer, long indirectOffset) {
         try {
              DOWN$MH.invokeExact(funcPtr, computePassEncoder, indirectBuffer, indirectOffset);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

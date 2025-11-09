@@ -50,7 +50,7 @@ public class WGPUShaderDefine {
         return name$LAYOUT;
     }
 
-    private static final long name$OFFSET = 0;
+    private static final long name$OFFSET = $LAYOUT.byteOffset(groupElement("name"));
 
     /**
      * Offset for field:
@@ -94,7 +94,7 @@ public class WGPUShaderDefine {
         return value$LAYOUT;
     }
 
-    private static final long value$OFFSET = 16;
+    private static final long value$OFFSET = $LAYOUT.byteOffset(groupElement("value"));
 
     /**
      * Offset for field:

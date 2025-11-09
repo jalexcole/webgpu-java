@@ -53,7 +53,7 @@ public class WGPUShaderSourceSPIRV {
         return chain$LAYOUT;
     }
 
-    private static final long chain$OFFSET = 0;
+    private static final long chain$OFFSET = $LAYOUT.byteOffset(groupElement("chain"));
 
     /**
      * Offset for field:
@@ -97,7 +97,7 @@ public class WGPUShaderSourceSPIRV {
         return codeSize$LAYOUT;
     }
 
-    private static final long codeSize$OFFSET = 16;
+    private static final long codeSize$OFFSET = $LAYOUT.byteOffset(groupElement("codeSize"));
 
     /**
      * Offset for field:
@@ -141,7 +141,7 @@ public class WGPUShaderSourceSPIRV {
         return code$LAYOUT;
     }
 
-    private static final long code$OFFSET = 24;
+    private static final long code$OFFSET = $LAYOUT.byteOffset(groupElement("code"));
 
     /**
      * Offset for field:

@@ -52,7 +52,7 @@ public class WGPUQuerySetDescriptorExtras {
         return chain$LAYOUT;
     }
 
-    private static final long chain$OFFSET = 0;
+    private static final long chain$OFFSET = $LAYOUT.byteOffset(groupElement("chain"));
 
     /**
      * Offset for field:
@@ -96,7 +96,7 @@ public class WGPUQuerySetDescriptorExtras {
         return pipelineStatistics$LAYOUT;
     }
 
-    private static final long pipelineStatistics$OFFSET = 16;
+    private static final long pipelineStatistics$OFFSET = $LAYOUT.byteOffset(groupElement("pipelineStatistics"));
 
     /**
      * Offset for field:
@@ -140,7 +140,7 @@ public class WGPUQuerySetDescriptorExtras {
         return pipelineStatisticCount$LAYOUT;
     }
 
-    private static final long pipelineStatisticCount$OFFSET = 24;
+    private static final long pipelineStatisticCount$OFFSET = $LAYOUT.byteOffset(groupElement("pipelineStatisticCount"));
 
     /**
      * Offset for field:

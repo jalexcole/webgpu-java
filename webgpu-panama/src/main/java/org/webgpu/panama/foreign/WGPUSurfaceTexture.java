@@ -53,7 +53,7 @@ public class WGPUSurfaceTexture {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -97,7 +97,7 @@ public class WGPUSurfaceTexture {
         return texture$LAYOUT;
     }
 
-    private static final long texture$OFFSET = 8;
+    private static final long texture$OFFSET = $LAYOUT.byteOffset(groupElement("texture"));
 
     /**
      * Offset for field:
@@ -141,7 +141,7 @@ public class WGPUSurfaceTexture {
         return status$LAYOUT;
     }
 
-    private static final long status$OFFSET = 16;
+    private static final long status$OFFSET = $LAYOUT.byteOffset(groupElement("status"));
 
     /**
      * Offset for field:

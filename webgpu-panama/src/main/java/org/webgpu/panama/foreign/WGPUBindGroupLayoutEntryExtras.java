@@ -51,7 +51,7 @@ public class WGPUBindGroupLayoutEntryExtras {
         return chain$LAYOUT;
     }
 
-    private static final long chain$OFFSET = 0;
+    private static final long chain$OFFSET = $LAYOUT.byteOffset(groupElement("chain"));
 
     /**
      * Offset for field:
@@ -95,7 +95,7 @@ public class WGPUBindGroupLayoutEntryExtras {
         return count$LAYOUT;
     }
 
-    private static final long count$OFFSET = 16;
+    private static final long count$OFFSET = $LAYOUT.byteOffset(groupElement("count"));
 
     /**
      * Offset for field:

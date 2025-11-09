@@ -61,7 +61,7 @@ public class WGPUBindGroupEntry {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -105,7 +105,7 @@ public class WGPUBindGroupEntry {
         return binding$LAYOUT;
     }
 
-    private static final long binding$OFFSET = 8;
+    private static final long binding$OFFSET = $LAYOUT.byteOffset(groupElement("binding"));
 
     /**
      * Offset for field:
@@ -149,7 +149,7 @@ public class WGPUBindGroupEntry {
         return buffer$LAYOUT;
     }
 
-    private static final long buffer$OFFSET = 16;
+    private static final long buffer$OFFSET = $LAYOUT.byteOffset(groupElement("buffer"));
 
     /**
      * Offset for field:
@@ -193,7 +193,7 @@ public class WGPUBindGroupEntry {
         return offset$LAYOUT;
     }
 
-    private static final long offset$OFFSET = 24;
+    private static final long offset$OFFSET = $LAYOUT.byteOffset(groupElement("offset"));
 
     /**
      * Offset for field:
@@ -237,7 +237,7 @@ public class WGPUBindGroupEntry {
         return size$LAYOUT;
     }
 
-    private static final long size$OFFSET = 32;
+    private static final long size$OFFSET = $LAYOUT.byteOffset(groupElement("size"));
 
     /**
      * Offset for field:
@@ -281,7 +281,7 @@ public class WGPUBindGroupEntry {
         return sampler$LAYOUT;
     }
 
-    private static final long sampler$OFFSET = 40;
+    private static final long sampler$OFFSET = $LAYOUT.byteOffset(groupElement("sampler"));
 
     /**
      * Offset for field:
@@ -325,7 +325,7 @@ public class WGPUBindGroupEntry {
         return textureView$LAYOUT;
     }
 
-    private static final long textureView$OFFSET = 48;
+    private static final long textureView$OFFSET = $LAYOUT.byteOffset(groupElement("textureView"));
 
     /**
      * Offset for field:

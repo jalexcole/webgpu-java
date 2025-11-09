@@ -54,7 +54,7 @@ public class WGPUUncapturedErrorCallbackInfo {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -98,7 +98,7 @@ public class WGPUUncapturedErrorCallbackInfo {
         return callback$LAYOUT;
     }
 
-    private static final long callback$OFFSET = 8;
+    private static final long callback$OFFSET = $LAYOUT.byteOffset(groupElement("callback"));
 
     /**
      * Offset for field:
@@ -142,7 +142,7 @@ public class WGPUUncapturedErrorCallbackInfo {
         return userdata1$LAYOUT;
     }
 
-    private static final long userdata1$OFFSET = 16;
+    private static final long userdata1$OFFSET = $LAYOUT.byteOffset(groupElement("userdata1"));
 
     /**
      * Offset for field:
@@ -186,7 +186,7 @@ public class WGPUUncapturedErrorCallbackInfo {
         return userdata2$LAYOUT;
     }
 
-    private static final long userdata2$OFFSET = 24;
+    private static final long userdata2$OFFSET = $LAYOUT.byteOffset(groupElement("userdata2"));
 
     /**
      * Offset for field:

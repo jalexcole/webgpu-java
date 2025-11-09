@@ -52,7 +52,7 @@ public class WGPUTexelCopyBufferLayout {
         return offset$LAYOUT;
     }
 
-    private static final long offset$OFFSET = 0;
+    private static final long offset$OFFSET = $LAYOUT.byteOffset(groupElement("offset"));
 
     /**
      * Offset for field:
@@ -96,7 +96,7 @@ public class WGPUTexelCopyBufferLayout {
         return bytesPerRow$LAYOUT;
     }
 
-    private static final long bytesPerRow$OFFSET = 8;
+    private static final long bytesPerRow$OFFSET = $LAYOUT.byteOffset(groupElement("bytesPerRow"));
 
     /**
      * Offset for field:
@@ -140,7 +140,7 @@ public class WGPUTexelCopyBufferLayout {
         return rowsPerImage$LAYOUT;
     }
 
-    private static final long rowsPerImage$OFFSET = 12;
+    private static final long rowsPerImage$OFFSET = $LAYOUT.byteOffset(groupElement("rowsPerImage"));
 
     /**
      * Offset for field:

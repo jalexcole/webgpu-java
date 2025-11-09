@@ -51,7 +51,7 @@ public class WGPUFutureWaitInfo {
         return future$LAYOUT;
     }
 
-    private static final long future$OFFSET = 0;
+    private static final long future$OFFSET = $LAYOUT.byteOffset(groupElement("future"));
 
     /**
      * Offset for field:
@@ -95,7 +95,7 @@ public class WGPUFutureWaitInfo {
         return completed$LAYOUT;
     }
 
-    private static final long completed$OFFSET = 8;
+    private static final long completed$OFFSET = $LAYOUT.byteOffset(groupElement("completed"));
 
     /**
      * Offset for field:

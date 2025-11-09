@@ -50,7 +50,7 @@ public class WGPUBlendState {
         return color$LAYOUT;
     }
 
-    private static final long color$OFFSET = 0;
+    private static final long color$OFFSET = $LAYOUT.byteOffset(groupElement("color"));
 
     /**
      * Offset for field:
@@ -94,7 +94,7 @@ public class WGPUBlendState {
         return alpha$LAYOUT;
     }
 
-    private static final long alpha$OFFSET = 12;
+    private static final long alpha$OFFSET = $LAYOUT.byteOffset(groupElement("alpha"));
 
     /**
      * Offset for field:

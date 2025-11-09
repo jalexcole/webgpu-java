@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcCommandBufferRelease)(WGPUCommandBuffer)
  * }
  */
-public class WGPUProcCommandBufferRelease {
+public final class WGPUProcCommandBufferRelease {
 
-    WGPUProcCommandBufferRelease() {
+    private WGPUProcCommandBufferRelease() {
         // Should not be called directly
     }
 
@@ -56,9 +56,11 @@ public class WGPUProcCommandBufferRelease {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment commandBuffer) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment commandBuffer) {
         try {
              DOWN$MH.invokeExact(funcPtr, commandBuffer);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

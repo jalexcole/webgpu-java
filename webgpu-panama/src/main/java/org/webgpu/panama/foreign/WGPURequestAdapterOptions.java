@@ -58,7 +58,7 @@ public class WGPURequestAdapterOptions {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -102,7 +102,7 @@ public class WGPURequestAdapterOptions {
         return featureLevel$LAYOUT;
     }
 
-    private static final long featureLevel$OFFSET = 8;
+    private static final long featureLevel$OFFSET = $LAYOUT.byteOffset(groupElement("featureLevel"));
 
     /**
      * Offset for field:
@@ -146,7 +146,7 @@ public class WGPURequestAdapterOptions {
         return powerPreference$LAYOUT;
     }
 
-    private static final long powerPreference$OFFSET = 12;
+    private static final long powerPreference$OFFSET = $LAYOUT.byteOffset(groupElement("powerPreference"));
 
     /**
      * Offset for field:
@@ -190,7 +190,7 @@ public class WGPURequestAdapterOptions {
         return forceFallbackAdapter$LAYOUT;
     }
 
-    private static final long forceFallbackAdapter$OFFSET = 16;
+    private static final long forceFallbackAdapter$OFFSET = $LAYOUT.byteOffset(groupElement("forceFallbackAdapter"));
 
     /**
      * Offset for field:
@@ -234,7 +234,7 @@ public class WGPURequestAdapterOptions {
         return backendType$LAYOUT;
     }
 
-    private static final long backendType$OFFSET = 20;
+    private static final long backendType$OFFSET = $LAYOUT.byteOffset(groupElement("backendType"));
 
     /**
      * Offset for field:
@@ -278,7 +278,7 @@ public class WGPURequestAdapterOptions {
         return compatibleSurface$LAYOUT;
     }
 
-    private static final long compatibleSurface$OFFSET = 24;
+    private static final long compatibleSurface$OFFSET = $LAYOUT.byteOffset(groupElement("compatibleSurface"));
 
     /**
      * Offset for field:

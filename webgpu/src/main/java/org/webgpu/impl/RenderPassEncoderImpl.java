@@ -12,7 +12,7 @@ import org.webgpu.api.RenderPipeline;
 import org.webgpu.panama.foreign.webgpu_h;
 
 public record RenderPassEncoderImpl(MemorySegment ptr) implements RenderPassEncoder {
-
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(RenderPassEncoderImpl.class);
     @Override
     public void beginOcclusionQuery(int queryIndex) {
         webgpu_h.wgpuRenderPassEncoderBeginOcclusionQuery(ptr, queryIndex);

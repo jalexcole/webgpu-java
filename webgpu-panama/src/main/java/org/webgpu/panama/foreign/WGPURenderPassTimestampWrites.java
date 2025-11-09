@@ -52,7 +52,7 @@ public class WGPURenderPassTimestampWrites {
         return querySet$LAYOUT;
     }
 
-    private static final long querySet$OFFSET = 0;
+    private static final long querySet$OFFSET = $LAYOUT.byteOffset(groupElement("querySet"));
 
     /**
      * Offset for field:
@@ -96,7 +96,7 @@ public class WGPURenderPassTimestampWrites {
         return beginningOfPassWriteIndex$LAYOUT;
     }
 
-    private static final long beginningOfPassWriteIndex$OFFSET = 8;
+    private static final long beginningOfPassWriteIndex$OFFSET = $LAYOUT.byteOffset(groupElement("beginningOfPassWriteIndex"));
 
     /**
      * Offset for field:
@@ -140,7 +140,7 @@ public class WGPURenderPassTimestampWrites {
         return endOfPassWriteIndex$LAYOUT;
     }
 
-    private static final long endOfPassWriteIndex$OFFSET = 12;
+    private static final long endOfPassWriteIndex$OFFSET = $LAYOUT.byteOffset(groupElement("endOfPassWriteIndex"));
 
     /**
      * Offset for field:

@@ -51,7 +51,7 @@ public class WGPUSurfaceConfigurationExtras {
         return chain$LAYOUT;
     }
 
-    private static final long chain$OFFSET = 0;
+    private static final long chain$OFFSET = $LAYOUT.byteOffset(groupElement("chain"));
 
     /**
      * Offset for field:
@@ -95,7 +95,7 @@ public class WGPUSurfaceConfigurationExtras {
         return desiredMaximumFrameLatency$LAYOUT;
     }
 
-    private static final long desiredMaximumFrameLatency$OFFSET = 16;
+    private static final long desiredMaximumFrameLatency$OFFSET = $LAYOUT.byteOffset(groupElement("desiredMaximumFrameLatency"));
 
     /**
      * Offset for field:

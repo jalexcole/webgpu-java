@@ -50,7 +50,7 @@ public class WGPUDeviceExtras {
         return chain$LAYOUT;
     }
 
-    private static final long chain$OFFSET = 0;
+    private static final long chain$OFFSET = $LAYOUT.byteOffset(groupElement("chain"));
 
     /**
      * Offset for field:
@@ -94,7 +94,7 @@ public class WGPUDeviceExtras {
         return tracePath$LAYOUT;
     }
 
-    private static final long tracePath$OFFSET = 16;
+    private static final long tracePath$OFFSET = $LAYOUT.byteOffset(groupElement("tracePath"));
 
     /**
      * Offset for field:

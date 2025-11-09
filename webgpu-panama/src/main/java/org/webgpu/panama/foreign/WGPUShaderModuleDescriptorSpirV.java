@@ -53,7 +53,7 @@ public class WGPUShaderModuleDescriptorSpirV {
         return label$LAYOUT;
     }
 
-    private static final long label$OFFSET = 0;
+    private static final long label$OFFSET = $LAYOUT.byteOffset(groupElement("label"));
 
     /**
      * Offset for field:
@@ -97,7 +97,7 @@ public class WGPUShaderModuleDescriptorSpirV {
         return sourceSize$LAYOUT;
     }
 
-    private static final long sourceSize$OFFSET = 16;
+    private static final long sourceSize$OFFSET = $LAYOUT.byteOffset(groupElement("sourceSize"));
 
     /**
      * Offset for field:
@@ -141,7 +141,7 @@ public class WGPUShaderModuleDescriptorSpirV {
         return source$LAYOUT;
     }
 
-    private static final long source$OFFSET = 24;
+    private static final long source$OFFSET = $LAYOUT.byteOffset(groupElement("source"));
 
     /**
      * Offset for field:

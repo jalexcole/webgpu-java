@@ -67,7 +67,7 @@ public class WGPUTextureDescriptor {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -111,7 +111,7 @@ public class WGPUTextureDescriptor {
         return label$LAYOUT;
     }
 
-    private static final long label$OFFSET = 8;
+    private static final long label$OFFSET = $LAYOUT.byteOffset(groupElement("label"));
 
     /**
      * Offset for field:
@@ -155,7 +155,7 @@ public class WGPUTextureDescriptor {
         return usage$LAYOUT;
     }
 
-    private static final long usage$OFFSET = 24;
+    private static final long usage$OFFSET = $LAYOUT.byteOffset(groupElement("usage"));
 
     /**
      * Offset for field:
@@ -199,7 +199,7 @@ public class WGPUTextureDescriptor {
         return dimension$LAYOUT;
     }
 
-    private static final long dimension$OFFSET = 32;
+    private static final long dimension$OFFSET = $LAYOUT.byteOffset(groupElement("dimension"));
 
     /**
      * Offset for field:
@@ -243,7 +243,7 @@ public class WGPUTextureDescriptor {
         return size$LAYOUT;
     }
 
-    private static final long size$OFFSET = 36;
+    private static final long size$OFFSET = $LAYOUT.byteOffset(groupElement("size"));
 
     /**
      * Offset for field:
@@ -287,7 +287,7 @@ public class WGPUTextureDescriptor {
         return format$LAYOUT;
     }
 
-    private static final long format$OFFSET = 48;
+    private static final long format$OFFSET = $LAYOUT.byteOffset(groupElement("format"));
 
     /**
      * Offset for field:
@@ -331,7 +331,7 @@ public class WGPUTextureDescriptor {
         return mipLevelCount$LAYOUT;
     }
 
-    private static final long mipLevelCount$OFFSET = 52;
+    private static final long mipLevelCount$OFFSET = $LAYOUT.byteOffset(groupElement("mipLevelCount"));
 
     /**
      * Offset for field:
@@ -375,7 +375,7 @@ public class WGPUTextureDescriptor {
         return sampleCount$LAYOUT;
     }
 
-    private static final long sampleCount$OFFSET = 56;
+    private static final long sampleCount$OFFSET = $LAYOUT.byteOffset(groupElement("sampleCount"));
 
     /**
      * Offset for field:
@@ -419,7 +419,7 @@ public class WGPUTextureDescriptor {
         return viewFormatCount$LAYOUT;
     }
 
-    private static final long viewFormatCount$OFFSET = 64;
+    private static final long viewFormatCount$OFFSET = $LAYOUT.byteOffset(groupElement("viewFormatCount"));
 
     /**
      * Offset for field:
@@ -463,7 +463,7 @@ public class WGPUTextureDescriptor {
         return viewFormats$LAYOUT;
     }
 
-    private static final long viewFormats$OFFSET = 72;
+    private static final long viewFormats$OFFSET = $LAYOUT.byteOffset(groupElement("viewFormats"));
 
     /**
      * Offset for field:

@@ -56,7 +56,7 @@ public class WGPUProgrammableStageDescriptor {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -100,7 +100,7 @@ public class WGPUProgrammableStageDescriptor {
         return module$LAYOUT;
     }
 
-    private static final long module$OFFSET = 8;
+    private static final long module$OFFSET = $LAYOUT.byteOffset(groupElement("module"));
 
     /**
      * Offset for field:
@@ -144,7 +144,7 @@ public class WGPUProgrammableStageDescriptor {
         return entryPoint$LAYOUT;
     }
 
-    private static final long entryPoint$OFFSET = 16;
+    private static final long entryPoint$OFFSET = $LAYOUT.byteOffset(groupElement("entryPoint"));
 
     /**
      * Offset for field:
@@ -188,7 +188,7 @@ public class WGPUProgrammableStageDescriptor {
         return constantCount$LAYOUT;
     }
 
-    private static final long constantCount$OFFSET = 32;
+    private static final long constantCount$OFFSET = $LAYOUT.byteOffset(groupElement("constantCount"));
 
     /**
      * Offset for field:
@@ -232,7 +232,7 @@ public class WGPUProgrammableStageDescriptor {
         return constants$LAYOUT;
     }
 
-    private static final long constants$OFFSET = 40;
+    private static final long constants$OFFSET = $LAYOUT.byteOffset(groupElement("constants"));
 
     /**
      * Offset for field:

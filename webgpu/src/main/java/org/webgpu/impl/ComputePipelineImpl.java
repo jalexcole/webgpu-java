@@ -9,7 +9,7 @@ import org.webgpu.panama.foreign.webgpu_h;
 import org.webgpu.util.StringView;
 
 public record ComputePipelineImpl(MemorySegment ptr) implements ComputePipeline {
-
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(ComputePipelineImpl.class);
     @Override
     public BindGroupLayout getBindGroupLayout(int groupIndex) {
         final var bindGroupLayoutPtr = webgpu_h.wgpuComputePipelineGetBindGroupLayout(ptr, groupIndex);

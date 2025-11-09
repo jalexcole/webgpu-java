@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef WGPUStatus (*WGPUProcAdapterGetLimits)(WGPUAdapter, WGPULimits *)
  * }
  */
-public class WGPUProcAdapterGetLimits {
+public final class WGPUProcAdapterGetLimits {
 
-    WGPUProcAdapterGetLimits() {
+    private WGPUProcAdapterGetLimits() {
         // Should not be called directly
     }
 
@@ -58,9 +58,11 @@ public class WGPUProcAdapterGetLimits {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static int invoke(MemorySegment funcPtr,MemorySegment adapter, MemorySegment limits) {
+    public static int invoke(MemorySegment funcPtr, MemorySegment adapter, MemorySegment limits) {
         try {
             return (int) DOWN$MH.invokeExact(funcPtr, adapter, limits);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

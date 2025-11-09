@@ -71,7 +71,7 @@ public class WGPUSamplerDescriptor {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -115,7 +115,7 @@ public class WGPUSamplerDescriptor {
         return label$LAYOUT;
     }
 
-    private static final long label$OFFSET = 8;
+    private static final long label$OFFSET = $LAYOUT.byteOffset(groupElement("label"));
 
     /**
      * Offset for field:
@@ -159,7 +159,7 @@ public class WGPUSamplerDescriptor {
         return addressModeU$LAYOUT;
     }
 
-    private static final long addressModeU$OFFSET = 24;
+    private static final long addressModeU$OFFSET = $LAYOUT.byteOffset(groupElement("addressModeU"));
 
     /**
      * Offset for field:
@@ -203,7 +203,7 @@ public class WGPUSamplerDescriptor {
         return addressModeV$LAYOUT;
     }
 
-    private static final long addressModeV$OFFSET = 28;
+    private static final long addressModeV$OFFSET = $LAYOUT.byteOffset(groupElement("addressModeV"));
 
     /**
      * Offset for field:
@@ -247,7 +247,7 @@ public class WGPUSamplerDescriptor {
         return addressModeW$LAYOUT;
     }
 
-    private static final long addressModeW$OFFSET = 32;
+    private static final long addressModeW$OFFSET = $LAYOUT.byteOffset(groupElement("addressModeW"));
 
     /**
      * Offset for field:
@@ -291,7 +291,7 @@ public class WGPUSamplerDescriptor {
         return magFilter$LAYOUT;
     }
 
-    private static final long magFilter$OFFSET = 36;
+    private static final long magFilter$OFFSET = $LAYOUT.byteOffset(groupElement("magFilter"));
 
     /**
      * Offset for field:
@@ -335,7 +335,7 @@ public class WGPUSamplerDescriptor {
         return minFilter$LAYOUT;
     }
 
-    private static final long minFilter$OFFSET = 40;
+    private static final long minFilter$OFFSET = $LAYOUT.byteOffset(groupElement("minFilter"));
 
     /**
      * Offset for field:
@@ -379,7 +379,7 @@ public class WGPUSamplerDescriptor {
         return mipmapFilter$LAYOUT;
     }
 
-    private static final long mipmapFilter$OFFSET = 44;
+    private static final long mipmapFilter$OFFSET = $LAYOUT.byteOffset(groupElement("mipmapFilter"));
 
     /**
      * Offset for field:
@@ -423,7 +423,7 @@ public class WGPUSamplerDescriptor {
         return lodMinClamp$LAYOUT;
     }
 
-    private static final long lodMinClamp$OFFSET = 48;
+    private static final long lodMinClamp$OFFSET = $LAYOUT.byteOffset(groupElement("lodMinClamp"));
 
     /**
      * Offset for field:
@@ -467,7 +467,7 @@ public class WGPUSamplerDescriptor {
         return lodMaxClamp$LAYOUT;
     }
 
-    private static final long lodMaxClamp$OFFSET = 52;
+    private static final long lodMaxClamp$OFFSET = $LAYOUT.byteOffset(groupElement("lodMaxClamp"));
 
     /**
      * Offset for field:
@@ -511,7 +511,7 @@ public class WGPUSamplerDescriptor {
         return compare$LAYOUT;
     }
 
-    private static final long compare$OFFSET = 56;
+    private static final long compare$OFFSET = $LAYOUT.byteOffset(groupElement("compare"));
 
     /**
      * Offset for field:
@@ -555,7 +555,7 @@ public class WGPUSamplerDescriptor {
         return maxAnisotropy$LAYOUT;
     }
 
-    private static final long maxAnisotropy$OFFSET = 60;
+    private static final long maxAnisotropy$OFFSET = $LAYOUT.byteOffset(groupElement("maxAnisotropy"));
 
     /**
      * Offset for field:

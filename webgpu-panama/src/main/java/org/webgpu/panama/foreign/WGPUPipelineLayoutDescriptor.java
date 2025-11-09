@@ -54,7 +54,7 @@ public class WGPUPipelineLayoutDescriptor {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -98,7 +98,7 @@ public class WGPUPipelineLayoutDescriptor {
         return label$LAYOUT;
     }
 
-    private static final long label$OFFSET = 8;
+    private static final long label$OFFSET = $LAYOUT.byteOffset(groupElement("label"));
 
     /**
      * Offset for field:
@@ -142,7 +142,7 @@ public class WGPUPipelineLayoutDescriptor {
         return bindGroupLayoutCount$LAYOUT;
     }
 
-    private static final long bindGroupLayoutCount$OFFSET = 24;
+    private static final long bindGroupLayoutCount$OFFSET = $LAYOUT.byteOffset(groupElement("bindGroupLayoutCount"));
 
     /**
      * Offset for field:
@@ -186,7 +186,7 @@ public class WGPUPipelineLayoutDescriptor {
         return bindGroupLayouts$LAYOUT;
     }
 
-    private static final long bindGroupLayouts$OFFSET = 32;
+    private static final long bindGroupLayouts$OFFSET = $LAYOUT.byteOffset(groupElement("bindGroupLayouts"));
 
     /**
      * Offset for field:

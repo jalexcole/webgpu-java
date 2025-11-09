@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef WGPUBufferUsage (*WGPUProcBufferGetUsage)(WGPUBuffer)
  * }
  */
-public class WGPUProcBufferGetUsage {
+public final class WGPUProcBufferGetUsage {
 
-    WGPUProcBufferGetUsage() {
+    private WGPUProcBufferGetUsage() {
         // Should not be called directly
     }
 
@@ -57,9 +57,11 @@ public class WGPUProcBufferGetUsage {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static long invoke(MemorySegment funcPtr,MemorySegment buffer) {
+    public static long invoke(MemorySegment funcPtr, MemorySegment buffer) {
         try {
             return (long) DOWN$MH.invokeExact(funcPtr, buffer);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

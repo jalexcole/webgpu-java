@@ -12,63 +12,18 @@ import java.util.stream.*;
 import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
-public class webgpu_h {
+public class webgpu_h extends webgpu_h$shared {
 
     webgpu_h() {
         // Should not be called directly
     }
 
     static final Arena LIBRARY_ARENA = Arena.ofAuto();
-    static final boolean TRACE_DOWNCALLS = Boolean.getBoolean("jextract.trace.downcalls");
-
-    static void traceDowncall(String name, Object... args) {
-         String traceArgs = Arrays.stream(args)
-                       .map(Object::toString)
-                       .collect(Collectors.joining(", "));
-         System.out.printf("%s(%s)\n", name, traceArgs);
-    }
-
-    static MemorySegment findOrThrow(String symbol) {
-        return SYMBOL_LOOKUP.find(symbol)
-            .orElseThrow(() -> new UnsatisfiedLinkError("unresolved symbol: " + symbol));
-    }
-
-    static MethodHandle upcallHandle(Class<?> fi, String name, FunctionDescriptor fdesc) {
-        try {
-            return MethodHandles.lookup().findVirtual(fi, name, fdesc.toMethodType());
-        } catch (ReflectiveOperationException ex) {
-            throw new AssertionError(ex);
-        }
-    }
-
-    static MemoryLayout align(MemoryLayout layout, long align) {
-        return switch (layout) {
-            case PaddingLayout p -> p;
-            case ValueLayout v -> v.withByteAlignment(align);
-            case GroupLayout g -> {
-                MemoryLayout[] alignedMembers = g.memberLayouts().stream()
-                        .map(m -> align(m, align)).toArray(MemoryLayout[]::new);
-                yield g instanceof StructLayout ?
-                        MemoryLayout.structLayout(alignedMembers) : MemoryLayout.unionLayout(alignedMembers);
-            }
-            case SequenceLayout s -> MemoryLayout.sequenceLayout(s.elementCount(), align(s.elementLayout(), align));
-        };
-    }
 
     static final SymbolLookup SYMBOL_LOOKUP = SymbolLookup.libraryLookup(System.mapLibraryName("wgpu_native"), LIBRARY_ARENA)
             .or(SymbolLookup.loaderLookup())
             .or(Linker.nativeLinker().defaultLookup());
 
-    public static final ValueLayout.OfBoolean C_BOOL = ValueLayout.JAVA_BOOLEAN;
-    public static final ValueLayout.OfByte C_CHAR = ValueLayout.JAVA_BYTE;
-    public static final ValueLayout.OfShort C_SHORT = ValueLayout.JAVA_SHORT;
-    public static final ValueLayout.OfInt C_INT = ValueLayout.JAVA_INT;
-    public static final ValueLayout.OfLong C_LONG_LONG = ValueLayout.JAVA_LONG;
-    public static final ValueLayout.OfFloat C_FLOAT = ValueLayout.JAVA_FLOAT;
-    public static final ValueLayout.OfDouble C_DOUBLE = ValueLayout.JAVA_DOUBLE;
-    public static final AddressLayout C_POINTER = ValueLayout.ADDRESS
-            .withTargetLayout(MemoryLayout.sequenceLayout(java.lang.Long.MAX_VALUE, JAVA_BYTE));
-    public static final ValueLayout.OfLong C_LONG = ValueLayout.JAVA_LONG;
     private static final int __WORDSIZE = (int)64L;
     /**
      * {@snippet lang=c :
@@ -4859,7 +4814,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuCreateInstance");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuCreateInstance");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -4906,6 +4861,8 @@ public class webgpu_h {
                 traceDowncall("wgpuCreateInstance", descriptor);
             }
             return (MemorySegment)mh$.invokeExact(descriptor);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -4917,7 +4874,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuGetInstanceCapabilities");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuGetInstanceCapabilities");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -4964,6 +4921,8 @@ public class webgpu_h {
                 traceDowncall("wgpuGetInstanceCapabilities", capabilities);
             }
             return (int)mh$.invokeExact(capabilities);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -4975,7 +4934,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuGetProcAddress");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuGetProcAddress");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -5022,6 +4981,8 @@ public class webgpu_h {
                 traceDowncall("wgpuGetProcAddress", procName);
             }
             return (MemorySegment)mh$.invokeExact(procName);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -5033,7 +4994,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuAdapterGetFeatures");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuAdapterGetFeatures");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -5080,6 +5041,8 @@ public class webgpu_h {
                 traceDowncall("wgpuAdapterGetFeatures", adapter, features);
             }
             mh$.invokeExact(adapter, features);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -5092,7 +5055,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuAdapterGetInfo");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuAdapterGetInfo");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -5139,6 +5102,8 @@ public class webgpu_h {
                 traceDowncall("wgpuAdapterGetInfo", adapter, info);
             }
             return (int)mh$.invokeExact(adapter, info);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -5151,7 +5116,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuAdapterGetLimits");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuAdapterGetLimits");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -5198,6 +5163,8 @@ public class webgpu_h {
                 traceDowncall("wgpuAdapterGetLimits", adapter, limits);
             }
             return (int)mh$.invokeExact(adapter, limits);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -5210,7 +5177,7 @@ public class webgpu_h {
             webgpu_h.C_INT
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuAdapterHasFeature");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuAdapterHasFeature");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -5257,6 +5224,8 @@ public class webgpu_h {
                 traceDowncall("wgpuAdapterHasFeature", adapter, feature);
             }
             return (int)mh$.invokeExact(adapter, feature);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -5270,7 +5239,7 @@ public class webgpu_h {
             WGPURequestDeviceCallbackInfo.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuAdapterRequestDevice");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuAdapterRequestDevice");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -5317,6 +5286,8 @@ public class webgpu_h {
                 traceDowncall("wgpuAdapterRequestDevice", allocator, adapter, descriptor, callbackInfo);
             }
             return (MemorySegment)mh$.invokeExact(allocator, adapter, descriptor, callbackInfo);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -5327,7 +5298,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuAdapterAddRef");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuAdapterAddRef");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -5374,6 +5345,8 @@ public class webgpu_h {
                 traceDowncall("wgpuAdapterAddRef", adapter);
             }
             mh$.invokeExact(adapter);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -5384,7 +5357,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuAdapterRelease");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuAdapterRelease");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -5431,6 +5404,8 @@ public class webgpu_h {
                 traceDowncall("wgpuAdapterRelease", adapter);
             }
             mh$.invokeExact(adapter);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -5441,7 +5416,7 @@ public class webgpu_h {
             WGPUAdapterInfo.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuAdapterInfoFreeMembers");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuAdapterInfoFreeMembers");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -5488,6 +5463,8 @@ public class webgpu_h {
                 traceDowncall("wgpuAdapterInfoFreeMembers", adapterInfo);
             }
             mh$.invokeExact(adapterInfo);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -5499,7 +5476,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuBindGroupSetLabel");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuBindGroupSetLabel");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -5546,6 +5523,8 @@ public class webgpu_h {
                 traceDowncall("wgpuBindGroupSetLabel", bindGroup, label);
             }
             mh$.invokeExact(bindGroup, label);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -5556,7 +5535,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuBindGroupAddRef");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuBindGroupAddRef");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -5603,6 +5582,8 @@ public class webgpu_h {
                 traceDowncall("wgpuBindGroupAddRef", bindGroup);
             }
             mh$.invokeExact(bindGroup);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -5613,7 +5594,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuBindGroupRelease");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuBindGroupRelease");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -5660,6 +5641,8 @@ public class webgpu_h {
                 traceDowncall("wgpuBindGroupRelease", bindGroup);
             }
             mh$.invokeExact(bindGroup);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -5671,7 +5654,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuBindGroupLayoutSetLabel");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuBindGroupLayoutSetLabel");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -5718,6 +5701,8 @@ public class webgpu_h {
                 traceDowncall("wgpuBindGroupLayoutSetLabel", bindGroupLayout, label);
             }
             mh$.invokeExact(bindGroupLayout, label);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -5728,7 +5713,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuBindGroupLayoutAddRef");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuBindGroupLayoutAddRef");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -5775,6 +5760,8 @@ public class webgpu_h {
                 traceDowncall("wgpuBindGroupLayoutAddRef", bindGroupLayout);
             }
             mh$.invokeExact(bindGroupLayout);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -5785,7 +5772,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuBindGroupLayoutRelease");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuBindGroupLayoutRelease");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -5832,6 +5819,8 @@ public class webgpu_h {
                 traceDowncall("wgpuBindGroupLayoutRelease", bindGroupLayout);
             }
             mh$.invokeExact(bindGroupLayout);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -5842,7 +5831,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuBufferDestroy");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuBufferDestroy");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -5889,6 +5878,8 @@ public class webgpu_h {
                 traceDowncall("wgpuBufferDestroy", buffer);
             }
             mh$.invokeExact(buffer);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -5902,7 +5893,7 @@ public class webgpu_h {
             webgpu_h.C_LONG
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuBufferGetConstMappedRange");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuBufferGetConstMappedRange");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -5949,6 +5940,8 @@ public class webgpu_h {
                 traceDowncall("wgpuBufferGetConstMappedRange", buffer, offset, size);
             }
             return (MemorySegment)mh$.invokeExact(buffer, offset, size);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -5960,7 +5953,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuBufferGetMapState");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuBufferGetMapState");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -6007,6 +6000,8 @@ public class webgpu_h {
                 traceDowncall("wgpuBufferGetMapState", buffer);
             }
             return (int)mh$.invokeExact(buffer);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -6020,7 +6015,7 @@ public class webgpu_h {
             webgpu_h.C_LONG
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuBufferGetMappedRange");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuBufferGetMappedRange");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -6067,6 +6062,8 @@ public class webgpu_h {
                 traceDowncall("wgpuBufferGetMappedRange", buffer, offset, size);
             }
             return (MemorySegment)mh$.invokeExact(buffer, offset, size);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -6078,7 +6075,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuBufferGetSize");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuBufferGetSize");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -6125,6 +6122,8 @@ public class webgpu_h {
                 traceDowncall("wgpuBufferGetSize", buffer);
             }
             return (long)mh$.invokeExact(buffer);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -6136,7 +6135,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuBufferGetUsage");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuBufferGetUsage");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -6183,6 +6182,8 @@ public class webgpu_h {
                 traceDowncall("wgpuBufferGetUsage", buffer);
             }
             return (long)mh$.invokeExact(buffer);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -6198,7 +6199,7 @@ public class webgpu_h {
             WGPUBufferMapCallbackInfo.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuBufferMapAsync");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuBufferMapAsync");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -6245,6 +6246,8 @@ public class webgpu_h {
                 traceDowncall("wgpuBufferMapAsync", allocator, buffer, mode, offset, size, callbackInfo);
             }
             return (MemorySegment)mh$.invokeExact(allocator, buffer, mode, offset, size, callbackInfo);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -6256,7 +6259,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuBufferSetLabel");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuBufferSetLabel");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -6303,6 +6306,8 @@ public class webgpu_h {
                 traceDowncall("wgpuBufferSetLabel", buffer, label);
             }
             mh$.invokeExact(buffer, label);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -6313,7 +6318,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuBufferUnmap");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuBufferUnmap");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -6360,6 +6365,8 @@ public class webgpu_h {
                 traceDowncall("wgpuBufferUnmap", buffer);
             }
             mh$.invokeExact(buffer);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -6370,7 +6377,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuBufferAddRef");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuBufferAddRef");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -6417,6 +6424,8 @@ public class webgpu_h {
                 traceDowncall("wgpuBufferAddRef", buffer);
             }
             mh$.invokeExact(buffer);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -6427,7 +6436,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuBufferRelease");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuBufferRelease");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -6474,6 +6483,8 @@ public class webgpu_h {
                 traceDowncall("wgpuBufferRelease", buffer);
             }
             mh$.invokeExact(buffer);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -6485,7 +6496,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuCommandBufferSetLabel");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuCommandBufferSetLabel");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -6532,6 +6543,8 @@ public class webgpu_h {
                 traceDowncall("wgpuCommandBufferSetLabel", commandBuffer, label);
             }
             mh$.invokeExact(commandBuffer, label);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -6542,7 +6555,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuCommandBufferAddRef");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuCommandBufferAddRef");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -6589,6 +6602,8 @@ public class webgpu_h {
                 traceDowncall("wgpuCommandBufferAddRef", commandBuffer);
             }
             mh$.invokeExact(commandBuffer);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -6599,7 +6614,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuCommandBufferRelease");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuCommandBufferRelease");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -6646,6 +6661,8 @@ public class webgpu_h {
                 traceDowncall("wgpuCommandBufferRelease", commandBuffer);
             }
             mh$.invokeExact(commandBuffer);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -6658,7 +6675,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuCommandEncoderBeginComputePass");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuCommandEncoderBeginComputePass");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -6705,6 +6722,8 @@ public class webgpu_h {
                 traceDowncall("wgpuCommandEncoderBeginComputePass", commandEncoder, descriptor);
             }
             return (MemorySegment)mh$.invokeExact(commandEncoder, descriptor);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -6717,7 +6736,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuCommandEncoderBeginRenderPass");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuCommandEncoderBeginRenderPass");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -6764,6 +6783,8 @@ public class webgpu_h {
                 traceDowncall("wgpuCommandEncoderBeginRenderPass", commandEncoder, descriptor);
             }
             return (MemorySegment)mh$.invokeExact(commandEncoder, descriptor);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -6777,7 +6798,7 @@ public class webgpu_h {
             webgpu_h.C_LONG_LONG
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuCommandEncoderClearBuffer");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuCommandEncoderClearBuffer");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -6824,6 +6845,8 @@ public class webgpu_h {
                 traceDowncall("wgpuCommandEncoderClearBuffer", commandEncoder, buffer, offset, size);
             }
             mh$.invokeExact(commandEncoder, buffer, offset, size);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -6839,7 +6862,7 @@ public class webgpu_h {
             webgpu_h.C_LONG_LONG
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuCommandEncoderCopyBufferToBuffer");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuCommandEncoderCopyBufferToBuffer");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -6886,6 +6909,8 @@ public class webgpu_h {
                 traceDowncall("wgpuCommandEncoderCopyBufferToBuffer", commandEncoder, source, sourceOffset, destination, destinationOffset, size);
             }
             mh$.invokeExact(commandEncoder, source, sourceOffset, destination, destinationOffset, size);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -6899,7 +6924,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuCommandEncoderCopyBufferToTexture");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuCommandEncoderCopyBufferToTexture");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -6946,6 +6971,8 @@ public class webgpu_h {
                 traceDowncall("wgpuCommandEncoderCopyBufferToTexture", commandEncoder, source, destination, copySize);
             }
             mh$.invokeExact(commandEncoder, source, destination, copySize);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -6959,7 +6986,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuCommandEncoderCopyTextureToBuffer");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuCommandEncoderCopyTextureToBuffer");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -7006,6 +7033,8 @@ public class webgpu_h {
                 traceDowncall("wgpuCommandEncoderCopyTextureToBuffer", commandEncoder, source, destination, copySize);
             }
             mh$.invokeExact(commandEncoder, source, destination, copySize);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -7019,7 +7048,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuCommandEncoderCopyTextureToTexture");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuCommandEncoderCopyTextureToTexture");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -7066,6 +7095,8 @@ public class webgpu_h {
                 traceDowncall("wgpuCommandEncoderCopyTextureToTexture", commandEncoder, source, destination, copySize);
             }
             mh$.invokeExact(commandEncoder, source, destination, copySize);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -7078,7 +7109,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuCommandEncoderFinish");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuCommandEncoderFinish");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -7125,6 +7156,8 @@ public class webgpu_h {
                 traceDowncall("wgpuCommandEncoderFinish", commandEncoder, descriptor);
             }
             return (MemorySegment)mh$.invokeExact(commandEncoder, descriptor);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -7136,7 +7169,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuCommandEncoderInsertDebugMarker");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuCommandEncoderInsertDebugMarker");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -7183,6 +7216,8 @@ public class webgpu_h {
                 traceDowncall("wgpuCommandEncoderInsertDebugMarker", commandEncoder, markerLabel);
             }
             mh$.invokeExact(commandEncoder, markerLabel);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -7193,7 +7228,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuCommandEncoderPopDebugGroup");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuCommandEncoderPopDebugGroup");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -7240,6 +7275,8 @@ public class webgpu_h {
                 traceDowncall("wgpuCommandEncoderPopDebugGroup", commandEncoder);
             }
             mh$.invokeExact(commandEncoder);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -7251,7 +7288,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuCommandEncoderPushDebugGroup");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuCommandEncoderPushDebugGroup");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -7298,6 +7335,8 @@ public class webgpu_h {
                 traceDowncall("wgpuCommandEncoderPushDebugGroup", commandEncoder, groupLabel);
             }
             mh$.invokeExact(commandEncoder, groupLabel);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -7313,7 +7352,7 @@ public class webgpu_h {
             webgpu_h.C_LONG_LONG
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuCommandEncoderResolveQuerySet");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuCommandEncoderResolveQuerySet");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -7360,6 +7399,8 @@ public class webgpu_h {
                 traceDowncall("wgpuCommandEncoderResolveQuerySet", commandEncoder, querySet, firstQuery, queryCount, destination, destinationOffset);
             }
             mh$.invokeExact(commandEncoder, querySet, firstQuery, queryCount, destination, destinationOffset);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -7371,7 +7412,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuCommandEncoderSetLabel");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuCommandEncoderSetLabel");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -7418,6 +7459,8 @@ public class webgpu_h {
                 traceDowncall("wgpuCommandEncoderSetLabel", commandEncoder, label);
             }
             mh$.invokeExact(commandEncoder, label);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -7430,7 +7473,7 @@ public class webgpu_h {
             webgpu_h.C_INT
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuCommandEncoderWriteTimestamp");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuCommandEncoderWriteTimestamp");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -7477,6 +7520,8 @@ public class webgpu_h {
                 traceDowncall("wgpuCommandEncoderWriteTimestamp", commandEncoder, querySet, queryIndex);
             }
             mh$.invokeExact(commandEncoder, querySet, queryIndex);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -7487,7 +7532,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuCommandEncoderAddRef");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuCommandEncoderAddRef");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -7534,6 +7579,8 @@ public class webgpu_h {
                 traceDowncall("wgpuCommandEncoderAddRef", commandEncoder);
             }
             mh$.invokeExact(commandEncoder);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -7544,7 +7591,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuCommandEncoderRelease");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuCommandEncoderRelease");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -7591,6 +7638,8 @@ public class webgpu_h {
                 traceDowncall("wgpuCommandEncoderRelease", commandEncoder);
             }
             mh$.invokeExact(commandEncoder);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -7604,7 +7653,7 @@ public class webgpu_h {
             webgpu_h.C_INT
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuComputePassEncoderDispatchWorkgroups");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuComputePassEncoderDispatchWorkgroups");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -7651,6 +7700,8 @@ public class webgpu_h {
                 traceDowncall("wgpuComputePassEncoderDispatchWorkgroups", computePassEncoder, workgroupCountX, workgroupCountY, workgroupCountZ);
             }
             mh$.invokeExact(computePassEncoder, workgroupCountX, workgroupCountY, workgroupCountZ);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -7663,7 +7714,7 @@ public class webgpu_h {
             webgpu_h.C_LONG_LONG
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuComputePassEncoderDispatchWorkgroupsIndirect");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuComputePassEncoderDispatchWorkgroupsIndirect");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -7710,6 +7761,8 @@ public class webgpu_h {
                 traceDowncall("wgpuComputePassEncoderDispatchWorkgroupsIndirect", computePassEncoder, indirectBuffer, indirectOffset);
             }
             mh$.invokeExact(computePassEncoder, indirectBuffer, indirectOffset);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -7720,7 +7773,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuComputePassEncoderEnd");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuComputePassEncoderEnd");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -7767,6 +7820,8 @@ public class webgpu_h {
                 traceDowncall("wgpuComputePassEncoderEnd", computePassEncoder);
             }
             mh$.invokeExact(computePassEncoder);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -7778,7 +7833,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuComputePassEncoderInsertDebugMarker");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuComputePassEncoderInsertDebugMarker");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -7825,6 +7880,8 @@ public class webgpu_h {
                 traceDowncall("wgpuComputePassEncoderInsertDebugMarker", computePassEncoder, markerLabel);
             }
             mh$.invokeExact(computePassEncoder, markerLabel);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -7835,7 +7892,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuComputePassEncoderPopDebugGroup");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuComputePassEncoderPopDebugGroup");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -7882,6 +7939,8 @@ public class webgpu_h {
                 traceDowncall("wgpuComputePassEncoderPopDebugGroup", computePassEncoder);
             }
             mh$.invokeExact(computePassEncoder);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -7893,7 +7952,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuComputePassEncoderPushDebugGroup");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuComputePassEncoderPushDebugGroup");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -7940,6 +7999,8 @@ public class webgpu_h {
                 traceDowncall("wgpuComputePassEncoderPushDebugGroup", computePassEncoder, groupLabel);
             }
             mh$.invokeExact(computePassEncoder, groupLabel);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -7954,7 +8015,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuComputePassEncoderSetBindGroup");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuComputePassEncoderSetBindGroup");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -8001,6 +8062,8 @@ public class webgpu_h {
                 traceDowncall("wgpuComputePassEncoderSetBindGroup", computePassEncoder, groupIndex, group, dynamicOffsetCount, dynamicOffsets);
             }
             mh$.invokeExact(computePassEncoder, groupIndex, group, dynamicOffsetCount, dynamicOffsets);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -8012,7 +8075,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuComputePassEncoderSetLabel");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuComputePassEncoderSetLabel");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -8059,6 +8122,8 @@ public class webgpu_h {
                 traceDowncall("wgpuComputePassEncoderSetLabel", computePassEncoder, label);
             }
             mh$.invokeExact(computePassEncoder, label);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -8070,7 +8135,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuComputePassEncoderSetPipeline");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuComputePassEncoderSetPipeline");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -8117,6 +8182,8 @@ public class webgpu_h {
                 traceDowncall("wgpuComputePassEncoderSetPipeline", computePassEncoder, pipeline);
             }
             mh$.invokeExact(computePassEncoder, pipeline);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -8127,7 +8194,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuComputePassEncoderAddRef");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuComputePassEncoderAddRef");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -8174,6 +8241,8 @@ public class webgpu_h {
                 traceDowncall("wgpuComputePassEncoderAddRef", computePassEncoder);
             }
             mh$.invokeExact(computePassEncoder);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -8184,7 +8253,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuComputePassEncoderRelease");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuComputePassEncoderRelease");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -8231,6 +8300,8 @@ public class webgpu_h {
                 traceDowncall("wgpuComputePassEncoderRelease", computePassEncoder);
             }
             mh$.invokeExact(computePassEncoder);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -8243,7 +8314,7 @@ public class webgpu_h {
             webgpu_h.C_INT
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuComputePipelineGetBindGroupLayout");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuComputePipelineGetBindGroupLayout");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -8290,6 +8361,8 @@ public class webgpu_h {
                 traceDowncall("wgpuComputePipelineGetBindGroupLayout", computePipeline, groupIndex);
             }
             return (MemorySegment)mh$.invokeExact(computePipeline, groupIndex);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -8301,7 +8374,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuComputePipelineSetLabel");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuComputePipelineSetLabel");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -8348,6 +8421,8 @@ public class webgpu_h {
                 traceDowncall("wgpuComputePipelineSetLabel", computePipeline, label);
             }
             mh$.invokeExact(computePipeline, label);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -8358,7 +8433,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuComputePipelineAddRef");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuComputePipelineAddRef");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -8405,6 +8480,8 @@ public class webgpu_h {
                 traceDowncall("wgpuComputePipelineAddRef", computePipeline);
             }
             mh$.invokeExact(computePipeline);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -8415,7 +8492,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuComputePipelineRelease");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuComputePipelineRelease");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -8462,6 +8539,8 @@ public class webgpu_h {
                 traceDowncall("wgpuComputePipelineRelease", computePipeline);
             }
             mh$.invokeExact(computePipeline);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -8474,7 +8553,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDeviceCreateBindGroup");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDeviceCreateBindGroup");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -8521,6 +8600,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDeviceCreateBindGroup", device, descriptor);
             }
             return (MemorySegment)mh$.invokeExact(device, descriptor);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -8533,7 +8614,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDeviceCreateBindGroupLayout");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDeviceCreateBindGroupLayout");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -8580,6 +8661,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDeviceCreateBindGroupLayout", device, descriptor);
             }
             return (MemorySegment)mh$.invokeExact(device, descriptor);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -8592,7 +8675,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDeviceCreateBuffer");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDeviceCreateBuffer");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -8639,6 +8722,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDeviceCreateBuffer", device, descriptor);
             }
             return (MemorySegment)mh$.invokeExact(device, descriptor);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -8651,7 +8736,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDeviceCreateCommandEncoder");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDeviceCreateCommandEncoder");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -8698,6 +8783,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDeviceCreateCommandEncoder", device, descriptor);
             }
             return (MemorySegment)mh$.invokeExact(device, descriptor);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -8710,7 +8797,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDeviceCreateComputePipeline");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDeviceCreateComputePipeline");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -8757,6 +8844,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDeviceCreateComputePipeline", device, descriptor);
             }
             return (MemorySegment)mh$.invokeExact(device, descriptor);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -8770,7 +8859,7 @@ public class webgpu_h {
             WGPUCreateComputePipelineAsyncCallbackInfo.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDeviceCreateComputePipelineAsync");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDeviceCreateComputePipelineAsync");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -8817,6 +8906,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDeviceCreateComputePipelineAsync", allocator, device, descriptor, callbackInfo);
             }
             return (MemorySegment)mh$.invokeExact(allocator, device, descriptor, callbackInfo);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -8829,7 +8920,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDeviceCreatePipelineLayout");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDeviceCreatePipelineLayout");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -8876,6 +8967,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDeviceCreatePipelineLayout", device, descriptor);
             }
             return (MemorySegment)mh$.invokeExact(device, descriptor);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -8888,7 +8981,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDeviceCreateQuerySet");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDeviceCreateQuerySet");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -8935,6 +9028,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDeviceCreateQuerySet", device, descriptor);
             }
             return (MemorySegment)mh$.invokeExact(device, descriptor);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -8947,7 +9042,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDeviceCreateRenderBundleEncoder");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDeviceCreateRenderBundleEncoder");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -8994,6 +9089,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDeviceCreateRenderBundleEncoder", device, descriptor);
             }
             return (MemorySegment)mh$.invokeExact(device, descriptor);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -9006,7 +9103,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDeviceCreateRenderPipeline");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDeviceCreateRenderPipeline");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -9053,6 +9150,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDeviceCreateRenderPipeline", device, descriptor);
             }
             return (MemorySegment)mh$.invokeExact(device, descriptor);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -9066,7 +9165,7 @@ public class webgpu_h {
             WGPUCreateRenderPipelineAsyncCallbackInfo.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDeviceCreateRenderPipelineAsync");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDeviceCreateRenderPipelineAsync");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -9113,6 +9212,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDeviceCreateRenderPipelineAsync", allocator, device, descriptor, callbackInfo);
             }
             return (MemorySegment)mh$.invokeExact(allocator, device, descriptor, callbackInfo);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -9125,7 +9226,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDeviceCreateSampler");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDeviceCreateSampler");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -9172,6 +9273,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDeviceCreateSampler", device, descriptor);
             }
             return (MemorySegment)mh$.invokeExact(device, descriptor);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -9184,7 +9287,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDeviceCreateShaderModule");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDeviceCreateShaderModule");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -9231,6 +9334,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDeviceCreateShaderModule", device, descriptor);
             }
             return (MemorySegment)mh$.invokeExact(device, descriptor);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -9243,7 +9348,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDeviceCreateTexture");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDeviceCreateTexture");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -9290,6 +9395,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDeviceCreateTexture", device, descriptor);
             }
             return (MemorySegment)mh$.invokeExact(device, descriptor);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -9300,7 +9407,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDeviceDestroy");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDeviceDestroy");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -9347,6 +9454,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDeviceDestroy", device);
             }
             mh$.invokeExact(device);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -9358,7 +9467,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDeviceGetAdapterInfo");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDeviceGetAdapterInfo");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -9405,6 +9514,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDeviceGetAdapterInfo", allocator, device);
             }
             return (MemorySegment)mh$.invokeExact(allocator, device);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -9416,7 +9527,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDeviceGetFeatures");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDeviceGetFeatures");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -9463,6 +9574,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDeviceGetFeatures", device, features);
             }
             mh$.invokeExact(device, features);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -9475,7 +9588,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDeviceGetLimits");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDeviceGetLimits");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -9522,6 +9635,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDeviceGetLimits", device, limits);
             }
             return (int)mh$.invokeExact(device, limits);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -9533,7 +9648,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDeviceGetLostFuture");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDeviceGetLostFuture");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -9580,6 +9695,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDeviceGetLostFuture", allocator, device);
             }
             return (MemorySegment)mh$.invokeExact(allocator, device);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -9591,7 +9708,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDeviceGetQueue");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDeviceGetQueue");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -9638,6 +9755,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDeviceGetQueue", device);
             }
             return (MemorySegment)mh$.invokeExact(device);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -9650,7 +9769,7 @@ public class webgpu_h {
             webgpu_h.C_INT
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDeviceHasFeature");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDeviceHasFeature");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -9697,6 +9816,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDeviceHasFeature", device, feature);
             }
             return (int)mh$.invokeExact(device, feature);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -9709,7 +9830,7 @@ public class webgpu_h {
             WGPUPopErrorScopeCallbackInfo.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDevicePopErrorScope");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDevicePopErrorScope");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -9756,6 +9877,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDevicePopErrorScope", allocator, device, callbackInfo);
             }
             return (MemorySegment)mh$.invokeExact(allocator, device, callbackInfo);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -9767,7 +9890,7 @@ public class webgpu_h {
             webgpu_h.C_INT
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDevicePushErrorScope");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDevicePushErrorScope");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -9814,6 +9937,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDevicePushErrorScope", device, filter);
             }
             mh$.invokeExact(device, filter);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -9825,7 +9950,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDeviceSetLabel");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDeviceSetLabel");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -9872,6 +9997,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDeviceSetLabel", device, label);
             }
             mh$.invokeExact(device, label);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -9882,7 +10009,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDeviceAddRef");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDeviceAddRef");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -9929,6 +10056,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDeviceAddRef", device);
             }
             mh$.invokeExact(device);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -9939,7 +10068,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDeviceRelease");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDeviceRelease");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -9986,6 +10115,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDeviceRelease", device);
             }
             mh$.invokeExact(device);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -9998,7 +10129,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuInstanceCreateSurface");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuInstanceCreateSurface");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -10045,6 +10176,8 @@ public class webgpu_h {
                 traceDowncall("wgpuInstanceCreateSurface", instance, descriptor);
             }
             return (MemorySegment)mh$.invokeExact(instance, descriptor);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -10057,7 +10190,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuInstanceGetWGSLLanguageFeatures");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuInstanceGetWGSLLanguageFeatures");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -10104,6 +10237,8 @@ public class webgpu_h {
                 traceDowncall("wgpuInstanceGetWGSLLanguageFeatures", instance, features);
             }
             return (int)mh$.invokeExact(instance, features);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -10116,7 +10251,7 @@ public class webgpu_h {
             webgpu_h.C_INT
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuInstanceHasWGSLLanguageFeature");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuInstanceHasWGSLLanguageFeature");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -10163,6 +10298,8 @@ public class webgpu_h {
                 traceDowncall("wgpuInstanceHasWGSLLanguageFeature", instance, feature);
             }
             return (int)mh$.invokeExact(instance, feature);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -10173,7 +10310,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuInstanceProcessEvents");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuInstanceProcessEvents");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -10220,6 +10357,8 @@ public class webgpu_h {
                 traceDowncall("wgpuInstanceProcessEvents", instance);
             }
             mh$.invokeExact(instance);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -10233,7 +10372,7 @@ public class webgpu_h {
             WGPURequestAdapterCallbackInfo.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuInstanceRequestAdapter");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuInstanceRequestAdapter");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -10280,6 +10419,8 @@ public class webgpu_h {
                 traceDowncall("wgpuInstanceRequestAdapter", allocator, instance, options, callbackInfo);
             }
             return (MemorySegment)mh$.invokeExact(allocator, instance, options, callbackInfo);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -10294,7 +10435,7 @@ public class webgpu_h {
             webgpu_h.C_LONG_LONG
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuInstanceWaitAny");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuInstanceWaitAny");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -10341,6 +10482,8 @@ public class webgpu_h {
                 traceDowncall("wgpuInstanceWaitAny", instance, futureCount, futures, timeoutNS);
             }
             return (int)mh$.invokeExact(instance, futureCount, futures, timeoutNS);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -10351,7 +10494,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuInstanceAddRef");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuInstanceAddRef");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -10398,6 +10541,8 @@ public class webgpu_h {
                 traceDowncall("wgpuInstanceAddRef", instance);
             }
             mh$.invokeExact(instance);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -10408,7 +10553,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuInstanceRelease");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuInstanceRelease");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -10455,6 +10600,8 @@ public class webgpu_h {
                 traceDowncall("wgpuInstanceRelease", instance);
             }
             mh$.invokeExact(instance);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -10466,7 +10613,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuPipelineLayoutSetLabel");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuPipelineLayoutSetLabel");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -10513,6 +10660,8 @@ public class webgpu_h {
                 traceDowncall("wgpuPipelineLayoutSetLabel", pipelineLayout, label);
             }
             mh$.invokeExact(pipelineLayout, label);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -10523,7 +10672,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuPipelineLayoutAddRef");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuPipelineLayoutAddRef");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -10570,6 +10719,8 @@ public class webgpu_h {
                 traceDowncall("wgpuPipelineLayoutAddRef", pipelineLayout);
             }
             mh$.invokeExact(pipelineLayout);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -10580,7 +10731,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuPipelineLayoutRelease");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuPipelineLayoutRelease");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -10627,6 +10778,8 @@ public class webgpu_h {
                 traceDowncall("wgpuPipelineLayoutRelease", pipelineLayout);
             }
             mh$.invokeExact(pipelineLayout);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -10637,7 +10790,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuQuerySetDestroy");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuQuerySetDestroy");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -10684,6 +10837,8 @@ public class webgpu_h {
                 traceDowncall("wgpuQuerySetDestroy", querySet);
             }
             mh$.invokeExact(querySet);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -10695,7 +10850,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuQuerySetGetCount");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuQuerySetGetCount");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -10742,6 +10897,8 @@ public class webgpu_h {
                 traceDowncall("wgpuQuerySetGetCount", querySet);
             }
             return (int)mh$.invokeExact(querySet);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -10753,7 +10910,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuQuerySetGetType");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuQuerySetGetType");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -10800,6 +10957,8 @@ public class webgpu_h {
                 traceDowncall("wgpuQuerySetGetType", querySet);
             }
             return (int)mh$.invokeExact(querySet);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -10811,7 +10970,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuQuerySetSetLabel");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuQuerySetSetLabel");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -10858,6 +11017,8 @@ public class webgpu_h {
                 traceDowncall("wgpuQuerySetSetLabel", querySet, label);
             }
             mh$.invokeExact(querySet, label);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -10868,7 +11029,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuQuerySetAddRef");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuQuerySetAddRef");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -10915,6 +11076,8 @@ public class webgpu_h {
                 traceDowncall("wgpuQuerySetAddRef", querySet);
             }
             mh$.invokeExact(querySet);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -10925,7 +11088,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuQuerySetRelease");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuQuerySetRelease");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -10972,6 +11135,8 @@ public class webgpu_h {
                 traceDowncall("wgpuQuerySetRelease", querySet);
             }
             mh$.invokeExact(querySet);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -10984,7 +11149,7 @@ public class webgpu_h {
             WGPUQueueWorkDoneCallbackInfo.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuQueueOnSubmittedWorkDone");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuQueueOnSubmittedWorkDone");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -11031,6 +11196,8 @@ public class webgpu_h {
                 traceDowncall("wgpuQueueOnSubmittedWorkDone", allocator, queue, callbackInfo);
             }
             return (MemorySegment)mh$.invokeExact(allocator, queue, callbackInfo);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -11042,7 +11209,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuQueueSetLabel");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuQueueSetLabel");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -11089,6 +11256,8 @@ public class webgpu_h {
                 traceDowncall("wgpuQueueSetLabel", queue, label);
             }
             mh$.invokeExact(queue, label);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -11101,7 +11270,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuQueueSubmit");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuQueueSubmit");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -11148,6 +11317,8 @@ public class webgpu_h {
                 traceDowncall("wgpuQueueSubmit", queue, commandCount, commands);
             }
             mh$.invokeExact(queue, commandCount, commands);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -11162,7 +11333,7 @@ public class webgpu_h {
             webgpu_h.C_LONG
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuQueueWriteBuffer");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuQueueWriteBuffer");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -11209,6 +11380,8 @@ public class webgpu_h {
                 traceDowncall("wgpuQueueWriteBuffer", queue, buffer, bufferOffset, data, size);
             }
             mh$.invokeExact(queue, buffer, bufferOffset, data, size);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -11224,7 +11397,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuQueueWriteTexture");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuQueueWriteTexture");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -11271,6 +11444,8 @@ public class webgpu_h {
                 traceDowncall("wgpuQueueWriteTexture", queue, destination, data, dataSize, dataLayout, writeSize);
             }
             mh$.invokeExact(queue, destination, data, dataSize, dataLayout, writeSize);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -11281,7 +11456,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuQueueAddRef");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuQueueAddRef");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -11328,6 +11503,8 @@ public class webgpu_h {
                 traceDowncall("wgpuQueueAddRef", queue);
             }
             mh$.invokeExact(queue);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -11338,7 +11515,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuQueueRelease");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuQueueRelease");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -11385,6 +11562,8 @@ public class webgpu_h {
                 traceDowncall("wgpuQueueRelease", queue);
             }
             mh$.invokeExact(queue);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -11396,7 +11575,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderBundleSetLabel");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderBundleSetLabel");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -11443,6 +11622,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderBundleSetLabel", renderBundle, label);
             }
             mh$.invokeExact(renderBundle, label);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -11453,7 +11634,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderBundleAddRef");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderBundleAddRef");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -11500,6 +11681,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderBundleAddRef", renderBundle);
             }
             mh$.invokeExact(renderBundle);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -11510,7 +11693,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderBundleRelease");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderBundleRelease");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -11557,6 +11740,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderBundleRelease", renderBundle);
             }
             mh$.invokeExact(renderBundle);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -11571,7 +11756,7 @@ public class webgpu_h {
             webgpu_h.C_INT
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderBundleEncoderDraw");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderBundleEncoderDraw");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -11618,6 +11803,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderBundleEncoderDraw", renderBundleEncoder, vertexCount, instanceCount, firstVertex, firstInstance);
             }
             mh$.invokeExact(renderBundleEncoder, vertexCount, instanceCount, firstVertex, firstInstance);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -11633,7 +11820,7 @@ public class webgpu_h {
             webgpu_h.C_INT
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderBundleEncoderDrawIndexed");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderBundleEncoderDrawIndexed");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -11680,6 +11867,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderBundleEncoderDrawIndexed", renderBundleEncoder, indexCount, instanceCount, firstIndex, baseVertex, firstInstance);
             }
             mh$.invokeExact(renderBundleEncoder, indexCount, instanceCount, firstIndex, baseVertex, firstInstance);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -11692,7 +11881,7 @@ public class webgpu_h {
             webgpu_h.C_LONG_LONG
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderBundleEncoderDrawIndexedIndirect");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderBundleEncoderDrawIndexedIndirect");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -11739,6 +11928,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderBundleEncoderDrawIndexedIndirect", renderBundleEncoder, indirectBuffer, indirectOffset);
             }
             mh$.invokeExact(renderBundleEncoder, indirectBuffer, indirectOffset);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -11751,7 +11942,7 @@ public class webgpu_h {
             webgpu_h.C_LONG_LONG
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderBundleEncoderDrawIndirect");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderBundleEncoderDrawIndirect");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -11798,6 +11989,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderBundleEncoderDrawIndirect", renderBundleEncoder, indirectBuffer, indirectOffset);
             }
             mh$.invokeExact(renderBundleEncoder, indirectBuffer, indirectOffset);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -11810,7 +12003,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderBundleEncoderFinish");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderBundleEncoderFinish");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -11857,6 +12050,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderBundleEncoderFinish", renderBundleEncoder, descriptor);
             }
             return (MemorySegment)mh$.invokeExact(renderBundleEncoder, descriptor);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -11868,7 +12063,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderBundleEncoderInsertDebugMarker");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderBundleEncoderInsertDebugMarker");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -11915,6 +12110,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderBundleEncoderInsertDebugMarker", renderBundleEncoder, markerLabel);
             }
             mh$.invokeExact(renderBundleEncoder, markerLabel);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -11925,7 +12122,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderBundleEncoderPopDebugGroup");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderBundleEncoderPopDebugGroup");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -11972,6 +12169,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderBundleEncoderPopDebugGroup", renderBundleEncoder);
             }
             mh$.invokeExact(renderBundleEncoder);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -11983,7 +12182,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderBundleEncoderPushDebugGroup");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderBundleEncoderPushDebugGroup");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -12030,6 +12229,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderBundleEncoderPushDebugGroup", renderBundleEncoder, groupLabel);
             }
             mh$.invokeExact(renderBundleEncoder, groupLabel);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -12044,7 +12245,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderBundleEncoderSetBindGroup");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderBundleEncoderSetBindGroup");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -12091,6 +12292,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderBundleEncoderSetBindGroup", renderBundleEncoder, groupIndex, group, dynamicOffsetCount, dynamicOffsets);
             }
             mh$.invokeExact(renderBundleEncoder, groupIndex, group, dynamicOffsetCount, dynamicOffsets);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -12105,7 +12308,7 @@ public class webgpu_h {
             webgpu_h.C_LONG_LONG
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderBundleEncoderSetIndexBuffer");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderBundleEncoderSetIndexBuffer");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -12152,6 +12355,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderBundleEncoderSetIndexBuffer", renderBundleEncoder, buffer, format, offset, size);
             }
             mh$.invokeExact(renderBundleEncoder, buffer, format, offset, size);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -12163,7 +12368,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderBundleEncoderSetLabel");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderBundleEncoderSetLabel");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -12210,6 +12415,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderBundleEncoderSetLabel", renderBundleEncoder, label);
             }
             mh$.invokeExact(renderBundleEncoder, label);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -12221,7 +12428,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderBundleEncoderSetPipeline");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderBundleEncoderSetPipeline");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -12268,6 +12475,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderBundleEncoderSetPipeline", renderBundleEncoder, pipeline);
             }
             mh$.invokeExact(renderBundleEncoder, pipeline);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -12282,7 +12491,7 @@ public class webgpu_h {
             webgpu_h.C_LONG_LONG
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderBundleEncoderSetVertexBuffer");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderBundleEncoderSetVertexBuffer");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -12329,6 +12538,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderBundleEncoderSetVertexBuffer", renderBundleEncoder, slot, buffer, offset, size);
             }
             mh$.invokeExact(renderBundleEncoder, slot, buffer, offset, size);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -12339,7 +12550,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderBundleEncoderAddRef");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderBundleEncoderAddRef");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -12386,6 +12597,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderBundleEncoderAddRef", renderBundleEncoder);
             }
             mh$.invokeExact(renderBundleEncoder);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -12396,7 +12609,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderBundleEncoderRelease");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderBundleEncoderRelease");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -12443,6 +12656,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderBundleEncoderRelease", renderBundleEncoder);
             }
             mh$.invokeExact(renderBundleEncoder);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -12454,7 +12669,7 @@ public class webgpu_h {
             webgpu_h.C_INT
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderBeginOcclusionQuery");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderBeginOcclusionQuery");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -12501,6 +12716,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderBeginOcclusionQuery", renderPassEncoder, queryIndex);
             }
             mh$.invokeExact(renderPassEncoder, queryIndex);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -12515,7 +12732,7 @@ public class webgpu_h {
             webgpu_h.C_INT
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderDraw");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderDraw");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -12562,6 +12779,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderDraw", renderPassEncoder, vertexCount, instanceCount, firstVertex, firstInstance);
             }
             mh$.invokeExact(renderPassEncoder, vertexCount, instanceCount, firstVertex, firstInstance);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -12577,7 +12796,7 @@ public class webgpu_h {
             webgpu_h.C_INT
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderDrawIndexed");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderDrawIndexed");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -12624,6 +12843,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderDrawIndexed", renderPassEncoder, indexCount, instanceCount, firstIndex, baseVertex, firstInstance);
             }
             mh$.invokeExact(renderPassEncoder, indexCount, instanceCount, firstIndex, baseVertex, firstInstance);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -12636,7 +12857,7 @@ public class webgpu_h {
             webgpu_h.C_LONG_LONG
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderDrawIndexedIndirect");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderDrawIndexedIndirect");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -12683,6 +12904,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderDrawIndexedIndirect", renderPassEncoder, indirectBuffer, indirectOffset);
             }
             mh$.invokeExact(renderPassEncoder, indirectBuffer, indirectOffset);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -12695,7 +12918,7 @@ public class webgpu_h {
             webgpu_h.C_LONG_LONG
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderDrawIndirect");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderDrawIndirect");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -12742,6 +12965,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderDrawIndirect", renderPassEncoder, indirectBuffer, indirectOffset);
             }
             mh$.invokeExact(renderPassEncoder, indirectBuffer, indirectOffset);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -12752,7 +12977,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderEnd");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderEnd");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -12799,6 +13024,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderEnd", renderPassEncoder);
             }
             mh$.invokeExact(renderPassEncoder);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -12809,7 +13036,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderEndOcclusionQuery");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderEndOcclusionQuery");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -12856,6 +13083,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderEndOcclusionQuery", renderPassEncoder);
             }
             mh$.invokeExact(renderPassEncoder);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -12868,7 +13097,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderExecuteBundles");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderExecuteBundles");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -12915,6 +13144,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderExecuteBundles", renderPassEncoder, bundleCount, bundles);
             }
             mh$.invokeExact(renderPassEncoder, bundleCount, bundles);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -12926,7 +13157,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderInsertDebugMarker");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderInsertDebugMarker");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -12973,6 +13204,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderInsertDebugMarker", renderPassEncoder, markerLabel);
             }
             mh$.invokeExact(renderPassEncoder, markerLabel);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -12983,7 +13216,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderPopDebugGroup");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderPopDebugGroup");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -13030,6 +13263,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderPopDebugGroup", renderPassEncoder);
             }
             mh$.invokeExact(renderPassEncoder);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -13041,7 +13276,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderPushDebugGroup");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderPushDebugGroup");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -13088,6 +13323,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderPushDebugGroup", renderPassEncoder, groupLabel);
             }
             mh$.invokeExact(renderPassEncoder, groupLabel);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -13102,7 +13339,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderSetBindGroup");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderSetBindGroup");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -13149,6 +13386,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderSetBindGroup", renderPassEncoder, groupIndex, group, dynamicOffsetCount, dynamicOffsets);
             }
             mh$.invokeExact(renderPassEncoder, groupIndex, group, dynamicOffsetCount, dynamicOffsets);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -13160,7 +13399,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderSetBlendConstant");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderSetBlendConstant");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -13207,6 +13446,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderSetBlendConstant", renderPassEncoder, color);
             }
             mh$.invokeExact(renderPassEncoder, color);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -13221,7 +13462,7 @@ public class webgpu_h {
             webgpu_h.C_LONG_LONG
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderSetIndexBuffer");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderSetIndexBuffer");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -13268,6 +13509,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderSetIndexBuffer", renderPassEncoder, buffer, format, offset, size);
             }
             mh$.invokeExact(renderPassEncoder, buffer, format, offset, size);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -13279,7 +13522,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderSetLabel");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderSetLabel");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -13326,6 +13569,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderSetLabel", renderPassEncoder, label);
             }
             mh$.invokeExact(renderPassEncoder, label);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -13337,7 +13582,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderSetPipeline");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderSetPipeline");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -13384,6 +13629,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderSetPipeline", renderPassEncoder, pipeline);
             }
             mh$.invokeExact(renderPassEncoder, pipeline);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -13398,7 +13645,7 @@ public class webgpu_h {
             webgpu_h.C_INT
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderSetScissorRect");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderSetScissorRect");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -13445,6 +13692,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderSetScissorRect", renderPassEncoder, x, y, width, height);
             }
             mh$.invokeExact(renderPassEncoder, x, y, width, height);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -13456,7 +13705,7 @@ public class webgpu_h {
             webgpu_h.C_INT
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderSetStencilReference");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderSetStencilReference");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -13503,6 +13752,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderSetStencilReference", renderPassEncoder, reference);
             }
             mh$.invokeExact(renderPassEncoder, reference);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -13517,7 +13768,7 @@ public class webgpu_h {
             webgpu_h.C_LONG_LONG
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderSetVertexBuffer");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderSetVertexBuffer");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -13564,6 +13815,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderSetVertexBuffer", renderPassEncoder, slot, buffer, offset, size);
             }
             mh$.invokeExact(renderPassEncoder, slot, buffer, offset, size);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -13580,7 +13833,7 @@ public class webgpu_h {
             webgpu_h.C_FLOAT
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderSetViewport");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderSetViewport");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -13627,6 +13880,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderSetViewport", renderPassEncoder, x, y, width, height, minDepth, maxDepth);
             }
             mh$.invokeExact(renderPassEncoder, x, y, width, height, minDepth, maxDepth);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -13637,7 +13892,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderAddRef");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderAddRef");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -13684,6 +13939,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderAddRef", renderPassEncoder);
             }
             mh$.invokeExact(renderPassEncoder);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -13694,7 +13951,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderRelease");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderRelease");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -13741,6 +13998,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderRelease", renderPassEncoder);
             }
             mh$.invokeExact(renderPassEncoder);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -13753,7 +14012,7 @@ public class webgpu_h {
             webgpu_h.C_INT
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPipelineGetBindGroupLayout");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPipelineGetBindGroupLayout");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -13800,6 +14059,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPipelineGetBindGroupLayout", renderPipeline, groupIndex);
             }
             return (MemorySegment)mh$.invokeExact(renderPipeline, groupIndex);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -13811,7 +14072,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPipelineSetLabel");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPipelineSetLabel");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -13858,6 +14119,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPipelineSetLabel", renderPipeline, label);
             }
             mh$.invokeExact(renderPipeline, label);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -13868,7 +14131,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPipelineAddRef");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPipelineAddRef");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -13915,6 +14178,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPipelineAddRef", renderPipeline);
             }
             mh$.invokeExact(renderPipeline);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -13925,7 +14190,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPipelineRelease");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPipelineRelease");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -13972,6 +14237,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPipelineRelease", renderPipeline);
             }
             mh$.invokeExact(renderPipeline);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -13983,7 +14250,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuSamplerSetLabel");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuSamplerSetLabel");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -14030,6 +14297,8 @@ public class webgpu_h {
                 traceDowncall("wgpuSamplerSetLabel", sampler, label);
             }
             mh$.invokeExact(sampler, label);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -14040,7 +14309,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuSamplerAddRef");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuSamplerAddRef");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -14087,6 +14356,8 @@ public class webgpu_h {
                 traceDowncall("wgpuSamplerAddRef", sampler);
             }
             mh$.invokeExact(sampler);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -14097,7 +14368,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuSamplerRelease");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuSamplerRelease");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -14144,6 +14415,8 @@ public class webgpu_h {
                 traceDowncall("wgpuSamplerRelease", sampler);
             }
             mh$.invokeExact(sampler);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -14156,7 +14429,7 @@ public class webgpu_h {
             WGPUCompilationInfoCallbackInfo.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuShaderModuleGetCompilationInfo");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuShaderModuleGetCompilationInfo");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -14203,6 +14476,8 @@ public class webgpu_h {
                 traceDowncall("wgpuShaderModuleGetCompilationInfo", allocator, shaderModule, callbackInfo);
             }
             return (MemorySegment)mh$.invokeExact(allocator, shaderModule, callbackInfo);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -14214,7 +14489,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuShaderModuleSetLabel");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuShaderModuleSetLabel");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -14261,6 +14536,8 @@ public class webgpu_h {
                 traceDowncall("wgpuShaderModuleSetLabel", shaderModule, label);
             }
             mh$.invokeExact(shaderModule, label);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -14271,7 +14548,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuShaderModuleAddRef");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuShaderModuleAddRef");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -14318,6 +14595,8 @@ public class webgpu_h {
                 traceDowncall("wgpuShaderModuleAddRef", shaderModule);
             }
             mh$.invokeExact(shaderModule);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -14328,7 +14607,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuShaderModuleRelease");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuShaderModuleRelease");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -14375,6 +14654,8 @@ public class webgpu_h {
                 traceDowncall("wgpuShaderModuleRelease", shaderModule);
             }
             mh$.invokeExact(shaderModule);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -14385,7 +14666,7 @@ public class webgpu_h {
             WGPUSupportedFeatures.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuSupportedFeaturesFreeMembers");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuSupportedFeaturesFreeMembers");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -14432,6 +14713,8 @@ public class webgpu_h {
                 traceDowncall("wgpuSupportedFeaturesFreeMembers", supportedFeatures);
             }
             mh$.invokeExact(supportedFeatures);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -14442,7 +14725,7 @@ public class webgpu_h {
             WGPUSupportedWGSLLanguageFeatures.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuSupportedWGSLLanguageFeaturesFreeMembers");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuSupportedWGSLLanguageFeaturesFreeMembers");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -14489,6 +14772,8 @@ public class webgpu_h {
                 traceDowncall("wgpuSupportedWGSLLanguageFeaturesFreeMembers", supportedWGSLLanguageFeatures);
             }
             mh$.invokeExact(supportedWGSLLanguageFeatures);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -14500,7 +14785,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuSurfaceConfigure");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuSurfaceConfigure");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -14547,6 +14832,8 @@ public class webgpu_h {
                 traceDowncall("wgpuSurfaceConfigure", surface, config);
             }
             mh$.invokeExact(surface, config);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -14560,7 +14847,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuSurfaceGetCapabilities");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuSurfaceGetCapabilities");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -14607,6 +14894,8 @@ public class webgpu_h {
                 traceDowncall("wgpuSurfaceGetCapabilities", surface, adapter, capabilities);
             }
             return (int)mh$.invokeExact(surface, adapter, capabilities);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -14618,7 +14907,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuSurfaceGetCurrentTexture");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuSurfaceGetCurrentTexture");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -14665,6 +14954,8 @@ public class webgpu_h {
                 traceDowncall("wgpuSurfaceGetCurrentTexture", surface, surfaceTexture);
             }
             mh$.invokeExact(surface, surfaceTexture);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -14676,7 +14967,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuSurfacePresent");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuSurfacePresent");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -14723,6 +15014,8 @@ public class webgpu_h {
                 traceDowncall("wgpuSurfacePresent", surface);
             }
             return (int)mh$.invokeExact(surface);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -14734,7 +15027,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuSurfaceSetLabel");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuSurfaceSetLabel");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -14781,6 +15074,8 @@ public class webgpu_h {
                 traceDowncall("wgpuSurfaceSetLabel", surface, label);
             }
             mh$.invokeExact(surface, label);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -14791,7 +15086,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuSurfaceUnconfigure");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuSurfaceUnconfigure");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -14838,6 +15133,8 @@ public class webgpu_h {
                 traceDowncall("wgpuSurfaceUnconfigure", surface);
             }
             mh$.invokeExact(surface);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -14848,7 +15145,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuSurfaceAddRef");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuSurfaceAddRef");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -14895,6 +15192,8 @@ public class webgpu_h {
                 traceDowncall("wgpuSurfaceAddRef", surface);
             }
             mh$.invokeExact(surface);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -14905,7 +15204,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuSurfaceRelease");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuSurfaceRelease");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -14952,6 +15251,8 @@ public class webgpu_h {
                 traceDowncall("wgpuSurfaceRelease", surface);
             }
             mh$.invokeExact(surface);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -14962,7 +15263,7 @@ public class webgpu_h {
             WGPUSurfaceCapabilities.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuSurfaceCapabilitiesFreeMembers");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuSurfaceCapabilitiesFreeMembers");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -15009,6 +15310,8 @@ public class webgpu_h {
                 traceDowncall("wgpuSurfaceCapabilitiesFreeMembers", surfaceCapabilities);
             }
             mh$.invokeExact(surfaceCapabilities);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -15021,7 +15324,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuTextureCreateView");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuTextureCreateView");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -15068,6 +15371,8 @@ public class webgpu_h {
                 traceDowncall("wgpuTextureCreateView", texture, descriptor);
             }
             return (MemorySegment)mh$.invokeExact(texture, descriptor);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -15078,7 +15383,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuTextureDestroy");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuTextureDestroy");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -15125,6 +15430,8 @@ public class webgpu_h {
                 traceDowncall("wgpuTextureDestroy", texture);
             }
             mh$.invokeExact(texture);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -15136,7 +15443,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuTextureGetDepthOrArrayLayers");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuTextureGetDepthOrArrayLayers");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -15183,6 +15490,8 @@ public class webgpu_h {
                 traceDowncall("wgpuTextureGetDepthOrArrayLayers", texture);
             }
             return (int)mh$.invokeExact(texture);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -15194,7 +15503,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuTextureGetDimension");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuTextureGetDimension");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -15241,6 +15550,8 @@ public class webgpu_h {
                 traceDowncall("wgpuTextureGetDimension", texture);
             }
             return (int)mh$.invokeExact(texture);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -15252,7 +15563,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuTextureGetFormat");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuTextureGetFormat");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -15299,6 +15610,8 @@ public class webgpu_h {
                 traceDowncall("wgpuTextureGetFormat", texture);
             }
             return (int)mh$.invokeExact(texture);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -15310,7 +15623,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuTextureGetHeight");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuTextureGetHeight");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -15357,6 +15670,8 @@ public class webgpu_h {
                 traceDowncall("wgpuTextureGetHeight", texture);
             }
             return (int)mh$.invokeExact(texture);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -15368,7 +15683,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuTextureGetMipLevelCount");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuTextureGetMipLevelCount");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -15415,6 +15730,8 @@ public class webgpu_h {
                 traceDowncall("wgpuTextureGetMipLevelCount", texture);
             }
             return (int)mh$.invokeExact(texture);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -15426,7 +15743,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuTextureGetSampleCount");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuTextureGetSampleCount");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -15473,6 +15790,8 @@ public class webgpu_h {
                 traceDowncall("wgpuTextureGetSampleCount", texture);
             }
             return (int)mh$.invokeExact(texture);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -15484,7 +15803,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuTextureGetUsage");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuTextureGetUsage");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -15531,6 +15850,8 @@ public class webgpu_h {
                 traceDowncall("wgpuTextureGetUsage", texture);
             }
             return (long)mh$.invokeExact(texture);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -15542,7 +15863,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuTextureGetWidth");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuTextureGetWidth");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -15589,6 +15910,8 @@ public class webgpu_h {
                 traceDowncall("wgpuTextureGetWidth", texture);
             }
             return (int)mh$.invokeExact(texture);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -15600,7 +15923,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuTextureSetLabel");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuTextureSetLabel");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -15647,6 +15970,8 @@ public class webgpu_h {
                 traceDowncall("wgpuTextureSetLabel", texture, label);
             }
             mh$.invokeExact(texture, label);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -15657,7 +15982,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuTextureAddRef");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuTextureAddRef");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -15704,6 +16029,8 @@ public class webgpu_h {
                 traceDowncall("wgpuTextureAddRef", texture);
             }
             mh$.invokeExact(texture);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -15714,7 +16041,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuTextureRelease");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuTextureRelease");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -15761,6 +16088,8 @@ public class webgpu_h {
                 traceDowncall("wgpuTextureRelease", texture);
             }
             mh$.invokeExact(texture);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -15772,7 +16101,7 @@ public class webgpu_h {
             WGPUStringView.layout()
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuTextureViewSetLabel");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuTextureViewSetLabel");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -15819,6 +16148,8 @@ public class webgpu_h {
                 traceDowncall("wgpuTextureViewSetLabel", textureView, label);
             }
             mh$.invokeExact(textureView, label);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -15829,7 +16160,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuTextureViewAddRef");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuTextureViewAddRef");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -15876,6 +16207,8 @@ public class webgpu_h {
                 traceDowncall("wgpuTextureViewAddRef", textureView);
             }
             mh$.invokeExact(textureView);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -15886,7 +16219,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuTextureViewRelease");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuTextureViewRelease");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -15933,6 +16266,8 @@ public class webgpu_h {
                 traceDowncall("wgpuTextureViewRelease", textureView);
             }
             mh$.invokeExact(textureView);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -16027,6 +16362,15 @@ public class webgpu_h {
     public static int WGPUSType_SurfaceSourceSwapChainPanel() {
         return WGPUSType_SurfaceSourceSwapChainPanel;
     }
+    private static final int WGPUSType_PrimitiveStateExtras = (int)196620L;
+    /**
+     * {@snippet lang=c :
+     * enum WGPUNativeSType.WGPUSType_PrimitiveStateExtras = 196620
+     * }
+     */
+    public static int WGPUSType_PrimitiveStateExtras() {
+        return WGPUSType_PrimitiveStateExtras;
+    }
     private static final int WGPUNativeSType_Force32 = (int)2147483647L;
     /**
      * {@snippet lang=c :
@@ -16053,15 +16397,6 @@ public class webgpu_h {
      */
     public static int WGPUNativeFeature_TextureAdapterSpecificFormatFeatures() {
         return WGPUNativeFeature_TextureAdapterSpecificFormatFeatures;
-    }
-    private static final int WGPUNativeFeature_MultiDrawIndirect = (int)196611L;
-    /**
-     * {@snippet lang=c :
-     * enum WGPUNativeFeature.WGPUNativeFeature_MultiDrawIndirect = 196611
-     * }
-     */
-    public static int WGPUNativeFeature_MultiDrawIndirect() {
-        return WGPUNativeFeature_MultiDrawIndirect;
     }
     private static final int WGPUNativeFeature_MultiDrawIndirectCount = (int)196612L;
     /**
@@ -16171,6 +16506,33 @@ public class webgpu_h {
     public static int WGPUNativeFeature_UniformBufferAndStorageTextureArrayNonUniformIndexing() {
         return WGPUNativeFeature_UniformBufferAndStorageTextureArrayNonUniformIndexing;
     }
+    private static final int WGPUNativeFeature_PolygonModeLine = (int)196627L;
+    /**
+     * {@snippet lang=c :
+     * enum WGPUNativeFeature.WGPUNativeFeature_PolygonModeLine = 196627
+     * }
+     */
+    public static int WGPUNativeFeature_PolygonModeLine() {
+        return WGPUNativeFeature_PolygonModeLine;
+    }
+    private static final int WGPUNativeFeature_PolygonModePoint = (int)196628L;
+    /**
+     * {@snippet lang=c :
+     * enum WGPUNativeFeature.WGPUNativeFeature_PolygonModePoint = 196628
+     * }
+     */
+    public static int WGPUNativeFeature_PolygonModePoint() {
+        return WGPUNativeFeature_PolygonModePoint;
+    }
+    private static final int WGPUNativeFeature_ConservativeRasterization = (int)196629L;
+    /**
+     * {@snippet lang=c :
+     * enum WGPUNativeFeature.WGPUNativeFeature_ConservativeRasterization = 196629
+     * }
+     */
+    public static int WGPUNativeFeature_ConservativeRasterization() {
+        return WGPUNativeFeature_ConservativeRasterization;
+    }
     private static final int WGPUNativeFeature_SpirvShaderPassthrough = (int)196631L;
     /**
      * {@snippet lang=c :
@@ -16197,15 +16559,6 @@ public class webgpu_h {
      */
     public static int WGPUNativeFeature_TextureFormatNv12() {
         return WGPUNativeFeature_TextureFormatNv12;
-    }
-    private static final int WGPUNativeFeature_RayTracingAccelerationStructure = (int)196635L;
-    /**
-     * {@snippet lang=c :
-     * enum WGPUNativeFeature.WGPUNativeFeature_RayTracingAccelerationStructure = 196635
-     * }
-     */
-    public static int WGPUNativeFeature_RayTracingAccelerationStructure() {
-        return WGPUNativeFeature_RayTracingAccelerationStructure;
     }
     private static final int WGPUNativeFeature_RayQuery = (int)196636L;
     /**
@@ -16657,6 +17010,33 @@ public class webgpu_h {
      * }
      */
     public static final OfLong WGPUSubmissionIndex = webgpu_h.C_LONG_LONG;
+    private static final int WGPUPolygonMode_Fill = (int)0L;
+    /**
+     * {@snippet lang=c :
+     * enum WGPUPolygonMode.WGPUPolygonMode_Fill = 0
+     * }
+     */
+    public static int WGPUPolygonMode_Fill() {
+        return WGPUPolygonMode_Fill;
+    }
+    private static final int WGPUPolygonMode_Line = (int)1L;
+    /**
+     * {@snippet lang=c :
+     * enum WGPUPolygonMode.WGPUPolygonMode_Line = 1
+     * }
+     */
+    public static int WGPUPolygonMode_Line() {
+        return WGPUPolygonMode_Line;
+    }
+    private static final int WGPUPolygonMode_Point = (int)2L;
+    /**
+     * {@snippet lang=c :
+     * enum WGPUPolygonMode.WGPUPolygonMode_Point = 2
+     * }
+     */
+    public static int WGPUPolygonMode_Point() {
+        return WGPUPolygonMode_Point;
+    }
     private static final int WGPUNativeTextureFormat_R16Unorm = (int)196609L;
     /**
      * {@snippet lang=c :
@@ -16720,6 +17100,15 @@ public class webgpu_h {
     public static int WGPUNativeTextureFormat_NV12() {
         return WGPUNativeTextureFormat_NV12;
     }
+    private static final int WGPUNativeTextureFormat_P010 = (int)196616L;
+    /**
+     * {@snippet lang=c :
+     * enum WGPUNativeTextureFormat.WGPUNativeTextureFormat_P010 = 196616
+     * }
+     */
+    public static int WGPUNativeTextureFormat_P010() {
+        return WGPUNativeTextureFormat_P010;
+    }
 
     private static class wgpuGenerateReport {
         public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
@@ -16727,7 +17116,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuGenerateReport");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuGenerateReport");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -16774,6 +17163,8 @@ public class webgpu_h {
                 traceDowncall("wgpuGenerateReport", instance, report);
             }
             mh$.invokeExact(instance, report);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -16787,7 +17178,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuInstanceEnumerateAdapters");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuInstanceEnumerateAdapters");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -16834,6 +17225,8 @@ public class webgpu_h {
                 traceDowncall("wgpuInstanceEnumerateAdapters", instance, options, adapters);
             }
             return (long)mh$.invokeExact(instance, options, adapters);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -16847,7 +17240,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuQueueSubmitForIndex");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuQueueSubmitForIndex");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -16894,6 +17287,8 @@ public class webgpu_h {
                 traceDowncall("wgpuQueueSubmitForIndex", queue, commandCount, commands);
             }
             return (long)mh$.invokeExact(queue, commandCount, commands);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -16907,7 +17302,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDevicePoll");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDevicePoll");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -16954,6 +17349,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDevicePoll", device, wait, submissionIndex);
             }
             return (int)mh$.invokeExact(device, wait, submissionIndex);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -16966,7 +17363,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuDeviceCreateShaderModuleSpirV");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuDeviceCreateShaderModuleSpirV");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -17013,6 +17410,8 @@ public class webgpu_h {
                 traceDowncall("wgpuDeviceCreateShaderModuleSpirV", device, descriptor);
             }
             return (MemorySegment)mh$.invokeExact(device, descriptor);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -17024,7 +17423,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuSetLogCallback");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuSetLogCallback");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -17071,6 +17470,8 @@ public class webgpu_h {
                 traceDowncall("wgpuSetLogCallback", callback, userdata);
             }
             mh$.invokeExact(callback, userdata);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -17081,7 +17482,7 @@ public class webgpu_h {
             webgpu_h.C_INT
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuSetLogLevel");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuSetLogLevel");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -17128,6 +17529,8 @@ public class webgpu_h {
                 traceDowncall("wgpuSetLogLevel", level);
             }
             mh$.invokeExact(level);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -17137,7 +17540,7 @@ public class webgpu_h {
         public static final FunctionDescriptor DESC = FunctionDescriptor.of(
             webgpu_h.C_INT    );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuGetVersion");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuGetVersion");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -17184,6 +17587,8 @@ public class webgpu_h {
                 traceDowncall("wgpuGetVersion");
             }
             return (int)mh$.invokeExact();
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -17198,7 +17603,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderSetPushConstants");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderSetPushConstants");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -17245,6 +17650,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderSetPushConstants", encoder, stages, offset, sizeBytes, data);
             }
             mh$.invokeExact(encoder, stages, offset, sizeBytes, data);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -17258,7 +17665,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuComputePassEncoderSetPushConstants");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuComputePassEncoderSetPushConstants");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -17305,6 +17712,8 @@ public class webgpu_h {
                 traceDowncall("wgpuComputePassEncoderSetPushConstants", encoder, offset, sizeBytes, data);
             }
             mh$.invokeExact(encoder, offset, sizeBytes, data);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -17319,7 +17728,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderBundleEncoderSetPushConstants");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderBundleEncoderSetPushConstants");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -17366,6 +17775,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderBundleEncoderSetPushConstants", encoder, stages, offset, sizeBytes, data);
             }
             mh$.invokeExact(encoder, stages, offset, sizeBytes, data);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -17379,7 +17790,7 @@ public class webgpu_h {
             webgpu_h.C_INT
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderMultiDrawIndirect");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderMultiDrawIndirect");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -17426,6 +17837,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderMultiDrawIndirect", encoder, buffer, offset, count);
             }
             mh$.invokeExact(encoder, buffer, offset, count);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -17439,7 +17852,7 @@ public class webgpu_h {
             webgpu_h.C_INT
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderMultiDrawIndexedIndirect");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderMultiDrawIndexedIndirect");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -17486,6 +17899,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderMultiDrawIndexedIndirect", encoder, buffer, offset, count);
             }
             mh$.invokeExact(encoder, buffer, offset, count);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -17501,7 +17916,7 @@ public class webgpu_h {
             webgpu_h.C_INT
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderMultiDrawIndirectCount");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderMultiDrawIndirectCount");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -17548,6 +17963,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderMultiDrawIndirectCount", encoder, buffer, offset, count_buffer, count_buffer_offset, max_count);
             }
             mh$.invokeExact(encoder, buffer, offset, count_buffer, count_buffer_offset, max_count);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -17563,7 +17980,7 @@ public class webgpu_h {
             webgpu_h.C_INT
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderMultiDrawIndexedIndirectCount");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderMultiDrawIndexedIndirectCount");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -17610,6 +18027,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderMultiDrawIndexedIndirectCount", encoder, buffer, offset, count_buffer, count_buffer_offset, max_count);
             }
             mh$.invokeExact(encoder, buffer, offset, count_buffer, count_buffer_offset, max_count);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -17622,7 +18041,7 @@ public class webgpu_h {
             webgpu_h.C_INT
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuComputePassEncoderBeginPipelineStatisticsQuery");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuComputePassEncoderBeginPipelineStatisticsQuery");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -17669,6 +18088,8 @@ public class webgpu_h {
                 traceDowncall("wgpuComputePassEncoderBeginPipelineStatisticsQuery", computePassEncoder, querySet, queryIndex);
             }
             mh$.invokeExact(computePassEncoder, querySet, queryIndex);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -17679,7 +18100,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuComputePassEncoderEndPipelineStatisticsQuery");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuComputePassEncoderEndPipelineStatisticsQuery");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -17726,6 +18147,8 @@ public class webgpu_h {
                 traceDowncall("wgpuComputePassEncoderEndPipelineStatisticsQuery", computePassEncoder);
             }
             mh$.invokeExact(computePassEncoder);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -17738,7 +18161,7 @@ public class webgpu_h {
             webgpu_h.C_INT
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderBeginPipelineStatisticsQuery");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderBeginPipelineStatisticsQuery");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -17785,6 +18208,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderBeginPipelineStatisticsQuery", renderPassEncoder, querySet, queryIndex);
             }
             mh$.invokeExact(renderPassEncoder, querySet, queryIndex);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -17795,7 +18220,7 @@ public class webgpu_h {
             webgpu_h.C_POINTER
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderEndPipelineStatisticsQuery");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderEndPipelineStatisticsQuery");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -17842,6 +18267,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderEndPipelineStatisticsQuery", renderPassEncoder);
             }
             mh$.invokeExact(renderPassEncoder);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -17854,7 +18281,7 @@ public class webgpu_h {
             webgpu_h.C_INT
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuComputePassEncoderWriteTimestamp");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuComputePassEncoderWriteTimestamp");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -17901,6 +18328,8 @@ public class webgpu_h {
                 traceDowncall("wgpuComputePassEncoderWriteTimestamp", computePassEncoder, querySet, queryIndex);
             }
             mh$.invokeExact(computePassEncoder, querySet, queryIndex);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }
@@ -17913,7 +18342,7 @@ public class webgpu_h {
             webgpu_h.C_INT
         );
 
-        public static final MemorySegment ADDR = webgpu_h.findOrThrow("wgpuRenderPassEncoderWriteTimestamp");
+        public static final MemorySegment ADDR = SYMBOL_LOOKUP.findOrThrow("wgpuRenderPassEncoderWriteTimestamp");
 
         public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
     }
@@ -17960,6 +18389,8 @@ public class webgpu_h {
                 traceDowncall("wgpuRenderPassEncoderWriteTimestamp", renderPassEncoder, querySet, queryIndex);
             }
             mh$.invokeExact(renderPassEncoder, querySet, queryIndex);
+        } catch (Error | RuntimeException ex) {
+           throw ex;
         } catch (Throwable ex$) {
            throw new AssertionError("should not reach here", ex$);
         }

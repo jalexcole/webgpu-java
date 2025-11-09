@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef WGPUStatus (*WGPUProcDeviceGetLimits)(WGPUDevice, WGPULimits *)
  * }
  */
-public class WGPUProcDeviceGetLimits {
+public final class WGPUProcDeviceGetLimits {
 
-    WGPUProcDeviceGetLimits() {
+    private WGPUProcDeviceGetLimits() {
         // Should not be called directly
     }
 
@@ -58,9 +58,11 @@ public class WGPUProcDeviceGetLimits {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static int invoke(MemorySegment funcPtr,MemorySegment device, MemorySegment limits) {
+    public static int invoke(MemorySegment funcPtr, MemorySegment device, MemorySegment limits) {
         try {
             return (int) DOWN$MH.invokeExact(funcPtr, device, limits);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

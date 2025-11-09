@@ -52,7 +52,7 @@ public class WGPUNativeLimits {
         return chain$LAYOUT;
     }
 
-    private static final long chain$OFFSET = 0;
+    private static final long chain$OFFSET = $LAYOUT.byteOffset(groupElement("chain"));
 
     /**
      * Offset for field:
@@ -96,7 +96,7 @@ public class WGPUNativeLimits {
         return maxPushConstantSize$LAYOUT;
     }
 
-    private static final long maxPushConstantSize$OFFSET = 16;
+    private static final long maxPushConstantSize$OFFSET = $LAYOUT.byteOffset(groupElement("maxPushConstantSize"));
 
     /**
      * Offset for field:
@@ -140,7 +140,7 @@ public class WGPUNativeLimits {
         return maxNonSamplerBindings$LAYOUT;
     }
 
-    private static final long maxNonSamplerBindings$OFFSET = 20;
+    private static final long maxNonSamplerBindings$OFFSET = $LAYOUT.byteOffset(groupElement("maxNonSamplerBindings"));
 
     /**
      * Offset for field:

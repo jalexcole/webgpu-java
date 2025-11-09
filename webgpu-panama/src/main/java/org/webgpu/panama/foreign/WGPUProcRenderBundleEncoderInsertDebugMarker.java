@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcRenderBundleEncoderInsertDebugMarker)(WGPURenderBundleEncoder, WGPUStringView)
  * }
  */
-public class WGPUProcRenderBundleEncoderInsertDebugMarker {
+public final class WGPUProcRenderBundleEncoderInsertDebugMarker {
 
-    WGPUProcRenderBundleEncoderInsertDebugMarker() {
+    private WGPUProcRenderBundleEncoderInsertDebugMarker() {
         // Should not be called directly
     }
 
@@ -57,9 +57,11 @@ public class WGPUProcRenderBundleEncoderInsertDebugMarker {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment renderBundleEncoder, MemorySegment markerLabel) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment renderBundleEncoder, MemorySegment markerLabel) {
         try {
              DOWN$MH.invokeExact(funcPtr, renderBundleEncoder, markerLabel);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

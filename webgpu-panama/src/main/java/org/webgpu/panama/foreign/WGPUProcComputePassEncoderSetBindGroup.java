@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcComputePassEncoderSetBindGroup)(WGPUComputePassEncoder, uint32_t, WGPUBindGroup, size_t, const uint32_t *)
  * }
  */
-public class WGPUProcComputePassEncoderSetBindGroup {
+public final class WGPUProcComputePassEncoderSetBindGroup {
 
-    WGPUProcComputePassEncoderSetBindGroup() {
+    private WGPUProcComputePassEncoderSetBindGroup() {
         // Should not be called directly
     }
 
@@ -60,9 +60,11 @@ public class WGPUProcComputePassEncoderSetBindGroup {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment computePassEncoder, int groupIndex, MemorySegment group, long dynamicOffsetCount, MemorySegment dynamicOffsets) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment computePassEncoder, int groupIndex, MemorySegment group, long dynamicOffsetCount, MemorySegment dynamicOffsets) {
         try {
              DOWN$MH.invokeExact(funcPtr, computePassEncoder, groupIndex, group, dynamicOffsetCount, dynamicOffsets);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

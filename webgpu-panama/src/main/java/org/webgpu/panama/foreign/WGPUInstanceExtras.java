@@ -2,8 +2,13 @@
 
 package org.webgpu.panama.foreign;
 
+import java.lang.invoke.*;
 import java.lang.foreign.*;
+import java.nio.ByteOrder;
+import java.util.*;
 import java.util.function.*;
+import java.util.stream.*;
+
 import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
@@ -16,9 +21,10 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  *     WGPUDx12Compiler dx12ShaderCompiler;
  *     WGPUGles3MinorVersion gles3MinorVersion;
  *     WGPUGLFenceBehaviour glFenceBehaviour;
- *     WGPUStringView dxilPath;
  *     WGPUStringView dxcPath;
  *     WGPUDxcMaxShaderModel dxcMaxShaderModel;
+ *     const uint8_t *budgetForDeviceCreation;
+ *     const uint8_t *budgetForDeviceLoss;
  * }
  * }
  */
@@ -36,10 +42,11 @@ public class WGPUInstanceExtras {
         webgpu_h.C_INT.withName("gles3MinorVersion"),
         webgpu_h.C_INT.withName("glFenceBehaviour"),
         MemoryLayout.paddingLayout(4),
-        WGPUStringView.layout().withName("dxilPath"),
         WGPUStringView.layout().withName("dxcPath"),
         webgpu_h.C_INT.withName("dxcMaxShaderModel"),
-        MemoryLayout.paddingLayout(4)
+        MemoryLayout.paddingLayout(4),
+        webgpu_h.C_POINTER.withName("budgetForDeviceCreation"),
+        webgpu_h.C_POINTER.withName("budgetForDeviceLoss")
     ).withName("WGPUInstanceExtras");
 
     /**
@@ -61,7 +68,7 @@ public class WGPUInstanceExtras {
         return chain$LAYOUT;
     }
 
-    private static final long chain$OFFSET = 0;
+    private static final long chain$OFFSET = $LAYOUT.byteOffset(groupElement("chain"));
 
     /**
      * Offset for field:
@@ -105,7 +112,7 @@ public class WGPUInstanceExtras {
         return backends$LAYOUT;
     }
 
-    private static final long backends$OFFSET = 16;
+    private static final long backends$OFFSET = $LAYOUT.byteOffset(groupElement("backends"));
 
     /**
      * Offset for field:
@@ -149,7 +156,7 @@ public class WGPUInstanceExtras {
         return flags$LAYOUT;
     }
 
-    private static final long flags$OFFSET = 24;
+    private static final long flags$OFFSET = $LAYOUT.byteOffset(groupElement("flags"));
 
     /**
      * Offset for field:
@@ -193,7 +200,7 @@ public class WGPUInstanceExtras {
         return dx12ShaderCompiler$LAYOUT;
     }
 
-    private static final long dx12ShaderCompiler$OFFSET = 32;
+    private static final long dx12ShaderCompiler$OFFSET = $LAYOUT.byteOffset(groupElement("dx12ShaderCompiler"));
 
     /**
      * Offset for field:
@@ -237,7 +244,7 @@ public class WGPUInstanceExtras {
         return gles3MinorVersion$LAYOUT;
     }
 
-    private static final long gles3MinorVersion$OFFSET = 36;
+    private static final long gles3MinorVersion$OFFSET = $LAYOUT.byteOffset(groupElement("gles3MinorVersion"));
 
     /**
      * Offset for field:
@@ -281,7 +288,7 @@ public class WGPUInstanceExtras {
         return glFenceBehaviour$LAYOUT;
     }
 
-    private static final long glFenceBehaviour$OFFSET = 40;
+    private static final long glFenceBehaviour$OFFSET = $LAYOUT.byteOffset(groupElement("glFenceBehaviour"));
 
     /**
      * Offset for field:
@@ -313,50 +320,6 @@ public class WGPUInstanceExtras {
         struct.set(glFenceBehaviour$LAYOUT, glFenceBehaviour$OFFSET, fieldValue);
     }
 
-    private static final GroupLayout dxilPath$LAYOUT = (GroupLayout)$LAYOUT.select(groupElement("dxilPath"));
-
-    /**
-     * Layout for field:
-     * {@snippet lang=c :
-     * WGPUStringView dxilPath
-     * }
-     */
-    public static final GroupLayout dxilPath$layout() {
-        return dxilPath$LAYOUT;
-    }
-
-    private static final long dxilPath$OFFSET = 48;
-
-    /**
-     * Offset for field:
-     * {@snippet lang=c :
-     * WGPUStringView dxilPath
-     * }
-     */
-    public static final long dxilPath$offset() {
-        return dxilPath$OFFSET;
-    }
-
-    /**
-     * Getter for field:
-     * {@snippet lang=c :
-     * WGPUStringView dxilPath
-     * }
-     */
-    public static MemorySegment dxilPath(MemorySegment struct) {
-        return struct.asSlice(dxilPath$OFFSET, dxilPath$LAYOUT.byteSize());
-    }
-
-    /**
-     * Setter for field:
-     * {@snippet lang=c :
-     * WGPUStringView dxilPath
-     * }
-     */
-    public static void dxilPath(MemorySegment struct, MemorySegment fieldValue) {
-        MemorySegment.copy(fieldValue, 0L, struct, dxilPath$OFFSET, dxilPath$LAYOUT.byteSize());
-    }
-
     private static final GroupLayout dxcPath$LAYOUT = (GroupLayout)$LAYOUT.select(groupElement("dxcPath"));
 
     /**
@@ -369,7 +332,7 @@ public class WGPUInstanceExtras {
         return dxcPath$LAYOUT;
     }
 
-    private static final long dxcPath$OFFSET = 64;
+    private static final long dxcPath$OFFSET = $LAYOUT.byteOffset(groupElement("dxcPath"));
 
     /**
      * Offset for field:
@@ -413,7 +376,7 @@ public class WGPUInstanceExtras {
         return dxcMaxShaderModel$LAYOUT;
     }
 
-    private static final long dxcMaxShaderModel$OFFSET = 80;
+    private static final long dxcMaxShaderModel$OFFSET = $LAYOUT.byteOffset(groupElement("dxcMaxShaderModel"));
 
     /**
      * Offset for field:
@@ -443,6 +406,94 @@ public class WGPUInstanceExtras {
      */
     public static void dxcMaxShaderModel(MemorySegment struct, int fieldValue) {
         struct.set(dxcMaxShaderModel$LAYOUT, dxcMaxShaderModel$OFFSET, fieldValue);
+    }
+
+    private static final AddressLayout budgetForDeviceCreation$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("budgetForDeviceCreation"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * const uint8_t *budgetForDeviceCreation
+     * }
+     */
+    public static final AddressLayout budgetForDeviceCreation$layout() {
+        return budgetForDeviceCreation$LAYOUT;
+    }
+
+    private static final long budgetForDeviceCreation$OFFSET = $LAYOUT.byteOffset(groupElement("budgetForDeviceCreation"));
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * const uint8_t *budgetForDeviceCreation
+     * }
+     */
+    public static final long budgetForDeviceCreation$offset() {
+        return budgetForDeviceCreation$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * const uint8_t *budgetForDeviceCreation
+     * }
+     */
+    public static MemorySegment budgetForDeviceCreation(MemorySegment struct) {
+        return struct.get(budgetForDeviceCreation$LAYOUT, budgetForDeviceCreation$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * const uint8_t *budgetForDeviceCreation
+     * }
+     */
+    public static void budgetForDeviceCreation(MemorySegment struct, MemorySegment fieldValue) {
+        struct.set(budgetForDeviceCreation$LAYOUT, budgetForDeviceCreation$OFFSET, fieldValue);
+    }
+
+    private static final AddressLayout budgetForDeviceLoss$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("budgetForDeviceLoss"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * const uint8_t *budgetForDeviceLoss
+     * }
+     */
+    public static final AddressLayout budgetForDeviceLoss$layout() {
+        return budgetForDeviceLoss$LAYOUT;
+    }
+
+    private static final long budgetForDeviceLoss$OFFSET = $LAYOUT.byteOffset(groupElement("budgetForDeviceLoss"));
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * const uint8_t *budgetForDeviceLoss
+     * }
+     */
+    public static final long budgetForDeviceLoss$offset() {
+        return budgetForDeviceLoss$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * const uint8_t *budgetForDeviceLoss
+     * }
+     */
+    public static MemorySegment budgetForDeviceLoss(MemorySegment struct) {
+        return struct.get(budgetForDeviceLoss$LAYOUT, budgetForDeviceLoss$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * const uint8_t *budgetForDeviceLoss
+     * }
+     */
+    public static void budgetForDeviceLoss(MemorySegment struct, MemorySegment fieldValue) {
+        struct.set(budgetForDeviceLoss$LAYOUT, budgetForDeviceLoss$OFFSET, fieldValue);
     }
 
     /**

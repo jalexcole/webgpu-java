@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcRenderPassEncoderInsertDebugMarker)(WGPURenderPassEncoder, WGPUStringView)
  * }
  */
-public class WGPUProcRenderPassEncoderInsertDebugMarker {
+public final class WGPUProcRenderPassEncoderInsertDebugMarker {
 
-    WGPUProcRenderPassEncoderInsertDebugMarker() {
+    private WGPUProcRenderPassEncoderInsertDebugMarker() {
         // Should not be called directly
     }
 
@@ -57,9 +57,11 @@ public class WGPUProcRenderPassEncoderInsertDebugMarker {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment renderPassEncoder, MemorySegment markerLabel) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment renderPassEncoder, MemorySegment markerLabel) {
         try {
              DOWN$MH.invokeExact(funcPtr, renderPassEncoder, markerLabel);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

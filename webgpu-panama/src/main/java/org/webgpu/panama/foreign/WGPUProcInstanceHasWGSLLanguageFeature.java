@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef WGPUBool (*WGPUProcInstanceHasWGSLLanguageFeature)(WGPUInstance, WGPUWGSLLanguageFeatureName)
  * }
  */
-public class WGPUProcInstanceHasWGSLLanguageFeature {
+public final class WGPUProcInstanceHasWGSLLanguageFeature {
 
-    WGPUProcInstanceHasWGSLLanguageFeature() {
+    private WGPUProcInstanceHasWGSLLanguageFeature() {
         // Should not be called directly
     }
 
@@ -58,9 +58,11 @@ public class WGPUProcInstanceHasWGSLLanguageFeature {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static int invoke(MemorySegment funcPtr,MemorySegment instance, int feature) {
+    public static int invoke(MemorySegment funcPtr, MemorySegment instance, int feature) {
         try {
             return (int) DOWN$MH.invokeExact(funcPtr, instance, feature);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

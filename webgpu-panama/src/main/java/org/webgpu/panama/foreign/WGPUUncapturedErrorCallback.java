@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUUncapturedErrorCallback)(const WGPUDevice *, WGPUErrorType, WGPUStringView, void *, void *)
  * }
  */
-public class WGPUUncapturedErrorCallback {
+public final class WGPUUncapturedErrorCallback {
 
-    WGPUUncapturedErrorCallback() {
+    private WGPUUncapturedErrorCallback() {
         // Should not be called directly
     }
 
@@ -60,9 +60,11 @@ public class WGPUUncapturedErrorCallback {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment device, int type, MemorySegment message, MemorySegment userdata1, MemorySegment userdata2) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment device, int type, MemorySegment message, MemorySegment userdata1, MemorySegment userdata2) {
         try {
              DOWN$MH.invokeExact(funcPtr, device, type, message, userdata1, userdata2);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

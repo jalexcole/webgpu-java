@@ -62,7 +62,7 @@ public class WGPUDeviceDescriptor {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -106,7 +106,7 @@ public class WGPUDeviceDescriptor {
         return label$LAYOUT;
     }
 
-    private static final long label$OFFSET = 8;
+    private static final long label$OFFSET = $LAYOUT.byteOffset(groupElement("label"));
 
     /**
      * Offset for field:
@@ -150,7 +150,7 @@ public class WGPUDeviceDescriptor {
         return requiredFeatureCount$LAYOUT;
     }
 
-    private static final long requiredFeatureCount$OFFSET = 24;
+    private static final long requiredFeatureCount$OFFSET = $LAYOUT.byteOffset(groupElement("requiredFeatureCount"));
 
     /**
      * Offset for field:
@@ -194,7 +194,7 @@ public class WGPUDeviceDescriptor {
         return requiredFeatures$LAYOUT;
     }
 
-    private static final long requiredFeatures$OFFSET = 32;
+    private static final long requiredFeatures$OFFSET = $LAYOUT.byteOffset(groupElement("requiredFeatures"));
 
     /**
      * Offset for field:
@@ -238,7 +238,7 @@ public class WGPUDeviceDescriptor {
         return requiredLimits$LAYOUT;
     }
 
-    private static final long requiredLimits$OFFSET = 40;
+    private static final long requiredLimits$OFFSET = $LAYOUT.byteOffset(groupElement("requiredLimits"));
 
     /**
      * Offset for field:
@@ -282,7 +282,7 @@ public class WGPUDeviceDescriptor {
         return defaultQueue$LAYOUT;
     }
 
-    private static final long defaultQueue$OFFSET = 48;
+    private static final long defaultQueue$OFFSET = $LAYOUT.byteOffset(groupElement("defaultQueue"));
 
     /**
      * Offset for field:
@@ -326,7 +326,7 @@ public class WGPUDeviceDescriptor {
         return deviceLostCallbackInfo$LAYOUT;
     }
 
-    private static final long deviceLostCallbackInfo$OFFSET = 72;
+    private static final long deviceLostCallbackInfo$OFFSET = $LAYOUT.byteOffset(groupElement("deviceLostCallbackInfo"));
 
     /**
      * Offset for field:
@@ -370,7 +370,7 @@ public class WGPUDeviceDescriptor {
         return uncapturedErrorCallbackInfo$LAYOUT;
     }
 
-    private static final long uncapturedErrorCallbackInfo$OFFSET = 112;
+    private static final long uncapturedErrorCallbackInfo$OFFSET = $LAYOUT.byteOffset(groupElement("uncapturedErrorCallbackInfo"));
 
     /**
      * Offset for field:

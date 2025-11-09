@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPURequestAdapterCallback)(WGPURequestAdapterStatus, WGPUAdapter, WGPUStringView, void *, void *)
  * }
  */
-public class WGPURequestAdapterCallback {
+public final class WGPURequestAdapterCallback {
 
-    WGPURequestAdapterCallback() {
+    private WGPURequestAdapterCallback() {
         // Should not be called directly
     }
 
@@ -60,9 +60,11 @@ public class WGPURequestAdapterCallback {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,int status, MemorySegment adapter, MemorySegment message, MemorySegment userdata1, MemorySegment userdata2) {
+    public static void invoke(MemorySegment funcPtr, int status, MemorySegment adapter, MemorySegment message, MemorySegment userdata1, MemorySegment userdata2) {
         try {
              DOWN$MH.invokeExact(funcPtr, status, adapter, message, userdata1, userdata2);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcQueueSubmit)(WGPUQueue, size_t, const WGPUCommandBuffer *)
  * }
  */
-public class WGPUProcQueueSubmit {
+public final class WGPUProcQueueSubmit {
 
-    WGPUProcQueueSubmit() {
+    private WGPUProcQueueSubmit() {
         // Should not be called directly
     }
 
@@ -58,9 +58,11 @@ public class WGPUProcQueueSubmit {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment queue, long commandCount, MemorySegment commands) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment queue, long commandCount, MemorySegment commands) {
         try {
              DOWN$MH.invokeExact(funcPtr, queue, commandCount, commands);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcTextureSetLabel)(WGPUTexture, WGPUStringView)
  * }
  */
-public class WGPUProcTextureSetLabel {
+public final class WGPUProcTextureSetLabel {
 
-    WGPUProcTextureSetLabel() {
+    private WGPUProcTextureSetLabel() {
         // Should not be called directly
     }
 
@@ -57,9 +57,11 @@ public class WGPUProcTextureSetLabel {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment texture, MemorySegment label) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment texture, MemorySegment label) {
         try {
              DOWN$MH.invokeExact(funcPtr, texture, label);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

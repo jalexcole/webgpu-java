@@ -54,7 +54,7 @@ public class WGPURegistryReport {
         return numAllocated$LAYOUT;
     }
 
-    private static final long numAllocated$OFFSET = 0;
+    private static final long numAllocated$OFFSET = $LAYOUT.byteOffset(groupElement("numAllocated"));
 
     /**
      * Offset for field:
@@ -98,7 +98,7 @@ public class WGPURegistryReport {
         return numKeptFromUser$LAYOUT;
     }
 
-    private static final long numKeptFromUser$OFFSET = 8;
+    private static final long numKeptFromUser$OFFSET = $LAYOUT.byteOffset(groupElement("numKeptFromUser"));
 
     /**
      * Offset for field:
@@ -142,7 +142,7 @@ public class WGPURegistryReport {
         return numReleasedFromUser$LAYOUT;
     }
 
-    private static final long numReleasedFromUser$OFFSET = 16;
+    private static final long numReleasedFromUser$OFFSET = $LAYOUT.byteOffset(groupElement("numReleasedFromUser"));
 
     /**
      * Offset for field:
@@ -186,7 +186,7 @@ public class WGPURegistryReport {
         return elementSize$LAYOUT;
     }
 
-    private static final long elementSize$OFFSET = 24;
+    private static final long elementSize$OFFSET = $LAYOUT.byteOffset(groupElement("elementSize"));
 
     /**
      * Offset for field:

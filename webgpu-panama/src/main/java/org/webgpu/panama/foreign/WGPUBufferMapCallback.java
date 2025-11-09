@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUBufferMapCallback)(WGPUMapAsyncStatus, WGPUStringView, void *, void *)
  * }
  */
-public class WGPUBufferMapCallback {
+public final class WGPUBufferMapCallback {
 
-    WGPUBufferMapCallback() {
+    private WGPUBufferMapCallback() {
         // Should not be called directly
     }
 
@@ -59,9 +59,11 @@ public class WGPUBufferMapCallback {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,int status, MemorySegment message, MemorySegment userdata1, MemorySegment userdata2) {
+    public static void invoke(MemorySegment funcPtr, int status, MemorySegment message, MemorySegment userdata1, MemorySegment userdata2) {
         try {
              DOWN$MH.invokeExact(funcPtr, status, message, userdata1, userdata2);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

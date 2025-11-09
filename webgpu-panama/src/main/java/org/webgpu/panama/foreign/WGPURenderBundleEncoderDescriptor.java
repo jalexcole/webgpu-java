@@ -62,7 +62,7 @@ public class WGPURenderBundleEncoderDescriptor {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -106,7 +106,7 @@ public class WGPURenderBundleEncoderDescriptor {
         return label$LAYOUT;
     }
 
-    private static final long label$OFFSET = 8;
+    private static final long label$OFFSET = $LAYOUT.byteOffset(groupElement("label"));
 
     /**
      * Offset for field:
@@ -150,7 +150,7 @@ public class WGPURenderBundleEncoderDescriptor {
         return colorFormatCount$LAYOUT;
     }
 
-    private static final long colorFormatCount$OFFSET = 24;
+    private static final long colorFormatCount$OFFSET = $LAYOUT.byteOffset(groupElement("colorFormatCount"));
 
     /**
      * Offset for field:
@@ -194,7 +194,7 @@ public class WGPURenderBundleEncoderDescriptor {
         return colorFormats$LAYOUT;
     }
 
-    private static final long colorFormats$OFFSET = 32;
+    private static final long colorFormats$OFFSET = $LAYOUT.byteOffset(groupElement("colorFormats"));
 
     /**
      * Offset for field:
@@ -238,7 +238,7 @@ public class WGPURenderBundleEncoderDescriptor {
         return depthStencilFormat$LAYOUT;
     }
 
-    private static final long depthStencilFormat$OFFSET = 40;
+    private static final long depthStencilFormat$OFFSET = $LAYOUT.byteOffset(groupElement("depthStencilFormat"));
 
     /**
      * Offset for field:
@@ -282,7 +282,7 @@ public class WGPURenderBundleEncoderDescriptor {
         return sampleCount$LAYOUT;
     }
 
-    private static final long sampleCount$OFFSET = 44;
+    private static final long sampleCount$OFFSET = $LAYOUT.byteOffset(groupElement("sampleCount"));
 
     /**
      * Offset for field:
@@ -326,7 +326,7 @@ public class WGPURenderBundleEncoderDescriptor {
         return depthReadOnly$LAYOUT;
     }
 
-    private static final long depthReadOnly$OFFSET = 48;
+    private static final long depthReadOnly$OFFSET = $LAYOUT.byteOffset(groupElement("depthReadOnly"));
 
     /**
      * Offset for field:
@@ -370,7 +370,7 @@ public class WGPURenderBundleEncoderDescriptor {
         return stencilReadOnly$LAYOUT;
     }
 
-    private static final long stencilReadOnly$OFFSET = 52;
+    private static final long stencilReadOnly$OFFSET = $LAYOUT.byteOffset(groupElement("stencilReadOnly"));
 
     /**
      * Offset for field:

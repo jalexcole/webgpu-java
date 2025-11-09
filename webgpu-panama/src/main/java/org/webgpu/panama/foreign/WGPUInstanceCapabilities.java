@@ -53,7 +53,7 @@ public class WGPUInstanceCapabilities {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -97,7 +97,7 @@ public class WGPUInstanceCapabilities {
         return timedWaitAnyEnable$LAYOUT;
     }
 
-    private static final long timedWaitAnyEnable$OFFSET = 8;
+    private static final long timedWaitAnyEnable$OFFSET = $LAYOUT.byteOffset(groupElement("timedWaitAnyEnable"));
 
     /**
      * Offset for field:
@@ -141,7 +141,7 @@ public class WGPUInstanceCapabilities {
         return timedWaitAnyMaxCount$LAYOUT;
     }
 
-    private static final long timedWaitAnyMaxCount$OFFSET = 16;
+    private static final long timedWaitAnyMaxCount$OFFSET = $LAYOUT.byteOffset(groupElement("timedWaitAnyMaxCount"));
 
     /**
      * Offset for field:

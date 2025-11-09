@@ -80,7 +80,7 @@ public class WGPUHubReport {
         return adapters$LAYOUT;
     }
 
-    private static final long adapters$OFFSET = 0;
+    private static final long adapters$OFFSET = $LAYOUT.byteOffset(groupElement("adapters"));
 
     /**
      * Offset for field:
@@ -124,7 +124,7 @@ public class WGPUHubReport {
         return devices$LAYOUT;
     }
 
-    private static final long devices$OFFSET = 32;
+    private static final long devices$OFFSET = $LAYOUT.byteOffset(groupElement("devices"));
 
     /**
      * Offset for field:
@@ -168,7 +168,7 @@ public class WGPUHubReport {
         return queues$LAYOUT;
     }
 
-    private static final long queues$OFFSET = 64;
+    private static final long queues$OFFSET = $LAYOUT.byteOffset(groupElement("queues"));
 
     /**
      * Offset for field:
@@ -212,7 +212,7 @@ public class WGPUHubReport {
         return pipelineLayouts$LAYOUT;
     }
 
-    private static final long pipelineLayouts$OFFSET = 96;
+    private static final long pipelineLayouts$OFFSET = $LAYOUT.byteOffset(groupElement("pipelineLayouts"));
 
     /**
      * Offset for field:
@@ -256,7 +256,7 @@ public class WGPUHubReport {
         return shaderModules$LAYOUT;
     }
 
-    private static final long shaderModules$OFFSET = 128;
+    private static final long shaderModules$OFFSET = $LAYOUT.byteOffset(groupElement("shaderModules"));
 
     /**
      * Offset for field:
@@ -300,7 +300,7 @@ public class WGPUHubReport {
         return bindGroupLayouts$LAYOUT;
     }
 
-    private static final long bindGroupLayouts$OFFSET = 160;
+    private static final long bindGroupLayouts$OFFSET = $LAYOUT.byteOffset(groupElement("bindGroupLayouts"));
 
     /**
      * Offset for field:
@@ -344,7 +344,7 @@ public class WGPUHubReport {
         return bindGroups$LAYOUT;
     }
 
-    private static final long bindGroups$OFFSET = 192;
+    private static final long bindGroups$OFFSET = $LAYOUT.byteOffset(groupElement("bindGroups"));
 
     /**
      * Offset for field:
@@ -388,7 +388,7 @@ public class WGPUHubReport {
         return commandBuffers$LAYOUT;
     }
 
-    private static final long commandBuffers$OFFSET = 224;
+    private static final long commandBuffers$OFFSET = $LAYOUT.byteOffset(groupElement("commandBuffers"));
 
     /**
      * Offset for field:
@@ -432,7 +432,7 @@ public class WGPUHubReport {
         return renderBundles$LAYOUT;
     }
 
-    private static final long renderBundles$OFFSET = 256;
+    private static final long renderBundles$OFFSET = $LAYOUT.byteOffset(groupElement("renderBundles"));
 
     /**
      * Offset for field:
@@ -476,7 +476,7 @@ public class WGPUHubReport {
         return renderPipelines$LAYOUT;
     }
 
-    private static final long renderPipelines$OFFSET = 288;
+    private static final long renderPipelines$OFFSET = $LAYOUT.byteOffset(groupElement("renderPipelines"));
 
     /**
      * Offset for field:
@@ -520,7 +520,7 @@ public class WGPUHubReport {
         return computePipelines$LAYOUT;
     }
 
-    private static final long computePipelines$OFFSET = 320;
+    private static final long computePipelines$OFFSET = $LAYOUT.byteOffset(groupElement("computePipelines"));
 
     /**
      * Offset for field:
@@ -564,7 +564,7 @@ public class WGPUHubReport {
         return pipelineCaches$LAYOUT;
     }
 
-    private static final long pipelineCaches$OFFSET = 352;
+    private static final long pipelineCaches$OFFSET = $LAYOUT.byteOffset(groupElement("pipelineCaches"));
 
     /**
      * Offset for field:
@@ -608,7 +608,7 @@ public class WGPUHubReport {
         return querySets$LAYOUT;
     }
 
-    private static final long querySets$OFFSET = 384;
+    private static final long querySets$OFFSET = $LAYOUT.byteOffset(groupElement("querySets"));
 
     /**
      * Offset for field:
@@ -652,7 +652,7 @@ public class WGPUHubReport {
         return buffers$LAYOUT;
     }
 
-    private static final long buffers$OFFSET = 416;
+    private static final long buffers$OFFSET = $LAYOUT.byteOffset(groupElement("buffers"));
 
     /**
      * Offset for field:
@@ -696,7 +696,7 @@ public class WGPUHubReport {
         return textures$LAYOUT;
     }
 
-    private static final long textures$OFFSET = 448;
+    private static final long textures$OFFSET = $LAYOUT.byteOffset(groupElement("textures"));
 
     /**
      * Offset for field:
@@ -740,7 +740,7 @@ public class WGPUHubReport {
         return textureViews$LAYOUT;
     }
 
-    private static final long textureViews$OFFSET = 480;
+    private static final long textureViews$OFFSET = $LAYOUT.byteOffset(groupElement("textureViews"));
 
     /**
      * Offset for field:
@@ -784,7 +784,7 @@ public class WGPUHubReport {
         return samplers$LAYOUT;
     }
 
-    private static final long samplers$OFFSET = 512;
+    private static final long samplers$OFFSET = $LAYOUT.byteOffset(groupElement("samplers"));
 
     /**
      * Offset for field:

@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcRenderPassEncoderBeginOcclusionQuery)(WGPURenderPassEncoder, uint32_t)
  * }
  */
-public class WGPUProcRenderPassEncoderBeginOcclusionQuery {
+public final class WGPUProcRenderPassEncoderBeginOcclusionQuery {
 
-    WGPUProcRenderPassEncoderBeginOcclusionQuery() {
+    private WGPUProcRenderPassEncoderBeginOcclusionQuery() {
         // Should not be called directly
     }
 
@@ -57,9 +57,11 @@ public class WGPUProcRenderPassEncoderBeginOcclusionQuery {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment renderPassEncoder, int queryIndex) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment renderPassEncoder, int queryIndex) {
         try {
              DOWN$MH.invokeExact(funcPtr, renderPassEncoder, queryIndex);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

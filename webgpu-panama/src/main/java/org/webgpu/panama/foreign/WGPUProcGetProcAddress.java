@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef WGPUProc (*WGPUProcGetProcAddress)(WGPUStringView)
  * }
  */
-public class WGPUProcGetProcAddress {
+public final class WGPUProcGetProcAddress {
 
-    WGPUProcGetProcAddress() {
+    private WGPUProcGetProcAddress() {
         // Should not be called directly
     }
 
@@ -57,9 +57,11 @@ public class WGPUProcGetProcAddress {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static MemorySegment invoke(MemorySegment funcPtr,MemorySegment procName) {
+    public static MemorySegment invoke(MemorySegment funcPtr, MemorySegment procName) {
         try {
             return (MemorySegment) DOWN$MH.invokeExact(funcPtr, procName);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

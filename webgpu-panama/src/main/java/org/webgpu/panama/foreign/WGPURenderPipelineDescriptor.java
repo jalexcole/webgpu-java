@@ -62,7 +62,7 @@ public class WGPURenderPipelineDescriptor {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -106,7 +106,7 @@ public class WGPURenderPipelineDescriptor {
         return label$LAYOUT;
     }
 
-    private static final long label$OFFSET = 8;
+    private static final long label$OFFSET = $LAYOUT.byteOffset(groupElement("label"));
 
     /**
      * Offset for field:
@@ -150,7 +150,7 @@ public class WGPURenderPipelineDescriptor {
         return layout$LAYOUT;
     }
 
-    private static final long layout$OFFSET = 24;
+    private static final long layout$OFFSET = $LAYOUT.byteOffset(groupElement("layout"));
 
     /**
      * Offset for field:
@@ -194,7 +194,7 @@ public class WGPURenderPipelineDescriptor {
         return vertex$LAYOUT;
     }
 
-    private static final long vertex$OFFSET = 32;
+    private static final long vertex$OFFSET = $LAYOUT.byteOffset(groupElement("vertex"));
 
     /**
      * Offset for field:
@@ -238,7 +238,7 @@ public class WGPURenderPipelineDescriptor {
         return primitive$LAYOUT;
     }
 
-    private static final long primitive$OFFSET = 96;
+    private static final long primitive$OFFSET = $LAYOUT.byteOffset(groupElement("primitive"));
 
     /**
      * Offset for field:
@@ -282,7 +282,7 @@ public class WGPURenderPipelineDescriptor {
         return depthStencil$LAYOUT;
     }
 
-    private static final long depthStencil$OFFSET = 128;
+    private static final long depthStencil$OFFSET = $LAYOUT.byteOffset(groupElement("depthStencil"));
 
     /**
      * Offset for field:
@@ -326,7 +326,7 @@ public class WGPURenderPipelineDescriptor {
         return multisample$LAYOUT;
     }
 
-    private static final long multisample$OFFSET = 136;
+    private static final long multisample$OFFSET = $LAYOUT.byteOffset(groupElement("multisample"));
 
     /**
      * Offset for field:
@@ -370,7 +370,7 @@ public class WGPURenderPipelineDescriptor {
         return fragment$LAYOUT;
     }
 
-    private static final long fragment$OFFSET = 160;
+    private static final long fragment$OFFSET = $LAYOUT.byteOffset(groupElement("fragment"));
 
     /**
      * Offset for field:

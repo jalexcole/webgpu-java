@@ -54,7 +54,7 @@ public class WGPUVertexAttribute {
         return format$LAYOUT;
     }
 
-    private static final long format$OFFSET = 0;
+    private static final long format$OFFSET = $LAYOUT.byteOffset(groupElement("format"));
 
     /**
      * Offset for field:
@@ -98,7 +98,7 @@ public class WGPUVertexAttribute {
         return offset$LAYOUT;
     }
 
-    private static final long offset$OFFSET = 8;
+    private static final long offset$OFFSET = $LAYOUT.byteOffset(groupElement("offset"));
 
     /**
      * Offset for field:
@@ -142,7 +142,7 @@ public class WGPUVertexAttribute {
         return shaderLocation$LAYOUT;
     }
 
-    private static final long shaderLocation$OFFSET = 16;
+    private static final long shaderLocation$OFFSET = $LAYOUT.byteOffset(groupElement("shaderLocation"));
 
     /**
      * Offset for field:

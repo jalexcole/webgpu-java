@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcBindGroupLayoutSetLabel)(WGPUBindGroupLayout, WGPUStringView)
  * }
  */
-public class WGPUProcBindGroupLayoutSetLabel {
+public final class WGPUProcBindGroupLayoutSetLabel {
 
-    WGPUProcBindGroupLayoutSetLabel() {
+    private WGPUProcBindGroupLayoutSetLabel() {
         // Should not be called directly
     }
 
@@ -57,9 +57,11 @@ public class WGPUProcBindGroupLayoutSetLabel {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment bindGroupLayout, MemorySegment label) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment bindGroupLayout, MemorySegment label) {
         try {
              DOWN$MH.invokeExact(funcPtr, bindGroupLayout, label);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

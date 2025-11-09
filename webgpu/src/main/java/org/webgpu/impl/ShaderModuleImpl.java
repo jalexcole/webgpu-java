@@ -8,7 +8,7 @@ import org.webgpu.api.ShaderModule;
 import org.webgpu.panama.foreign.webgpu_h;
 
 public record ShaderModuleImpl(MemorySegment ptr) implements ShaderModule {
-
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(ShaderModuleImpl.class);
     @Override
     public Future<CompilationInfo> getCompilationInfo() {
         // TODO Auto-generated method stub

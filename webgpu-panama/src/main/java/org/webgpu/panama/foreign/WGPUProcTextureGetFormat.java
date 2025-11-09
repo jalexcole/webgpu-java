@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef WGPUTextureFormat (*WGPUProcTextureGetFormat)(WGPUTexture)
  * }
  */
-public class WGPUProcTextureGetFormat {
+public final class WGPUProcTextureGetFormat {
 
-    WGPUProcTextureGetFormat() {
+    private WGPUProcTextureGetFormat() {
         // Should not be called directly
     }
 
@@ -57,9 +57,11 @@ public class WGPUProcTextureGetFormat {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static int invoke(MemorySegment funcPtr,MemorySegment texture) {
+    public static int invoke(MemorySegment funcPtr, MemorySegment texture) {
         try {
             return (int) DOWN$MH.invokeExact(funcPtr, texture);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

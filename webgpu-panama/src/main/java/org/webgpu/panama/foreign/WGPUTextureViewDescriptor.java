@@ -67,7 +67,7 @@ public class WGPUTextureViewDescriptor {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -111,7 +111,7 @@ public class WGPUTextureViewDescriptor {
         return label$LAYOUT;
     }
 
-    private static final long label$OFFSET = 8;
+    private static final long label$OFFSET = $LAYOUT.byteOffset(groupElement("label"));
 
     /**
      * Offset for field:
@@ -155,7 +155,7 @@ public class WGPUTextureViewDescriptor {
         return format$LAYOUT;
     }
 
-    private static final long format$OFFSET = 24;
+    private static final long format$OFFSET = $LAYOUT.byteOffset(groupElement("format"));
 
     /**
      * Offset for field:
@@ -199,7 +199,7 @@ public class WGPUTextureViewDescriptor {
         return dimension$LAYOUT;
     }
 
-    private static final long dimension$OFFSET = 28;
+    private static final long dimension$OFFSET = $LAYOUT.byteOffset(groupElement("dimension"));
 
     /**
      * Offset for field:
@@ -243,7 +243,7 @@ public class WGPUTextureViewDescriptor {
         return baseMipLevel$LAYOUT;
     }
 
-    private static final long baseMipLevel$OFFSET = 32;
+    private static final long baseMipLevel$OFFSET = $LAYOUT.byteOffset(groupElement("baseMipLevel"));
 
     /**
      * Offset for field:
@@ -287,7 +287,7 @@ public class WGPUTextureViewDescriptor {
         return mipLevelCount$LAYOUT;
     }
 
-    private static final long mipLevelCount$OFFSET = 36;
+    private static final long mipLevelCount$OFFSET = $LAYOUT.byteOffset(groupElement("mipLevelCount"));
 
     /**
      * Offset for field:
@@ -331,7 +331,7 @@ public class WGPUTextureViewDescriptor {
         return baseArrayLayer$LAYOUT;
     }
 
-    private static final long baseArrayLayer$OFFSET = 40;
+    private static final long baseArrayLayer$OFFSET = $LAYOUT.byteOffset(groupElement("baseArrayLayer"));
 
     /**
      * Offset for field:
@@ -375,7 +375,7 @@ public class WGPUTextureViewDescriptor {
         return arrayLayerCount$LAYOUT;
     }
 
-    private static final long arrayLayerCount$OFFSET = 44;
+    private static final long arrayLayerCount$OFFSET = $LAYOUT.byteOffset(groupElement("arrayLayerCount"));
 
     /**
      * Offset for field:
@@ -419,7 +419,7 @@ public class WGPUTextureViewDescriptor {
         return aspect$LAYOUT;
     }
 
-    private static final long aspect$OFFSET = 48;
+    private static final long aspect$OFFSET = $LAYOUT.byteOffset(groupElement("aspect"));
 
     /**
      * Offset for field:
@@ -463,7 +463,7 @@ public class WGPUTextureViewDescriptor {
         return usage$LAYOUT;
     }
 
-    private static final long usage$OFFSET = 56;
+    private static final long usage$OFFSET = $LAYOUT.byteOffset(groupElement("usage"));
 
     /**
      * Offset for field:

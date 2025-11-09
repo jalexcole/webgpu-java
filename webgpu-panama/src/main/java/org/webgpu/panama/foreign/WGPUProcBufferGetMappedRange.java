@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void *(*WGPUProcBufferGetMappedRange)(WGPUBuffer, size_t, size_t)
  * }
  */
-public class WGPUProcBufferGetMappedRange {
+public final class WGPUProcBufferGetMappedRange {
 
-    WGPUProcBufferGetMappedRange() {
+    private WGPUProcBufferGetMappedRange() {
         // Should not be called directly
     }
 
@@ -59,9 +59,11 @@ public class WGPUProcBufferGetMappedRange {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static MemorySegment invoke(MemorySegment funcPtr,MemorySegment buffer, long offset, long size) {
+    public static MemorySegment invoke(MemorySegment funcPtr, MemorySegment buffer, long offset, long size) {
         try {
             return (MemorySegment) DOWN$MH.invokeExact(funcPtr, buffer, offset, size);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

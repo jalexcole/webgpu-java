@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef WGPUFuture (*WGPUProcShaderModuleGetCompilationInfo)(WGPUShaderModule, WGPUCompilationInfoCallbackInfo)
  * }
  */
-public class WGPUProcShaderModuleGetCompilationInfo {
+public final class WGPUProcShaderModuleGetCompilationInfo {
 
-    WGPUProcShaderModuleGetCompilationInfo() {
+    private WGPUProcShaderModuleGetCompilationInfo() {
         // Should not be called directly
     }
 
@@ -58,9 +58,11 @@ public class WGPUProcShaderModuleGetCompilationInfo {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static MemorySegment invoke(MemorySegment funcPtr, SegmentAllocator alloc,MemorySegment shaderModule, MemorySegment callbackInfo) {
+    public static MemorySegment invoke(MemorySegment funcPtr, SegmentAllocator alloc, MemorySegment shaderModule, MemorySegment callbackInfo) {
         try {
             return (MemorySegment) DOWN$MH.invokeExact(funcPtr, alloc, shaderModule, callbackInfo);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

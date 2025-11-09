@@ -8,7 +8,7 @@ import org.webgpu.api.Limits;
 import org.webgpu.panama.foreign.WGPULimits;
 
 public record LimitsImpl(MemorySegment ptr) implements Limits {
-
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(LimitsImpl.class);
     @Override
     public Optional<ChainedStruct> nextInChain() {
         var nextInChainPtr = WGPULimits.nextInChain(this.ptr);

@@ -54,7 +54,7 @@ public class WGPUBufferBindingLayout {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -98,7 +98,7 @@ public class WGPUBufferBindingLayout {
         return type$LAYOUT;
     }
 
-    private static final long type$OFFSET = 8;
+    private static final long type$OFFSET = $LAYOUT.byteOffset(groupElement("type"));
 
     /**
      * Offset for field:
@@ -142,7 +142,7 @@ public class WGPUBufferBindingLayout {
         return hasDynamicOffset$LAYOUT;
     }
 
-    private static final long hasDynamicOffset$OFFSET = 12;
+    private static final long hasDynamicOffset$OFFSET = $LAYOUT.byteOffset(groupElement("hasDynamicOffset"));
 
     /**
      * Offset for field:
@@ -186,7 +186,7 @@ public class WGPUBufferBindingLayout {
         return minBindingSize$LAYOUT;
     }
 
-    private static final long minBindingSize$OFFSET = 16;
+    private static final long minBindingSize$OFFSET = $LAYOUT.byteOffset(groupElement("minBindingSize"));
 
     /**
      * Offset for field:

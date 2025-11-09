@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcSurfaceGetCurrentTexture)(WGPUSurface, WGPUSurfaceTexture *)
  * }
  */
-public class WGPUProcSurfaceGetCurrentTexture {
+public final class WGPUProcSurfaceGetCurrentTexture {
 
-    WGPUProcSurfaceGetCurrentTexture() {
+    private WGPUProcSurfaceGetCurrentTexture() {
         // Should not be called directly
     }
 
@@ -57,9 +57,11 @@ public class WGPUProcSurfaceGetCurrentTexture {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment surface, MemorySegment surfaceTexture) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment surface, MemorySegment surfaceTexture) {
         try {
              DOWN$MH.invokeExact(funcPtr, surface, surfaceTexture);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

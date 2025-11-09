@@ -6,7 +6,7 @@ import org.webgpu.api.RenderBundle;
 import org.webgpu.panama.foreign.webgpu_h;
 
 public record RenderBundleImpl(MemorySegment ptr) implements RenderBundle {
-
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(RenderBundleImpl.class);
     @Override
     public void setLabel(String label) {
         // TODO Auto-generated method stub

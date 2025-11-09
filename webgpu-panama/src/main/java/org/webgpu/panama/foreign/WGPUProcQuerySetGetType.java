@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef WGPUQueryType (*WGPUProcQuerySetGetType)(WGPUQuerySet)
  * }
  */
-public class WGPUProcQuerySetGetType {
+public final class WGPUProcQuerySetGetType {
 
-    WGPUProcQuerySetGetType() {
+    private WGPUProcQuerySetGetType() {
         // Should not be called directly
     }
 
@@ -57,9 +57,11 @@ public class WGPUProcQuerySetGetType {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static int invoke(MemorySegment funcPtr,MemorySegment querySet) {
+    public static int invoke(MemorySegment funcPtr, MemorySegment querySet) {
         try {
             return (int) DOWN$MH.invokeExact(funcPtr, querySet);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

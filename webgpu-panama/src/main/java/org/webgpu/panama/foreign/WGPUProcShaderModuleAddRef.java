@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcShaderModuleAddRef)(WGPUShaderModule)
  * }
  */
-public class WGPUProcShaderModuleAddRef {
+public final class WGPUProcShaderModuleAddRef {
 
-    WGPUProcShaderModuleAddRef() {
+    private WGPUProcShaderModuleAddRef() {
         // Should not be called directly
     }
 
@@ -56,9 +56,11 @@ public class WGPUProcShaderModuleAddRef {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment shaderModule) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment shaderModule) {
         try {
              DOWN$MH.invokeExact(funcPtr, shaderModule);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

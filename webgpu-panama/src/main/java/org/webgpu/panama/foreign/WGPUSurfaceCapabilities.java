@@ -62,7 +62,7 @@ public class WGPUSurfaceCapabilities {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -106,7 +106,7 @@ public class WGPUSurfaceCapabilities {
         return usages$LAYOUT;
     }
 
-    private static final long usages$OFFSET = 8;
+    private static final long usages$OFFSET = $LAYOUT.byteOffset(groupElement("usages"));
 
     /**
      * Offset for field:
@@ -150,7 +150,7 @@ public class WGPUSurfaceCapabilities {
         return formatCount$LAYOUT;
     }
 
-    private static final long formatCount$OFFSET = 16;
+    private static final long formatCount$OFFSET = $LAYOUT.byteOffset(groupElement("formatCount"));
 
     /**
      * Offset for field:
@@ -194,7 +194,7 @@ public class WGPUSurfaceCapabilities {
         return formats$LAYOUT;
     }
 
-    private static final long formats$OFFSET = 24;
+    private static final long formats$OFFSET = $LAYOUT.byteOffset(groupElement("formats"));
 
     /**
      * Offset for field:
@@ -238,7 +238,7 @@ public class WGPUSurfaceCapabilities {
         return presentModeCount$LAYOUT;
     }
 
-    private static final long presentModeCount$OFFSET = 32;
+    private static final long presentModeCount$OFFSET = $LAYOUT.byteOffset(groupElement("presentModeCount"));
 
     /**
      * Offset for field:
@@ -282,7 +282,7 @@ public class WGPUSurfaceCapabilities {
         return presentModes$LAYOUT;
     }
 
-    private static final long presentModes$OFFSET = 40;
+    private static final long presentModes$OFFSET = $LAYOUT.byteOffset(groupElement("presentModes"));
 
     /**
      * Offset for field:
@@ -326,7 +326,7 @@ public class WGPUSurfaceCapabilities {
         return alphaModeCount$LAYOUT;
     }
 
-    private static final long alphaModeCount$OFFSET = 48;
+    private static final long alphaModeCount$OFFSET = $LAYOUT.byteOffset(groupElement("alphaModeCount"));
 
     /**
      * Offset for field:
@@ -370,7 +370,7 @@ public class WGPUSurfaceCapabilities {
         return alphaModes$LAYOUT;
     }
 
-    private static final long alphaModes$OFFSET = 56;
+    private static final long alphaModes$OFFSET = $LAYOUT.byteOffset(groupElement("alphaModes"));
 
     /**
      * Offset for field:

@@ -4,15 +4,22 @@ package org.webgpu.panama.foreign;
 
 import java.lang.invoke.*;
 import java.lang.foreign.*;
+import java.nio.ByteOrder;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
+import static java.lang.foreign.ValueLayout.*;
+import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
  * {@snippet lang=c :
  * typedef void (*WGPULogCallback)(WGPULogLevel, WGPUStringView, void *)
  * }
  */
-public class WGPULogCallback {
+public final class WGPULogCallback {
 
-    WGPULogCallback() {
+    private WGPULogCallback() {
         // Should not be called directly
     }
 
@@ -51,9 +58,11 @@ public class WGPULogCallback {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,int level, MemorySegment message, MemorySegment userdata) {
+    public static void invoke(MemorySegment funcPtr, int level, MemorySegment message, MemorySegment userdata) {
         try {
              DOWN$MH.invokeExact(funcPtr, level, message, userdata);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

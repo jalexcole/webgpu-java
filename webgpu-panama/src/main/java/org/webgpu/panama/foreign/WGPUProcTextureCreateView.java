@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef WGPUTextureView (*WGPUProcTextureCreateView)(WGPUTexture, const WGPUTextureViewDescriptor *)
  * }
  */
-public class WGPUProcTextureCreateView {
+public final class WGPUProcTextureCreateView {
 
-    WGPUProcTextureCreateView() {
+    private WGPUProcTextureCreateView() {
         // Should not be called directly
     }
 
@@ -58,9 +58,11 @@ public class WGPUProcTextureCreateView {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static MemorySegment invoke(MemorySegment funcPtr,MemorySegment texture, MemorySegment descriptor) {
+    public static MemorySegment invoke(MemorySegment funcPtr, MemorySegment texture, MemorySegment descriptor) {
         try {
             return (MemorySegment) DOWN$MH.invokeExact(funcPtr, texture, descriptor);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

@@ -16,7 +16,7 @@ import org.webgpu.panama.foreign.WGPUSurfaceCapabilities;
 import org.webgpu.panama.foreign.webgpu_h;
 
 public record SurfaceImpl(@SuppressWarnings("preview") MemorySegment ptr) implements Surface {
-
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(SurfaceImpl.class);
     @Override
     public void configure(SurfaceConfiguration config) {
         webgpu_h.wgpuSurfaceConfigure(ptr, config.ptr());

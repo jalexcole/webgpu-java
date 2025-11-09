@@ -57,7 +57,7 @@ public class WGPUDeviceLostCallbackInfo {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -101,7 +101,7 @@ public class WGPUDeviceLostCallbackInfo {
         return mode$LAYOUT;
     }
 
-    private static final long mode$OFFSET = 8;
+    private static final long mode$OFFSET = $LAYOUT.byteOffset(groupElement("mode"));
 
     /**
      * Offset for field:
@@ -145,7 +145,7 @@ public class WGPUDeviceLostCallbackInfo {
         return callback$LAYOUT;
     }
 
-    private static final long callback$OFFSET = 16;
+    private static final long callback$OFFSET = $LAYOUT.byteOffset(groupElement("callback"));
 
     /**
      * Offset for field:
@@ -189,7 +189,7 @@ public class WGPUDeviceLostCallbackInfo {
         return userdata1$LAYOUT;
     }
 
-    private static final long userdata1$OFFSET = 24;
+    private static final long userdata1$OFFSET = $LAYOUT.byteOffset(groupElement("userdata1"));
 
     /**
      * Offset for field:
@@ -233,7 +233,7 @@ public class WGPUDeviceLostCallbackInfo {
         return userdata2$LAYOUT;
     }
 
-    private static final long userdata2$OFFSET = 32;
+    private static final long userdata2$OFFSET = $LAYOUT.byteOffset(groupElement("userdata2"));
 
     /**
      * Offset for field:

@@ -55,7 +55,7 @@ public class WGPUTextureBindingLayout {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -99,7 +99,7 @@ public class WGPUTextureBindingLayout {
         return sampleType$LAYOUT;
     }
 
-    private static final long sampleType$OFFSET = 8;
+    private static final long sampleType$OFFSET = $LAYOUT.byteOffset(groupElement("sampleType"));
 
     /**
      * Offset for field:
@@ -143,7 +143,7 @@ public class WGPUTextureBindingLayout {
         return viewDimension$LAYOUT;
     }
 
-    private static final long viewDimension$OFFSET = 12;
+    private static final long viewDimension$OFFSET = $LAYOUT.byteOffset(groupElement("viewDimension"));
 
     /**
      * Offset for field:
@@ -187,7 +187,7 @@ public class WGPUTextureBindingLayout {
         return multisampled$LAYOUT;
     }
 
-    private static final long multisampled$OFFSET = 16;
+    private static final long multisampled$OFFSET = $LAYOUT.byteOffset(groupElement("multisampled"));
 
     /**
      * Offset for field:

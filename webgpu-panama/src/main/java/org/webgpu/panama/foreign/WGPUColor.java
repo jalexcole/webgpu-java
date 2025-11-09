@@ -54,7 +54,7 @@ public class WGPUColor {
         return r$LAYOUT;
     }
 
-    private static final long r$OFFSET = 0;
+    private static final long r$OFFSET = $LAYOUT.byteOffset(groupElement("r"));
 
     /**
      * Offset for field:
@@ -98,7 +98,7 @@ public class WGPUColor {
         return g$LAYOUT;
     }
 
-    private static final long g$OFFSET = 8;
+    private static final long g$OFFSET = $LAYOUT.byteOffset(groupElement("g"));
 
     /**
      * Offset for field:
@@ -142,7 +142,7 @@ public class WGPUColor {
         return b$LAYOUT;
     }
 
-    private static final long b$OFFSET = 16;
+    private static final long b$OFFSET = $LAYOUT.byteOffset(groupElement("b"));
 
     /**
      * Offset for field:
@@ -186,7 +186,7 @@ public class WGPUColor {
         return a$LAYOUT;
     }
 
-    private static final long a$OFFSET = 24;
+    private static final long a$OFFSET = $LAYOUT.byteOffset(groupElement("a"));
 
     /**
      * Offset for field:

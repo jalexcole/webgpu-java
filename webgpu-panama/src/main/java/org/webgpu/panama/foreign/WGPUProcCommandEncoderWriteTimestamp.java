@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcCommandEncoderWriteTimestamp)(WGPUCommandEncoder, WGPUQuerySet, uint32_t)
  * }
  */
-public class WGPUProcCommandEncoderWriteTimestamp {
+public final class WGPUProcCommandEncoderWriteTimestamp {
 
-    WGPUProcCommandEncoderWriteTimestamp() {
+    private WGPUProcCommandEncoderWriteTimestamp() {
         // Should not be called directly
     }
 
@@ -58,9 +58,11 @@ public class WGPUProcCommandEncoderWriteTimestamp {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment commandEncoder, MemorySegment querySet, int queryIndex) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment commandEncoder, MemorySegment querySet, int queryIndex) {
         try {
              DOWN$MH.invokeExact(funcPtr, commandEncoder, querySet, queryIndex);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

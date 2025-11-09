@@ -55,7 +55,7 @@ public class WGPUVertexBufferLayout {
         return stepMode$LAYOUT;
     }
 
-    private static final long stepMode$OFFSET = 0;
+    private static final long stepMode$OFFSET = $LAYOUT.byteOffset(groupElement("stepMode"));
 
     /**
      * Offset for field:
@@ -99,7 +99,7 @@ public class WGPUVertexBufferLayout {
         return arrayStride$LAYOUT;
     }
 
-    private static final long arrayStride$OFFSET = 8;
+    private static final long arrayStride$OFFSET = $LAYOUT.byteOffset(groupElement("arrayStride"));
 
     /**
      * Offset for field:
@@ -143,7 +143,7 @@ public class WGPUVertexBufferLayout {
         return attributeCount$LAYOUT;
     }
 
-    private static final long attributeCount$OFFSET = 16;
+    private static final long attributeCount$OFFSET = $LAYOUT.byteOffset(groupElement("attributeCount"));
 
     /**
      * Offset for field:
@@ -187,7 +187,7 @@ public class WGPUVertexBufferLayout {
         return attributes$LAYOUT;
     }
 
-    private static final long attributes$OFFSET = 24;
+    private static final long attributes$OFFSET = $LAYOUT.byteOffset(groupElement("attributes"));
 
     /**
      * Offset for field:

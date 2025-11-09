@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcRenderPassEncoderSetStencilReference)(WGPURenderPassEncoder, uint32_t)
  * }
  */
-public class WGPUProcRenderPassEncoderSetStencilReference {
+public final class WGPUProcRenderPassEncoderSetStencilReference {
 
-    WGPUProcRenderPassEncoderSetStencilReference() {
+    private WGPUProcRenderPassEncoderSetStencilReference() {
         // Should not be called directly
     }
 
@@ -57,9 +57,11 @@ public class WGPUProcRenderPassEncoderSetStencilReference {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment renderPassEncoder, int reference) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment renderPassEncoder, int reference) {
         try {
              DOWN$MH.invokeExact(funcPtr, renderPassEncoder, reference);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProc)(void)
  * }
  */
-public class WGPUProc {
+public final class WGPUProc {
 
-    WGPUProc() {
+    private WGPUProc() {
         // Should not be called directly
     }
 
@@ -57,6 +57,8 @@ public class WGPUProc {
     public static void invoke(MemorySegment funcPtr) {
         try {
              DOWN$MH.invokeExact(funcPtr);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

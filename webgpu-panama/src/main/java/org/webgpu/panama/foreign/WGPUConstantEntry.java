@@ -52,7 +52,7 @@ public class WGPUConstantEntry {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -96,7 +96,7 @@ public class WGPUConstantEntry {
         return key$LAYOUT;
     }
 
-    private static final long key$OFFSET = 8;
+    private static final long key$OFFSET = $LAYOUT.byteOffset(groupElement("key"));
 
     /**
      * Offset for field:
@@ -140,7 +140,7 @@ public class WGPUConstantEntry {
         return value$LAYOUT;
     }
 
-    private static final long value$OFFSET = 24;
+    private static final long value$OFFSET = $LAYOUT.byteOffset(groupElement("value"));
 
     /**
      * Offset for field:

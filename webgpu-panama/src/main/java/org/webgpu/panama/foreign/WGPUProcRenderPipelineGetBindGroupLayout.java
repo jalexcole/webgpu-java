@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef WGPUBindGroupLayout (*WGPUProcRenderPipelineGetBindGroupLayout)(WGPURenderPipeline, uint32_t)
  * }
  */
-public class WGPUProcRenderPipelineGetBindGroupLayout {
+public final class WGPUProcRenderPipelineGetBindGroupLayout {
 
-    WGPUProcRenderPipelineGetBindGroupLayout() {
+    private WGPUProcRenderPipelineGetBindGroupLayout() {
         // Should not be called directly
     }
 
@@ -58,9 +58,11 @@ public class WGPUProcRenderPipelineGetBindGroupLayout {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static MemorySegment invoke(MemorySegment funcPtr,MemorySegment renderPipeline, int groupIndex) {
+    public static MemorySegment invoke(MemorySegment funcPtr, MemorySegment renderPipeline, int groupIndex) {
         try {
             return (MemorySegment) DOWN$MH.invokeExact(funcPtr, renderPipeline, groupIndex);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

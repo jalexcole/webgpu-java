@@ -54,7 +54,7 @@ public class WGPUComputePipelineDescriptor {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -98,7 +98,7 @@ public class WGPUComputePipelineDescriptor {
         return label$LAYOUT;
     }
 
-    private static final long label$OFFSET = 8;
+    private static final long label$OFFSET = $LAYOUT.byteOffset(groupElement("label"));
 
     /**
      * Offset for field:
@@ -142,7 +142,7 @@ public class WGPUComputePipelineDescriptor {
         return layout$LAYOUT;
     }
 
-    private static final long layout$OFFSET = 24;
+    private static final long layout$OFFSET = $LAYOUT.byteOffset(groupElement("layout"));
 
     /**
      * Offset for field:
@@ -186,7 +186,7 @@ public class WGPUComputePipelineDescriptor {
         return compute$LAYOUT;
     }
 
-    private static final long compute$OFFSET = 32;
+    private static final long compute$OFFSET = $LAYOUT.byteOffset(groupElement("compute"));
 
     /**
      * Offset for field:

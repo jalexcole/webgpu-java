@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcAdapterRelease)(WGPUAdapter)
  * }
  */
-public class WGPUProcAdapterRelease {
+public final class WGPUProcAdapterRelease {
 
-    WGPUProcAdapterRelease() {
+    private WGPUProcAdapterRelease() {
         // Should not be called directly
     }
 
@@ -56,9 +56,11 @@ public class WGPUProcAdapterRelease {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment adapter) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment adapter) {
         try {
              DOWN$MH.invokeExact(funcPtr, adapter);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

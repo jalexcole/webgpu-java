@@ -21,9 +21,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * } *, void *, void *)
  * }
  */
-public class WGPUCompilationInfoCallback {
+public final class WGPUCompilationInfoCallback {
 
-    WGPUCompilationInfoCallback() {
+    private WGPUCompilationInfoCallback() {
         // Should not be called directly
     }
 
@@ -63,9 +63,11 @@ public class WGPUCompilationInfoCallback {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,int status, MemorySegment compilationInfo, MemorySegment userdata1, MemorySegment userdata2) {
+    public static void invoke(MemorySegment funcPtr, int status, MemorySegment compilationInfo, MemorySegment userdata1, MemorySegment userdata2) {
         try {
              DOWN$MH.invokeExact(funcPtr, status, compilationInfo, userdata1, userdata2);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcComputePassEncoderAddRef)(WGPUComputePassEncoder)
  * }
  */
-public class WGPUProcComputePassEncoderAddRef {
+public final class WGPUProcComputePassEncoderAddRef {
 
-    WGPUProcComputePassEncoderAddRef() {
+    private WGPUProcComputePassEncoderAddRef() {
         // Should not be called directly
     }
 
@@ -56,9 +56,11 @@ public class WGPUProcComputePassEncoderAddRef {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment computePassEncoder) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment computePassEncoder) {
         try {
              DOWN$MH.invokeExact(funcPtr, computePassEncoder);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcSurfaceRelease)(WGPUSurface)
  * }
  */
-public class WGPUProcSurfaceRelease {
+public final class WGPUProcSurfaceRelease {
 
-    WGPUProcSurfaceRelease() {
+    private WGPUProcSurfaceRelease() {
         // Should not be called directly
     }
 
@@ -56,9 +56,11 @@ public class WGPUProcSurfaceRelease {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment surface) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment surface) {
         try {
              DOWN$MH.invokeExact(funcPtr, surface);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

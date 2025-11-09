@@ -52,7 +52,7 @@ public class WGPUBlendComponent {
         return operation$LAYOUT;
     }
 
-    private static final long operation$OFFSET = 0;
+    private static final long operation$OFFSET = $LAYOUT.byteOffset(groupElement("operation"));
 
     /**
      * Offset for field:
@@ -96,7 +96,7 @@ public class WGPUBlendComponent {
         return srcFactor$LAYOUT;
     }
 
-    private static final long srcFactor$OFFSET = 4;
+    private static final long srcFactor$OFFSET = $LAYOUT.byteOffset(groupElement("srcFactor"));
 
     /**
      * Offset for field:
@@ -140,7 +140,7 @@ public class WGPUBlendComponent {
         return dstFactor$LAYOUT;
     }
 
-    private static final long dstFactor$OFFSET = 8;
+    private static final long dstFactor$OFFSET = $LAYOUT.byteOffset(groupElement("dstFactor"));
 
     /**
      * Offset for field:

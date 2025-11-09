@@ -50,7 +50,7 @@ public class __mbstate_t {
         return __mbstate8$LAYOUT;
     }
 
-    private static final long __mbstate8$OFFSET = 0;
+    private static final long __mbstate8$OFFSET = $LAYOUT.byteOffset(groupElement("__mbstate8"));
 
     /**
      * Offset for field:
@@ -127,7 +127,7 @@ public class __mbstate_t {
         return _mbstateL$LAYOUT;
     }
 
-    private static final long _mbstateL$OFFSET = 0;
+    private static final long _mbstateL$OFFSET = $LAYOUT.byteOffset(groupElement("_mbstateL"));
 
     /**
      * Offset for field:

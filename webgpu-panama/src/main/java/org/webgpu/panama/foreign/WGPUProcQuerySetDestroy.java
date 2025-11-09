@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcQuerySetDestroy)(WGPUQuerySet)
  * }
  */
-public class WGPUProcQuerySetDestroy {
+public final class WGPUProcQuerySetDestroy {
 
-    WGPUProcQuerySetDestroy() {
+    private WGPUProcQuerySetDestroy() {
         // Should not be called directly
     }
 
@@ -56,9 +56,11 @@ public class WGPUProcQuerySetDestroy {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment querySet) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment querySet) {
         try {
              DOWN$MH.invokeExact(funcPtr, querySet);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

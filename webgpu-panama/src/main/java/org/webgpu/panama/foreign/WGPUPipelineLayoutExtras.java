@@ -52,7 +52,7 @@ public class WGPUPipelineLayoutExtras {
         return chain$LAYOUT;
     }
 
-    private static final long chain$OFFSET = 0;
+    private static final long chain$OFFSET = $LAYOUT.byteOffset(groupElement("chain"));
 
     /**
      * Offset for field:
@@ -96,7 +96,7 @@ public class WGPUPipelineLayoutExtras {
         return pushConstantRangeCount$LAYOUT;
     }
 
-    private static final long pushConstantRangeCount$OFFSET = 16;
+    private static final long pushConstantRangeCount$OFFSET = $LAYOUT.byteOffset(groupElement("pushConstantRangeCount"));
 
     /**
      * Offset for field:
@@ -140,7 +140,7 @@ public class WGPUPipelineLayoutExtras {
         return pushConstantRanges$LAYOUT;
     }
 
-    private static final long pushConstantRanges$OFFSET = 24;
+    private static final long pushConstantRanges$OFFSET = $LAYOUT.byteOffset(groupElement("pushConstantRanges"));
 
     /**
      * Offset for field:

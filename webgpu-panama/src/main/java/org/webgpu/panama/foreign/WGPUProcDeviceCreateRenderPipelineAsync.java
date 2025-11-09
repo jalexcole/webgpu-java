@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef WGPUFuture (*WGPUProcDeviceCreateRenderPipelineAsync)(WGPUDevice, const WGPURenderPipelineDescriptor *, WGPUCreateRenderPipelineAsyncCallbackInfo)
  * }
  */
-public class WGPUProcDeviceCreateRenderPipelineAsync {
+public final class WGPUProcDeviceCreateRenderPipelineAsync {
 
-    WGPUProcDeviceCreateRenderPipelineAsync() {
+    private WGPUProcDeviceCreateRenderPipelineAsync() {
         // Should not be called directly
     }
 
@@ -59,9 +59,11 @@ public class WGPUProcDeviceCreateRenderPipelineAsync {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static MemorySegment invoke(MemorySegment funcPtr, SegmentAllocator alloc,MemorySegment device, MemorySegment descriptor, MemorySegment callbackInfo) {
+    public static MemorySegment invoke(MemorySegment funcPtr, SegmentAllocator alloc, MemorySegment device, MemorySegment descriptor, MemorySegment callbackInfo) {
         try {
             return (MemorySegment) DOWN$MH.invokeExact(funcPtr, alloc, device, descriptor, callbackInfo);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

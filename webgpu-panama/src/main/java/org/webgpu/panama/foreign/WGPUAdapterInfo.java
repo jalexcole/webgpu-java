@@ -64,7 +64,7 @@ public class WGPUAdapterInfo {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -108,7 +108,7 @@ public class WGPUAdapterInfo {
         return vendor$LAYOUT;
     }
 
-    private static final long vendor$OFFSET = 8;
+    private static final long vendor$OFFSET = $LAYOUT.byteOffset(groupElement("vendor"));
 
     /**
      * Offset for field:
@@ -152,7 +152,7 @@ public class WGPUAdapterInfo {
         return architecture$LAYOUT;
     }
 
-    private static final long architecture$OFFSET = 24;
+    private static final long architecture$OFFSET = $LAYOUT.byteOffset(groupElement("architecture"));
 
     /**
      * Offset for field:
@@ -196,7 +196,7 @@ public class WGPUAdapterInfo {
         return device$LAYOUT;
     }
 
-    private static final long device$OFFSET = 40;
+    private static final long device$OFFSET = $LAYOUT.byteOffset(groupElement("device"));
 
     /**
      * Offset for field:
@@ -240,7 +240,7 @@ public class WGPUAdapterInfo {
         return description$LAYOUT;
     }
 
-    private static final long description$OFFSET = 56;
+    private static final long description$OFFSET = $LAYOUT.byteOffset(groupElement("description"));
 
     /**
      * Offset for field:
@@ -284,7 +284,7 @@ public class WGPUAdapterInfo {
         return backendType$LAYOUT;
     }
 
-    private static final long backendType$OFFSET = 72;
+    private static final long backendType$OFFSET = $LAYOUT.byteOffset(groupElement("backendType"));
 
     /**
      * Offset for field:
@@ -328,7 +328,7 @@ public class WGPUAdapterInfo {
         return adapterType$LAYOUT;
     }
 
-    private static final long adapterType$OFFSET = 76;
+    private static final long adapterType$OFFSET = $LAYOUT.byteOffset(groupElement("adapterType"));
 
     /**
      * Offset for field:
@@ -372,7 +372,7 @@ public class WGPUAdapterInfo {
         return vendorID$LAYOUT;
     }
 
-    private static final long vendorID$OFFSET = 80;
+    private static final long vendorID$OFFSET = $LAYOUT.byteOffset(groupElement("vendorID"));
 
     /**
      * Offset for field:
@@ -416,7 +416,7 @@ public class WGPUAdapterInfo {
         return deviceID$LAYOUT;
     }
 
-    private static final long deviceID$OFFSET = 84;
+    private static final long deviceID$OFFSET = $LAYOUT.byteOffset(groupElement("deviceID"));
 
     /**
      * Offset for field:

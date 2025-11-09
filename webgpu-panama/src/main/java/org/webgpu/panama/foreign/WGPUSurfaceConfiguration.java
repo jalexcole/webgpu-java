@@ -67,7 +67,7 @@ public class WGPUSurfaceConfiguration {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -111,7 +111,7 @@ public class WGPUSurfaceConfiguration {
         return device$LAYOUT;
     }
 
-    private static final long device$OFFSET = 8;
+    private static final long device$OFFSET = $LAYOUT.byteOffset(groupElement("device"));
 
     /**
      * Offset for field:
@@ -155,7 +155,7 @@ public class WGPUSurfaceConfiguration {
         return format$LAYOUT;
     }
 
-    private static final long format$OFFSET = 16;
+    private static final long format$OFFSET = $LAYOUT.byteOffset(groupElement("format"));
 
     /**
      * Offset for field:
@@ -199,7 +199,7 @@ public class WGPUSurfaceConfiguration {
         return usage$LAYOUT;
     }
 
-    private static final long usage$OFFSET = 24;
+    private static final long usage$OFFSET = $LAYOUT.byteOffset(groupElement("usage"));
 
     /**
      * Offset for field:
@@ -243,7 +243,7 @@ public class WGPUSurfaceConfiguration {
         return width$LAYOUT;
     }
 
-    private static final long width$OFFSET = 32;
+    private static final long width$OFFSET = $LAYOUT.byteOffset(groupElement("width"));
 
     /**
      * Offset for field:
@@ -287,7 +287,7 @@ public class WGPUSurfaceConfiguration {
         return height$LAYOUT;
     }
 
-    private static final long height$OFFSET = 36;
+    private static final long height$OFFSET = $LAYOUT.byteOffset(groupElement("height"));
 
     /**
      * Offset for field:
@@ -331,7 +331,7 @@ public class WGPUSurfaceConfiguration {
         return viewFormatCount$LAYOUT;
     }
 
-    private static final long viewFormatCount$OFFSET = 40;
+    private static final long viewFormatCount$OFFSET = $LAYOUT.byteOffset(groupElement("viewFormatCount"));
 
     /**
      * Offset for field:
@@ -375,7 +375,7 @@ public class WGPUSurfaceConfiguration {
         return viewFormats$LAYOUT;
     }
 
-    private static final long viewFormats$OFFSET = 48;
+    private static final long viewFormats$OFFSET = $LAYOUT.byteOffset(groupElement("viewFormats"));
 
     /**
      * Offset for field:
@@ -419,7 +419,7 @@ public class WGPUSurfaceConfiguration {
         return alphaMode$LAYOUT;
     }
 
-    private static final long alphaMode$OFFSET = 56;
+    private static final long alphaMode$OFFSET = $LAYOUT.byteOffset(groupElement("alphaMode"));
 
     /**
      * Offset for field:
@@ -463,7 +463,7 @@ public class WGPUSurfaceConfiguration {
         return presentMode$LAYOUT;
     }
 
-    private static final long presentMode$OFFSET = 60;
+    private static final long presentMode$OFFSET = $LAYOUT.byteOffset(groupElement("presentMode"));
 
     /**
      * Offset for field:

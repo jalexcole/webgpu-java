@@ -54,7 +54,7 @@ public class WGPUQuerySetDescriptor {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -98,7 +98,7 @@ public class WGPUQuerySetDescriptor {
         return label$LAYOUT;
     }
 
-    private static final long label$OFFSET = 8;
+    private static final long label$OFFSET = $LAYOUT.byteOffset(groupElement("label"));
 
     /**
      * Offset for field:
@@ -142,7 +142,7 @@ public class WGPUQuerySetDescriptor {
         return type$LAYOUT;
     }
 
-    private static final long type$OFFSET = 24;
+    private static final long type$OFFSET = $LAYOUT.byteOffset(groupElement("type"));
 
     /**
      * Offset for field:
@@ -186,7 +186,7 @@ public class WGPUQuerySetDescriptor {
         return count$LAYOUT;
     }
 
-    private static final long count$OFFSET = 28;
+    private static final long count$OFFSET = $LAYOUT.byteOffset(groupElement("count"));
 
     /**
      * Offset for field:

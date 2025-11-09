@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUQueueWorkDoneCallback)(WGPUQueueWorkDoneStatus, void *, void *)
  * }
  */
-public class WGPUQueueWorkDoneCallback {
+public final class WGPUQueueWorkDoneCallback {
 
-    WGPUQueueWorkDoneCallback() {
+    private WGPUQueueWorkDoneCallback() {
         // Should not be called directly
     }
 
@@ -58,9 +58,11 @@ public class WGPUQueueWorkDoneCallback {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,int status, MemorySegment userdata1, MemorySegment userdata2) {
+    public static void invoke(MemorySegment funcPtr, int status, MemorySegment userdata1, MemorySegment userdata2) {
         try {
              DOWN$MH.invokeExact(funcPtr, status, userdata1, userdata2);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

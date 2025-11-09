@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcCommandEncoderResolveQuerySet)(WGPUCommandEncoder, WGPUQuerySet, uint32_t, uint32_t, WGPUBuffer, uint64_t)
  * }
  */
-public class WGPUProcCommandEncoderResolveQuerySet {
+public final class WGPUProcCommandEncoderResolveQuerySet {
 
-    WGPUProcCommandEncoderResolveQuerySet() {
+    private WGPUProcCommandEncoderResolveQuerySet() {
         // Should not be called directly
     }
 
@@ -61,9 +61,11 @@ public class WGPUProcCommandEncoderResolveQuerySet {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment commandEncoder, MemorySegment querySet, int firstQuery, int queryCount, MemorySegment destination, long destinationOffset) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment commandEncoder, MemorySegment querySet, int firstQuery, int queryCount, MemorySegment destination, long destinationOffset) {
         try {
              DOWN$MH.invokeExact(funcPtr, commandEncoder, querySet, firstQuery, queryCount, destination, destinationOffset);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

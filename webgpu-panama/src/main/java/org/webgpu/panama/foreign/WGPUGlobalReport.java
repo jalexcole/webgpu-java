@@ -50,7 +50,7 @@ public class WGPUGlobalReport {
         return surfaces$LAYOUT;
     }
 
-    private static final long surfaces$OFFSET = 0;
+    private static final long surfaces$OFFSET = $LAYOUT.byteOffset(groupElement("surfaces"));
 
     /**
      * Offset for field:
@@ -94,7 +94,7 @@ public class WGPUGlobalReport {
         return hub$LAYOUT;
     }
 
-    private static final long hub$OFFSET = 32;
+    private static final long hub$OFFSET = $LAYOUT.byteOffset(groupElement("hub"));
 
     /**
      * Offset for field:

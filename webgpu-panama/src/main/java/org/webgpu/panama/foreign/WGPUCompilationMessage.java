@@ -61,7 +61,7 @@ public class WGPUCompilationMessage {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -105,7 +105,7 @@ public class WGPUCompilationMessage {
         return message$LAYOUT;
     }
 
-    private static final long message$OFFSET = 8;
+    private static final long message$OFFSET = $LAYOUT.byteOffset(groupElement("message"));
 
     /**
      * Offset for field:
@@ -149,7 +149,7 @@ public class WGPUCompilationMessage {
         return type$LAYOUT;
     }
 
-    private static final long type$OFFSET = 24;
+    private static final long type$OFFSET = $LAYOUT.byteOffset(groupElement("type"));
 
     /**
      * Offset for field:
@@ -193,7 +193,7 @@ public class WGPUCompilationMessage {
         return lineNum$LAYOUT;
     }
 
-    private static final long lineNum$OFFSET = 32;
+    private static final long lineNum$OFFSET = $LAYOUT.byteOffset(groupElement("lineNum"));
 
     /**
      * Offset for field:
@@ -237,7 +237,7 @@ public class WGPUCompilationMessage {
         return linePos$LAYOUT;
     }
 
-    private static final long linePos$OFFSET = 40;
+    private static final long linePos$OFFSET = $LAYOUT.byteOffset(groupElement("linePos"));
 
     /**
      * Offset for field:
@@ -281,7 +281,7 @@ public class WGPUCompilationMessage {
         return offset$LAYOUT;
     }
 
-    private static final long offset$OFFSET = 48;
+    private static final long offset$OFFSET = $LAYOUT.byteOffset(groupElement("offset"));
 
     /**
      * Offset for field:
@@ -325,7 +325,7 @@ public class WGPUCompilationMessage {
         return length$LAYOUT;
     }
 
-    private static final long length$OFFSET = 56;
+    private static final long length$OFFSET = $LAYOUT.byteOffset(groupElement("length"));
 
     /**
      * Offset for field:

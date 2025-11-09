@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcQueueWriteBuffer)(WGPUQueue, WGPUBuffer, uint64_t, const void *, size_t)
  * }
  */
-public class WGPUProcQueueWriteBuffer {
+public final class WGPUProcQueueWriteBuffer {
 
-    WGPUProcQueueWriteBuffer() {
+    private WGPUProcQueueWriteBuffer() {
         // Should not be called directly
     }
 
@@ -60,9 +60,11 @@ public class WGPUProcQueueWriteBuffer {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment queue, MemorySegment buffer, long bufferOffset, MemorySegment data, long size) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment queue, MemorySegment buffer, long bufferOffset, MemorySegment data, long size) {
         try {
              DOWN$MH.invokeExact(funcPtr, queue, buffer, bufferOffset, data, size);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

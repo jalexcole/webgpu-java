@@ -50,7 +50,7 @@ public class WGPUSupportedWGSLLanguageFeatures {
         return featureCount$LAYOUT;
     }
 
-    private static final long featureCount$OFFSET = 0;
+    private static final long featureCount$OFFSET = $LAYOUT.byteOffset(groupElement("featureCount"));
 
     /**
      * Offset for field:
@@ -94,7 +94,7 @@ public class WGPUSupportedWGSLLanguageFeatures {
         return features$LAYOUT;
     }
 
-    private static final long features$OFFSET = 8;
+    private static final long features$OFFSET = $LAYOUT.byteOffset(groupElement("features"));
 
     /**
      * Offset for field:

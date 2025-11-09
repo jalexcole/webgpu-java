@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef WGPUStatus (*WGPUProcGetInstanceCapabilities)(WGPUInstanceCapabilities *)
  * }
  */
-public class WGPUProcGetInstanceCapabilities {
+public final class WGPUProcGetInstanceCapabilities {
 
-    WGPUProcGetInstanceCapabilities() {
+    private WGPUProcGetInstanceCapabilities() {
         // Should not be called directly
     }
 
@@ -57,9 +57,11 @@ public class WGPUProcGetInstanceCapabilities {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static int invoke(MemorySegment funcPtr,MemorySegment capabilities) {
+    public static int invoke(MemorySegment funcPtr, MemorySegment capabilities) {
         try {
             return (int) DOWN$MH.invokeExact(funcPtr, capabilities);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

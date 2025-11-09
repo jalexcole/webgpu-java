@@ -5,7 +5,7 @@ import java.lang.foreign.MemorySegment;
 import org.webgpu.api.CommandBuffer;
 
 public record CommandBufferImpl(MemorySegment ptr) implements CommandBuffer{
-
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(CommandBufferImpl.class);
     @Override
     public void setLabel(String label) {
         // TODO Auto-generated method stub

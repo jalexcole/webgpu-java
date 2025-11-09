@@ -50,7 +50,7 @@ public class WGPUStringView {
         return data$LAYOUT;
     }
 
-    private static final long data$OFFSET = 0;
+    private static final long data$OFFSET = $LAYOUT.byteOffset(groupElement("data"));
 
     /**
      * Offset for field:
@@ -94,7 +94,7 @@ public class WGPUStringView {
         return length$LAYOUT;
     }
 
-    private static final long length$OFFSET = 8;
+    private static final long length$OFFSET = $LAYOUT.byteOffset(groupElement("length"));
 
     /**
      * Offset for field:

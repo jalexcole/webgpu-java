@@ -52,7 +52,7 @@ public class WGPUCompilationInfo {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -96,7 +96,7 @@ public class WGPUCompilationInfo {
         return messageCount$LAYOUT;
     }
 
-    private static final long messageCount$OFFSET = 8;
+    private static final long messageCount$OFFSET = $LAYOUT.byteOffset(groupElement("messageCount"));
 
     /**
      * Offset for field:
@@ -140,7 +140,7 @@ public class WGPUCompilationInfo {
         return messages$LAYOUT;
     }
 
-    private static final long messages$OFFSET = 16;
+    private static final long messages$OFFSET = $LAYOUT.byteOffset(groupElement("messages"));
 
     /**
      * Offset for field:

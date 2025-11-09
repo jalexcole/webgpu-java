@@ -52,7 +52,7 @@ public class WGPUComputePassDescriptor {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -96,7 +96,7 @@ public class WGPUComputePassDescriptor {
         return label$LAYOUT;
     }
 
-    private static final long label$OFFSET = 8;
+    private static final long label$OFFSET = $LAYOUT.byteOffset(groupElement("label"));
 
     /**
      * Offset for field:
@@ -140,7 +140,7 @@ public class WGPUComputePassDescriptor {
         return timestampWrites$LAYOUT;
     }
 
-    private static final long timestampWrites$OFFSET = 24;
+    private static final long timestampWrites$OFFSET = $LAYOUT.byteOffset(groupElement("timestampWrites"));
 
     /**
      * Offset for field:

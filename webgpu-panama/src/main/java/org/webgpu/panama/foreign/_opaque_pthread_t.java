@@ -52,7 +52,7 @@ public class _opaque_pthread_t {
         return __sig$LAYOUT;
     }
 
-    private static final long __sig$OFFSET = 0;
+    private static final long __sig$OFFSET = $LAYOUT.byteOffset(groupElement("__sig"));
 
     /**
      * Offset for field:
@@ -96,7 +96,7 @@ public class _opaque_pthread_t {
         return __cleanup_stack$LAYOUT;
     }
 
-    private static final long __cleanup_stack$OFFSET = 8;
+    private static final long __cleanup_stack$OFFSET = $LAYOUT.byteOffset(groupElement("__cleanup_stack"));
 
     /**
      * Offset for field:
@@ -140,7 +140,7 @@ public class _opaque_pthread_t {
         return __opaque$LAYOUT;
     }
 
-    private static final long __opaque$OFFSET = 16;
+    private static final long __opaque$OFFSET = $LAYOUT.byteOffset(groupElement("__opaque"));
 
     /**
      * Offset for field:

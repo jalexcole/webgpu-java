@@ -12,7 +12,7 @@ import org.webgpu.api.ComputePassEncoder;
 import org.webgpu.api.ComputePipeline;
 
 public record ComputePassEncoderImpl(MemorySegment ptr) implements ComputePassEncoder {
-
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(ComputePassEncoderImpl.class);
     @Override
     public void setPipeline(ComputePipeline pipeline) {
         wgpuComputePassEncoderSetPipeline(this.ptr, pipeline.ptr());

@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcRenderPassEncoderExecuteBundles)(WGPURenderPassEncoder, size_t, const WGPURenderBundle *)
  * }
  */
-public class WGPUProcRenderPassEncoderExecuteBundles {
+public final class WGPUProcRenderPassEncoderExecuteBundles {
 
-    WGPUProcRenderPassEncoderExecuteBundles() {
+    private WGPUProcRenderPassEncoderExecuteBundles() {
         // Should not be called directly
     }
 
@@ -58,9 +58,11 @@ public class WGPUProcRenderPassEncoderExecuteBundles {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment renderPassEncoder, long bundleCount, MemorySegment bundles) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment renderPassEncoder, long bundleCount, MemorySegment bundles) {
         try {
              DOWN$MH.invokeExact(funcPtr, renderPassEncoder, bundleCount, bundles);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

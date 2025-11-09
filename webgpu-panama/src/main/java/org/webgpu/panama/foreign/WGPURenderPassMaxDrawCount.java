@@ -50,7 +50,7 @@ public class WGPURenderPassMaxDrawCount {
         return chain$LAYOUT;
     }
 
-    private static final long chain$OFFSET = 0;
+    private static final long chain$OFFSET = $LAYOUT.byteOffset(groupElement("chain"));
 
     /**
      * Offset for field:
@@ -94,7 +94,7 @@ public class WGPURenderPassMaxDrawCount {
         return maxDrawCount$LAYOUT;
     }
 
-    private static final long maxDrawCount$OFFSET = 16;
+    private static final long maxDrawCount$OFFSET = $LAYOUT.byteOffset(groupElement("maxDrawCount"));
 
     /**
      * Offset for field:

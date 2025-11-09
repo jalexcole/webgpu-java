@@ -60,7 +60,7 @@ public class WGPUBindGroupEntryExtras {
         return chain$LAYOUT;
     }
 
-    private static final long chain$OFFSET = 0;
+    private static final long chain$OFFSET = $LAYOUT.byteOffset(groupElement("chain"));
 
     /**
      * Offset for field:
@@ -104,7 +104,7 @@ public class WGPUBindGroupEntryExtras {
         return buffers$LAYOUT;
     }
 
-    private static final long buffers$OFFSET = 16;
+    private static final long buffers$OFFSET = $LAYOUT.byteOffset(groupElement("buffers"));
 
     /**
      * Offset for field:
@@ -148,7 +148,7 @@ public class WGPUBindGroupEntryExtras {
         return bufferCount$LAYOUT;
     }
 
-    private static final long bufferCount$OFFSET = 24;
+    private static final long bufferCount$OFFSET = $LAYOUT.byteOffset(groupElement("bufferCount"));
 
     /**
      * Offset for field:
@@ -192,7 +192,7 @@ public class WGPUBindGroupEntryExtras {
         return samplers$LAYOUT;
     }
 
-    private static final long samplers$OFFSET = 32;
+    private static final long samplers$OFFSET = $LAYOUT.byteOffset(groupElement("samplers"));
 
     /**
      * Offset for field:
@@ -236,7 +236,7 @@ public class WGPUBindGroupEntryExtras {
         return samplerCount$LAYOUT;
     }
 
-    private static final long samplerCount$OFFSET = 40;
+    private static final long samplerCount$OFFSET = $LAYOUT.byteOffset(groupElement("samplerCount"));
 
     /**
      * Offset for field:
@@ -280,7 +280,7 @@ public class WGPUBindGroupEntryExtras {
         return textureViews$LAYOUT;
     }
 
-    private static final long textureViews$OFFSET = 48;
+    private static final long textureViews$OFFSET = $LAYOUT.byteOffset(groupElement("textureViews"));
 
     /**
      * Offset for field:
@@ -324,7 +324,7 @@ public class WGPUBindGroupEntryExtras {
         return textureViewCount$LAYOUT;
     }
 
-    private static final long textureViewCount$OFFSET = 56;
+    private static final long textureViewCount$OFFSET = $LAYOUT.byteOffset(groupElement("textureViewCount"));
 
     /**
      * Offset for field:

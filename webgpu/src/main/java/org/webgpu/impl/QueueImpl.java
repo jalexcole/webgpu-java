@@ -13,7 +13,7 @@ import org.webgpu.api.TexelCopyTextureInfo;
 import org.webgpu.panama.foreign.webgpu_h;
 
 public record QueueImpl(MemorySegment ptr) implements Queue {
-
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(QueueImpl.class);
     @Override
     public Future<QueueWorkDone> onSubmittedWorkDone() {
         // TODO Auto-generated method stub

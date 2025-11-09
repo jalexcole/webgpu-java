@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcInstanceAddRef)(WGPUInstance)
  * }
  */
-public class WGPUProcInstanceAddRef {
+public final class WGPUProcInstanceAddRef {
 
-    WGPUProcInstanceAddRef() {
+    private WGPUProcInstanceAddRef() {
         // Should not be called directly
     }
 
@@ -56,9 +56,11 @@ public class WGPUProcInstanceAddRef {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment instance) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment instance) {
         try {
              DOWN$MH.invokeExact(funcPtr, instance);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

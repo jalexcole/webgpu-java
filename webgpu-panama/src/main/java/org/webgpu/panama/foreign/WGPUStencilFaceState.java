@@ -54,7 +54,7 @@ public class WGPUStencilFaceState {
         return compare$LAYOUT;
     }
 
-    private static final long compare$OFFSET = 0;
+    private static final long compare$OFFSET = $LAYOUT.byteOffset(groupElement("compare"));
 
     /**
      * Offset for field:
@@ -98,7 +98,7 @@ public class WGPUStencilFaceState {
         return failOp$LAYOUT;
     }
 
-    private static final long failOp$OFFSET = 4;
+    private static final long failOp$OFFSET = $LAYOUT.byteOffset(groupElement("failOp"));
 
     /**
      * Offset for field:
@@ -142,7 +142,7 @@ public class WGPUStencilFaceState {
         return depthFailOp$LAYOUT;
     }
 
-    private static final long depthFailOp$OFFSET = 8;
+    private static final long depthFailOp$OFFSET = $LAYOUT.byteOffset(groupElement("depthFailOp"));
 
     /**
      * Offset for field:
@@ -186,7 +186,7 @@ public class WGPUStencilFaceState {
         return passOp$LAYOUT;
     }
 
-    private static final long passOp$OFFSET = 12;
+    private static final long passOp$OFFSET = $LAYOUT.byteOffset(groupElement("passOp"));
 
     /**
      * Offset for field:

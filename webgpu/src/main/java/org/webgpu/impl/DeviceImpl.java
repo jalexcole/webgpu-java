@@ -6,6 +6,7 @@ import java.util.concurrent.Future;
 
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
+import org.slf4j.Logger;
 import org.webgpu.api.BindGroup;
 import org.webgpu.api.BindGroupDescriptor;
 import org.webgpu.api.BindGroupLayout;
@@ -41,7 +42,7 @@ import org.webgpu.panama.foreign.WGPUSupportedFeatures;
 import org.webgpu.panama.foreign.webgpu_h;
 
 public record DeviceImpl(MemorySegment ptr, Arena arena) implements Device {
-
+    private static final Logger logger = org.slf4j.LoggerFactory.getLogger(DeviceImpl.class);
     @Override
     public SupportedFeatures features() {
         Arena arena = Arena.ofAuto();

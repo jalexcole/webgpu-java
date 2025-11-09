@@ -51,7 +51,7 @@ public class WGPUChainedStruct {
         return next$LAYOUT;
     }
 
-    private static final long next$OFFSET = 0;
+    private static final long next$OFFSET = $LAYOUT.byteOffset(groupElement("next"));
 
     /**
      * Offset for field:
@@ -95,7 +95,7 @@ public class WGPUChainedStruct {
         return sType$LAYOUT;
     }
 
-    private static final long sType$OFFSET = 8;
+    private static final long sType$OFFSET = $LAYOUT.byteOffset(groupElement("sType"));
 
     /**
      * Offset for field:

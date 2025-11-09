@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef WGPUSurface (*WGPUProcInstanceCreateSurface)(WGPUInstance, const WGPUSurfaceDescriptor *)
  * }
  */
-public class WGPUProcInstanceCreateSurface {
+public final class WGPUProcInstanceCreateSurface {
 
-    WGPUProcInstanceCreateSurface() {
+    private WGPUProcInstanceCreateSurface() {
         // Should not be called directly
     }
 
@@ -58,9 +58,11 @@ public class WGPUProcInstanceCreateSurface {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static MemorySegment invoke(MemorySegment funcPtr,MemorySegment instance, MemorySegment descriptor) {
+    public static MemorySegment invoke(MemorySegment funcPtr, MemorySegment instance, MemorySegment descriptor) {
         try {
             return (MemorySegment) DOWN$MH.invokeExact(funcPtr, instance, descriptor);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

@@ -45,9 +45,9 @@ public class __darwin_pthread_handler_rec {
      * void (*__routine)(void *)
      * }
      */
-    public static class __routine {
+    public final static class __routine {
 
-        __routine() {
+        private __routine() {
             // Should not be called directly
         }
 
@@ -84,9 +84,11 @@ public class __darwin_pthread_handler_rec {
         /**
          * Invoke the upcall stub {@code funcPtr}, with given parameters
          */
-        public static void invoke(MemorySegment funcPtr,MemorySegment _x0) {
+        public static void invoke(MemorySegment funcPtr, MemorySegment _x0) {
             try {
                  DOWN$MH.invokeExact(funcPtr, _x0);
+            } catch (Error | RuntimeException ex) {
+                throw ex;
             } catch (Throwable ex$) {
                 throw new AssertionError("should not reach here", ex$);
             }
@@ -105,7 +107,7 @@ public class __darwin_pthread_handler_rec {
         return __routine$LAYOUT;
     }
 
-    private static final long __routine$OFFSET = 0;
+    private static final long __routine$OFFSET = $LAYOUT.byteOffset(groupElement("__routine"));
 
     /**
      * Offset for field:
@@ -149,7 +151,7 @@ public class __darwin_pthread_handler_rec {
         return __arg$LAYOUT;
     }
 
-    private static final long __arg$OFFSET = 8;
+    private static final long __arg$OFFSET = $LAYOUT.byteOffset(groupElement("__arg"));
 
     /**
      * Offset for field:
@@ -193,7 +195,7 @@ public class __darwin_pthread_handler_rec {
         return __next$LAYOUT;
     }
 
-    private static final long __next$OFFSET = 16;
+    private static final long __next$OFFSET = $LAYOUT.byteOffset(groupElement("__next"));
 
     /**
      * Offset for field:

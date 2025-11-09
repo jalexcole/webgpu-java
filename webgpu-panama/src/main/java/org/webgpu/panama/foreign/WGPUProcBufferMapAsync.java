@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef WGPUFuture (*WGPUProcBufferMapAsync)(WGPUBuffer, WGPUMapMode, size_t, size_t, WGPUBufferMapCallbackInfo)
  * }
  */
-public class WGPUProcBufferMapAsync {
+public final class WGPUProcBufferMapAsync {
 
-    WGPUProcBufferMapAsync() {
+    private WGPUProcBufferMapAsync() {
         // Should not be called directly
     }
 
@@ -61,9 +61,11 @@ public class WGPUProcBufferMapAsync {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static MemorySegment invoke(MemorySegment funcPtr, SegmentAllocator alloc,MemorySegment buffer, long mode, long offset, long size, MemorySegment callbackInfo) {
+    public static MemorySegment invoke(MemorySegment funcPtr, SegmentAllocator alloc, MemorySegment buffer, long mode, long offset, long size, MemorySegment callbackInfo) {
         try {
             return (MemorySegment) DOWN$MH.invokeExact(funcPtr, alloc, buffer, mode, offset, size, callbackInfo);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

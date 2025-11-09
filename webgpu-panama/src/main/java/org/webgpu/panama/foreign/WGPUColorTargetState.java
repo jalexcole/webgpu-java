@@ -55,7 +55,7 @@ public class WGPUColorTargetState {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -99,7 +99,7 @@ public class WGPUColorTargetState {
         return format$LAYOUT;
     }
 
-    private static final long format$OFFSET = 8;
+    private static final long format$OFFSET = $LAYOUT.byteOffset(groupElement("format"));
 
     /**
      * Offset for field:
@@ -143,7 +143,7 @@ public class WGPUColorTargetState {
         return blend$LAYOUT;
     }
 
-    private static final long blend$OFFSET = 16;
+    private static final long blend$OFFSET = $LAYOUT.byteOffset(groupElement("blend"));
 
     /**
      * Offset for field:
@@ -187,7 +187,7 @@ public class WGPUColorTargetState {
         return writeMask$LAYOUT;
     }
 
-    private static final long writeMask$OFFSET = 24;
+    private static final long writeMask$OFFSET = $LAYOUT.byteOffset(groupElement("writeMask"));
 
     /**
      * Offset for field:

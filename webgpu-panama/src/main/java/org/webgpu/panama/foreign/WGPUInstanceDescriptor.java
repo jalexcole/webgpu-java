@@ -50,7 +50,7 @@ public class WGPUInstanceDescriptor {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -94,7 +94,7 @@ public class WGPUInstanceDescriptor {
         return features$LAYOUT;
     }
 
-    private static final long features$OFFSET = 8;
+    private static final long features$OFFSET = $LAYOUT.byteOffset(groupElement("features"));
 
     /**
      * Offset for field:

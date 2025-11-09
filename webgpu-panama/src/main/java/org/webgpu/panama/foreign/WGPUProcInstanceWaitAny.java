@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef WGPUWaitStatus (*WGPUProcInstanceWaitAny)(WGPUInstance, size_t, WGPUFutureWaitInfo *, uint64_t)
  * }
  */
-public class WGPUProcInstanceWaitAny {
+public final class WGPUProcInstanceWaitAny {
 
-    WGPUProcInstanceWaitAny() {
+    private WGPUProcInstanceWaitAny() {
         // Should not be called directly
     }
 
@@ -60,9 +60,11 @@ public class WGPUProcInstanceWaitAny {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static int invoke(MemorySegment funcPtr,MemorySegment instance, long futureCount, MemorySegment futures, long timeoutNS) {
+    public static int invoke(MemorySegment funcPtr, MemorySegment instance, long futureCount, MemorySegment futures, long timeoutNS) {
         try {
             return (int) DOWN$MH.invokeExact(funcPtr, instance, futureCount, futures, timeoutNS);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

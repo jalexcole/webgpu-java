@@ -50,7 +50,7 @@ public class WGPUSurfaceSourceSwapChainPanel {
         return chain$LAYOUT;
     }
 
-    private static final long chain$OFFSET = 0;
+    private static final long chain$OFFSET = $LAYOUT.byteOffset(groupElement("chain"));
 
     /**
      * Offset for field:
@@ -94,7 +94,7 @@ public class WGPUSurfaceSourceSwapChainPanel {
         return panelNative$LAYOUT;
     }
 
-    private static final long panelNative$OFFSET = 16;
+    private static final long panelNative$OFFSET = $LAYOUT.byteOffset(groupElement("panelNative"));
 
     /**
      * Offset for field:

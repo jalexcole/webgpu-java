@@ -57,7 +57,7 @@ public class WGPUShaderSourceGLSL {
         return chain$LAYOUT;
     }
 
-    private static final long chain$OFFSET = 0;
+    private static final long chain$OFFSET = $LAYOUT.byteOffset(groupElement("chain"));
 
     /**
      * Offset for field:
@@ -101,7 +101,7 @@ public class WGPUShaderSourceGLSL {
         return stage$LAYOUT;
     }
 
-    private static final long stage$OFFSET = 16;
+    private static final long stage$OFFSET = $LAYOUT.byteOffset(groupElement("stage"));
 
     /**
      * Offset for field:
@@ -145,7 +145,7 @@ public class WGPUShaderSourceGLSL {
         return code$LAYOUT;
     }
 
-    private static final long code$OFFSET = 24;
+    private static final long code$OFFSET = $LAYOUT.byteOffset(groupElement("code"));
 
     /**
      * Offset for field:
@@ -189,7 +189,7 @@ public class WGPUShaderSourceGLSL {
         return defineCount$LAYOUT;
     }
 
-    private static final long defineCount$OFFSET = 40;
+    private static final long defineCount$OFFSET = $LAYOUT.byteOffset(groupElement("defineCount"));
 
     /**
      * Offset for field:
@@ -233,7 +233,7 @@ public class WGPUShaderSourceGLSL {
         return defines$LAYOUT;
     }
 
-    private static final long defines$OFFSET = 48;
+    private static final long defines$OFFSET = $LAYOUT.byteOffset(groupElement("defines"));
 
     /**
      * Offset for field:

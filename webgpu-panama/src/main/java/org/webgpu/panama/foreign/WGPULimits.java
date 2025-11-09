@@ -2,8 +2,13 @@
 
 package org.webgpu.panama.foreign;
 
+import java.lang.invoke.*;
 import java.lang.foreign.*;
+import java.nio.ByteOrder;
+import java.util.*;
 import java.util.function.*;
+import java.util.stream.*;
+
 import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
@@ -107,7 +112,7 @@ public class WGPULimits {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -151,7 +156,7 @@ public class WGPULimits {
         return maxTextureDimension1D$LAYOUT;
     }
 
-    private static final long maxTextureDimension1D$OFFSET = 8;
+    private static final long maxTextureDimension1D$OFFSET = $LAYOUT.byteOffset(groupElement("maxTextureDimension1D"));
 
     /**
      * Offset for field:
@@ -195,7 +200,7 @@ public class WGPULimits {
         return maxTextureDimension2D$LAYOUT;
     }
 
-    private static final long maxTextureDimension2D$OFFSET = 12;
+    private static final long maxTextureDimension2D$OFFSET = $LAYOUT.byteOffset(groupElement("maxTextureDimension2D"));
 
     /**
      * Offset for field:
@@ -239,7 +244,7 @@ public class WGPULimits {
         return maxTextureDimension3D$LAYOUT;
     }
 
-    private static final long maxTextureDimension3D$OFFSET = 16;
+    private static final long maxTextureDimension3D$OFFSET = $LAYOUT.byteOffset(groupElement("maxTextureDimension3D"));
 
     /**
      * Offset for field:
@@ -283,7 +288,7 @@ public class WGPULimits {
         return maxTextureArrayLayers$LAYOUT;
     }
 
-    private static final long maxTextureArrayLayers$OFFSET = 20;
+    private static final long maxTextureArrayLayers$OFFSET = $LAYOUT.byteOffset(groupElement("maxTextureArrayLayers"));
 
     /**
      * Offset for field:
@@ -327,7 +332,7 @@ public class WGPULimits {
         return maxBindGroups$LAYOUT;
     }
 
-    private static final long maxBindGroups$OFFSET = 24;
+    private static final long maxBindGroups$OFFSET = $LAYOUT.byteOffset(groupElement("maxBindGroups"));
 
     /**
      * Offset for field:
@@ -371,7 +376,7 @@ public class WGPULimits {
         return maxBindGroupsPlusVertexBuffers$LAYOUT;
     }
 
-    private static final long maxBindGroupsPlusVertexBuffers$OFFSET = 28;
+    private static final long maxBindGroupsPlusVertexBuffers$OFFSET = $LAYOUT.byteOffset(groupElement("maxBindGroupsPlusVertexBuffers"));
 
     /**
      * Offset for field:
@@ -415,7 +420,7 @@ public class WGPULimits {
         return maxBindingsPerBindGroup$LAYOUT;
     }
 
-    private static final long maxBindingsPerBindGroup$OFFSET = 32;
+    private static final long maxBindingsPerBindGroup$OFFSET = $LAYOUT.byteOffset(groupElement("maxBindingsPerBindGroup"));
 
     /**
      * Offset for field:
@@ -459,7 +464,7 @@ public class WGPULimits {
         return maxDynamicUniformBuffersPerPipelineLayout$LAYOUT;
     }
 
-    private static final long maxDynamicUniformBuffersPerPipelineLayout$OFFSET = 36;
+    private static final long maxDynamicUniformBuffersPerPipelineLayout$OFFSET = $LAYOUT.byteOffset(groupElement("maxDynamicUniformBuffersPerPipelineLayout"));
 
     /**
      * Offset for field:
@@ -503,7 +508,7 @@ public class WGPULimits {
         return maxDynamicStorageBuffersPerPipelineLayout$LAYOUT;
     }
 
-    private static final long maxDynamicStorageBuffersPerPipelineLayout$OFFSET = 40;
+    private static final long maxDynamicStorageBuffersPerPipelineLayout$OFFSET = $LAYOUT.byteOffset(groupElement("maxDynamicStorageBuffersPerPipelineLayout"));
 
     /**
      * Offset for field:
@@ -547,7 +552,7 @@ public class WGPULimits {
         return maxSampledTexturesPerShaderStage$LAYOUT;
     }
 
-    private static final long maxSampledTexturesPerShaderStage$OFFSET = 44;
+    private static final long maxSampledTexturesPerShaderStage$OFFSET = $LAYOUT.byteOffset(groupElement("maxSampledTexturesPerShaderStage"));
 
     /**
      * Offset for field:
@@ -591,7 +596,7 @@ public class WGPULimits {
         return maxSamplersPerShaderStage$LAYOUT;
     }
 
-    private static final long maxSamplersPerShaderStage$OFFSET = 48;
+    private static final long maxSamplersPerShaderStage$OFFSET = $LAYOUT.byteOffset(groupElement("maxSamplersPerShaderStage"));
 
     /**
      * Offset for field:
@@ -635,7 +640,7 @@ public class WGPULimits {
         return maxStorageBuffersPerShaderStage$LAYOUT;
     }
 
-    private static final long maxStorageBuffersPerShaderStage$OFFSET = 52;
+    private static final long maxStorageBuffersPerShaderStage$OFFSET = $LAYOUT.byteOffset(groupElement("maxStorageBuffersPerShaderStage"));
 
     /**
      * Offset for field:
@@ -679,7 +684,7 @@ public class WGPULimits {
         return maxStorageTexturesPerShaderStage$LAYOUT;
     }
 
-    private static final long maxStorageTexturesPerShaderStage$OFFSET = 56;
+    private static final long maxStorageTexturesPerShaderStage$OFFSET = $LAYOUT.byteOffset(groupElement("maxStorageTexturesPerShaderStage"));
 
     /**
      * Offset for field:
@@ -723,7 +728,7 @@ public class WGPULimits {
         return maxUniformBuffersPerShaderStage$LAYOUT;
     }
 
-    private static final long maxUniformBuffersPerShaderStage$OFFSET = 60;
+    private static final long maxUniformBuffersPerShaderStage$OFFSET = $LAYOUT.byteOffset(groupElement("maxUniformBuffersPerShaderStage"));
 
     /**
      * Offset for field:
@@ -767,7 +772,7 @@ public class WGPULimits {
         return maxUniformBufferBindingSize$LAYOUT;
     }
 
-    private static final long maxUniformBufferBindingSize$OFFSET = 64;
+    private static final long maxUniformBufferBindingSize$OFFSET = $LAYOUT.byteOffset(groupElement("maxUniformBufferBindingSize"));
 
     /**
      * Offset for field:
@@ -811,7 +816,7 @@ public class WGPULimits {
         return maxStorageBufferBindingSize$LAYOUT;
     }
 
-    private static final long maxStorageBufferBindingSize$OFFSET = 72;
+    private static final long maxStorageBufferBindingSize$OFFSET = $LAYOUT.byteOffset(groupElement("maxStorageBufferBindingSize"));
 
     /**
      * Offset for field:
@@ -855,7 +860,7 @@ public class WGPULimits {
         return minUniformBufferOffsetAlignment$LAYOUT;
     }
 
-    private static final long minUniformBufferOffsetAlignment$OFFSET = 80;
+    private static final long minUniformBufferOffsetAlignment$OFFSET = $LAYOUT.byteOffset(groupElement("minUniformBufferOffsetAlignment"));
 
     /**
      * Offset for field:
@@ -899,7 +904,7 @@ public class WGPULimits {
         return minStorageBufferOffsetAlignment$LAYOUT;
     }
 
-    private static final long minStorageBufferOffsetAlignment$OFFSET = 84;
+    private static final long minStorageBufferOffsetAlignment$OFFSET = $LAYOUT.byteOffset(groupElement("minStorageBufferOffsetAlignment"));
 
     /**
      * Offset for field:
@@ -943,7 +948,7 @@ public class WGPULimits {
         return maxVertexBuffers$LAYOUT;
     }
 
-    private static final long maxVertexBuffers$OFFSET = 88;
+    private static final long maxVertexBuffers$OFFSET = $LAYOUT.byteOffset(groupElement("maxVertexBuffers"));
 
     /**
      * Offset for field:
@@ -987,7 +992,7 @@ public class WGPULimits {
         return maxBufferSize$LAYOUT;
     }
 
-    private static final long maxBufferSize$OFFSET = 96;
+    private static final long maxBufferSize$OFFSET = $LAYOUT.byteOffset(groupElement("maxBufferSize"));
 
     /**
      * Offset for field:
@@ -1031,7 +1036,7 @@ public class WGPULimits {
         return maxVertexAttributes$LAYOUT;
     }
 
-    private static final long maxVertexAttributes$OFFSET = 104;
+    private static final long maxVertexAttributes$OFFSET = $LAYOUT.byteOffset(groupElement("maxVertexAttributes"));
 
     /**
      * Offset for field:
@@ -1075,7 +1080,7 @@ public class WGPULimits {
         return maxVertexBufferArrayStride$LAYOUT;
     }
 
-    private static final long maxVertexBufferArrayStride$OFFSET = 108;
+    private static final long maxVertexBufferArrayStride$OFFSET = $LAYOUT.byteOffset(groupElement("maxVertexBufferArrayStride"));
 
     /**
      * Offset for field:
@@ -1119,7 +1124,7 @@ public class WGPULimits {
         return maxInterStageShaderVariables$LAYOUT;
     }
 
-    private static final long maxInterStageShaderVariables$OFFSET = 112;
+    private static final long maxInterStageShaderVariables$OFFSET = $LAYOUT.byteOffset(groupElement("maxInterStageShaderVariables"));
 
     /**
      * Offset for field:
@@ -1163,7 +1168,7 @@ public class WGPULimits {
         return maxColorAttachments$LAYOUT;
     }
 
-    private static final long maxColorAttachments$OFFSET = 116;
+    private static final long maxColorAttachments$OFFSET = $LAYOUT.byteOffset(groupElement("maxColorAttachments"));
 
     /**
      * Offset for field:
@@ -1207,7 +1212,7 @@ public class WGPULimits {
         return maxColorAttachmentBytesPerSample$LAYOUT;
     }
 
-    private static final long maxColorAttachmentBytesPerSample$OFFSET = 120;
+    private static final long maxColorAttachmentBytesPerSample$OFFSET = $LAYOUT.byteOffset(groupElement("maxColorAttachmentBytesPerSample"));
 
     /**
      * Offset for field:
@@ -1251,7 +1256,7 @@ public class WGPULimits {
         return maxComputeWorkgroupStorageSize$LAYOUT;
     }
 
-    private static final long maxComputeWorkgroupStorageSize$OFFSET = 124;
+    private static final long maxComputeWorkgroupStorageSize$OFFSET = $LAYOUT.byteOffset(groupElement("maxComputeWorkgroupStorageSize"));
 
     /**
      * Offset for field:
@@ -1295,7 +1300,7 @@ public class WGPULimits {
         return maxComputeInvocationsPerWorkgroup$LAYOUT;
     }
 
-    private static final long maxComputeInvocationsPerWorkgroup$OFFSET = 128;
+    private static final long maxComputeInvocationsPerWorkgroup$OFFSET = $LAYOUT.byteOffset(groupElement("maxComputeInvocationsPerWorkgroup"));
 
     /**
      * Offset for field:
@@ -1339,7 +1344,7 @@ public class WGPULimits {
         return maxComputeWorkgroupSizeX$LAYOUT;
     }
 
-    private static final long maxComputeWorkgroupSizeX$OFFSET = 132;
+    private static final long maxComputeWorkgroupSizeX$OFFSET = $LAYOUT.byteOffset(groupElement("maxComputeWorkgroupSizeX"));
 
     /**
      * Offset for field:
@@ -1383,7 +1388,7 @@ public class WGPULimits {
         return maxComputeWorkgroupSizeY$LAYOUT;
     }
 
-    private static final long maxComputeWorkgroupSizeY$OFFSET = 136;
+    private static final long maxComputeWorkgroupSizeY$OFFSET = $LAYOUT.byteOffset(groupElement("maxComputeWorkgroupSizeY"));
 
     /**
      * Offset for field:
@@ -1427,7 +1432,7 @@ public class WGPULimits {
         return maxComputeWorkgroupSizeZ$LAYOUT;
     }
 
-    private static final long maxComputeWorkgroupSizeZ$OFFSET = 140;
+    private static final long maxComputeWorkgroupSizeZ$OFFSET = $LAYOUT.byteOffset(groupElement("maxComputeWorkgroupSizeZ"));
 
     /**
      * Offset for field:
@@ -1471,7 +1476,7 @@ public class WGPULimits {
         return maxComputeWorkgroupsPerDimension$LAYOUT;
     }
 
-    private static final long maxComputeWorkgroupsPerDimension$OFFSET = 144;
+    private static final long maxComputeWorkgroupsPerDimension$OFFSET = $LAYOUT.byteOffset(groupElement("maxComputeWorkgroupsPerDimension"));
 
     /**
      * Offset for field:

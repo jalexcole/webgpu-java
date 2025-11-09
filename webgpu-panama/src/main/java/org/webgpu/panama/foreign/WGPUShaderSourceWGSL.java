@@ -50,7 +50,7 @@ public class WGPUShaderSourceWGSL {
         return chain$LAYOUT;
     }
 
-    private static final long chain$OFFSET = 0;
+    private static final long chain$OFFSET = $LAYOUT.byteOffset(groupElement("chain"));
 
     /**
      * Offset for field:
@@ -94,7 +94,7 @@ public class WGPUShaderSourceWGSL {
         return code$LAYOUT;
     }
 
-    private static final long code$OFFSET = 16;
+    private static final long code$OFFSET = $LAYOUT.byteOffset(groupElement("code"));
 
     /**
      * Offset for field:

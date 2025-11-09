@@ -8,7 +8,7 @@ import org.webgpu.panama.foreign.webgpu_h;
 import org.webgpu.util.StringView;
 
 public record RenderPipelineImpl(MemorySegment ptr) implements RenderPipeline {
-
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(RenderPipelineImpl.class);
     @Override
     public void setLabel(String label) {
         try (Arena arena = Arena.ofConfined()) {

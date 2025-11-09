@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcQueueWriteTexture)(WGPUQueue, const WGPUTexelCopyTextureInfo *, const void *, size_t, const WGPUTexelCopyBufferLayout *, const WGPUExtent3D *)
  * }
  */
-public class WGPUProcQueueWriteTexture {
+public final class WGPUProcQueueWriteTexture {
 
-    WGPUProcQueueWriteTexture() {
+    private WGPUProcQueueWriteTexture() {
         // Should not be called directly
     }
 
@@ -61,9 +61,11 @@ public class WGPUProcQueueWriteTexture {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment queue, MemorySegment destination, MemorySegment data, long dataSize, MemorySegment dataLayout, MemorySegment writeSize) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment queue, MemorySegment destination, MemorySegment data, long dataSize, MemorySegment dataLayout, MemorySegment writeSize) {
         try {
              DOWN$MH.invokeExact(funcPtr, queue, destination, data, dataSize, dataLayout, writeSize);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

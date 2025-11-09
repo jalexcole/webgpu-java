@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcSurfaceSetLabel)(WGPUSurface, WGPUStringView)
  * }
  */
-public class WGPUProcSurfaceSetLabel {
+public final class WGPUProcSurfaceSetLabel {
 
-    WGPUProcSurfaceSetLabel() {
+    private WGPUProcSurfaceSetLabel() {
         // Should not be called directly
     }
 
@@ -57,9 +57,11 @@ public class WGPUProcSurfaceSetLabel {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment surface, MemorySegment label) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment surface, MemorySegment label) {
         try {
              DOWN$MH.invokeExact(funcPtr, surface, label);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

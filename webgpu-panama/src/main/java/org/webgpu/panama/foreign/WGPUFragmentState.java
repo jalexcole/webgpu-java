@@ -60,7 +60,7 @@ public class WGPUFragmentState {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -104,7 +104,7 @@ public class WGPUFragmentState {
         return module$LAYOUT;
     }
 
-    private static final long module$OFFSET = 8;
+    private static final long module$OFFSET = $LAYOUT.byteOffset(groupElement("module"));
 
     /**
      * Offset for field:
@@ -148,7 +148,7 @@ public class WGPUFragmentState {
         return entryPoint$LAYOUT;
     }
 
-    private static final long entryPoint$OFFSET = 16;
+    private static final long entryPoint$OFFSET = $LAYOUT.byteOffset(groupElement("entryPoint"));
 
     /**
      * Offset for field:
@@ -192,7 +192,7 @@ public class WGPUFragmentState {
         return constantCount$LAYOUT;
     }
 
-    private static final long constantCount$OFFSET = 32;
+    private static final long constantCount$OFFSET = $LAYOUT.byteOffset(groupElement("constantCount"));
 
     /**
      * Offset for field:
@@ -236,7 +236,7 @@ public class WGPUFragmentState {
         return constants$LAYOUT;
     }
 
-    private static final long constants$OFFSET = 40;
+    private static final long constants$OFFSET = $LAYOUT.byteOffset(groupElement("constants"));
 
     /**
      * Offset for field:
@@ -280,7 +280,7 @@ public class WGPUFragmentState {
         return targetCount$LAYOUT;
     }
 
-    private static final long targetCount$OFFSET = 48;
+    private static final long targetCount$OFFSET = $LAYOUT.byteOffset(groupElement("targetCount"));
 
     /**
      * Offset for field:
@@ -324,7 +324,7 @@ public class WGPUFragmentState {
         return targets$LAYOUT;
     }
 
-    private static final long targets$OFFSET = 56;
+    private static final long targets$OFFSET = $LAYOUT.byteOffset(groupElement("targets"));
 
     /**
      * Offset for field:

@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef WGPUPipelineLayout (*WGPUProcDeviceCreatePipelineLayout)(WGPUDevice, const WGPUPipelineLayoutDescriptor *)
  * }
  */
-public class WGPUProcDeviceCreatePipelineLayout {
+public final class WGPUProcDeviceCreatePipelineLayout {
 
-    WGPUProcDeviceCreatePipelineLayout() {
+    private WGPUProcDeviceCreatePipelineLayout() {
         // Should not be called directly
     }
 
@@ -58,9 +58,11 @@ public class WGPUProcDeviceCreatePipelineLayout {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static MemorySegment invoke(MemorySegment funcPtr,MemorySegment device, MemorySegment descriptor) {
+    public static MemorySegment invoke(MemorySegment funcPtr, MemorySegment device, MemorySegment descriptor) {
         try {
             return (MemorySegment) DOWN$MH.invokeExact(funcPtr, device, descriptor);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

@@ -55,7 +55,7 @@ public class WGPUTexelCopyTextureInfo {
         return texture$LAYOUT;
     }
 
-    private static final long texture$OFFSET = 0;
+    private static final long texture$OFFSET = $LAYOUT.byteOffset(groupElement("texture"));
 
     /**
      * Offset for field:
@@ -99,7 +99,7 @@ public class WGPUTexelCopyTextureInfo {
         return mipLevel$LAYOUT;
     }
 
-    private static final long mipLevel$OFFSET = 8;
+    private static final long mipLevel$OFFSET = $LAYOUT.byteOffset(groupElement("mipLevel"));
 
     /**
      * Offset for field:
@@ -143,7 +143,7 @@ public class WGPUTexelCopyTextureInfo {
         return origin$LAYOUT;
     }
 
-    private static final long origin$OFFSET = 12;
+    private static final long origin$OFFSET = $LAYOUT.byteOffset(groupElement("origin"));
 
     /**
      * Offset for field:
@@ -187,7 +187,7 @@ public class WGPUTexelCopyTextureInfo {
         return aspect$LAYOUT;
     }
 
-    private static final long aspect$OFFSET = 24;
+    private static final long aspect$OFFSET = $LAYOUT.byteOffset(groupElement("aspect"));
 
     /**
      * Offset for field:

@@ -61,7 +61,7 @@ public class WGPURenderPassColorAttachment {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -105,7 +105,7 @@ public class WGPURenderPassColorAttachment {
         return view$LAYOUT;
     }
 
-    private static final long view$OFFSET = 8;
+    private static final long view$OFFSET = $LAYOUT.byteOffset(groupElement("view"));
 
     /**
      * Offset for field:
@@ -149,7 +149,7 @@ public class WGPURenderPassColorAttachment {
         return depthSlice$LAYOUT;
     }
 
-    private static final long depthSlice$OFFSET = 16;
+    private static final long depthSlice$OFFSET = $LAYOUT.byteOffset(groupElement("depthSlice"));
 
     /**
      * Offset for field:
@@ -193,7 +193,7 @@ public class WGPURenderPassColorAttachment {
         return resolveTarget$LAYOUT;
     }
 
-    private static final long resolveTarget$OFFSET = 24;
+    private static final long resolveTarget$OFFSET = $LAYOUT.byteOffset(groupElement("resolveTarget"));
 
     /**
      * Offset for field:
@@ -237,7 +237,7 @@ public class WGPURenderPassColorAttachment {
         return loadOp$LAYOUT;
     }
 
-    private static final long loadOp$OFFSET = 32;
+    private static final long loadOp$OFFSET = $LAYOUT.byteOffset(groupElement("loadOp"));
 
     /**
      * Offset for field:
@@ -281,7 +281,7 @@ public class WGPURenderPassColorAttachment {
         return storeOp$LAYOUT;
     }
 
-    private static final long storeOp$OFFSET = 36;
+    private static final long storeOp$OFFSET = $LAYOUT.byteOffset(groupElement("storeOp"));
 
     /**
      * Offset for field:
@@ -325,7 +325,7 @@ public class WGPURenderPassColorAttachment {
         return clearValue$LAYOUT;
     }
 
-    private static final long clearValue$OFFSET = 40;
+    private static final long clearValue$OFFSET = $LAYOUT.byteOffset(groupElement("clearValue"));
 
     /**
      * Offset for field:

@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcComputePipelineSetLabel)(WGPUComputePipeline, WGPUStringView)
  * }
  */
-public class WGPUProcComputePipelineSetLabel {
+public final class WGPUProcComputePipelineSetLabel {
 
-    WGPUProcComputePipelineSetLabel() {
+    private WGPUProcComputePipelineSetLabel() {
         // Should not be called directly
     }
 
@@ -57,9 +57,11 @@ public class WGPUProcComputePipelineSetLabel {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment computePipeline, MemorySegment label) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment computePipeline, MemorySegment label) {
         try {
              DOWN$MH.invokeExact(funcPtr, computePipeline, label);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

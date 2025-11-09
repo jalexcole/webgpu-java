@@ -59,7 +59,7 @@ public class WGPUPrimitiveState {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -103,7 +103,7 @@ public class WGPUPrimitiveState {
         return topology$LAYOUT;
     }
 
-    private static final long topology$OFFSET = 8;
+    private static final long topology$OFFSET = $LAYOUT.byteOffset(groupElement("topology"));
 
     /**
      * Offset for field:
@@ -147,7 +147,7 @@ public class WGPUPrimitiveState {
         return stripIndexFormat$LAYOUT;
     }
 
-    private static final long stripIndexFormat$OFFSET = 12;
+    private static final long stripIndexFormat$OFFSET = $LAYOUT.byteOffset(groupElement("stripIndexFormat"));
 
     /**
      * Offset for field:
@@ -191,7 +191,7 @@ public class WGPUPrimitiveState {
         return frontFace$LAYOUT;
     }
 
-    private static final long frontFace$OFFSET = 16;
+    private static final long frontFace$OFFSET = $LAYOUT.byteOffset(groupElement("frontFace"));
 
     /**
      * Offset for field:
@@ -235,7 +235,7 @@ public class WGPUPrimitiveState {
         return cullMode$LAYOUT;
     }
 
-    private static final long cullMode$OFFSET = 20;
+    private static final long cullMode$OFFSET = $LAYOUT.byteOffset(groupElement("cullMode"));
 
     /**
      * Offset for field:
@@ -279,7 +279,7 @@ public class WGPUPrimitiveState {
         return unclippedDepth$LAYOUT;
     }
 
-    private static final long unclippedDepth$OFFSET = 24;
+    private static final long unclippedDepth$OFFSET = $LAYOUT.byteOffset(groupElement("unclippedDepth"));
 
     /**
      * Offset for field:

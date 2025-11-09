@@ -2,8 +2,13 @@
 
 package org.webgpu.panama.foreign;
 
+import java.lang.invoke.*;
 import java.lang.foreign.*;
+import java.nio.ByteOrder;
+import java.util.*;
 import java.util.function.*;
+import java.util.stream.*;
+
 import static java.lang.foreign.ValueLayout.*;
 import static java.lang.foreign.MemoryLayout.PathElement.*;
 
@@ -45,7 +50,7 @@ public class WGPUInstanceEnumerateAdapterOptions {
         return nextInChain$LAYOUT;
     }
 
-    private static final long nextInChain$OFFSET = 0;
+    private static final long nextInChain$OFFSET = $LAYOUT.byteOffset(groupElement("nextInChain"));
 
     /**
      * Offset for field:
@@ -89,7 +94,7 @@ public class WGPUInstanceEnumerateAdapterOptions {
         return backends$LAYOUT;
     }
 
-    private static final long backends$OFFSET = 8;
+    private static final long backends$OFFSET = $LAYOUT.byteOffset(groupElement("backends"));
 
     /**
      * Offset for field:

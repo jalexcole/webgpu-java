@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcSurfaceUnconfigure)(WGPUSurface)
  * }
  */
-public class WGPUProcSurfaceUnconfigure {
+public final class WGPUProcSurfaceUnconfigure {
 
-    WGPUProcSurfaceUnconfigure() {
+    private WGPUProcSurfaceUnconfigure() {
         // Should not be called directly
     }
 
@@ -56,9 +56,11 @@ public class WGPUProcSurfaceUnconfigure {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment surface) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment surface) {
         try {
              DOWN$MH.invokeExact(funcPtr, surface);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }

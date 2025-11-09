@@ -52,7 +52,7 @@ public class WGPUPushConstantRange {
         return stages$LAYOUT;
     }
 
-    private static final long stages$OFFSET = 0;
+    private static final long stages$OFFSET = $LAYOUT.byteOffset(groupElement("stages"));
 
     /**
      * Offset for field:
@@ -96,7 +96,7 @@ public class WGPUPushConstantRange {
         return start$LAYOUT;
     }
 
-    private static final long start$OFFSET = 8;
+    private static final long start$OFFSET = $LAYOUT.byteOffset(groupElement("start"));
 
     /**
      * Offset for field:
@@ -140,7 +140,7 @@ public class WGPUPushConstantRange {
         return end$LAYOUT;
     }
 
-    private static final long end$OFFSET = 12;
+    private static final long end$OFFSET = $LAYOUT.byteOffset(groupElement("end"));
 
     /**
      * Offset for field:

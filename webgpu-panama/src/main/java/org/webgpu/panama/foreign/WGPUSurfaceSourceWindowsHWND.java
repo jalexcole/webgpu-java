@@ -52,7 +52,7 @@ public class WGPUSurfaceSourceWindowsHWND {
         return chain$LAYOUT;
     }
 
-    private static final long chain$OFFSET = 0;
+    private static final long chain$OFFSET = $LAYOUT.byteOffset(groupElement("chain"));
 
     /**
      * Offset for field:
@@ -96,7 +96,7 @@ public class WGPUSurfaceSourceWindowsHWND {
         return hinstance$LAYOUT;
     }
 
-    private static final long hinstance$OFFSET = 16;
+    private static final long hinstance$OFFSET = $LAYOUT.byteOffset(groupElement("hinstance"));
 
     /**
      * Offset for field:
@@ -140,7 +140,7 @@ public class WGPUSurfaceSourceWindowsHWND {
         return hwnd$LAYOUT;
     }
 
-    private static final long hwnd$OFFSET = 24;
+    private static final long hwnd$OFFSET = $LAYOUT.byteOffset(groupElement("hwnd"));
 
     /**
      * Offset for field:

@@ -17,9 +17,9 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
  * typedef void (*WGPUProcBindGroupRelease)(WGPUBindGroup)
  * }
  */
-public class WGPUProcBindGroupRelease {
+public final class WGPUProcBindGroupRelease {
 
-    WGPUProcBindGroupRelease() {
+    private WGPUProcBindGroupRelease() {
         // Should not be called directly
     }
 
@@ -56,9 +56,11 @@ public class WGPUProcBindGroupRelease {
     /**
      * Invoke the upcall stub {@code funcPtr}, with given parameters
      */
-    public static void invoke(MemorySegment funcPtr,MemorySegment bindGroup) {
+    public static void invoke(MemorySegment funcPtr, MemorySegment bindGroup) {
         try {
              DOWN$MH.invokeExact(funcPtr, bindGroup);
+        } catch (Error | RuntimeException ex) {
+            throw ex;
         } catch (Throwable ex$) {
             throw new AssertionError("should not reach here", ex$);
         }
