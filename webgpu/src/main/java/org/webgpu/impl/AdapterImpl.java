@@ -179,7 +179,7 @@ public record AdapterImpl(@NonNull MemorySegment ptr, Arena arena) implements Ad
 
 	@Override
 	public void release() {
-		webgpu_h.wgpuAdapterRelease(this.ptr);
+		webgpu_h.wgpuAdapterRelease(this.ptr());
 	}
 
 }

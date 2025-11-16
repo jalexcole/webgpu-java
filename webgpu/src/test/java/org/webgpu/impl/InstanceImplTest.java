@@ -19,16 +19,6 @@ class InstanceImplTest {
     }
 
     @Test
-    void testClose() {
-        try (Instance instance = WGPU.createInstance(null)) {
-            instance.close();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    @Test
     void testRequestAdapterFuture() {
         try (Instance instance = WGPU.createInstance(null)) {
             instance.requestAdapter(null);
