@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.webgpu.api.WGPU;
 import org.webgpu.panama.foreign.WGPUStringView;
+import org.webgpu.panama.foreign.webgpu_h;
 
 public class StringViewTest {
 
@@ -70,6 +71,31 @@ public class StringViewTest {
         final MemorySegment nativeStringData = arena.allocate(testString.getBytes().length);
         nativeStringData.copyFrom(MemorySegment.ofArray(testString.getBytes()));
         WGPUStringView.data(wgpuStringViewPtr, nativeStringData);
-        StringView.map(wgpuStringViewPtr);
+
+        final String mappedString = StringView.map(wgpuStringViewPtr);
+        logger.info("Mapped WGPUStringView string: {}", mappedString);
+        assertTrue(mappedString.equals(testString));
+    }
+
+    @Test
+    void mapToStringNullTerminatedWithWGPUStringView() {
+        final Arena arena = Arena.ofAuto();
+        final var instance = WGPU.createInstance(null);
+        logger.info("Beginning mapToStringNullTerminatedWithWGPUStringView test...");
+
+        // When we read the String over the FFI boundary we stop being null-terminated.
+        final String testString = "mapToStringNullTerminatedWithWGPUStringView";
+        final String testStringNullTerminated = testString + '\0';
+
+        final MemorySegment wgpuStringViewPtr = WGPUStringView.allocate(arena);
+        WGPUStringView.length(wgpuStringViewPtr, webgpu_h.WGPU_STRLEN());
+        WGPUStringView.data(wgpuStringViewPtr).reinterpret(testStringNullTerminated.getBytes().length);
+        final MemorySegment nativeStringData = arena.allocate(testStringNullTerminated.getBytes().length);
+        nativeStringData.copyFrom(MemorySegment.ofArray(testStringNullTerminated.getBytes()));
+        WGPUStringView.data(wgpuStringViewPtr, nativeStringData);
+
+        final String mappedString = StringView.map(wgpuStringViewPtr);
+        logger.info("Mapped WGPUStringView string: {}", mappedString);
+        assertTrue(mappedString.equals(testString));
     }
 }
