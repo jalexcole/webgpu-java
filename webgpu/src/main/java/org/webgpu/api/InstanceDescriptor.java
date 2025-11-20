@@ -30,7 +30,7 @@ public final class InstanceDescriptor implements DescriptorBase {
 
     // Convenience methods operating on the wrapped segment
     @SuppressWarnings("preview")
-    public MemorySegment nextInChain() {
+    public MemorySegment nextInChain() { // TODO: Make this an Option<ChainableDescriptor>
         return WGPUInstanceDescriptor.nextInChain(descriptorPtr);
     }
 
