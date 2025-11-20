@@ -1,5 +1,6 @@
 package org.webgpu.util;
 
+import java.io.ByteArrayOutputStream;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.webgpu.api.WGPU;
 import org.webgpu.panama.foreign.WGPUStringView;
+import org.webgpu.panama.foreign.webgpu_h;
 
 public record StringView(MemorySegment stringViewPtr) {
 
@@ -51,14 +53,28 @@ public record StringView(MemorySegment stringViewPtr) {
      */
     public static String map(@NonNull final MemorySegment stringViewPtr) {
         final long length = WGPUStringView.length(stringViewPtr);
-        
-        byte[] dataArray = new byte[(int) length];
-        for (int i = 0; i < length; i++) {
-            byte b = WGPUStringView.data(stringViewPtr).get(ValueLayout.JAVA_BYTE, i);
-            // logger.info("Byte at index {}: {}", i, (char) b);
-            dataArray[i] = b;
+
+        // If `length` is WGPU_STRLEN, the string is NULL-terminated.
+        if (length == webgpu_h.WGPU_STRLEN()) {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            int offset = 0;
+            byte b;
+
+            while ((b = WGPUStringView.data(stringViewPtr).get(ValueLayout.JAVA_BYTE, offset)) != 0) {
+                bos.write(b);
+                offset++;
+            }
+
+            return new String(bos.toByteArray(), StandardCharsets.UTF_8);
+        } else {
+            byte[] dataArray = new byte[(int) length];
+            for (int i = 0; i < length; i++) {
+                byte b = WGPUStringView.data(stringViewPtr).get(ValueLayout.JAVA_BYTE, i);
+                dataArray[i] = b;
+            }
+
+            return new String(dataArray, StandardCharsets.UTF_8);
         }
-        return new String(dataArray, StandardCharsets.UTF_8);
     }
 
     String string() {
