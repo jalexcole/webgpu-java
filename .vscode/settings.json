@@ -15,14 +15,16 @@
         "org.mockito.Mockito.*",
         "org.mockito.ArgumentMatchers.*",
         "org.mockito.Answers.*"
-    ], 
+    ],
     "java.test.config": {
-        "env": {"WGPU_LOG": "debug"},
+        "env": {
+            "WGPU_LOG": "debug"
+        },
         "console": "integratedTerminal",
-        
     },
     "java.test.output": "both",
-    "java.test.log.level": "verbose"
-
-    
+    "java.test.log.level": "verbose",
+    "cSpell.words": [
+        "wgpu"
+    ]
 }

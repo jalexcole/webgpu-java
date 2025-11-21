@@ -2,7 +2,7 @@ package org.webgpu.impl;
 
 import java.util.concurrent.ExecutionException;
 
-
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +14,7 @@ import org.webgpu.exceptions.RequestAdaptorError;
 public class BufferImplTest {
 
     private static final Logger logger = LoggerFactory.getLogger(BufferImplTest.class);
+
     @Test
     void testDestroy() throws InterruptedException, ExecutionException, RequestAdaptorError {
         // final var instance = WGPU.createInstance(null);
@@ -26,9 +27,9 @@ public class BufferImplTest {
         // logger.info("Buffer created: " + buffer);
 
         // try {buffer.destroy();} catch (Exception e) {
-        //     logger.error("Failed to destroy buffer: " + e.getMessage());
+        // logger.error("Failed to destroy buffer: " + e.getMessage());
         // } finally {
-        //     throw new RuntimeException("Test exception");
+        // throw new RuntimeException("Test exception");
         // }
         // logger.info("Buffer destroyed: " + buffer);
     }
@@ -38,7 +39,12 @@ public class BufferImplTest {
 
     }
 
-    // @Test
+    @Test
+    @Disabled("Validation Error\n" + //
+            "\n" + //
+            "Caused by:\n" + //
+            "  In wgpuDeviceCreateBuffer\n" + //
+            "    Invalid usage flags BufferUsages(0x0)")
     void testGetMapState() throws InterruptedException, ExecutionException, RequestAdaptorError {
         final var instance = WGPU.createInstance(null);
         var adapter = instance.requestAdapter(null).get();
@@ -53,7 +59,8 @@ public class BufferImplTest {
         logger.info("Buffer map state: " + mapState);
     }
 
-    // @Test
+    @Test
+    @Disabled
     void testGetSize() throws InterruptedException, ExecutionException, RequestAdaptorError {
         final var instance = WGPU.createInstance(null);
         var adapter = instance.requestAdapter(null).get();
@@ -68,7 +75,8 @@ public class BufferImplTest {
         logger.info("Buffer size: " + size);
     }
 
-    // @Test
+    @Test
+    @Disabled
     void testGetUsage() throws InterruptedException, ExecutionException, RequestAdaptorError {
         final var instance = WGPU.createInstance(null);
         var adapter = instance.requestAdapter(null).get();
@@ -83,7 +91,8 @@ public class BufferImplTest {
         logger.info("Buffer usage: " + usage);
     }
 
-    // @Test
+    @Test
+    @Disabled
     void testHashCode() throws InterruptedException, ExecutionException, RequestAdaptorError {
         final var instance = WGPU.createInstance(null);
         var adapter = instance.requestAdapter(null).get();
@@ -98,7 +107,8 @@ public class BufferImplTest {
         logger.info("Buffer hash code: " + hashCode);
     }
 
-    // @Test
+    @Test
+    @Disabled
     void testToString() throws InterruptedException, ExecutionException, RequestAdaptorError {
         final var instance = WGPU.createInstance(null);
         var adapter = instance.requestAdapter(null).get();

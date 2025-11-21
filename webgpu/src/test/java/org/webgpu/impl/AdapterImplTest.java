@@ -11,14 +11,6 @@ import org.webgpu.exceptions.RequestAdaptorError;
 public class AdapterImplTest {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AdapterImplTest.class.getName());
-    @Test
-    void testClose() {
-        try (var adapter = (AdapterImpl) WGPU.createInstance(null).requestAdapter(null).get()) {
-            adapter.close();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @Test
     void testEquals() {

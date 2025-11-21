@@ -1,7 +1,7 @@
 package org.webgpu.api;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
-
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.lang.foreign.MemorySegment;
 
@@ -24,18 +24,24 @@ public class RequestAdapterOptionsTest {
     void testBackendType() {
         var adapterOptions = new RequestAdapterOptions();
         adapterOptions.backendType();
+        logger.info("BackendType: {}", adapterOptions.backendType());
+        assertNotNull(adapterOptions);
 
     }
-
+    @Test
     void testSetBackendType() {
         var adapterOptions = new RequestAdapterOptions();
         adapterOptions.backendType(BackendType.Vulkan);
+        logger.info("BackendType set to: {}", adapterOptions.backendType());
+
     }
 
     @Test
     void testCompatibleSurface() {
         var adapterOptions = new RequestAdapterOptions();
-        adapterOptions.compatibleSurface();
+        var compatibleSurface = adapterOptions.compatibleSurface();
+        logger.info("CompatibleSurface: {}", compatibleSurface);
+        assertNotNull(compatibleSurface);
     }
 
     
@@ -60,12 +66,17 @@ public class RequestAdapterOptionsTest {
     void testNextInChain() {
         var adapterOptions = new RequestAdapterOptions();
         adapterOptions.nextInChain();
+
+        logger.info("NextInChain: {}", adapterOptions.nextInChain());
+        assertNotNull(adapterOptions);
     }
 
     @Test
     void testPowerPreference() {
         var adapterOptions = new RequestAdapterOptions();
-        adapterOptions.powerPreference();
+        var powerPreference = adapterOptions.powerPreference();
+        logger.info("PowerPreference: {}", powerPreference);
+        assertNotNull(powerPreference);
     }
 
     @Test
