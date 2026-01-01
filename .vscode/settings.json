@@ -25,6 +25,7 @@
     "java.test.output": "both",
     "java.test.log.level": "verbose",
     "cSpell.words": [
+        "webgpu",
         "wgpu"
-    ]
+    ],
 }

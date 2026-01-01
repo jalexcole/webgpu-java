@@ -18,14 +18,11 @@ public class WGPU {
     static {
         try {
 
-            System.load("/Users/alex/dev/webgpu-java/webgpu/src/test/resources/libwgpu_native.dylib");
-        } catch (SecurityException e) {
+            // System.load("/Users/alex/dev/webgpu-java/webgpu/src/test/resources/libwgpu_native.dylib");
+            System.load("/usr/local/lib/libwgpu_native.dylib");
+        } catch (UnsatisfiedLinkError | Exception e) {
             logger.error(e.getMessage());
-        } catch (final UnsatisfiedLinkError e) {
-            logger.error(e.getMessage());
-        } catch (final Exception e) {
-            logger.error(e.getMessage());
-        }
+        }  
     }
 
     @SuppressWarnings("preview")
