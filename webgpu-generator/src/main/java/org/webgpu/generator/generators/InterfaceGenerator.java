@@ -9,6 +9,8 @@ import org.webgpu.generator.domain.YamlModel;
 import com.palantir.javapoet.JavaFile;
 import com.palantir.javapoet.TypeSpec;
 
+import jpassport.Passport;
+
 public class InterfaceGenerator {
     private final YamlModel yamlModel;
     private final String packageName;
@@ -22,7 +24,8 @@ public class InterfaceGenerator {
     public List<JavaFile> generate() {
 
         return yamlModel.getObjects().stream().map(i -> {
-            return TypeSpec.interfaceBuilder(i.getName()).addJavadoc(i.getDoc()).build();
+            return TypeSpec.interfaceBuilder(i.getName()).addJavadoc(i.getDoc()).addSuperinterface(Passport.class)
+                    .build();
         }).map(ts -> JavaFile.builder(packageName, ts).build()).toList();
 
     }

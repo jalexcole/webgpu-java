@@ -20,12 +20,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    
-    - uses: actions/checkout@v4
-    # - name: Checkout repo with submodules
-    #   uses: actions/checkout@v4
-    #   with:
-    #     submodules: true   # Recursively initialize submodules
+    - name: Checkout repo with submodules
+      uses: actions/checkout@v4
+      with:
+        submodules: true   # Recursively initialize submodules
     
     # - name: Install SDKMAN!
     #   run: |
