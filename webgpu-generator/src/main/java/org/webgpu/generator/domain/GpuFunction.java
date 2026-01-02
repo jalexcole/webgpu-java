@@ -1,14 +1,15 @@
 package org.webgpu.generator.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class GpuFunction {
     private String name;
     private String doc;
-    private List<Arg> args;
-    private List<Arg> returns_async;
-    private Return returns;
+    private List<Arg> args = new ArrayList<>();
+    private List<Arg> returns_async = new ArrayList<>();
+    private Optional<Return> returns = Optional.empty();
     private String callback;
 
     public GpuFunction() {
@@ -27,7 +28,7 @@ public class GpuFunction {
         this.doc = doc;
         this.args = args;
         this.returns_async = returns_async;
-        this.returns = returns;
+        this.returns = Optional.ofNullable(returns);
         this.callback = callback;
     }
 
@@ -238,7 +239,7 @@ public class GpuFunction {
 	/**
 	 * @return the returns
 	 */
-	public Return getReturns() {
+	public Optional<Return> getReturns() {
 		return returns;
 	}
 
@@ -246,7 +247,7 @@ public class GpuFunction {
 	 * @param returns the returns to set
 	 */
 	public void setReturns(Return returns) {
-		this.returns = returns;
+		this.returns = Optional.ofNullable(returns);
 	}
 
 	/**

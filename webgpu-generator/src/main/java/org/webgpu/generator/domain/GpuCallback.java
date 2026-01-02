@@ -2,38 +2,29 @@ package org.webgpu.generator.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class GpuCallback {
-    String name;
-    String doc;
-    String style;
-    List<Arg> args = new ArrayList<>();
+	String name;
+	String doc;
+	String style;
+	List<Arg> args = new ArrayList<>();
 
-    
-    
+	@Override
+	public String toString() {
+		return "GpuCallback [name=" + name + ", doc=" + doc + ", style=" + style + ", args=" + args + "]";
+	}
 
-    @Override
-    public String toString() {
-        return "GpuCallback [name=" + name + ", doc=" + doc + ", style=" + style + ", args=" + args + "]";
-    }
+	public static class Arg {
+		String name;
+		String doc;
+		String type;
+		Optional<String> pointer = Optional.empty();
 
-
-
-
-    public static class Arg {
-        String name;
-        String doc;
-        String type;
-        String pointer;
-
-        
-
-        @Override
-        public String toString() {
-            return "Arg [name=" + name + ", doc=" + doc + ", type=" + type + ", pointer=" + pointer + "]";
-        }
-
-
+		@Override
+		public String toString() {
+			return "Arg [name=" + name + ", doc=" + doc + ", type=" + type + ", pointer=" + pointer + "]";
+		}
 
 		/**
 		 * @return the name
@@ -42,16 +33,12 @@ public class GpuCallback {
 			return name;
 		}
 
-
-
 		/**
 		 * @param name the name to set
 		 */
 		public void setName(String name) {
 			this.name = name;
 		}
-
-
 
 		/**
 		 * @return the doc
@@ -60,16 +47,12 @@ public class GpuCallback {
 			return doc;
 		}
 
-
-
 		/**
 		 * @param doc the doc to set
 		 */
 		public void setDoc(String doc) {
 			this.doc = doc;
 		}
-
-
 
 		/**
 		 * @return the type
@@ -78,8 +61,6 @@ public class GpuCallback {
 			return type;
 		}
 
-
-
 		/**
 		 * @param type the type to set
 		 */
@@ -87,30 +68,21 @@ public class GpuCallback {
 			this.type = type;
 		}
 
-
-
 		/**
 		 * @return the pointer
 		 */
-		public String getPointer() {
+		public Optional<String> getPointer() {
 			return pointer;
 		}
-
-
 
 		/**
 		 * @param pointer the pointer to set
 		 */
 		public void setPointer(String pointer) {
-			this.pointer = pointer;
+			this.pointer = Optional.ofNullable(pointer);
 		}
 
-
-        
-    }
-
-
-
+	}
 
 	/**
 	 * @return the name
@@ -119,18 +91,12 @@ public class GpuCallback {
 		return name;
 	}
 
-
-
-
 	/**
 	 * @param name the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
-
 
 	/**
 	 * @return the doc
@@ -139,18 +105,12 @@ public class GpuCallback {
 		return doc;
 	}
 
-
-
-
 	/**
 	 * @param doc the doc to set
 	 */
 	public void setDoc(String doc) {
 		this.doc = doc;
 	}
-
-
-
 
 	/**
 	 * @return the style
@@ -159,9 +119,6 @@ public class GpuCallback {
 		return style;
 	}
 
-
-
-
 	/**
 	 * @param style the style to set
 	 */
@@ -169,18 +126,12 @@ public class GpuCallback {
 		this.style = style;
 	}
 
-
-
-
 	/**
 	 * @return the args
 	 */
 	public List<Arg> getArgs() {
 		return args;
 	}
-
-
-
 
 	/**
 	 * @param args the args to set

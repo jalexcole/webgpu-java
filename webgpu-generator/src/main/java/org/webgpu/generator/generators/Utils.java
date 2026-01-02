@@ -3,6 +3,10 @@ package org.webgpu.generator.generators;
 import java.lang.foreign.MemorySegment;
 import java.util.List;
 
+import org.webgpu.utils.Immutable;
+import org.webgpu.utils.Mutable;
+
+import com.palantir.javapoet.AnnotationSpec;
 import com.palantir.javapoet.ArrayTypeName;
 import com.palantir.javapoet.ClassName;
 import com.palantir.javapoet.TypeName;
@@ -20,13 +24,13 @@ public class Utils {
     }
 
     public static TypeName map(String type) {
-        type = cleanName(type);
+        final String sampledType = cleanName(type);
 
-        if (type.endsWith("[]")) {
-            return ArrayTypeName.of(map(type.replace("[]", "")));
+        if (sampledType.endsWith("[]")) {
+            return ArrayTypeName.of(map(sampledType.replace("[]", "")));
         }
-
-        return switch (type) {
+        
+        return switch (sampledType) {
             case "usize" -> TypeName.INT;
             case "void" -> TypeName.VOID;
             case "uint16" -> TypeName.SHORT;
@@ -47,7 +51,7 @@ public class Utils {
             case "nullable_string" -> ClassName.get(String.class);
             case "string_with_default_empty" -> ClassName.get(String.class);
             case "c_void" -> ClassName.get(MemorySegment.class);
-            default -> ClassName.get("org.webgpu", type);
+            default -> ClassName.get("org.webgpu", sampledType);
         };
 
     }
@@ -67,7 +71,6 @@ public class Utils {
             input = sb.toString();
         }
 
-
         if (input.contains("enum.")) {
             return input.replace("enum.", "");
         } else if (input.contains("struct.")) {
@@ -80,8 +83,18 @@ public class Utils {
             return input.replace("callback.", "");
         }
 
-        
-
         return input;
     }
+    
+    public static AnnotationSpec mapPointer(String input) {
+        
+
+        return switch(input) {
+            case "immutable" -> AnnotationSpec.builder(Immutable.class).build();
+            case "mutable" -> AnnotationSpec.builder(Mutable.class).build();
+            default -> throw new IllegalStateException("Unknown pointer type: " + input);
+        };
+    }
+
+    
 }

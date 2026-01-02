@@ -1,16 +1,18 @@
 package org.webgpu.generator.domain;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class GpuEnum {
     String name;
     String doc;
-    List<Entry> entries;
+    List<Entry> entries = new ArrayList<>();
 
     public static class Entry {
         String name;
         String doc;
-        Integer value;
+        Optional<Integer> value;
         @Override
         public String toString() {
             return "Entry [name=" + name + ", doc=" + doc + ", value=" + value + "]";
@@ -42,14 +44,14 @@ public class GpuEnum {
 		/**
 		 * @return the value
 		 */
-		public Integer getValue() {
+		public Optional<Integer> getValue() {
 			return value;
 		}
 		/**
 		 * @param value the value to set
 		 */
 		public void setValue(Integer value) {
-			this.value = value;
+			this.value = Optional.ofNullable(value);
 		}
         
         
