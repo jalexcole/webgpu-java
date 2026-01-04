@@ -67,23 +67,20 @@ public class MainFileGenerator {
     public void addFunctions(TypeSpec.Builder wgpuBuilder) {
         yamlModel.getFunctions().stream().forEach(e -> logger.info("Generated function: {}", e.getName()));
         yamlModel.getFunctions().stream().forEach(f -> {
-            MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(f.getName())
+            MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(Utils.toCamelCase(f.getName()))
                     .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL);
 
             for (var a : f.getArgs()) {
 
                 if (a.getPointer().isPresent()) {
                     methodBuilder.addParameter(Utils.map(a.getType())
-                        .annotated(Utils.mapPointer(a.getPointer().get())), a.getName());
+                            .annotated(Utils.mapPointer(a.getPointer().get())), Utils.toCamelCase(a.getName()));
                 } else {
                     methodBuilder.addParameter(Utils.map(a.getType()), a.getName());
                 }
 
             }
-            f.getReturns().ifPresent(r -> {
-                methodBuilder.returns(Utils.map(r.getType()));
-            });
-            
+            f.getReturns().ifPresent(r -> methodBuilder.returns(Utils.map(r.getType())));
 
             methodBuilder.addCode(CodeBlock.of("return null;"));
 

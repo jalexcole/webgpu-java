@@ -36,10 +36,10 @@ public class EnumGenerator {
         yamlModel.getEnums().stream().forEach(e -> logger.info("Generated enum: {}", e.getName()));
 
         return yamlModel.getEnums().stream().map(e -> {
-            var enumBuilder = TypeSpec.enumBuilder(e.getName()).addJavadoc(e.getDoc());
+            var enumBuilder = TypeSpec.enumBuilder(Utils.toPascalCase(e.getName())).addJavadoc(e.getDoc());
 
             for (int i = 0; i < e.getEntries().size(); i++) {
-                // logger.info("Generated enum entry: {}", e.getEntries().get(i).getName());
+                
                 try {
                 var entry = Optional.ofNullable(e.getEntries().get(i));
 
@@ -77,7 +77,7 @@ public class EnumGenerator {
             enumBuilder.addField(FieldSpec.builder(TypeName.INT, "value", Modifier.PRIVATE, Modifier.FINAL).build());
 
             enumBuilder.addMethod(MethodSpec.constructorBuilder().addParameter(TypeName.INT, "value")
-                    .addCode(CodeBlock.of("this.value = value;")).build());
+                    .addCode(CodeBlock.of("this.value = value;")).addModifiers(Modifier.PRIVATE).build());
 
             enumBuilder.addMethod(MethodSpec.methodBuilder("value").addModifiers(Modifier.PUBLIC)
                     .returns(TypeName.INT).addCode(CodeBlock.of("return this.value;")).build());

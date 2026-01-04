@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.webgpu.generator.domain.YamlModel;
 
-import com.palantir.javapoet.ClassName;
 import com.palantir.javapoet.JavaFile;
 import com.palantir.javapoet.MethodSpec;
 import com.palantir.javapoet.TypeName;
@@ -30,18 +29,25 @@ public class CallbackGenerator {
 
         return yamlModel.getCallbacks().stream().map(c -> {
 
-            var callbackMethodBuilder = MethodSpec.methodBuilder("invoke")
+            MethodSpec.Builder callbackMethodBuilder = MethodSpec.methodBuilder("invoke")
                     .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
 
                     .returns(void.class);
 
             for (var a : c.getArgs()) {
-                callbackMethodBuilder.addParameter(Utils.map(a.getType()), a.getName());
+                final TypeName typeName;
+                if (a.getType().contains("bitflag.")) {
+                    typeName = Utils.boxEnumSet(Utils.map(a.getType()));
+                } else {
+                    typeName = Utils.map(a.getType());
+                }
+                
+                callbackMethodBuilder.addParameter(typeName, a.getName());
             }
 
             var callbackMethod = callbackMethodBuilder.build();
 
-            TypeSpec callbackSpec = TypeSpec.interfaceBuilder(c.getName())
+            TypeSpec callbackSpec = TypeSpec.interfaceBuilder(Utils.toPascalCase(c.getName()))
                     .addJavadoc(c.getDoc())
                     .addModifiers(Modifier.PUBLIC)
 
@@ -53,22 +59,5 @@ public class CallbackGenerator {
             logger.info("Created callback interface: \n{}", callbackSpec);
             return callbackSpec;
         }).map(typeSpec -> JavaFile.builder(packageName, typeSpec).build()).toList();
-    }
-
-    private TypeName mapType(String type) {
-        logger.info("Mapping type: {}", type);
-        String fixedType = type.replace("enum.", "");
-        fixedType = fixedType.replace("object.", "fixedType");
-        fixedType = fixedType.replace("struct.", "fixedType");
-        return switch (type) {
-            case "void" -> TypeName.VOID;
-            case "int" -> TypeName.INT;
-            case "long" -> TypeName.LONG;
-            case "float" -> TypeName.FLOAT;
-            case "double" -> TypeName.DOUBLE;
-            case "boolean" -> TypeName.BOOLEAN;
-            case "String" -> ClassName.get(String.class);
-            default -> ClassName.get(packageName, fixedType);
-        };
     }
 }

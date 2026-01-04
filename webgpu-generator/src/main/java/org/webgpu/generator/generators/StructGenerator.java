@@ -31,7 +31,7 @@ public class StructGenerator {
 
 
         return yamlModel.getStructs().stream().map(e -> {
-            TypeSpec.Builder structSpecBuilder = TypeSpec.recordBuilder(e.getName()).addJavadoc(e.getDoc());
+            TypeSpec.Builder structSpecBuilder = TypeSpec.recordBuilder(Utils.toPascalCase(e.getName())).addJavadoc(e.getDoc());
             
             
             MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder();

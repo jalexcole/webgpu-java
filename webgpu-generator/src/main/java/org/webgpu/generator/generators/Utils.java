@@ -1,7 +1,12 @@
 package org.webgpu.generator.generators;
 
 import java.lang.foreign.MemorySegment;
+import java.lang.reflect.Type;
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
+
+import javax.lang.model.type.TypeMirror;
 
 import org.webgpu.utils.Immutable;
 import org.webgpu.utils.Mutable;
@@ -9,7 +14,11 @@ import org.webgpu.utils.Mutable;
 import com.palantir.javapoet.AnnotationSpec;
 import com.palantir.javapoet.ArrayTypeName;
 import com.palantir.javapoet.ClassName;
+import com.palantir.javapoet.ParameterizedTypeName;
 import com.palantir.javapoet.TypeName;
+import com.palantir.javapoet.TypeSpec;
+
+import tools.jackson.databind.deser.bean.CreatorCandidate.Param;
 
 public class Utils {
 
@@ -29,7 +38,14 @@ public class Utils {
         if (sampledType.endsWith("[]")) {
             return ArrayTypeName.of(map(sampledType.replace("[]", "")));
         }
-        
+
+        if (type.contains("bitflag.")) {
+            ClassName enumSet = ClassName.get(EnumSet.class);
+            ClassName bitflag = ClassName.get("org.webgpu", toPascalCase(sampledType));
+
+            return ParameterizedTypeName.get(enumSet, bitflag);
+        }
+
         return switch (sampledType) {
             case "usize" -> TypeName.INT;
             case "void" -> TypeName.VOID;
@@ -51,7 +67,7 @@ public class Utils {
             case "nullable_string" -> ClassName.get(String.class);
             case "string_with_default_empty" -> ClassName.get(String.class);
             case "c_void" -> ClassName.get(MemorySegment.class);
-            default -> ClassName.get("org.webgpu", sampledType);
+            default -> ClassName.get("org.webgpu", toPascalCase(sampledType));
         };
 
     }
@@ -87,14 +103,55 @@ public class Utils {
     }
     
     public static AnnotationSpec mapPointer(String input) {
-        
 
-        return switch(input) {
+        return switch (input) {
             case "immutable" -> AnnotationSpec.builder(Immutable.class).build();
             case "mutable" -> AnnotationSpec.builder(Mutable.class).build();
             default -> throw new IllegalStateException("Unknown pointer type: " + input);
         };
     }
+    
+    public static String toPascalCase(String input) {
+        var splitInput = input.split("_");
+
+        StringBuilder sb = new StringBuilder();
+
+        for (String s : splitInput) {
+            sb.append(Character.toUpperCase(s.charAt(0)));
+            sb.append(s.substring(1));
+        }
+
+        return sb.toString();
+    }
+
+    public static String toCamelCase(String input) {
+        var splitInput = input.split("_");
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < splitInput.length; i++) {
+            if (i == 0) {
+                sb.append(Character.toLowerCase(splitInput[i].charAt(0)));
+                sb.append(splitInput[i].substring(1));
+            } else {
+                sb.append(Character.toUpperCase(splitInput[i].charAt(0)));
+                sb.append(splitInput[i].substring(1));
+            }
+        }
+
+        return sb.toString();
+    }
+
+    public static TypeName boxEnumSet(TypeName input) {
+        return ParameterizedTypeName.get(EnumSet.class, new Type() {
+            @Override
+            public String toString() {
+                return input.toString();
+            }
+        });
+    }
+
+    
 
     
 }
