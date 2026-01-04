@@ -1,5 +1,8 @@
 package org.webgpu.generator.generators;
 
+import java.lang.foreign.Linker;
+import java.lang.foreign.SymbolLookup;
+
 import javax.lang.model.element.Modifier;
 
 import org.slf4j.Logger;
@@ -86,5 +89,27 @@ public class MainFileGenerator {
 
             wgpuBuilder.addMethod(methodBuilder.build());
         });
+    }
+
+    public void addFields(TypeSpec.Builder wgpuBuilder) {
+        // static final SymbolLookup SYMBOL_LOOKUP = SymbolLookup.libraryLookup(System.mapLibraryName("wgpu_native"), LIBRARY_ARENA)
+        //     .or(SymbolLookup.loaderLookup())
+        //     .or(Linker.nativeLinker().defaultLookup());
+
+        FieldSpec symbolLookupField = FieldSpec.builder(SymbolLookup.class, "SYMBOL_LOOKUP",
+                Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
+                .initializer(
+                        "$T.libraryLookup($T.mapLibraryName($S), $N)\n" +
+                                "    .or($T.loaderLookup())\n" +
+                                "    .or($T.nativeLinker().defaultLookup())",
+                        SymbolLookup.class,
+                        System.class,
+                        "wgpu_native",
+                        "LIBRARY_ARENA",
+                        SymbolLookup.class,
+                        Linker.class)
+                .build();
+        
+        wgpuBuilder.addField(symbolLookupField);
     }
 }

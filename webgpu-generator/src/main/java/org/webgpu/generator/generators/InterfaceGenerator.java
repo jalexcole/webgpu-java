@@ -49,7 +49,7 @@ public class InterfaceGenerator {
 
                     methodSpecBuilder.addParameter(parameterSpecBuilder.build());
                 }
-                methodSpecBuilder.addAnnotation(AnnotationSpec.builder(SymbolLink.class).addMember("name", "\"WGPU$N_$N\"",Utils.toPascalCase(i.getName()), Utils.toCamelCase(m.getName())).build());
+                methodSpecBuilder.addAnnotation(AnnotationSpec.builder(SymbolLink.class).addMember("name", "\"wgpu$N_$N\"",Utils.toPascalCase(i.getName()), Utils.toCamelCase(m.getName())).build());
                 m.getReturns().ifPresent(r -> 
                     methodSpecBuilder.returns(Utils.map(r.getType()))
                 );

@@ -13,7 +13,6 @@ import com.palantir.javapoet.ParameterSpec;
 import com.palantir.javapoet.TypeSpec;
 
 public class StructGenerator {
-    
 
     private final YamlModel yamlModel;
     private final String packageName;
@@ -24,24 +23,26 @@ public class StructGenerator {
         this.yamlModel = yamlModel;
         this.packageName = packageName;
     }
-    
+
     public List<JavaFile> generate() {
-        
+
         yamlModel.getStructs().stream().forEach(e -> logger.info("Generated struct: {}", e.getName()));
 
-
         return yamlModel.getStructs().stream().map(e -> {
-            TypeSpec.Builder structSpecBuilder = TypeSpec.recordBuilder(Utils.toPascalCase(e.getName())).addJavadoc(e.getDoc());
-            
-            
+            TypeSpec.Builder structSpecBuilder = TypeSpec.recordBuilder(Utils.toPascalCase(e.getName()))
+                    .addJavadoc(e.getDoc());
+
             MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder();
             for (Member f : e.getMembers()) {
+                final ParameterSpec.Builder parameterSpecBuilder = ParameterSpec
+                        .builder(Utils.map(f.getType()), Utils.toCamelCase(f.getName())).addJavadoc(f.getDoc());
+                        
                 constructorBuilder.addParameter(
-                        ParameterSpec.builder(Utils.map(f.getType()), f.getName()).addJavadoc(f.getDoc()).build());
+                        parameterSpecBuilder.build());
             }
 
             structSpecBuilder.recordConstructor(constructorBuilder.build());
-            
+
             return structSpecBuilder.build();
         }).map(ts -> JavaFile.builder(packageName, ts).build()).toList();
 

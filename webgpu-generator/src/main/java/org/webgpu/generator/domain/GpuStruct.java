@@ -2,6 +2,7 @@ package org.webgpu.generator.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class GpuStruct {
     String name;
@@ -28,7 +29,7 @@ public class GpuStruct {
         String doc;
         String type;
         boolean optional = false;
-        String pointer = null;
+        Optional<String> pointer = Optional.empty();
         @Override
         public String toString() {
             return "Member [name=" + name + ", doc=" + doc + ", type=" + type + ", optional=" + optional + ", pointer="
@@ -85,14 +86,14 @@ public class GpuStruct {
         /**
          * @return the pointer
          */
-        public String getPointer() {
+        public Optional<String> getPointer() {
             return pointer;
         }
         /**
          * @param pointer the pointer to set
          */
         public void setPointer(String pointer) {
-            this.pointer = pointer;
+            this.pointer = Optional.ofNullable(pointer);
         }
 
         

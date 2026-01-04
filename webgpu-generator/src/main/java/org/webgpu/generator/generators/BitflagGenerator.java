@@ -27,7 +27,7 @@ public class BitflagGenerator {
 
     public List<JavaFile> generate() {
         return yamlModel.getBitflags().stream().map(e -> {
-            var bitFlagBuilder = TypeSpec.enumBuilder(Utils.toPascalCase(e.getName())).addModifiers(Modifier.PUBLIC).addJavadoc(e.getDoc()).addAnnotation(Bitflag.class).addSuperinterface(Utils.map("WGPUBitFlag"));
+            var bitFlagBuilder = TypeSpec.enumBuilder(Utils.toPascalCase(e.getName())).addModifiers(Modifier.PUBLIC).addJavadoc(e.getDoc()).addAnnotation(Bitflag.class).addSuperinterface(Utils.map("BitFlag"));
             for (int i = 0; i < e.getEntries().size(); i++) {
                 logger.info("Generated bitflag: {}", e.getEntries().get(i).getName());
                 bitFlagBuilder.addEnumConstant(e.getEntries().get(i).getName().toUpperCase(),
@@ -36,7 +36,7 @@ public class BitflagGenerator {
             
             bitFlagBuilder.addField(FieldSpec.builder(TypeName.LONG, "value", Modifier.PRIVATE, Modifier.FINAL).build());
             bitFlagBuilder.addMethod(MethodSpec.constructorBuilder().addParameter(TypeName.LONG, "value")
-                    .addCode("this.value = value;").build());
+                    .addCode("this.value = value;").addModifiers(Modifier.PRIVATE).build());
             bitFlagBuilder.addMethod(MethodSpec.methodBuilder("value").addModifiers(Modifier.PUBLIC).returns(TypeName.LONG).addStatement("return value").build());
 
 

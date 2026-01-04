@@ -19,6 +19,7 @@
         <module>webgpu-panama</module>
         <!-- <module>webgpu</module> -->
         <module>webgpu-generated</module>
+        <module>webgpu-binder</module>
     </modules>
 
     <build>

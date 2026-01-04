@@ -127,9 +127,9 @@ public class GeneratorMojo extends AbstractMojo {
     }
     
     private void createBaseFiles(File generatedSourcesFile) throws IOException {
-        var ob = TypeSpec.interfaceBuilder("WGPUObjectBase").build();
+        var ob = TypeSpec.interfaceBuilder("ObjectBase").build();
         JavaFile.builder(packageName, ob).build().writeTo(generatedSourcesFile);
-        var bf = TypeSpec.interfaceBuilder("WGPUBitFlag").build();
+        var bf = TypeSpec.interfaceBuilder("BitFlag").build();
         JavaFile.builder(packageName, bf).build().writeTo(generatedSourcesFile);
     }
 }
