@@ -1,4 +1,4 @@
-package org.webgpu.utils;
+package org.webgpu.annotations;
 
 public @interface Bitflag {
     

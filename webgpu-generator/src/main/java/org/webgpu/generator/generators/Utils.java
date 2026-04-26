@@ -4,21 +4,15 @@ import java.lang.foreign.MemorySegment;
 import java.lang.reflect.Type;
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Set;
 
-import javax.lang.model.type.TypeMirror;
-
-import org.webgpu.utils.Immutable;
-import org.webgpu.utils.Mutable;
+import org.webgpu.annotations.Immutable;
+import org.webgpu.annotations.Mutable;
 
 import com.palantir.javapoet.AnnotationSpec;
 import com.palantir.javapoet.ArrayTypeName;
 import com.palantir.javapoet.ClassName;
 import com.palantir.javapoet.ParameterizedTypeName;
 import com.palantir.javapoet.TypeName;
-import com.palantir.javapoet.TypeSpec;
-
-import tools.jackson.databind.deser.bean.CreatorCandidate.Param;
 
 public class Utils {
 

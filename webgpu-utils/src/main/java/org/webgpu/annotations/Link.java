@@ -1,4 +1,4 @@
-package org.webgpu.utils;
+package org.webgpu.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;

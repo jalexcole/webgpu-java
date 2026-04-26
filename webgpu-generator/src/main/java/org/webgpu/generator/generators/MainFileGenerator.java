@@ -2,6 +2,7 @@ package org.webgpu.generator.generators;
 
 import java.lang.foreign.Linker;
 import java.lang.foreign.SymbolLookup;
+import java.util.ServiceLoader;
 
 import javax.lang.model.element.Modifier;
 
@@ -73,6 +74,8 @@ public class MainFileGenerator {
             MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(Utils.toCamelCase(f.getName()))
                     .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL);
 
+            TypeName returnType = f.getReturns().map(r -> Utils.map(r.getType())).orElse(TypeName.VOID);
+
             for (var a : f.getArgs()) {
 
                 if (a.getPointer().isPresent()) {
@@ -85,16 +88,24 @@ public class MainFileGenerator {
             }
             f.getReturns().ifPresent(r -> methodBuilder.returns(Utils.map(r.getType())));
 
-            methodBuilder.addCode(CodeBlock.of("return null;"));
+            CodeBlock codeBlock = CodeBlock.builder()
+                    .addStatement("return $T.load($T.class).findFirst().orElseThrow()",
+                            ServiceLoader.class,
+                            returnType)
+                    .build();
+
+            methodBuilder.addCode(codeBlock);
 
             wgpuBuilder.addMethod(methodBuilder.build());
         });
     }
 
     public void addFields(TypeSpec.Builder wgpuBuilder) {
-        // static final SymbolLookup SYMBOL_LOOKUP = SymbolLookup.libraryLookup(System.mapLibraryName("wgpu_native"), LIBRARY_ARENA)
-        //     .or(SymbolLookup.loaderLookup())
-        //     .or(Linker.nativeLinker().defaultLookup());
+        // static final SymbolLookup SYMBOL_LOOKUP =
+        // SymbolLookup.libraryLookup(System.mapLibraryName("wgpu_native"),
+        // LIBRARY_ARENA)
+        // .or(SymbolLookup.loaderLookup())
+        // .or(Linker.nativeLinker().defaultLookup());
 
         FieldSpec symbolLookupField = FieldSpec.builder(SymbolLookup.class, "SYMBOL_LOOKUP",
                 Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
@@ -109,7 +120,7 @@ public class MainFileGenerator {
                         SymbolLookup.class,
                         Linker.class)
                 .build();
-        
+
         wgpuBuilder.addField(symbolLookupField);
     }
 }

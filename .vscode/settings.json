@@ -28,4 +28,5 @@
         "webgpu",
         "wgpu"
     ],
+    "java.compile.nullAnalysis.mode": "automatic",
 }

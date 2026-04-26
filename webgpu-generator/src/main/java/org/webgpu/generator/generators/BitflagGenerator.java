@@ -6,9 +6,8 @@ import javax.lang.model.element.Modifier;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.webgpu.annotations.Bitflag;
 import org.webgpu.generator.domain.YamlModel;
-import org.webgpu.utils.Bitflag;
-
 import com.palantir.javapoet.FieldSpec;
 import com.palantir.javapoet.JavaFile;
 import com.palantir.javapoet.MethodSpec;

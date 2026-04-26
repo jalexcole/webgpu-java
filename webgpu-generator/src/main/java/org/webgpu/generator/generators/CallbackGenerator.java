@@ -29,7 +29,7 @@ public class CallbackGenerator {
 
         return yamlModel.getCallbacks().stream().map(c -> {
 
-            MethodSpec.Builder callbackMethodBuilder = MethodSpec.methodBuilder("invoke")
+            MethodSpec.Builder callbackMethodBuilder = MethodSpec.methodBuilder("apply")
                     .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
 
                     .returns(void.class);
