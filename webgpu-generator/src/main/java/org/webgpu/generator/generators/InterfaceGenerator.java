@@ -52,7 +52,7 @@ public class InterfaceGenerator {
                 m.getReturns().ifPresent(r -> methodSpecBuilder.returns(Utils.map(r.getType())));
                 methodSpecBuilder.addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT);
                 typeSpecBuilder.addMethod(methodSpecBuilder.build());
-
+                typeSpecBuilder.addModifiers(Modifier.PUBLIC);
             }
 
             return typeSpecBuilder.build();

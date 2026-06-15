@@ -34,6 +34,7 @@ public class MainFileGenerator {
         var wgpuBuilder = TypeSpec.classBuilder("WGPU");
         addConstants(wgpuBuilder);
         addFunctions(wgpuBuilder);
+        wgpuBuilder.addModifiers(Modifier.PUBLIC, Modifier.FINAL);
         return JavaFile.builder(packageName, wgpuBuilder.build()).build();
     }
 
@@ -60,6 +61,11 @@ public class MainFileGenerator {
                                     Modifier.STATIC, Modifier.FINAL)
                             .addJavadoc(e.getDoc()).initializer(CodeBlock.of("Integer.MAX_VALUE")).build();
 
+                case "nan" -> FieldSpec
+                        .builder(TypeName.DOUBLE, Utils.toScreamingSnakeCase(e.getName()), Modifier.PUBLIC,
+                                Modifier.STATIC, Modifier.FINAL)
+                        .addJavadoc(e.getDoc()).initializer(CodeBlock.of("Double.NaN")).build();
+
                 default -> throw new IllegalStateException("Unknown constant value: " + e.getValue());
             };
 
@@ -69,12 +75,12 @@ public class MainFileGenerator {
     }
 
     public void addFunctions(TypeSpec.Builder wgpuBuilder) {
-        yamlModel.getFunctions().stream().forEach(e -> logger.info("Generated function: {}", e.getName()));
-        yamlModel.getFunctions().stream().forEach(f -> {
+        yamlModel.getFunctions().forEach(e -> logger.info("Generated function: {}", e.getName()));
+        yamlModel.getFunctions().forEach(f -> {
             MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(Utils.toCamelCase(f.getName()))
                     .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL);
 
-            TypeName returnType = f.getReturns().map(r -> Utils.map(r.getType())).orElse(TypeName.VOID);
+            final TypeName returnType = f.getReturns().map(r -> Utils.map(r.getType())).orElse(TypeName.VOID);
 
             for (var a : f.getArgs()) {
 
@@ -87,14 +93,20 @@ public class MainFileGenerator {
 
             }
             f.getReturns().ifPresent(r -> methodBuilder.returns(Utils.map(r.getType())));
+                if (returnType != TypeName.VOID) {
+                
+            final TypeName builderType = f.getReturns().map(r -> Utils.map(r.getType() + "Builder"))
+                                        .orElseThrow();
+                
+            final CodeBlock codeBlock = CodeBlock.builder()
+                .addStatement("var builder = $T.load($T.class).findFirst().orElseThrow()",
+                ServiceLoader.class,
+                                                        builderType)
+                .addStatement("return builder.$L($L).build()", f.getArgs().getFirst().getName(), f.getArgs().getFirst().getName())
+                .build();
 
-            CodeBlock codeBlock = CodeBlock.builder()
-                    .addStatement("return $T.load($T.class).findFirst().orElseThrow()",
-                            ServiceLoader.class,
-                            returnType)
-                    .build();
-
-            methodBuilder.addCode(codeBlock);
+                methodBuilder.addCode(codeBlock);
+            }
 
             wgpuBuilder.addMethod(methodBuilder.build());
         });

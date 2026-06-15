@@ -13,7 +13,6 @@ import com.palantir.javapoet.MethodSpec;
 import com.palantir.javapoet.TypeName;
 import com.palantir.javapoet.TypeSpec;
 
-import jpassport.Passport;
 
 public class CallbackGenerator {
     private static final Logger logger = LoggerFactory.getLogger(CallbackGenerator.class);
@@ -54,7 +53,6 @@ public class CallbackGenerator {
                     .addAnnotation(FunctionalInterface.class)
 
                     .addMethod(callbackMethod)
-                    .addSuperinterface(Passport.class)
                     .build();
             logger.info("Created callback interface: \n{}", callbackSpec);
             return callbackSpec;

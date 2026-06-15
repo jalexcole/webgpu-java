@@ -81,7 +81,7 @@ public class EnumGenerator {
 
             enumBuilder.addMethod(MethodSpec.methodBuilder("value").addModifiers(Modifier.PUBLIC)
                     .returns(TypeName.INT).addCode(CodeBlock.of("return this.value;")).build());
-
+            enumBuilder.addModifiers(Modifier.PUBLIC);
             return enumBuilder.build();
         }).map(ts -> JavaFile.builder(packageName, ts).build()).toList();
     }

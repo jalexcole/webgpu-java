@@ -35,13 +35,13 @@ public class Utils {
 
         if (type.contains("bitflag.")) {
             ClassName enumSet = ClassName.get(EnumSet.class);
-            ClassName bitflag = ClassName.get("org.webgpu", toPascalCase(sampledType));
+            ClassName bitflag = ClassName.get("org.webgpu.api", toPascalCase(sampledType));
 
             return ParameterizedTypeName.get(enumSet, bitflag);
         }
 
         return switch (sampledType) {
-            case "usize" -> TypeName.INT;
+            case "usize" -> TypeName.LONG;
             case "void" -> TypeName.VOID;
             case "uint16" -> TypeName.SHORT;
             case "int" -> TypeName.INT;
@@ -61,7 +61,9 @@ public class Utils {
             case "nullable_string" -> ClassName.get(String.class);
             case "string_with_default_empty" -> ClassName.get(String.class);
             case "c_void" -> ClassName.get(MemorySegment.class);
-            default -> ClassName.get("org.webgpu", toPascalCase(sampledType));
+            case "nullable_float32" -> TypeName.FLOAT;
+            case "float64_supertype" -> TypeName.DOUBLE;
+            default -> ClassName.get("org.webgpu.api", toPascalCase(sampledType));
         };
 
     }

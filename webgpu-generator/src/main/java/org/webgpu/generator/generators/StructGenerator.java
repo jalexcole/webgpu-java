@@ -1,5 +1,6 @@
 package org.webgpu.generator.generators;
 
+import javax.lang.model.element.Modifier;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -42,7 +43,7 @@ public class StructGenerator {
             }
 
             structSpecBuilder.recordConstructor(constructorBuilder.build());
-
+            structSpecBuilder.addModifiers(Modifier.PUBLIC);
             return structSpecBuilder.build();
         }).map(ts -> JavaFile.builder(packageName, ts).build()).toList();
 
