@@ -26,8 +26,8 @@ jobs:
         submodules: recursive   # Recursively initialize submodules
     - name: Install wgpu-native
       run: |
-        curl -L https://github.com/gfx-rs/wgpu-native/releases/download/v0.19.4/wgpu-linux-x86_64-release.zip -o wgpu-native.zip
-        unzip wgpu-native.zip -d wgpu-native
+        curl -L https://github.com/gfx-rs/wgpu-native/releases/download/v0.20.0/wgpu-ubuntu-x86_64-release.tar.gz -o wgpu-native.tar.gz
+        tar -xzf wgpu-native.tar.gz -C wgpu-native
         sudo cp wgpu-native/libwgpu_native.so /usr/local/lib/
         sudo ldconfig
         echo "LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
