@@ -2,7 +2,6 @@ package org.webgpu.panama;
 
 import java.lang.foreign.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 /**
