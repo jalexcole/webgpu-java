@@ -20,7 +20,7 @@
         <!-- <module>webgpu</module> -->
         <module>webgpu-generated</module>
         <module>webgpu-binder</module>
-        <module>webgpu-hand</module>
+        <module>webgpu-impl</module>
         <module>webgpu-examples</module>
     </modules>
 
