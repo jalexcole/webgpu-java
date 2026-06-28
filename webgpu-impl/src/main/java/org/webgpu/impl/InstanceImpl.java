@@ -1,4 +1,4 @@
-package org.webgpu.hand;
+package org.webgpu.impl;
 
 import java.lang.foreign.MemorySegment;
 
@@ -11,14 +11,14 @@ import org.webgpu.api.Surface;
 import org.webgpu.api.SurfaceDescriptor;
 import org.webgpu.api.WGSLLanguageFeatureName;
 import org.webgpu.api.WaitStatus;
-import org.webgpu.hand.util.InstanceDescriptorMapper;
+import org.webgpu.impl.util.InstanceDescriptorMapper;
 import org.webgpu.panama.webgpu_h;
 
-public class HandInstance implements Instance {
+public class InstanceImpl implements Instance {
 
     private MemorySegment memorySegment;
 
-    public HandInstance(InstanceDescriptor descriptor) {
+    public InstanceImpl(InstanceDescriptor descriptor) {
         
         this.memorySegment = webgpu_h.wgpuCreateInstance(InstanceDescriptorMapper.map(descriptor));
     }

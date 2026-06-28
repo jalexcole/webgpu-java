@@ -1,3 +1,3 @@
-module webgpu.utils {
+module org.webgpu.utils {
     exports org.webgpu.annotations;
 }

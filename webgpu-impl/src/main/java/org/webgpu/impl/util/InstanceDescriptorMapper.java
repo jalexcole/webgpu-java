@@ -1,4 +1,4 @@
-package org.webgpu.hand.util;
+package org.webgpu.impl.util;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;

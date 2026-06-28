@@ -1,9 +1,9 @@
-package org.webgpu.hand.spi;
+package org.webgpu.impl.spi;
 
 import org.webgpu.api.Instance;
 import org.webgpu.api.InstanceDescriptor;
 import org.webgpu.api.InstanceBuilder;
-import org.webgpu.hand.HandInstance;
+import org.webgpu.impl.InstanceImpl;
 
 public final class DefaultInstanceBuilder extends NativeEntrant implements InstanceBuilder {
 
@@ -20,6 +20,6 @@ public final class DefaultInstanceBuilder extends NativeEntrant implements Insta
 
      @Override
      public Instance build() {
-          return new HandInstance(descriptor);
+          return new InstanceImpl(descriptor);
      }
 }

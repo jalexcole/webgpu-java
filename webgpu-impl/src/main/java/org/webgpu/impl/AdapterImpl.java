@@ -1,4 +1,4 @@
-package org.webgpu.hand;
+package org.webgpu.impl;
 
 import org.webgpu.api.Adapter;
 import org.webgpu.api.AdapterInfo;
@@ -8,7 +8,7 @@ import org.webgpu.api.Limits;
 import org.webgpu.api.Status;
 import org.webgpu.api.SupportedFeatures;
 
-public class BasicAdapter implements Adapter{
+public class AdapterImpl implements Adapter{
 
     @Override
     public Status getLimits(Limits limits) {
