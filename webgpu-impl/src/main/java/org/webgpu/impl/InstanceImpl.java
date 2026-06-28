@@ -19,7 +19,6 @@ public class InstanceImpl implements Instance {
     private MemorySegment memorySegment;
 
     public InstanceImpl(InstanceDescriptor descriptor) {
-        
         this.memorySegment = webgpu_h.wgpuCreateInstance(InstanceDescriptorMapper.map(descriptor));
     }
 

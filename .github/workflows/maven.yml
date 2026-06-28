@@ -26,10 +26,11 @@ jobs:
         submodules: recursive   # Recursively initialize submodules
     - name: Install wgpu-native
       run: |
-        curl -L https://github.com/gfx-rs/wgpu-native/releases/download/${{ env.WGPU_VERSION }}/wgpu-linux-x86_64-release.zip -o wgpu-native.zip
+        curl -L https://github.com/gfx-rs/wgpu-native/releases/download/v0.19.4/wgpu-linux-x86_64-release.zip -o wgpu-native.zip
         unzip wgpu-native.zip -d wgpu-native
         sudo cp wgpu-native/libwgpu_native.so /usr/local/lib/
         sudo ldconfig
+        echo "LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
     - name: Set up JDK 25
       uses: actions/setup-java@v4
       with:

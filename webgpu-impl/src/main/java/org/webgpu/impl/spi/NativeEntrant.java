@@ -1,9 +1,11 @@
 package org.webgpu.impl.spi;
 
+import org.webgpu.panama.NativeLibraryLoader;
+
 public abstract class NativeEntrant {
 
     static {
-        System.loadLibrary("wgpu_native");
+        NativeLibraryLoader.loadLibrary();
     }
 
 }
