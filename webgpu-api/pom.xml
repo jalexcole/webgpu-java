@@ -19,7 +19,7 @@
         </dependency>
         <dependency>
             <groupId>org.webgpu</groupId>
-            <artifactId>utils</artifactId>
+            <artifactId>annotations</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
