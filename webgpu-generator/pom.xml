@@ -19,15 +19,9 @@
     <dependencies>
         <dependency>
             <groupId>org.webgpu</groupId>
-            <artifactId>utils</artifactId>
+            <artifactId>annotations</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
-        <!-- <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <scope>test</scope>
-        </dependency> -->
         <!-- https://mvnrepository.com/artifact/tools.jackson.core/jackson-databind -->
         <dependency>
             <groupId>tools.jackson.core</groupId>
@@ -57,7 +51,12 @@
             <version>2.0.17</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/io.github.boulder-on/JPassport -->
-
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>6.0.0</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-plugin-api</artifactId>

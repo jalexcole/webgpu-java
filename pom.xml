@@ -14,12 +14,11 @@
     </properties>
 
     <modules>
-        <module>webgpu-utils</module>
+        <module>webgpu-annotations</module>
         <module>webgpu-generator</module>
         <module>webgpu-panama</module>
         <!-- <module>webgpu</module> -->
-        <module>webgpu-generated</module>
-        <module>webgpu-binder</module>
+        <module>webgpu-api</module>
         <module>webgpu-impl</module>
         <module>webgpu-examples</module>
     </modules>

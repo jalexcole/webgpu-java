@@ -2,7 +2,7 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.webgpu</groupId>
-    <artifactId>generated</artifactId>
+    <artifactId>api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <parent>
@@ -12,6 +12,11 @@
     </parent>
 
     <dependencies>
+        <dependency>
+            <groupId>org.webgpu</groupId>
+            <artifactId>annotations</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.webgpu</groupId>
             <artifactId>utils</artifactId>
