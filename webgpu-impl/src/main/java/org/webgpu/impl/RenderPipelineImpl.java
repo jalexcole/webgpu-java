@@ -10,7 +10,11 @@ import java.lang.foreign.MemorySegment;
 
 public class RenderPipelineImpl implements RenderPipeline {
 
-    private MemorySegment memorySegment;
+    private final MemorySegment memorySegment;
+
+    public RenderPipelineImpl(MemorySegment memorySegment) {
+        this.memorySegment = memorySegment;
+    }
 
     @Override
     public BindGroupLayout getBindGroupLayout(int groupIndex) {

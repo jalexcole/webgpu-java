@@ -1,8 +1,10 @@
 package org.webgpu.impl;
 
 import org.webgpu.api.*;
+import org.webgpu.panama.WGPUStringView;
 import org.webgpu.panama.webgpu_h;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.util.EnumSet;
 
@@ -41,7 +43,12 @@ class BufferImpl implements Buffer {
 
     @Override
     public void setLabel(String label) {
-
+        final Arena arena = Arena.ofAuto();
+        final var stringView = arena.allocate(WGPUStringView.layout());
+        final var labelSegment = arena.allocateFrom(label);
+        WGPUStringView.data(stringView, labelSegment);
+        WGPUStringView.length(stringView, label.length());
+        webgpu_h.wgpuBufferSetLabel(this.memorySegment, stringView);
     }
 
     @Override

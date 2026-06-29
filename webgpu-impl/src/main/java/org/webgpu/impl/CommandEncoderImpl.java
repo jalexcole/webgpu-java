@@ -1,5 +1,7 @@
 package org.webgpu.impl;
 
+import java.lang.foreign.MemorySegment;
+
 import org.webgpu.api.Buffer;
 import org.webgpu.api.CommandBuffer;
 import org.webgpu.api.CommandBufferDescriptor;
@@ -14,6 +16,12 @@ import org.webgpu.api.TexelCopyBufferInfo;
 import org.webgpu.api.TexelCopyTextureInfo;
 
 class CommandEncoderImpl implements CommandEncoder {
+
+    private final MemorySegment memorySegment;
+
+    public CommandEncoderImpl(MemorySegment memorySegment) {
+        this.memorySegment = memorySegment;
+    }
 
     @Override
     public CommandBuffer finish(CommandBufferDescriptor descriptor) {

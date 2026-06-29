@@ -30,5 +30,37 @@ public class InstanceImplTest {
         assertNotNull(instance);
     }
 
+    @Test
+    void testCreateSurface() {
+        
+    }
+
+    @Test
+    void testGetWGSLLanguageFeatures() {
+        
+    }
+
+    @Test
+    void testHasWGSLLanguageFeature() {
+        
+    }
+
+    @Test
+    void testProcessEvents() {
+        
+    }
+
+    @Test
+    void testRequestAdapter() {
+        
+    }
+
+    @Test
+    void testWaitAny() {
+        
+    }
+
+
+
 
 }
