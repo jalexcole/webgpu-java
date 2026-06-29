@@ -17,9 +17,10 @@
         <module>webgpu-annotations</module>
         <module>webgpu-generator</module>
         <module>webgpu-panama</module>
-        <!-- <module>webgpu</module> -->
+        
         <module>webgpu-api</module>
         <module>webgpu-impl</module>
+        <module>webgpu</module>
         <module>webgpu-examples</module>
     </modules>
 
