@@ -3,7 +3,7 @@ module org.webgpu.api {
 
     exports org.webgpu.api;
     exports org.webgpu.api.exceptions;
-    exports org.webgpu.api.spi to org.webgpu.impl;
+    exports org.webgpu.api.spi;
 
     uses org.webgpu.api.spi.InstanceInjector;
 }

@@ -34,16 +34,19 @@ public class InstanceImpl implements Instance {
 
     @Override
     public boolean hasWGSLLanguageFeature(WGSLLanguageFeatureName feature) {
-        throw new UnsupportedOperationException("Unimplemented method 'hasWGSLLanguageFeature'");
+        return webgpu_h.wgpuInstanceHasWGSLLanguageFeature(memorySegment, feature.value()) == 1;
     }
 
     @Override
     public void processEvents() {
-        throw new UnsupportedOperationException("Unimplemented method 'processEvents'");
+        webgpu_h.wgpuInstanceProcessEvents(memorySegment);
     }
 
     @Override
     public void requestAdapter(RequestAdapterOptions options) {
+        // var requestAdapterOptions = Arenas.ofAuto().
+
+
         throw new UnsupportedOperationException("Unimplemented method 'requestAdapter'");
     }
 
