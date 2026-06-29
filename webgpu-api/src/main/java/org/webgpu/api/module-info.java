@@ -1,8 +1,8 @@
 module org.webgpu.api {
     requires org.webgpu.annotations;
-    exports org.webgpu.api;
 
-    uses org.webgpu.api.InstanceBuilder;
-    uses org.webgpu.api.BoolBuilder;
-    uses org.webgpu.api.StatusBuilder;
+    exports org.webgpu.api;
+    exports org.webgpu.api.spi to org.webgpu.impl;
+
+    uses org.webgpu.api.spi.InstanceInjector;
 }
