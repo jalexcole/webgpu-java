@@ -10,19 +10,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.webgpu.generator.domain.YamlModel;
 
+import com.palantir.javapoet.ClassName;
 import com.palantir.javapoet.CodeBlock;
 import com.palantir.javapoet.FieldSpec;
 import com.palantir.javapoet.JavaFile;
 import com.palantir.javapoet.MethodSpec;
 import com.palantir.javapoet.TypeName;
 import com.palantir.javapoet.TypeSpec;
+import com.palantir.javapoet.TypeSpec.Builder;
 
 public class MainFileGenerator {
 
     private final YamlModel yamlModel;
     private final String packageName;
 
+    private final String injectorClassName = "org.webgpu.api.spi.InstanceInjector";
+    private final String injectorFieldName = "INSTANCE_INJECTOR";
+
     private static final Logger logger = LoggerFactory.getLogger(MainFileGenerator.class);
+    private Builder field;
 
     public MainFileGenerator(YamlModel yamlModel, String packageName) {
         this.yamlModel = yamlModel;
@@ -34,6 +40,7 @@ public class MainFileGenerator {
         var wgpuBuilder = TypeSpec.classBuilder("WGPU");
         addConstants(wgpuBuilder);
         addFunctions(wgpuBuilder);
+        addInjector(wgpuBuilder);
         wgpuBuilder.addModifiers(Modifier.PUBLIC, Modifier.FINAL);
         return JavaFile.builder(packageName, wgpuBuilder.build()).build();
     }
@@ -74,6 +81,15 @@ public class MainFileGenerator {
         });
     }
 
+    private void addInjector(TypeSpec.Builder wgpuBuilder) {
+        var instanceInjector = ClassName.get("org.webgpu.api.spi", "InstanceInjector");
+        wgpuBuilder.addField(FieldSpec
+                .builder(instanceInjector, injectorFieldName, Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
+                .initializer("$T.load($T.class).findFirst().orElseThrow()", ServiceLoader.class, instanceInjector)
+                .build());
+        // wgpuBuilder.addField(FieldSpec.builder(, packageName, null))
+    }
+
     public void addFunctions(TypeSpec.Builder wgpuBuilder) {
         yamlModel.getFunctions().forEach(e -> logger.info("Generated function: {}", e.getName()));
         yamlModel.getFunctions().forEach(f -> {
@@ -93,17 +109,29 @@ public class MainFileGenerator {
 
             }
             f.getReturns().ifPresent(r -> methodBuilder.returns(Utils.map(r.getType())));
-                if (returnType != TypeName.VOID) {
-                
-            final TypeName builderType = f.getReturns().map(r -> Utils.map(r.getType() + "Builder"))
-                                        .orElseThrow();
-                
-            final CodeBlock codeBlock = CodeBlock.builder()
-                .addStatement("var builder = $T.load($T.class).findFirst().orElseThrow()",
-                ServiceLoader.class,
-                                                        builderType)
-                .addStatement("return builder.$L($L).build()", f.getArgs().getFirst().getName(), f.getArgs().getFirst().getName())
-                .build();
+            if (returnType != TypeName.VOID) {
+
+                final CodeBlock codeBlock = CodeBlock.builder()
+                        .addStatement("return $L.$L($L)", injectorFieldName,
+                                Utils.toCamelCase(f
+                                        .getName()),
+                                f.getArgs()
+                                        .getFirst()
+                                        .getName())
+
+                        .build();
+
+                methodBuilder.addCode(codeBlock);
+            } else {
+                final CodeBlock codeBlock = CodeBlock.builder()
+                        .addStatement("$L.$L($L)", injectorFieldName,
+                                Utils.toCamelCase(f
+                                        .getName()),
+                                f.getArgs()
+                                        .getFirst()
+                                        .getName())
+
+                        .build();
 
                 methodBuilder.addCode(codeBlock);
             }
