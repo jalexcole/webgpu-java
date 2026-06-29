@@ -2,9 +2,15 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.webgpu</groupId>
-    <artifactId>webgpu-impl</artifactId>
+    <artifactId>impl</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>WebGPU Hand Made Bindings</name>
+
+    <parent>
+        <groupId>org.webgpu</groupId>
+        <artifactId>webgpu-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
 
     <properties>
         <maven.compiler.release>23</maven.compiler.release>

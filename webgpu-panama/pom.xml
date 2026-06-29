@@ -6,14 +6,14 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <parent>
-        <groupId>com.webgpu</groupId>
+        <groupId>org.webgpu</groupId>
         <artifactId>webgpu-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <properties>
         <wgpu.native.build>debug</wgpu.native.build>
-        <wgpu.native.version>v29.0.0.0</wgpu.native.version>
+        <wgpu.native.version>v29.0.1.1</wgpu.native.version>
     </properties>
 
     <profiles>
@@ -84,7 +84,7 @@
 
     <build>
         <plugins>
-            <!-- <plugin>
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.5.1</version>
@@ -98,25 +98,23 @@
                 </executions>
                 <configuration>
                     <executable>jextract</executable>
-                    
-
                     <arguments>
-                        <argument>-o</argument>
+                        <argument>--output</argument>
                         <argument>${project.build.directory}/generated-sources/jextract</argument>
-                        <argument>-t</argument>
-                        <argument>org.webgpu.panama.foriegn</argument>
-                        <argument>header-class-name</argument>
+                        <argument>--target-package</argument>
+                        <argument>org.webgpu.panama</argument>
+                        <argument>--header-class-name</argument>
                         <argument>webgpu_h</argument>
-                        <argument>library</argument>
+                        <argument>--library</argument>
                         <argument>wgpu_native</argument>
-                        <argument>include-dir</argument>
+                        <argument>--include-dir</argument>
                         <argument>${project.build.directory}/downloads-unzipped/include/webgpu</argument>
                         <argument>${project.build.directory}/downloads-unzipped/include/webgpu/wgpu.h</argument>
                     </arguments>
 
                 </configuration>
-            </plugin> -->
-            <!-- <plugin>
+            </plugin>
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
                 <version>3.6.0</version>
@@ -134,7 +132,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin> -->
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>

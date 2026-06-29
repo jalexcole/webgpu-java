@@ -14,6 +14,7 @@ import org.webgpu.generator.domain.YamlModel;
 import org.webgpu.generator.generators.BitflagGenerator;
 import org.webgpu.generator.generators.CallbackGenerator;
 import org.webgpu.generator.generators.EnumGenerator;
+import org.webgpu.generator.generators.InjectorGenerator;
 import org.webgpu.generator.generators.InterfaceGenerator;
 import org.webgpu.generator.generators.MainFileGenerator;
 import org.webgpu.generator.generators.StructGenerator;
@@ -123,6 +124,15 @@ public class GeneratorMojo extends AbstractMojo {
             } catch (IOException e) {
                 logger.error(e);
             }
+        }
+
+        InjectorGenerator injectorGenerator = new InjectorGenerator(yamlModel, packageName);
+
+        var injector = injectorGenerator.generate();
+        try {
+            injector.writeTo(generatedSourcesFile);
+        } catch (IOException e) {
+            logger.error(e);
         }
     }
     

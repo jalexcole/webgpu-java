@@ -2,14 +2,14 @@
 <project>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.webgpu</groupId>
+    <groupId>org.webgpu</groupId>
     <artifactId>webgpu-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <properties>
-        <maven.compiler.release>23</maven.compiler.release>
-        <maven.compiler.source>23</maven.compiler.source>
+        <maven.compiler.release>25</maven.compiler.release>
+        <maven.compiler.source>25</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 

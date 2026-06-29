@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>org.webgpu</groupId>
     <artifactId>webgpu</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>WebGPU Import</name>
 
     <parent>
-        <groupId>org.webgpu</groupId>
+        <groupId>com.webgpu</groupId>
         <artifactId>webgpu-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
@@ -15,19 +16,17 @@
     <dependencies>
         <dependency>
             <groupId>org.webgpu</groupId>
-            <artifactId>webgpu-api</artifactId>
+            <artifactId>api</artifactId>
             <version>${project.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.webgpu</groupId>
-            <artifactId>webgpu-impl</artifactId>
+            <artifactId>impl</artifactId>
             <version>${project.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.webgpu</groupId>
-            <artifactId>webgpu-panama</artifactId>
+            <artifactId>panama</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
