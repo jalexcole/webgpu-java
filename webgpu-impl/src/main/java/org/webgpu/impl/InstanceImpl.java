@@ -1,22 +1,37 @@
 package org.webgpu.impl;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
+import java.lang.foreign.ValueLayout;
+import java.util.concurrent.CompletableFuture;
 
+import org.webgpu.api.Adapter;
+import org.webgpu.api.BackendType;
+import org.webgpu.api.CallbackMode;
 import org.webgpu.api.FutureWaitInfo;
 import org.webgpu.api.Instance;
 import org.webgpu.api.InstanceDescriptor;
+import org.webgpu.api.PowerPreference;
+import org.webgpu.api.RequestAdapter;
 import org.webgpu.api.RequestAdapterOptions;
+import org.webgpu.api.RequestAdapterStatus;
 import org.webgpu.api.SupportedWGSLLanguageFeatures;
 import org.webgpu.api.Surface;
 import org.webgpu.api.SurfaceDescriptor;
 import org.webgpu.api.WGSLLanguageFeatureName;
 import org.webgpu.api.WaitStatus;
 import org.webgpu.impl.util.InstanceDescriptorMapper;
+import org.webgpu.impl.util.StringViewMapper;
+import org.webgpu.panama.WGPURequestAdapterCallback;
+import org.webgpu.panama.WGPURequestAdapterCallbackInfo;
+import org.webgpu.panama.WGPURequestAdapterOptions;
 import org.webgpu.panama.webgpu_h;
 
 public class InstanceImpl implements Instance {
 
     private final MemorySegment memorySegment;
+
+    private final Arena arena = Arena.ofShared();
 
     public InstanceImpl(InstanceDescriptor descriptor) {
         this.memorySegment = webgpu_h.wgpuCreateInstance(InstanceDescriptorMapper.map(descriptor));
@@ -46,13 +61,48 @@ public class InstanceImpl implements Instance {
     public void requestAdapter(RequestAdapterOptions options) {
         // var requestAdapterOptions = Arenas.ofAuto().
 
-
         throw new UnsupportedOperationException("Unimplemented method 'requestAdapter'");
+    }
+
+    public void requestAdapter(RequestAdapter callback, RequestAdapterOptions options) {
+        var requestAdapterOptions = WGPURequestAdapterOptions.allocate(arena);
+        WGPURequestAdapterOptions.powerPreference(requestAdapterOptions,
+                options.powerPreference() != null ? options.powerPreference().value()
+                        : PowerPreference.UNDEFINED.value());
+        WGPURequestAdapterOptions.forceFallbackAdapter(requestAdapterOptions,
+                options.forceFallbackAdapter() ? webgpu_h.WGPU_TRUE() : webgpu_h.WGPU_FALSE());
+        WGPURequestAdapterOptions.backendType(requestAdapterOptions,
+                options.backendType() != null ? options.backendType().value() : BackendType.UNDEFINED.value());
+        WGPURequestAdapterOptions.compatibleSurface(requestAdapterOptions,
+                MemorySegment.NULL); // Assuming no surface is provided in this example
+
+        var callbackInfo = WGPURequestAdapterCallbackInfo.allocate(arena);
+
+        WGPURequestAdapterCallback.Function nativeCallback = (int status, MemorySegment adapter, MemorySegment message,
+                MemorySegment userdata1, MemorySegment userdata2) -> {
+            RequestAdapterStatus statusEnum = RequestAdapterStatus.values()[status];
+            var adapterImpl = new AdapterImpl(adapter); // Create an AdapterImpl instance with the provided adapter
+                                                        // MemorySegment
+
+            callback.apply(statusEnum, adapterImpl, StringViewMapper.map(message));
+
+        };
+
+        var callbackSegment = WGPURequestAdapterCallback.allocate(nativeCallback, arena);
+
+        WGPURequestAdapterCallbackInfo.callback(callbackInfo, callbackSegment);
+        WGPURequestAdapterCallbackInfo.nextInChain(callbackInfo, MemorySegment.NULL);
+        WGPURequestAdapterCallbackInfo.mode(callbackInfo, CallbackMode.WAIT_ANY_ONLY.value()); // Assuming 0 is
+
+        WGPURequestAdapterCallbackInfo.userdata1(callbackInfo, MemorySegment.NULL);
+        WGPURequestAdapterCallbackInfo.userdata2(callbackInfo, MemorySegment.NULL);
+
+        webgpu_h.wgpuInstanceRequestAdapter(arena, this.memorySegment, requestAdapterOptions, callbackInfo);
     }
 
     @Override
     public WaitStatus waitAny(long futureCount, FutureWaitInfo futures, long timeoutNS) {
         throw new UnsupportedOperationException("Unimplemented method 'waitAny'");
     }
-    
+
 }

@@ -9,7 +9,9 @@ import org.webgpu.api.Instance;
 import org.webgpu.api.InstanceDescriptor;
 import org.webgpu.api.InstanceFeatureName;
 import org.webgpu.api.InstanceLimits;
+import org.webgpu.api.RequestAdapterOptions;
 import org.webgpu.api.WGPU;
+import org.webgpu.impl.spi.InstanceInjectorImpl;
 
 public class InstanceImplTest {
 
@@ -52,11 +54,25 @@ public class InstanceImplTest {
 
     @Test
     void testRequestAdapter() {
+        InstanceInjectorImpl injector = new InstanceInjectorImpl();
+
+        InstanceImpl instance = (InstanceImpl) injector.createInstance(null);
         
+        instance.requestAdapter((status, adapter, message) -> {
+            logger.info("Request Adapter Callback: status=" + status + ", adapter=" + adapter + ", message=" + message);
+            assertNotNull(status);
+            assertNotNull(adapter);
+            assertNotNull(message);
+        }, new RequestAdapterOptions());
     }
 
     @Test
     void testWaitAny() {
+        
+    }
+
+    @Test
+    void testRequestAdapter2() {
         
     }
 
