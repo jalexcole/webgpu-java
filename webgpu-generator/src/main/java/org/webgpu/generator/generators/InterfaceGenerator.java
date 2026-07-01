@@ -1,6 +1,7 @@
 package org.webgpu.generator.generators;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.lang.model.element.Modifier;
 
@@ -15,6 +16,7 @@ import com.palantir.javapoet.AnnotationSpec;
 import com.palantir.javapoet.JavaFile;
 import com.palantir.javapoet.MethodSpec;
 import com.palantir.javapoet.ParameterSpec;
+import com.palantir.javapoet.TypeName;
 import com.palantir.javapoet.TypeSpec;
 
 public class InterfaceGenerator {
@@ -29,7 +31,7 @@ public class InterfaceGenerator {
 
     public List<JavaFile> generate() {
 
-        return yamlModel.getObjects().stream().map(i -> {
+        List<JavaFile> files = yamlModel.getObjects().stream().map(i -> {
             var typeSpecBuilder = TypeSpec.interfaceBuilder(Utils.toPascalCase(i.getName())).addJavadoc(i.getDoc());
 
             for (var m : i.getMethods()) {
@@ -52,11 +54,28 @@ public class InterfaceGenerator {
                 m.getReturns().ifPresent(r -> methodSpecBuilder.returns(Utils.map(r.getType())));
                 methodSpecBuilder.addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT);
                 typeSpecBuilder.addMethod(methodSpecBuilder.build());
-                typeSpecBuilder.addModifiers(Modifier.PUBLIC);
+                typeSpecBuilder.addModifiers(Modifier.PUBLIC, Modifier.NON_SEALED);
+
             }
-
+            typeSpecBuilder.addSuperinterface(Utils.map("WGPUObject"));
             return typeSpecBuilder.build();
-        }).map(ts -> JavaFile.builder(packageName, ts).build()).toList();
+        }).map(ts -> JavaFile.builder(packageName, ts).build()).collect(Collectors.toList());
 
+        files.add(generateWGPUObject());
+        return files;
+    }
+    
+    private JavaFile generateWGPUObject() {
+        TypeSpec.Builder typeSpecBuilder = TypeSpec.interfaceBuilder("WGPUObject").addJavadoc("TODO");
+        typeSpecBuilder.addModifiers(Modifier.PUBLIC, Modifier.SEALED);
+
+        List<String> permitedInterfaces = yamlModel.getObjects().stream().map(i -> Utils.toPascalCase(i.getName()))
+                .collect(Collectors.toList());
+        
+        for (String i : permitedInterfaces) {
+            typeSpecBuilder.addPermittedSubclass((Utils.map(i)));
+        }
+
+        return JavaFile.builder(packageName, typeSpecBuilder.build()).build();
     }
 }

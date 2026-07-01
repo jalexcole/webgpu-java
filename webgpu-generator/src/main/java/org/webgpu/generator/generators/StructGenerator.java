@@ -9,12 +9,16 @@ import org.webgpu.generator.domain.YamlModel;
 import org.webgpu.generator.domain.GpuStruct;
 import org.webgpu.generator.domain.GpuStruct.Member;
 
+import com.palantir.javapoet.ArrayTypeName;
+import com.palantir.javapoet.ClassName;
 import com.palantir.javapoet.CodeBlock;
 import com.palantir.javapoet.FieldSpec;
 import com.palantir.javapoet.JavaFile;
 import com.palantir.javapoet.MethodSpec;
 import com.palantir.javapoet.ParameterSpec;
+import com.palantir.javapoet.TypeName;
 import com.palantir.javapoet.TypeSpec;
+import com.palantir.javapoet.WildcardTypeName;
 
 public class StructGenerator {
 
@@ -75,7 +79,18 @@ public class StructGenerator {
         structSpecBuilder.addMethod(constructorBuilder.build());
 
         if (!e.getMembers().isEmpty()) {
-            structSpecBuilder.addMethod(MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC).build());
+            MethodSpec.Builder defaultConstructorBuilder = MethodSpec.constructorBuilder()
+                    .addModifiers(Modifier.PUBLIC);
+            
+            CodeBlock.Builder initBlock = CodeBlock.builder();
+            e.getMembers().forEach(m -> {
+                String fieldName = Utils.toCamelCase(m.getName());
+                TypeName fieldType = Utils.map(m.getType());
+                addDefaultAssignment(initBlock, fieldName, fieldType);
+            });
+            
+            defaultConstructorBuilder.addCode(initBlock.build());
+            structSpecBuilder.addMethod(defaultConstructorBuilder.build());
         }
         // Adding Fields.
         e.getMembers().forEach(m -> {
@@ -106,9 +121,64 @@ public class StructGenerator {
             structSpecBuilder.addMethod(methodBuilder.build());
         });
 
+        // Adding toString method
+        MethodSpec.Builder toStringBuilder = MethodSpec.methodBuilder("toString")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(String.class)
+                .addAnnotation(Override.class);
 
+        String className = Utils.toPascalCase(e.getName());
+        StringBuilder code = new StringBuilder("return \"$L[\"");
+        List<Object> args = new java.util.ArrayList<>();
+        args.add(className);
+        
+        boolean first = true;
+        for (Member m : e.getMembers()) {
+            String fieldName = Utils.toCamelCase(m.getName());
+            if (!first) {
+                code.append(" + \", \" + \"$L=\" + $N()");
+                args.add(fieldName);
+                args.add(fieldName);
+            } else {
+                code.append(" + \"$L=\" + $N()");
+                args.add(fieldName);
+                args.add(fieldName);
+            }
+            first = false;
+        }
+        code.append(" + \"]\";");
+        
+        toStringBuilder.addCode(CodeBlock.of(code.toString(), args.toArray()));
+        structSpecBuilder.addMethod(toStringBuilder.build());
 
         structSpecBuilder.addModifiers(Modifier.PUBLIC);
         return structSpecBuilder.build();
+    }
+
+    private void addDefaultAssignment(CodeBlock.Builder initBlock, String fieldName, TypeName fieldType) {
+        if (fieldType.isPrimitive()) {
+            if (fieldType.equals(TypeName.BOOLEAN)) {
+                initBlock.addStatement("this.$N = false", fieldName);
+            } else if (fieldType.equals(TypeName.BYTE) || fieldType.equals(TypeName.SHORT) || 
+                       fieldType.equals(TypeName.INT) || fieldType.equals(TypeName.LONG)) {
+                initBlock.addStatement("this.$N = 0", fieldName);
+            } else if (fieldType.equals(TypeName.FLOAT)) {
+                initBlock.addStatement("this.$N = 0.0f", fieldName);
+            } else if (fieldType.equals(TypeName.DOUBLE)) {
+                initBlock.addStatement("this.$N = 0.0", fieldName);
+            } else if (fieldType.equals(TypeName.CHAR)) {
+                initBlock.addStatement("this.$N = '\\0'", fieldName);
+            }
+        } else if (fieldType instanceof ArrayTypeName) {
+            // For array types, use new Type[0]
+            ArrayTypeName arrayType = (ArrayTypeName) fieldType;
+            initBlock.addStatement("this.$N = new $T[0]", fieldName, arrayType.componentType());
+        } else if (fieldType.equals(ClassName.get(String.class))) {
+            // For String, use empty string
+            initBlock.addStatement("this.$N = \"\"", fieldName);
+        } else {
+            // For all other reference types (enums, abstract classes, interfaces, etc.), use null
+            initBlock.addStatement("this.$N = null", fieldName);
+        }
     }
 }

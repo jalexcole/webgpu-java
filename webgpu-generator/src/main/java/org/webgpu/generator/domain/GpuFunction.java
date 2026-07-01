@@ -8,7 +8,8 @@ public class GpuFunction {
     private String name;
     private String doc;
     private List<Arg> args = new ArrayList<>();
-    private List<Arg> returns_async = new ArrayList<>();
+	private List<Arg> returns_async = new ArrayList<>();
+	private List<Arg> callback_args = new ArrayList<>();
     private Optional<Return> returns = Optional.empty();
     private String callback;
 
