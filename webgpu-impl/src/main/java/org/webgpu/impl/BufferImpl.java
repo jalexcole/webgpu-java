@@ -6,6 +6,7 @@ import org.webgpu.panama.webgpu_h;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
+import java.nio.ByteBuffer;
 import java.util.EnumSet;
 
 class BufferImpl implements Buffer {
@@ -22,22 +23,22 @@ class BufferImpl implements Buffer {
     }
 
     @Override
-    public MemorySegment getMappedRange(long offset, long size) {
+    public ByteBuffer getMappedRange(long offset, long size) {
         return null;
     }
 
     @Override
-    public MemorySegment getConstMappedRange(long offset, long size) {
+    public ByteBuffer getConstMappedRange(long offset, long size) {
         return null;
     }
 
     @Override
-    public Status readMappedRange(long offset, MemorySegment data, long size) {
+    public Status readMappedRange(long offset, ByteBuffer data, long size) {
         return null;
     }
 
     @Override
-    public Status writeMappedRange(long offset, MemorySegment data, long size) {
+    public Status writeMappedRange(long offset, ByteBuffer data, long size) {
         return null;
     }
 

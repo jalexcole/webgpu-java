@@ -12,7 +12,4 @@ public class WebGPUException extends RuntimeException {
     public WebGPUException(Throwable cause) {
         super(cause);
     }
-
-    
-    
 }

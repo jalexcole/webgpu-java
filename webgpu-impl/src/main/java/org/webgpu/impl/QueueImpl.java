@@ -1,6 +1,7 @@
 package org.webgpu.impl;
 
 import java.lang.foreign.MemorySegment;
+import java.nio.ByteBuffer;
 
 import org.webgpu.api.Buffer;
 import org.webgpu.api.CommandBuffer;
@@ -30,13 +31,13 @@ public class QueueImpl implements Queue {
 	}
 
 	@Override
-	public void writeBuffer(Buffer buffer, long bufferOffset, MemorySegment data, long size) {
+	public void writeBuffer(Buffer buffer, long bufferOffset, ByteBuffer data, long size) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'writeBuffer'");
 	}
 
 	@Override
-	public void writeTexture(TexelCopyTextureInfo destination, MemorySegment data, long dataSize,
+	public void writeTexture(TexelCopyTextureInfo destination, ByteBuffer data, long dataSize,
 			TexelCopyBufferLayout dataLayout, Extent3D writeSize) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'writeTexture'");

@@ -206,7 +206,7 @@ public class GpuStruct {
 	/**
 	 * @return the extendz
 	 */
-	public List<String> getExtendz() {
+	public List<String> getExtends() {
 		return extendz;
 	}
 
@@ -216,7 +216,7 @@ public class GpuStruct {
 	/**
 	 * @param extendz the extendz to set
 	 */
-	public void setExtendz(List<String> extendz) {
+	public void setExtends(List<String> extendz) {
 		this.extendz = extendz;
 	}
 }

@@ -11,7 +11,7 @@ import org.webgpu.api.Status;
 import org.webgpu.api.SupportedFeatures;
 import org.webgpu.panama.webgpu_h;
 
-public class AdapterImpl implements Adapter {
+public final class AdapterImpl implements Adapter, WebGPUObjectImpl {
     
     private final MemorySegment memorySegment;
 
@@ -48,6 +48,10 @@ public class AdapterImpl implements Adapter {
     public void requestDevice(DeviceDescriptor descriptor) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'requestDevice'");
+    }
+
+    public MemorySegment ptr() {
+        return this.memorySegment;
     }
     
 }

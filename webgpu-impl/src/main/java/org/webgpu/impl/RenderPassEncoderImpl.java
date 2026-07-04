@@ -1,6 +1,7 @@
 package org.webgpu.impl;
 
 import java.lang.foreign.MemorySegment;
+import java.nio.ByteBuffer;
 
 import org.webgpu.api.BindGroup;
 import org.webgpu.api.Buffer;
@@ -31,7 +32,7 @@ public class RenderPassEncoderImpl implements RenderPassEncoder {
 	}
 
 	@Override
-	public void setImmediates(int offset, MemorySegment data, long size) {
+	public void setImmediates(int offset, ByteBuffer data, long size) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'setImmediates'");
 	}

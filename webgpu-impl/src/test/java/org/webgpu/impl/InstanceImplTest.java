@@ -1,7 +1,9 @@
 package org.webgpu.impl;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.lang.foreign.MemorySegment;
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Test;
@@ -63,6 +65,7 @@ public class InstanceImplTest {
             assertNotNull(status);
             assertNotNull(adapter);
             assertNotNull(message);
+            assertFalse(((AdapterImpl) adapter).ptr().equals(MemorySegment.NULL));
         }, new RequestAdapterOptions());
     }
 

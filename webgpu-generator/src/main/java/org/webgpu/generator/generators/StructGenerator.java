@@ -64,6 +64,10 @@ public class StructGenerator {
         final TypeSpec.Builder structSpecBuilder = TypeSpec.classBuilder(Utils.toPascalCase(e.getName()))
                 .addJavadoc(e.getDoc());
 
+        e.getExtends().forEach(ext -> {
+            structSpecBuilder.superclass(ClassName.get(packageName, Utils.toPascalCase(ext)));
+        });
+
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder();
         constructorBuilder.addModifiers(Modifier.PUBLIC);
         for (Member f : e.getMembers()) {

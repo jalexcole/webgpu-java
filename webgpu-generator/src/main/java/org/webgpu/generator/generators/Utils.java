@@ -2,6 +2,7 @@ package org.webgpu.generator.generators;
 
 import java.lang.foreign.MemorySegment;
 import java.lang.reflect.Type;
+import java.nio.ByteBuffer;
 import java.util.EnumSet;
 import java.util.List;
 
@@ -60,7 +61,7 @@ public class Utils {
             case "out_string" -> ClassName.get(String.class);
             case "nullable_string" -> ClassName.get(String.class);
             case "string_with_default_empty" -> ClassName.get(String.class);
-            case "c_void" -> ClassName.get(MemorySegment.class);
+            case "c_void" -> ClassName.get(ByteBuffer.class);
             case "nullable_float32" -> TypeName.FLOAT;
             case "float64_supertype" -> TypeName.DOUBLE;
             default -> ClassName.get("org.webgpu.api", toPascalCase(sampledType));
