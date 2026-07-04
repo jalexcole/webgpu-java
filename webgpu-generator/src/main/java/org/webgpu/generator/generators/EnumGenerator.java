@@ -36,14 +36,17 @@ public class EnumGenerator {
         yamlModel.getEnums().stream().forEach(e -> logger.info("Generated enum: {}", e.getName()));
 
         return yamlModel.getEnums().stream().map(e -> {
-            var enumBuilder = TypeSpec.enumBuilder(Utils.toPascalCase(e.getName())).addJavadoc(e.getDoc());
+            var enumBuilder = TypeSpec.enumBuilder(Utils.toPascalCase(e.getName()));
+            if (e.getDoc() != null) {
+                enumBuilder.addJavadoc(e.getDoc());
+            }
 
             for (int i = 0; i < e.getEntries().size(); i++) {
                 
                 try {
                 var entry = Optional.ofNullable(e.getEntries().get(i));
 
-                    if (entry.isPresent()) {
+                    if (entry.isPresent() && entry.get().getName() != null) {
                         var name = entry.get().getName().toUpperCase();
 
                         var chars = name.toCharArray();
@@ -62,11 +65,15 @@ public class EnumGenerator {
                             default -> name;
                         };
 
-                        enumBuilder.addEnumConstant(usable_name, TypeSpec.anonymousClassBuilder("$L", i).addJavadoc(entry.get().getDoc()).build());
-                        
-                } else {
-                    enumBuilder.addEnumConstant("NULL", TypeSpec.anonymousClassBuilder("$L", i).build());
-                }
+                        var anonymousBuilder = TypeSpec.anonymousClassBuilder("$L", i);
+                        if (entry.get().getDoc() != null) {
+                            anonymousBuilder.addJavadoc(entry.get().getDoc());
+                        }
+                        enumBuilder.addEnumConstant(usable_name, anonymousBuilder.build());
+                    } else {
+                        // Handle null entry or null name
+                        enumBuilder.addEnumConstant("NULL", TypeSpec.anonymousClassBuilder("$L", i).build());
+                    }
                 } catch (Exception ex) {
                     logger.error(ex.getMessage());
                 }

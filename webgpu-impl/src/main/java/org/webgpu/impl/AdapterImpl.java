@@ -7,6 +7,7 @@ import org.webgpu.api.AdapterInfo;
 import org.webgpu.api.DeviceDescriptor;
 import org.webgpu.api.FeatureName;
 import org.webgpu.api.Limits;
+import org.webgpu.api.RequestDevice;
 import org.webgpu.api.Status;
 import org.webgpu.api.SupportedFeatures;
 import org.webgpu.panama.webgpu_h;
@@ -44,7 +45,7 @@ public final class AdapterImpl implements Adapter, WebGPUObjectImpl {
         throw new UnsupportedOperationException("Unimplemented method 'getInfo'");
     }
 
-    @Override
+    
     public void requestDevice(DeviceDescriptor descriptor) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'requestDevice'");
@@ -53,5 +54,13 @@ public final class AdapterImpl implements Adapter, WebGPUObjectImpl {
     public MemorySegment ptr() {
         return this.memorySegment;
     }
+
+    @Override
+    public void requestDevice(RequestDevice callback, DeviceDescriptor descriptor) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'requestDevice'");
+    }
+
+   
     
 }

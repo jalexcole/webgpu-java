@@ -17,7 +17,7 @@ class BufferImpl implements Buffer {
         this.memorySegment = memorySegment;
     }
 
-    @Override
+
     public void mapAsync(EnumSet<MapMode> mode, long offset, long size) {
 
     }
@@ -44,12 +44,13 @@ class BufferImpl implements Buffer {
 
     @Override
     public void setLabel(String label) {
-        final Arena arena = Arena.ofAuto();
-        final var stringView = arena.allocate(WGPUStringView.layout());
-        final var labelSegment = arena.allocateFrom(label);
-        WGPUStringView.data(stringView, labelSegment);
-        WGPUStringView.length(stringView, label.length());
-        webgpu_h.wgpuBufferSetLabel(this.memorySegment, stringView);
+        throw new UnsupportedOperationException("WGPU Does not support setting labels on buffers yet.");
+        // final Arena arena = Arena.ofAuto();
+        // final var stringView = arena.allocate(WGPUStringView.layout());
+        // final var labelSegment = arena.allocateFrom(label);
+        // WGPUStringView.data(stringView, labelSegment);
+        // WGPUStringView.length(stringView, label.length());
+        // webgpu_h.wgpuBufferSetLabel(this.memorySegment, stringView);
     }
 
     @Override
@@ -75,5 +76,11 @@ class BufferImpl implements Buffer {
     @Override
     public void destroy() {
 
+    }
+    
+    @Override
+    public void mapAsync(BufferMap callback, EnumSet<MapMode> mode, long offset, long size) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mapAsync'");
     }
 }

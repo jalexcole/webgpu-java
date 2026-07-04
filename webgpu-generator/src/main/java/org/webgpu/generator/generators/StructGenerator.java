@@ -36,20 +36,34 @@ public class StructGenerator {
 
         yamlModel.getStructs().forEach(e -> logger.info("Generated struct: {}", e.getName()));
 
+        // Build a map of parent struct name to list of child structs that extend it
+        java.util.Map<String, List<GpuStruct>> parentToChildrenMap = new java.util.HashMap<>();
+        yamlModel.getStructs().forEach(struct -> {
+            for (String parentName : struct.getExtends()) {
+                parentToChildrenMap.computeIfAbsent(parentName, k -> new java.util.ArrayList<>()).add(struct);
+            }
+        });
+
         return yamlModel.getStructs().stream().map(e -> {
-            return generateStructClass(e);
+            List<GpuStruct> children = parentToChildrenMap.getOrDefault(e.getName(), List.of());
+            return generateStructClass(e, children);
         }).map(ts -> JavaFile.builder(packageName, ts).build()).toList();
 
     }
 
     private TypeSpec generateStructRecord(GpuStruct e) {
-        TypeSpec.Builder structSpecBuilder = TypeSpec.recordBuilder(Utils.toPascalCase(e.getName()))
-                .addJavadoc(e.getDoc());
+        TypeSpec.Builder structSpecBuilder = TypeSpec.recordBuilder(Utils.toPascalCase(e.getName()));
+        if (e.getDoc() != null) {
+            structSpecBuilder.addJavadoc(e.getDoc());
+        }
 
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder();
         for (Member f : e.getMembers()) {
             final ParameterSpec.Builder parameterSpecBuilder = ParameterSpec
-                    .builder(Utils.map(f.getType()), Utils.toCamelCase(f.getName())).addJavadoc(f.getDoc());
+                    .builder(Utils.map(f.getType()), Utils.toCamelCase(f.getName()));
+            if (f.getDoc() != null) {
+                parameterSpecBuilder.addJavadoc(f.getDoc());
+            }
                     
             constructorBuilder.addParameter(
                     parameterSpecBuilder.build());
@@ -60,9 +74,25 @@ public class StructGenerator {
         return structSpecBuilder.build();
     }
 
-    private TypeSpec generateStructClass(GpuStruct e) {
-        final TypeSpec.Builder structSpecBuilder = TypeSpec.classBuilder(Utils.toPascalCase(e.getName()))
-                .addJavadoc(e.getDoc());
+    private TypeSpec generateStructClass(GpuStruct e, List<GpuStruct> children) {
+        final TypeSpec.Builder structSpecBuilder = TypeSpec.classBuilder(Utils.toPascalCase(e.getName()));
+        if (e.getDoc() != null) {
+            structSpecBuilder.addJavadoc(e.getDoc());
+        }
+
+        // If this struct is extended by other structs, make it sealed
+        if (!children.isEmpty()) {
+            structSpecBuilder.addModifiers(Modifier.SEALED);
+            // Add permits clause with all child class names
+            List<ClassName> permittedClasses = children.stream()
+                    .map(child -> ClassName.get(packageName, Utils.toPascalCase(child.getName())))
+                    .toList();
+            structSpecBuilder.addPermittedSubclasses(permittedClasses);
+        } else if (!e.getExtends().isEmpty()) {
+            // If this struct extends a sealed class and has no children, mark it as final
+            // (if it has children, it will be processed as sealed in the if block above)
+            structSpecBuilder.addModifiers(Modifier.FINAL);
+        }
 
         e.getExtends().forEach(ext -> {
             structSpecBuilder.superclass(ClassName.get(packageName, Utils.toPascalCase(ext)));
@@ -72,7 +102,10 @@ public class StructGenerator {
         constructorBuilder.addModifiers(Modifier.PUBLIC);
         for (Member f : e.getMembers()) {
             final ParameterSpec.Builder parameterSpecBuilder = ParameterSpec
-                    .builder(Utils.map(f.getType()), Utils.toCamelCase(f.getName())).addJavadoc(f.getDoc());
+                    .builder(Utils.map(f.getType()), Utils.toCamelCase(f.getName()));
+            if (f.getDoc() != null) {
+                parameterSpecBuilder.addJavadoc(f.getDoc());
+            }
 
             constructorBuilder.addParameter(
                     parameterSpecBuilder.build());

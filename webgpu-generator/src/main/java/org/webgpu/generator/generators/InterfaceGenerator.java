@@ -16,7 +16,6 @@ import com.palantir.javapoet.AnnotationSpec;
 import com.palantir.javapoet.JavaFile;
 import com.palantir.javapoet.MethodSpec;
 import com.palantir.javapoet.ParameterSpec;
-import com.palantir.javapoet.TypeName;
 import com.palantir.javapoet.TypeSpec;
 
 public class InterfaceGenerator {
@@ -32,10 +31,33 @@ public class InterfaceGenerator {
     public List<JavaFile> generate() {
 
         List<JavaFile> files = yamlModel.getObjects().stream().map(i -> {
-            var typeSpecBuilder = TypeSpec.interfaceBuilder(Utils.toPascalCase(i.getName())).addJavadoc(i.getDoc());
+            var typeSpecBuilder = TypeSpec.interfaceBuilder(Utils.toPascalCase(i.getName()));
+            if (i.getDoc() != null) {
+                typeSpecBuilder.addJavadoc(i.getDoc());
+            }
+            typeSpecBuilder.addModifiers(Modifier.PUBLIC, Modifier.NON_SEALED);
 
             for (var m : i.getMethods()) {
-                var methodSpecBuilder = MethodSpec.methodBuilder(Utils.toCamelCase(m.getName())).addJavadoc(m.getDoc());
+                var methodSpecBuilder = MethodSpec.methodBuilder(Utils.toCamelCase(m.getName()));
+                if (m.getDoc() != null) {
+                    methodSpecBuilder.addJavadoc(m.getDoc());
+                }
+
+                // Handle callback parameter if method has a callback
+                String callback = m.getCallback();
+                if (callback != null && !callback.isEmpty()) {
+                    // Extract callback name from "callback.callback_name" format
+                    String callbackName = callback;
+                    if (callback.startsWith("callback.")) {
+                        callbackName = callback.substring("callback.".length());
+                    }
+                    // Convert to PascalCase for the interface type
+                    String callbackInterfaceName = Utils.toPascalCase(callbackName);
+
+                    methodSpecBuilder.addParameter(
+                            ParameterSpec.builder(Utils.map(callbackInterfaceName), "callback")
+                                    .build());
+                }
 
                 for (var a : m.getArgs()) {
                     ParameterSpec.Builder parameterSpecBuilder = ParameterSpec.builder(Utils.map(a.getType()),
@@ -49,12 +71,13 @@ public class InterfaceGenerator {
 
                     methodSpecBuilder.addParameter(parameterSpecBuilder.build());
                 }
+
+                
                 methodSpecBuilder.addAnnotation(AnnotationSpec.builder(SymbolLink.class).addMember("name",
                         "\"wgpu$N_$N\"", Utils.toPascalCase(i.getName()), Utils.toCamelCase(m.getName())).build());
                 m.getReturns().ifPresent(r -> methodSpecBuilder.returns(Utils.map(r.getType())));
                 methodSpecBuilder.addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT);
                 typeSpecBuilder.addMethod(methodSpecBuilder.build());
-                typeSpecBuilder.addModifiers(Modifier.PUBLIC, Modifier.NON_SEALED);
 
             }
             typeSpecBuilder.addSuperinterface(Utils.map("WGPUObject"));

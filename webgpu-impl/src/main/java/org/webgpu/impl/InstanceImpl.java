@@ -57,7 +57,7 @@ public class InstanceImpl implements Instance {
         webgpu_h.wgpuInstanceProcessEvents(memorySegment);
     }
 
-    @Override
+    
     public void requestAdapter(RequestAdapterOptions options) {
         // var requestAdapterOptions = Arenas.ofAuto().
 
@@ -104,5 +104,7 @@ public class InstanceImpl implements Instance {
     public WaitStatus waitAny(long futureCount, FutureWaitInfo futures, long timeoutNS) {
         throw new UnsupportedOperationException("Unimplemented method 'waitAny'");
     }
+
+    
 
 }

@@ -23,11 +23,6 @@ public class RenderPipelineImpl implements RenderPipeline {
 
     @Override
     public void setLabel(final String label) {
-        final Arena arena = Arena.ofAuto();
-        final var stringView = arena.allocate(WGPUStringView.layout());
-        final var labelSegment = arena.allocateFrom(label);
-        WGPUStringView.data(stringView, labelSegment);
-        WGPUStringView.length(stringView, label.length());
-        webgpu_h.wgpuRenderPipelineSetLabel(this.memorySegment, stringView);
+        throw new UnsupportedOperationException("WGPU Does not support setting labels on render pipelines yet.");
     }
 }

@@ -38,7 +38,7 @@ public class DeviceImpl implements Device {
         return null;
     }
 
-    @Override
+    
     public void createComputePipelineAsync(ComputePipelineDescriptor descriptor) {
 
     }
@@ -53,7 +53,7 @@ public class DeviceImpl implements Device {
         return null;
     }
 
-    @Override
+    
     public void createRenderPipelineAsync(RenderPipelineDescriptor descriptor) {
 
     }
@@ -124,7 +124,7 @@ public class DeviceImpl implements Device {
 
     }
 
-    @Override
+    
     public void popErrorScope() {
 
     }
@@ -132,5 +132,25 @@ public class DeviceImpl implements Device {
     @Override
     public void setLabel(String label) {
 
+    }
+
+    
+
+    @Override
+    public void popErrorScope(PopErrorScope callback) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'popErrorScope'");
+    }
+
+    @Override
+    public void createComputePipelineAsync(CreateComputePipelineAsync callback, ComputePipelineDescriptor descriptor) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'createComputePipelineAsync'");
+    }
+
+    @Override
+    public void createRenderPipelineAsync(CreateRenderPipelineAsync callback, RenderPipelineDescriptor descriptor) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'createRenderPipelineAsync'");
     }
 }

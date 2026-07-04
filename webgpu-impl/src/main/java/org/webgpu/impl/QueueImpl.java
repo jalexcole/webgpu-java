@@ -7,6 +7,7 @@ import org.webgpu.api.Buffer;
 import org.webgpu.api.CommandBuffer;
 import org.webgpu.api.Extent3D;
 import org.webgpu.api.Queue;
+import org.webgpu.api.QueueWorkDone;
 import org.webgpu.api.TexelCopyBufferLayout;
 import org.webgpu.api.TexelCopyTextureInfo;
 
@@ -24,7 +25,7 @@ public class QueueImpl implements Queue {
 		throw new UnsupportedOperationException("Unimplemented method 'submit'");
 	}
 
-	@Override
+	
 	public void onSubmittedWorkDone() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'onSubmittedWorkDone'");
@@ -47,6 +48,12 @@ public class QueueImpl implements Queue {
 	public void setLabel(String label) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'setLabel'");
+	}
+
+	@Override
+	public void onSubmittedWorkDone(QueueWorkDone callback) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'onSubmittedWorkDone'");
 	}
     
 }
