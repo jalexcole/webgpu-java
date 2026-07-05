@@ -1,6 +1,7 @@
 package org.webgpu.impl.util;
 
 import java.io.ByteArrayOutputStream;
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import java.nio.charset.StandardCharsets;
@@ -9,6 +10,10 @@ import org.webgpu.panama.WGPUStringView;
 import org.webgpu.panama.webgpu_h;
 
 public class StringViewMapper {
+    private StringViewMapper() {
+        /* This utility class should not be instantiated */
+    }
+
 
     public static String map(MemorySegment stringViewPtr) {
         final long length = WGPUStringView.length(stringViewPtr);
@@ -36,5 +41,19 @@ public class StringViewMapper {
         }
 
         return string;
+    }
+
+
+    public static MemorySegment map(String string) {
+        final Arena arena = Arena.ofAuto();
+        return map(string, arena);
+    }
+
+    public static MemorySegment map(String string, Arena arena) {
+        var stringView = WGPUStringView.allocate(arena);
+        var stringSegment = arena.allocateFrom(string);
+        WGPUStringView.data(stringView, stringSegment);
+        WGPUStringView.length(stringView, -1); // -1 indicates that the string is NULL-terminated
+        return stringView;
     }
 }
