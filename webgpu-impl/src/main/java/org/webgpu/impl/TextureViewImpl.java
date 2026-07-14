@@ -14,7 +14,7 @@ public class TextureViewImpl implements TextureView {
 
     @Override
     public void setLabel(String label) {
-
+        throw new UnsupportedOperationException("Unimplemented method 'setLabel'");
     }
 }
 

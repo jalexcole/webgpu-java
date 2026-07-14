@@ -1,56 +1,54 @@
 package org.webgpu.impl;
 
+import org.jspecify.annotations.NullMarked;
 import org.webgpu.api.*;
-import org.webgpu.panama.WGPUStringView;
+import org.webgpu.api.exceptions.WGPUException;
 import org.webgpu.panama.webgpu_h;
 
-import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
-import java.nio.ByteBuffer;
 import java.util.EnumSet;
+import java.util.Set;
 
-class BufferImpl implements Buffer {
+@NullMarked
+public final class BufferImpl implements Buffer, WebGPUObjectImpl {
 
     private final MemorySegment memorySegment;
+    private boolean destroyed = false;
 
     public BufferImpl(MemorySegment memorySegment) {
         this.memorySegment = memorySegment;
     }
 
 
-    public void mapAsync(EnumSet<MapMode> mode, long offset, long size) {
+    public void mapAsync(Set<MapMode> mode, long offset, long size) {
+        final long modes = mode.stream().mapToLong(MapMode::value).sum();
 
+        throw new WGPUException(new UnsupportedOperationException());
     }
 
     @Override
-    public ByteBuffer getMappedRange(long offset, long size) {
+    public MemorySegment getMappedRange(long offset, long size) {
+        return webgpu_h.wgpuBufferGetMappedRange(this.memorySegment, offset, size);
+    }
+
+    @Override
+    public MemorySegment getConstMappedRange(long offset, long size) {
+        return webgpu_h.wgpuBufferGetConstMappedRange(this.memorySegment, offset, size);
+    }
+
+    @Override
+    public Status readMappedRange(long offset, MemorySegment data, long size) {
         return null;
     }
 
     @Override
-    public ByteBuffer getConstMappedRange(long offset, long size) {
-        return null;
-    }
-
-    @Override
-    public Status readMappedRange(long offset, ByteBuffer data, long size) {
-        return null;
-    }
-
-    @Override
-    public Status writeMappedRange(long offset, ByteBuffer data, long size) {
+    public Status writeMappedRange(long offset, MemorySegment data, long size) {
         return null;
     }
 
     @Override
     public void setLabel(String label) {
-        throw new UnsupportedOperationException("WGPU Does not support setting labels on buffers yet.");
-        // final Arena arena = Arena.ofAuto();
-        // final var stringView = arena.allocate(WGPUStringView.layout());
-        // final var labelSegment = arena.allocateFrom(label);
-        // WGPUStringView.data(stringView, labelSegment);
-        // WGPUStringView.length(stringView, label.length());
-        // webgpu_h.wgpuBufferSetLabel(this.memorySegment, stringView);
+        throw new WGPUException(new UnsupportedOperationException("WGPU Does not support setting labels on buffers yet."));
     }
 
     @Override
@@ -60,12 +58,14 @@ class BufferImpl implements Buffer {
 
     @Override
     public long getSize() {
-        return 0;
+        return webgpu_h.wgpuBufferGetSize(this.memorySegment);
     }
 
     @Override
     public BufferMapState getMapState() {
-        return null;
+        final var mapState = webgpu_h.wgpuBufferGetMapState(this.memorySegment);
+        return BufferMapState.values()[mapState];
+        
     }
 
     @Override
@@ -74,13 +74,21 @@ class BufferImpl implements Buffer {
     }
 
     @Override
-    public void destroy() {
-
+    public synchronized void destroy() {
+        if (!destroyed) {
+            webgpu_h.wgpuBufferDestroy(this.memorySegment);
+            destroyed = true;
+        }
     }
     
     @Override
-    public void mapAsync(BufferMap callback, EnumSet<MapMode> mode, long offset, long size) {
-        // TODO Auto-generated method stub
+    public void mapAsync(BufferMap callback, Set<MapMode> mode, long offset, long size) {
         throw new UnsupportedOperationException("Unimplemented method 'mapAsync'");
     }
+
+
+	@Override
+	public MemorySegment ptr() {
+		return this.memorySegment;
+	}
 }

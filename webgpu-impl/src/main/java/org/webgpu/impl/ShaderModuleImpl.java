@@ -13,15 +13,8 @@ public class ShaderModuleImpl implements ShaderModule {
 	    this.memorySegment = memorySegment;
 	}
 
-	
-	public void getCompilationInfo() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getCompilationInfo'");
-	}
-
 	@Override
 	public void setLabel(String label) {
-		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'setLabel'");
 	}
 

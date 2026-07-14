@@ -27,7 +27,11 @@ public class GpuObject {
      * @return the doc
      */
     public String getDoc() {
-        return doc;
+        if (doc.equals("TODO")) {
+            return "";
+        }
+
+        return this.doc;
     }
     /**
      * @param doc the doc to set

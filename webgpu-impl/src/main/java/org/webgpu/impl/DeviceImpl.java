@@ -1,13 +1,19 @@
 package org.webgpu.impl;
 
+import org.jspecify.annotations.NullMarked;
 import org.webgpu.api.*;
+import org.webgpu.api.exceptions.WGPUException;
+import org.webgpu.impl.util.StructTools;
 import org.webgpu.panama.webgpu_h;
 
 import java.lang.foreign.MemorySegment;
+import java.util.concurrent.atomic.AtomicBoolean;
 
+@NullMarked
 public class DeviceImpl implements Device {
 
     private final MemorySegment memorySegment;
+    private final AtomicBoolean destroyed = new AtomicBoolean(false);
 
     public DeviceImpl(MemorySegment memorySegment) {
         this.memorySegment = memorySegment;
@@ -15,11 +21,13 @@ public class DeviceImpl implements Device {
     
     @Override
     public BindGroup createBindGroup(BindGroupDescriptor descriptor) {
-        return null;
+        final MemorySegment descriptorPtr = StructTools.fetchSegment(descriptor);
+        final var bindgroupPtr = webgpu_h.wgpuDeviceCreateBindGroup(this.memorySegment, descriptorPtr)
+        return new BindGroupImpl(bindgroupPtr);
     }
 
     @Override
-    public BindGroupLayout createBindGroupLayout(BindGroupLayoutDescriptor descriptor) {
+    public BindGroupLayoutImpl createBindGroupLayout(BindGroupLayoutDescriptor descriptor) {
         return null;
     }
 
@@ -29,12 +37,12 @@ public class DeviceImpl implements Device {
     }
 
     @Override
-    public CommandEncoder createCommandEncoder(CommandEncoderDescriptor descriptor) {
+    public CommandEncoderImpl createCommandEncoder(CommandEncoderDescriptor descriptor) {
         return null;
     }
 
     @Override
-    public ComputePipeline createComputePipeline(ComputePipelineDescriptor descriptor) {
+    public ComputePipelineImpl createComputePipeline(ComputePipelineDescriptor descriptor) {
         return null;
     }
 
@@ -44,27 +52,27 @@ public class DeviceImpl implements Device {
     }
 
     @Override
-    public PipelineLayout createPipelineLayout(PipelineLayoutDescriptor descriptor) {
+    public PipelineLayoutImpl createPipelineLayout(PipelineLayoutDescriptor descriptor) {
         return null;
     }
 
     @Override
-    public QuerySet createQuerySet(QuerySetDescriptor descriptor) {
-        return null;
+    public QuerySetImpl createQuerySet(QuerySetDescriptor descriptor) {
+        return new QuerySetImpl(webgpu_h.wgpuDeviceCreateQuerySet(memorySegment, StructTools.fetchSegment(descriptor)));
     }
 
     
     public void createRenderPipelineAsync(RenderPipelineDescriptor descriptor) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public RenderBundleEncoder createRenderBundleEncoder(RenderBundleEncoderDescriptor descriptor) {
+    public RenderBundleEncoderImpl createRenderBundleEncoder(RenderBundleEncoderDescriptor descriptor) {
         return null;
     }
 
     @Override
-    public RenderPipeline createRenderPipeline(RenderPipelineDescriptor descriptor) {
+    public RenderPipelineImpl createRenderPipeline(RenderPipelineDescriptor descriptor) {
         return null;
     }
 
@@ -85,7 +93,9 @@ public class DeviceImpl implements Device {
 
     @Override
     public void destroy() {
-
+        if (!destroyed.compareAndExchange(false, true)) {
+            webgpu_h.wgpuDeviceDestroy(this.memorySegment);
+        }
     }
 
     @Override
@@ -116,41 +126,33 @@ public class DeviceImpl implements Device {
 
     @Override
     public Queue getQueue() {
-        return null;
+        return new QueueImpl(webgpu_h.wgpuDeviceGetQueue(memorySegment));
     }
 
     @Override
     public void pushErrorScope(ErrorFilter filter) {
-
-    }
-
-    
-    public void popErrorScope() {
-
+        webgpu_h.wgpuDevicePushErrorScope(this.memorySegment, filter.value());
     }
 
     @Override
     public void setLabel(String label) {
-
+        throw new WGPUException(new UnsupportedOperationException());
     }
 
     
 
     @Override
     public void popErrorScope(PopErrorScope callback) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'popErrorScope'");
     }
 
     @Override
     public void createComputePipelineAsync(CreateComputePipelineAsync callback, ComputePipelineDescriptor descriptor) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'createComputePipelineAsync'");
     }
 
     @Override
     public void createRenderPipelineAsync(CreateRenderPipelineAsync callback, RenderPipelineDescriptor descriptor) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'createRenderPipelineAsync'");
     }
 }

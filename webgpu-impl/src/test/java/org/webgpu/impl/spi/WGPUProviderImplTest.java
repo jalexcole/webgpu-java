@@ -14,35 +14,38 @@ import org.webgpu.api.Status;
 import org.webgpu.api.SupportedInstanceFeatures;
 import org.webgpu.panama.webgpu_h;
 
-public class InstanceInjectorImplTest {
+class WGPUProviderImplTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(InstanceInjectorImplTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(WGPUProviderImplTest.class);
 
     @Test
     void testCreateInstance() {
         logger.info("Creating a blank instance injector.");
-        InstanceInjectorImpl injector = new InstanceInjectorImpl();
+        WGPUProviderImpl injector = new WGPUProviderImpl();
         // Test with null descriptor
         Instance instance1 = injector.createInstance(null);
         assertNotNull(instance1, "Instance should not be null when created with null descriptor");
 
         // Test with empty descriptor
-        InstanceDescriptor emptyDescriptor = new InstanceDescriptor(new InstanceFeatureName[0], new InstanceLimits(0));
+        InstanceDescriptor emptyDescriptor = new InstanceDescriptor();
         Instance instance2 = injector.createInstance(emptyDescriptor);
         assertNotNull(instance2, "Instance should not be null when created with empty descriptor");
 
         // Test with populated descriptor
         InstanceFeatureName[] features = { InstanceFeatureName.TIMED_WAIT_ANY };
-        InstanceLimits limits = new InstanceLimits(100);
-        InstanceDescriptor descriptor = new InstanceDescriptor(features, limits);
+        InstanceLimits limits = new InstanceLimits();
+        InstanceDescriptor descriptor = new InstanceDescriptor();
+        descriptor.requiredFeatures(features);
+        descriptor.requiredLimits(limits);
         Instance instance3 = injector.createInstance(descriptor);
         assertNotNull(instance3, "Instance should not be null when created with populated descriptor");
     }
+
     @Disabled
     @Test
     void testGetInstanceFeatures() {
         logger.info("Testing get instance features.");
-        InstanceInjectorImpl injector = new InstanceInjectorImpl();
+        WGPUProviderImpl injector = new WGPUProviderImpl();
         SupportedInstanceFeatures features = new SupportedInstanceFeatures();
         // This should not throw - the implementation populates features from native
         // code
@@ -54,11 +57,11 @@ public class InstanceInjectorImplTest {
         // TODO: Once the implementation is complete, add assertions for actual feature
         // values
     }
-    
+
     @Test
     void testGetInstanceLimits() {
         logger.info("Testing get instance limits.");
-        InstanceInjectorImpl injector = new InstanceInjectorImpl();
+        WGPUProviderImpl injector = new WGPUProviderImpl();
         InstanceLimits limits = new InstanceLimits();
         Status status = injector.getInstanceLimits(limits);
 
@@ -70,12 +73,13 @@ public class InstanceInjectorImplTest {
         // TODO: Once the implementation populates limits, add assertions for actual
         // limit values
     }
+
     @Disabled
     @Test
     void testHasInstanceFeature() {
         logger.info("Testing has instance feature.");
 
-        InstanceInjectorImpl injector = new InstanceInjectorImpl();
+        WGPUProviderImpl injector = new WGPUProviderImpl();
         // Test with NULL feature (should return false and not crash)
         assertDoesNotThrow(() -> {
             boolean hasNull = injector.hasInstanceFeature(InstanceFeatureName.NULL);
@@ -100,13 +104,15 @@ public class InstanceInjectorImplTest {
             // No assertion on the value since it depends on native support
         }, "hasInstanceFeature should not throw for MULTIPLE_DEVICES_PER_ADAPTER");
     }
+
     @Test
     void testSetLogCallback() {
-        
+
     }
+
     @Test
     void testSetLogLevel() {
-        
+
         webgpu_h.wgpuSetLogLevel(0);
 
     }

@@ -15,7 +15,7 @@ public class InjectorGenerator {
     private final YamlModel yamlModel;
     private final String packageName;
 
-    public final String injectorClassName = "InstanceInjector";
+    public static final String PROVIDER_CLASS_NAME = "WGPUProvider";
     public final String injectorFieldName = "INSTANCE_INJECTOR";
 
     private static final Logger logger = LoggerFactory.getLogger(InjectorGenerator.class);
@@ -27,7 +27,7 @@ public class InjectorGenerator {
 
     public JavaFile generate() {
 
-        var injectorBuilder = TypeSpec.interfaceBuilder(injectorClassName);
+        var injectorBuilder = TypeSpec.interfaceBuilder(PROVIDER_CLASS_NAME);
 
         addFunctions(injectorBuilder);
 

@@ -15,6 +15,6 @@ public class SamplerImpl implements Sampler {
     
     @Override
     public void setLabel(String label) {
-
+        throw new UnsupportedOperationException("Unimplemented method 'setLabel'");
     }
 }

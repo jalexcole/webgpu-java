@@ -126,7 +126,11 @@ public class GpuStruct {
 	/**
 	 * @return the doc
 	 */
-	public String getDoc() {
+    public String getDoc() {
+        if (doc.equals("TODO")) {
+            return "";
+        }
+
 		return doc;
 	}
 

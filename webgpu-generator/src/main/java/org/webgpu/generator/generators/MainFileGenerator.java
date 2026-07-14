@@ -17,18 +17,16 @@ import com.palantir.javapoet.JavaFile;
 import com.palantir.javapoet.MethodSpec;
 import com.palantir.javapoet.TypeName;
 import com.palantir.javapoet.TypeSpec;
-import com.palantir.javapoet.TypeSpec.Builder;
 
 public class MainFileGenerator {
 
     private final YamlModel yamlModel;
     private final String packageName;
 
-    private final String injectorClassName = "org.webgpu.api.spi.InstanceInjector";
-    private final String injectorFieldName = "INSTANCE_INJECTOR";
+    private static final String injectorClassName = "org.webgpu.api.spi.WGPUProvider";
+    private static final String injectorFieldName = "WGPU_PROVIDER";
 
     private static final Logger logger = LoggerFactory.getLogger(MainFileGenerator.class);
-    private Builder field;
 
     public MainFileGenerator(YamlModel yamlModel, String packageName) {
         this.yamlModel = yamlModel;
@@ -47,9 +45,9 @@ public class MainFileGenerator {
 
     private void addConstants(TypeSpec.Builder wgpuBuilder) {
 
-        yamlModel.getConstants().stream().forEach(e -> logger.info("Generated constant: {}", e.getName()));
+        yamlModel.getConstants().forEach(e -> logger.info("Generated constant: {}", e.getName()));
 
-        yamlModel.getConstants().stream().forEach(e -> {
+        yamlModel.getConstants().forEach(e -> {
 
             var fieldSpec = switch (e.getValue()) {
                 case "uint32_max" -> FieldSpec
@@ -82,7 +80,7 @@ public class MainFileGenerator {
     }
 
     private void addInjector(TypeSpec.Builder wgpuBuilder) {
-        var instanceInjector = ClassName.get("org.webgpu.api.spi", "InstanceInjector");
+        var instanceInjector = ClassName.get("org.webgpu.api.spi", "WGPUProvider");
         wgpuBuilder.addField(FieldSpec
                 .builder(instanceInjector, injectorFieldName, Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
                 .initializer("$T.load($T.class).findFirst().orElseThrow()", ServiceLoader.class, instanceInjector)

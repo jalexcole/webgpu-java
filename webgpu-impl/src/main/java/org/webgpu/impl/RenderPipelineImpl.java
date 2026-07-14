@@ -2,13 +2,11 @@ package org.webgpu.impl;
 
 import org.webgpu.api.BindGroupLayout;
 import org.webgpu.api.RenderPipeline;
-import org.webgpu.panama.WGPUStringView;
 import org.webgpu.panama.webgpu_h;
 
-import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
-public class RenderPipelineImpl implements RenderPipeline {
+public final class RenderPipelineImpl implements RenderPipeline, WebGPUObjectImpl {
 
     private final MemorySegment memorySegment;
 
@@ -18,11 +16,18 @@ public class RenderPipelineImpl implements RenderPipeline {
 
     @Override
     public BindGroupLayout getBindGroupLayout(int groupIndex) {
-        return null;
+        final var bindGroupLayoutSegment = webgpu_h.wgpuRenderPipelineGetBindGroupLayout(memorySegment, groupIndex);
+
+        return new BindGroupLayoutImpl(bindGroupLayoutSegment);
     }
 
     @Override
     public void setLabel(final String label) {
         throw new UnsupportedOperationException("WGPU Does not support setting labels on render pipelines yet.");
     }
+
+	@Override
+	public MemorySegment ptr() {
+        return this.memorySegment;
+	}
 }

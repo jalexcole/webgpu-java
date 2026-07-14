@@ -6,9 +6,11 @@ import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import java.nio.charset.StandardCharsets;
 
+import org.jspecify.annotations.NullMarked;
 import org.webgpu.panama.WGPUStringView;
 import org.webgpu.panama.webgpu_h;
 
+@NullMarked
 public class StringViewMapper {
     private StringViewMapper() {
         /* This utility class should not be instantiated */
@@ -20,16 +22,16 @@ public class StringViewMapper {
         final String string;
         // If `length` is WGPU_STRLEN, the string is NULL-terminated.
         if (length == webgpu_h.WGPU_STRLEN()) {
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             int offset = 0;
             byte b;
 
             while ((b = WGPUStringView.data(stringViewPtr).get(ValueLayout.JAVA_BYTE, offset)) != 0) {
-                bos.write(b);
+                byteArrayOutputStream.write(b);
                 offset++;
             }
 
-            string = new String(bos.toByteArray(), StandardCharsets.UTF_8);
+            string = new String(byteArrayOutputStream.toByteArray(), StandardCharsets.UTF_8);
         } else {
             byte[] dataArray = new byte[(int) length];
             for (int i = 0; i < length; i++) {

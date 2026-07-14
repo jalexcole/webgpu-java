@@ -13,6 +13,7 @@ import org.webgpu.api.Device;
 import org.webgpu.api.DeviceDescriptor;
 import org.webgpu.api.FeatureName;
 import org.webgpu.api.Instance;
+import org.webgpu.api.InstanceDescriptor;
 import org.webgpu.api.Limits;
 import org.webgpu.api.RequestAdapterOptions;
 import org.webgpu.api.RequestAdapterStatus;
@@ -28,7 +29,7 @@ public class AdapterImplTest {
 
     @BeforeEach
     void createAdapter() {
-        Instance instance = WGPU.createInstance(null);
+        Instance instance = WGPU.createInstance(new InstanceDescriptor());
 
         var options = new RequestAdapterOptions();
 

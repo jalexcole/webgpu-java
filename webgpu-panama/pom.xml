@@ -100,7 +100,7 @@
                     <executable>jextract</executable>
                     <arguments>
                         <argument>--output</argument>
-                        <argument>${project.build.directory}/generated-sources/jextract</argument>
+                        <argument>${project.build.directory}/generated-sources</argument>
                         <argument>--target-package</argument>
                         <argument>org.webgpu.panama</argument>
                         <argument>--header-class-name</argument>
@@ -108,10 +108,10 @@
                         <argument>--library</argument>
                         <argument>wgpu_native</argument>
                         <argument>--include-dir</argument>
-                        <argument>${project.build.directory}/downloads-unzipped/include/webgpu</argument>
-                        <argument>${project.build.directory}/downloads-unzipped/include/webgpu/wgpu.h</argument>
+                        <argument>
+                            ${maven.multiModuleProjectDirectory}/wgpu-native/ffi/webgpu-headers</argument>
+                        <argument>${maven.multiModuleProjectDirectory}/wgpu-native/ffi/wgpu.h</argument>
                     </arguments>
-
                 </configuration>
             </plugin>
             <plugin>
@@ -127,7 +127,7 @@
                         </goals>
                         <configuration>
                             <sources>
-                                <source>${project.build.directory}/generated-sources/jextract</source>
+                                <source>${project.build.directory}/generated-sources</source>
                             </sources>
                         </configuration>
                     </execution>
@@ -176,7 +176,9 @@
                                 <resource>
                                     <directory>${project.build.directory}/downloads-unzipped/lib</directory>
                                     <targetPath>resources/natives</targetPath>
-                                    <excludes><exclude>*.a</exclude></excludes>
+                                    <excludes>
+                                        <exclude>*.a</exclude>
+                                    </excludes>
                                 </resource>
                             </resources>
                         </configuration>
@@ -258,6 +260,11 @@
                     </execution>
                 </executions>
             </plugin> -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.15.0</version>
+            </plugin>
         </plugins>
     </build>
 </project>

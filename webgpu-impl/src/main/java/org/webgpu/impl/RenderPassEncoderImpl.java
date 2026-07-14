@@ -1,7 +1,9 @@
 package org.webgpu.impl;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
-import java.nio.ByteBuffer;
+import java.lang.foreign.ValueLayout;
+
 
 import org.webgpu.api.BindGroup;
 import org.webgpu.api.Buffer;
@@ -10,55 +12,59 @@ import org.webgpu.api.IndexFormat;
 import org.webgpu.api.RenderBundle;
 import org.webgpu.api.RenderPassEncoder;
 import org.webgpu.api.RenderPipeline;
+import org.webgpu.impl.util.StringViewMapper;
+import org.webgpu.impl.util.StructTools;
+import org.webgpu.panama.webgpu_h;
 
 public class RenderPassEncoderImpl implements RenderPassEncoder {
 
 	private final MemorySegment memorySegment;
-
+	private final Arena arena = Arena.ofAuto();
+	
 	public RenderPassEncoderImpl(MemorySegment memorySegment) {
 		this.memorySegment = memorySegment;
 	}
 
 	@Override
 	public void setPipeline(RenderPipeline pipeline) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'setPipeline'");
+		webgpu_h.wgpuRenderPassEncoderSetPipeline(memorySegment, ((RenderPipelineImpl) pipeline).ptr());
 	}
 
 	@Override
 	public void setBindGroup(int groupIndex, BindGroup group, int[] dynamicOffsets) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'setBindGroup'");
+		
+		final MemorySegment dynamicOffsetsSegment = arena.allocateFrom(ValueLayout.JAVA_INT, dynamicOffsets);
+		final MemorySegment groupPointer = ((BindGroupImpl) group).ptr();
+
+		webgpu_h.wgpuRenderPassEncoderSetBindGroup(this.memorySegment, groupIndex, groupPointer, dynamicOffsets.length, dynamicOffsetsSegment);
+		
 	}
 
 	@Override
-	public void setImmediates(int offset, ByteBuffer data, long size) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'setImmediates'");
+	public void setImmediates(int offset, MemorySegment data, long size) {
+		webgpu_h.wgpuRenderPassEncoderSetImmediates(memorySegment, offset, data, size);
 	}
 
 	@Override
 	public void draw(int vertexCount, int instanceCount, int firstVertex, int firstInstance) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'draw'");
+		webgpu_h.wgpuRenderPassEncoderDraw(memorySegment, vertexCount, instanceCount, firstVertex, firstInstance);
 	}
 
 	@Override
 	public void drawIndexed(int indexCount, int instanceCount, int firstIndex, int baseVertex, int firstInstance) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'drawIndexed'");
+		webgpu_h.wgpuRenderPassEncoderDrawIndexed(memorySegment, indexCount, instanceCount, firstIndex, baseVertex, firstInstance);
 	}
 
 	@Override
 	public void drawIndirect(Buffer indirectBuffer, long indirectOffset) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'drawIndirect'");
+		final BufferImpl bufferImpl = (BufferImpl) indirectBuffer;
+		webgpu_h.wgpuRenderPassEncoderDrawIndirect(memorySegment, bufferImpl.ptr(), indirectOffset);
 	}
 
 	@Override
 	public void drawIndexedIndirect(Buffer indirectBuffer, long indirectOffset) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'drawIndexedIndirect'");
+		final BufferImpl bufferImpl = (BufferImpl) indirectBuffer;
+		webgpu_h.wgpuRenderPassEncoderDrawIndexedIndirect(memorySegment, bufferImpl.ptr(), indirectOffset);
 	}
 
 	@Override
@@ -69,79 +75,70 @@ public class RenderPassEncoderImpl implements RenderPassEncoder {
 
 	@Override
 	public void insertDebugMarker(String markerLabel) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'insertDebugMarker'");
+		webgpu_h.wgpuRenderPassEncoderInsertDebugMarker(this.memorySegment, StringViewMapper.map(markerLabel));
 	}
 
 	@Override
 	public void popDebugGroup() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'popDebugGroup'");
+		webgpu_h.wgpuRenderPassEncoderPopDebugGroup(this.memorySegment);
 	}
 
 	@Override
 	public void pushDebugGroup(String groupLabel) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'pushDebugGroup'");
+		webgpu_h.wgpuRenderPassEncoderPushDebugGroup(this.memorySegment, StringViewMapper.map(groupLabel));
 	}
 
 	@Override
 	public void setStencilReference(int reference) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'setStencilReference'");
+		webgpu_h.wgpuRenderPassEncoderSetStencilReference(this.memorySegment, reference);
 	}
 
 	@Override
 	public void setBlendConstant(Color color) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'setBlendConstant'");
+		final MemorySegment colorPointer = StructTools.fetchSegment(color);
+		webgpu_h.wgpuRenderPassEncoderSetBlendConstant(this.memorySegment, colorPointer);
 	}
 
 	@Override
 	public void setViewport(float x, float y, float width, float height, float minDepth, float maxDepth) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'setViewport'");
+		webgpu_h.wgpuRenderPassEncoderSetViewport(this.memorySegment, x, y, width, height, minDepth, maxDepth);
 	}
 
 	@Override
 	public void setScissorRect(int x, int y, int width, int height) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'setScissorRect'");
+		webgpu_h.wgpuRenderPassEncoderSetScissorRect(this.memorySegment, x, y, width, height);
 	}
 
 	@Override
 	public void setVertexBuffer(int slot, Buffer buffer, long offset, long size) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'setVertexBuffer'");
+		webgpu_h.wgpuRenderPassEncoderSetVertexBuffer(this.memorySegment, slot, ((BufferImpl) buffer).ptr(), offset, size);
 	}
 
 	@Override
 	public void setIndexBuffer(Buffer buffer, IndexFormat format, long offset, long size) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'setIndexBuffer'");
+		final BufferImpl bufferImpl = (BufferImpl) buffer;
+		final int indexFormat = format.value();
+
+		webgpu_h.wgpuRenderPassEncoderSetIndexBuffer(memorySegment, bufferImpl.ptr(), indexFormat, offset, size);
 	}
 
 	@Override
 	public void beginOcclusionQuery(int queryIndex) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'beginOcclusionQuery'");
+		webgpu_h.wgpuRenderPassEncoderBeginOcclusionQuery(memorySegment, queryIndex);
 	}
 
 	@Override
 	public void endOcclusionQuery() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'endOcclusionQuery'");
+		webgpu_h.wgpuRenderPassEncoderEndOcclusionQuery(memorySegment);
 	}
 
 	@Override
 	public void end() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'end'");
+		webgpu_h.wgpuRenderPassEncoderEnd(memorySegment);
 	}
 
 	@Override
 	public void setLabel(String label) {
-		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'setLabel'");
 	}
     

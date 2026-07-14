@@ -6,16 +6,18 @@ import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import java.nio.charset.StandardCharsets;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
 import org.webgpu.api.Instance;
 import org.webgpu.api.InstanceDescriptor;
 import org.webgpu.api.InstanceFeatureName;
 import org.webgpu.api.InstanceLimits;
 import org.webgpu.api.Status;
 import org.webgpu.api.SupportedInstanceFeatures;
-import org.webgpu.api.exceptions.WebGPUException;
-import org.webgpu.api.spi.InstanceInjector;
+import org.webgpu.api.exceptions.WGPUException;
+
+import org.webgpu.api.spi.WGPUProvider;
 import org.webgpu.impl.InstanceImpl;
 import org.webgpu.panama.NativeLibraryLoader;
 import org.webgpu.panama.WGPULogCallback;
@@ -23,7 +25,8 @@ import org.webgpu.panama.WGPUStringView;
 import org.webgpu.panama.WGPUSupportedInstanceFeatures;
 import org.webgpu.panama.webgpu_h;
 
-public class InstanceInjectorImpl implements InstanceInjector {
+@NullMarked
+public class WGPUProviderImpl implements WGPUProvider {
 
     static {
         NativeLibraryLoader.loadLibrary();
@@ -31,15 +34,14 @@ public class InstanceInjectorImpl implements InstanceInjector {
 
     @Override
     public Instance createInstance(InstanceDescriptor descriptor) {
-        descriptor = descriptor == null ? new InstanceDescriptor(new InstanceFeatureName[0], new InstanceLimits(0))
-                : descriptor;
+        // descriptor = descriptor == null ? new InstanceDescriptor(new InstanceFeatureName[0], new InstanceLimits(0))
+        //         : descriptor;
         return new InstanceImpl(descriptor);
     }
 
     public void getInstanceFeatures(SupportedInstanceFeatures features) {
         var featuresSegment = Arena.ofAuto().allocate(WGPUSupportedInstanceFeatures.layout());
         webgpu_h.wgpuGetInstanceFeatures(featuresSegment);
-        // long size = WGPUSupportedInstanceFeatures.featureCount(featuresSegment);
         long count = WGPUSupportedInstanceFeatures.featureCount(featuresSegment);
         MemorySegment featuresArray = WGPUSupportedInstanceFeatures.features(featuresSegment);
 
@@ -51,7 +53,7 @@ public class InstanceInjectorImpl implements InstanceInjector {
                 case 1 -> InstanceFeatureName.TIMED_WAIT_ANY;
                 case 2 -> InstanceFeatureName.SHADER_SOURCE_SPIRV;
                 case 3 -> InstanceFeatureName.MULTIPLE_DEVICES_PER_ADAPTER;
-                default -> throw new WebGPUException("Unknown instance feature value: " + featureValue);
+                default -> throw new WGPUException("Unknown instance feature value: " + featureValue);
             };
         }
 

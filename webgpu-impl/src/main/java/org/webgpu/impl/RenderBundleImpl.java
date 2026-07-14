@@ -14,7 +14,6 @@ public class RenderBundleImpl implements RenderBundle {
 
 	@Override
 	public void setLabel(String label) {
-		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'setLabel'");
 	}
     

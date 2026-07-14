@@ -1,11 +1,16 @@
 package org.webgpu.impl;
 
 import java.lang.foreign.MemorySegment;
+import java.util.Objects;
 
+import org.jspecify.annotations.NullMarked;
 import org.webgpu.api.BindGroupLayout;
 import org.webgpu.api.ComputePipeline;
+import org.webgpu.api.exceptions.WGPUException;
+import org.webgpu.panama.webgpu_h;
 
-public class ComputePipelineImpl implements ComputePipeline {
+@NullMarked
+public final class ComputePipelineImpl implements ComputePipeline, WebGPUObjectImpl {
 
     private final MemorySegment memorySegment;
 
@@ -14,15 +19,20 @@ public class ComputePipelineImpl implements ComputePipeline {
     }
 
 	@Override
-	public BindGroupLayout getBindGroupLayout(int groupIndex) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getBindGroupLayout'");
+	public BindGroupLayoutImpl getBindGroupLayout(int groupIndex) {
+		final var bindGroupLayoutPtr = webgpu_h.wgpuComputePipelineGetBindGroupLayout(this.memorySegment, groupIndex);
+		
+		return new BindGroupLayoutImpl(bindGroupLayoutPtr);
 	}
 
 	@Override
 	public void setLabel(String label) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'setLabel'");
+		throw new WGPUException(new UnsupportedOperationException("Unimplemented method 'setLabel'"));
+	}
+
+	@Override
+	public MemorySegment ptr() {
+		return this.memorySegment;
 	}
     
 }

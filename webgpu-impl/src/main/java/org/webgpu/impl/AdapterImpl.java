@@ -5,6 +5,7 @@ import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import java.util.WeakHashMap;
 
+import org.jspecify.annotations.NullMarked;
 import org.webgpu.api.Adapter;
 import org.webgpu.api.AdapterInfo;
 import org.webgpu.api.BackendType;
@@ -24,6 +25,7 @@ import org.webgpu.panama.WGPURequestDeviceCallback;
 import org.webgpu.panama.WGPURequestDeviceCallbackInfo;
 import org.webgpu.panama.webgpu_h;
 
+@NullMarked
 public final class AdapterImpl implements Adapter, WebGPUObjectImpl {
 
     private final MemorySegment memorySegment;
@@ -94,7 +96,6 @@ public final class AdapterImpl implements Adapter, WebGPUObjectImpl {
 
     @Override
     public void getFeatures(SupportedFeatures features) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getFeatures'");
     }
 
@@ -176,5 +177,12 @@ public final class AdapterImpl implements Adapter, WebGPUObjectImpl {
     public DeviceImpl getCachedDevice(MemorySegment deviceSegment) {
         return deviceCache.get(deviceSegment);
     }
+
+	@Override
+	public String toString() {
+		return "AdapterImpl [memorySegment=" + memorySegment + "]";
+	}
+
+    
 
 }

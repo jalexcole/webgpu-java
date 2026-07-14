@@ -2,20 +2,22 @@ package org.webgpu.impl;
 
 import java.lang.foreign.MemorySegment;
 
+import org.jspecify.annotations.NullMarked;
 import org.webgpu.api.Buffer;
-import org.webgpu.api.CommandBuffer;
 import org.webgpu.api.CommandBufferDescriptor;
 import org.webgpu.api.CommandEncoder;
 import org.webgpu.api.ComputePassDescriptor;
-import org.webgpu.api.ComputePassEncoder;
 import org.webgpu.api.Extent3D;
 import org.webgpu.api.QuerySet;
 import org.webgpu.api.RenderPassDescriptor;
-import org.webgpu.api.RenderPassEncoder;
 import org.webgpu.api.TexelCopyBufferInfo;
 import org.webgpu.api.TexelCopyTextureInfo;
+import org.webgpu.api.exceptions.WGPUException;
+import org.webgpu.impl.util.StringViewMapper;
+import org.webgpu.panama.webgpu_h;
 
-class CommandEncoderImpl implements CommandEncoder {
+@NullMarked
+public class CommandEncoderImpl implements CommandEncoder {
 
     private final MemorySegment memorySegment;
 
@@ -24,19 +26,18 @@ class CommandEncoderImpl implements CommandEncoder {
     }
 
     @Override
-    public CommandBuffer finish(CommandBufferDescriptor descriptor) {
-        // TODO Auto-generated method stub
+    public CommandBufferImpl finish(CommandBufferDescriptor descriptor) {
         throw new UnsupportedOperationException("Unimplemented method 'finish'");
     }
 
     @Override
-    public ComputePassEncoder beginComputePass(ComputePassDescriptor descriptor) {
+    public ComputePassEncoderImpl beginComputePass(ComputePassDescriptor descriptor) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'beginComputePass'");
     }
 
     @Override
-    public RenderPassEncoder beginRenderPass(RenderPassDescriptor descriptor) {
+    public RenderPassEncoderImpl beginRenderPass(RenderPassDescriptor descriptor) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'beginRenderPass'");
     }
@@ -44,50 +45,43 @@ class CommandEncoderImpl implements CommandEncoder {
     @Override
     public void copyBufferToBuffer(Buffer source, long sourceOffset, Buffer destination, long destinationOffset,
             long size) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'copyBufferToBuffer'");
+        webgpu_h.wgpuCommandEncoderCopyBufferToBuffer(this.memorySegment, ((BufferImpl) source).ptr(), sourceOffset,
+                ((BufferImpl) destination).ptr(), destinationOffset, size);
     }
 
     @Override
     public void copyBufferToTexture(TexelCopyBufferInfo source, TexelCopyTextureInfo destination, Extent3D copySize) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'copyBufferToTexture'");
     }
 
     @Override
     public void copyTextureToBuffer(TexelCopyTextureInfo source, TexelCopyBufferInfo destination, Extent3D copySize) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'copyTextureToBuffer'");
     }
 
     @Override
     public void copyTextureToTexture(TexelCopyTextureInfo source, TexelCopyTextureInfo destination, Extent3D copySize) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'copyTextureToTexture'");
     }
 
     @Override
     public void clearBuffer(Buffer buffer, long offset, long size) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'clearBuffer'");
+        webgpu_h.wgpuCommandEncoderClearBuffer(this.memorySegment, ((BufferImpl) buffer).ptr(), offset, size);
     }
 
     @Override
     public void insertDebugMarker(String markerLabel) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'insertDebugMarker'");
+        webgpu_h.wgpuCommandEncoderInsertDebugMarker(this.memorySegment, StringViewMapper.map(markerLabel));
     }
 
     @Override
     public void popDebugGroup() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'popDebugGroup'");
+        webgpu_h.wgpuCommandEncoderPopDebugGroup(this.memorySegment);
     }
 
     @Override
     public void pushDebugGroup(String groupLabel) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'pushDebugGroup'");
+        webgpu_h.wgpuCommandEncoderPushDebugGroup(this.memorySegment, StringViewMapper.map(groupLabel));
     }
 
     @Override
@@ -99,13 +93,12 @@ class CommandEncoderImpl implements CommandEncoder {
 
     @Override
     public void writeTimestamp(QuerySet querySet, int queryIndex) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'writeTimestamp'");
+        QuerySetImpl querySetImpl = (QuerySetImpl) querySet;
+        webgpu_h.wgpuCommandEncoderWriteTimestamp(memorySegment, querySetImpl.ptr(), queryIndex);
     }
 
     @Override
     public void setLabel(String label) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setLabel'");
+        throw new WGPUException(new UnsupportedOperationException("Unimplemented method 'setLabel'"));
     }
 }

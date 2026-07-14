@@ -10,6 +10,8 @@ import org.webgpu.api.RenderBundle;
 import org.webgpu.api.RenderBundleDescriptor;
 import org.webgpu.api.RenderBundleEncoder;
 import org.webgpu.api.RenderPipeline;
+import org.webgpu.impl.util.StringViewMapper;
+import org.webgpu.panama.webgpu_h;
 
 public class RenderBundleEncoderImpl implements RenderBundleEncoder {
 
@@ -21,6 +23,7 @@ public class RenderBundleEncoderImpl implements RenderBundleEncoder {
 
 	@Override
 	public void setPipeline(RenderPipeline pipeline) {
+
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'setPipeline'");
 	}
@@ -32,63 +35,54 @@ public class RenderBundleEncoderImpl implements RenderBundleEncoder {
 	}
 
 	@Override
-	public void setImmediates(int offset, ByteBuffer data, long size) {
+	public void setImmediates(int offset, MemorySegment data, long size) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'setImmediates'");
 	}
 
 	@Override
 	public void draw(int vertexCount, int instanceCount, int firstVertex, int firstInstance) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'draw'");
+		webgpu_h.wgpuRenderBundleEncoderDraw(memorySegment, vertexCount, instanceCount, firstVertex, firstInstance);
 	}
 
 	@Override
 	public void drawIndexed(int indexCount, int instanceCount, int firstIndex, int baseVertex, int firstInstance) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'drawIndexed'");
+		webgpu_h.wgpuRenderBundleEncoderDrawIndexed(memorySegment, indexCount, instanceCount, firstIndex, baseVertex, firstInstance);
 	}
 
 	@Override
 	public void drawIndirect(Buffer indirectBuffer, long indirectOffset) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'drawIndirect'");
+		webgpu_h.wgpuRenderBundleEncoderDrawIndirect(memorySegment, ((BufferImpl) indirectBuffer).ptr(), indirectOffset);
 	}
 
 	@Override
 	public void drawIndexedIndirect(Buffer indirectBuffer, long indirectOffset) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'drawIndexedIndirect'");
+		webgpu_h.wgpuRenderBundleEncoderDrawIndexedIndirect(memorySegment, ((BufferImpl) indirectBuffer).ptr(), indirectOffset);
 	}
 
 	@Override
 	public void insertDebugMarker(String markerLabel) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'insertDebugMarker'");
+		webgpu_h.wgpuRenderBundleEncoderInsertDebugMarker(memorySegment, StringViewMapper.map(markerLabel));
 	}
 
 	@Override
 	public void popDebugGroup() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'popDebugGroup'");
+		webgpu_h.wgpuRenderBundleEncoderPopDebugGroup(memorySegment);
 	}
 
 	@Override
 	public void pushDebugGroup(String groupLabel) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'pushDebugGroup'");
+		webgpu_h.wgpuRenderBundleEncoderPushDebugGroup(memorySegment, StringViewMapper.map(groupLabel));
 	}
 
 	@Override
 	public void setVertexBuffer(int slot, Buffer buffer, long offset, long size) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'setVertexBuffer'");
+		webgpu_h.wgpuRenderBundleEncoderSetVertexBuffer(memorySegment, slot, ((BufferImpl) buffer).ptr(), offset, size);
 	}
 
 	@Override
 	public void setIndexBuffer(Buffer buffer, IndexFormat format, long offset, long size) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'setIndexBuffer'");
+		webgpu_h.wgpuRenderBundleEncoderSetIndexBuffer(memorySegment, ((BufferImpl) buffer).ptr(), format.value(), offset, size);
 	}
 
 	@Override
@@ -99,7 +93,6 @@ public class RenderBundleEncoderImpl implements RenderBundleEncoder {
 
 	@Override
 	public void setLabel(String label) {
-		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'setLabel'");
 	}
     

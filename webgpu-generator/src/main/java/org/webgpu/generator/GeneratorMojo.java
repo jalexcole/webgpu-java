@@ -18,6 +18,7 @@ import org.webgpu.generator.generators.InjectorGenerator;
 import org.webgpu.generator.generators.InterfaceGenerator;
 import org.webgpu.generator.generators.MainFileGenerator;
 import org.webgpu.generator.generators.StructGenerator;
+import org.webgpu.generator.generators.StructSpiGenerator;
 
 import com.palantir.javapoet.JavaFile;
 import com.palantir.javapoet.TypeSpec;
@@ -91,6 +92,16 @@ public class GeneratorMojo extends AbstractMojo {
                 s.writeTo(generatedSourcesFile);
 
             } catch (Exception e) {
+                logger.error(e);
+            }
+        }
+
+        StructSpiGenerator structSpiGenerator = new StructSpiGenerator(yamlModel, packageName);
+        var structSpis = structSpiGenerator.generate();
+        for (var s : structSpis) {
+            try {
+                s.writeTo(generatedSourcesFile);
+            } catch (IOException e) {
                 logger.error(e);
             }
         }

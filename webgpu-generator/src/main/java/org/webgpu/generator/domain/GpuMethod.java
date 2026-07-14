@@ -63,7 +63,11 @@ public class GpuMethod {
          * @return the doc
          */
         public String getDoc() {
-            return doc;
+            if (doc.equals("TODO")) {
+                return "";
+            }
+
+            return this.doc;
         }
 
         /**
@@ -135,7 +139,11 @@ public class GpuMethod {
      * @return the doc
      */
     public String getDoc() {
-        return doc;
+        if (doc.equals("TODO")) {
+            return "";
+        }
+
+        return this.doc;
     }
 
     /**

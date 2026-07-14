@@ -5,6 +5,7 @@ import java.lang.reflect.Type;
 import java.nio.ByteBuffer;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 import org.webgpu.annotations.Immutable;
 import org.webgpu.annotations.Mutable;
@@ -35,7 +36,7 @@ public class Utils {
         }
 
         if (type.contains("bitflag.")) {
-            ClassName enumSet = ClassName.get(EnumSet.class);
+            ClassName enumSet = ClassName.get(Set.class);
             ClassName bitflag = ClassName.get("org.webgpu.api", toPascalCase(sampledType));
 
             return ParameterizedTypeName.get(enumSet, bitflag);
@@ -61,7 +62,7 @@ public class Utils {
             case "out_string" -> ClassName.get(String.class);
             case "nullable_string" -> ClassName.get(String.class);
             case "string_with_default_empty" -> ClassName.get(String.class);
-            case "c_void" -> ClassName.get(ByteBuffer.class);
+            case "c_void" -> ClassName.get(MemorySegment.class);
             case "nullable_float32" -> TypeName.FLOAT;
             case "float64_supertype" -> TypeName.DOUBLE;
             default -> ClassName.get("org.webgpu.api", toPascalCase(sampledType));
@@ -140,7 +141,7 @@ public class Utils {
     }
 
     public static TypeName boxEnumSet(TypeName input) {
-        return ParameterizedTypeName.get(EnumSet.class, new Type() {
+        return ParameterizedTypeName.get(Set.class, new Type() {
             @Override
             public String toString() {
                 return input.toString();

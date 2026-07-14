@@ -13,7 +13,7 @@ import org.webgpu.api.InstanceFeatureName;
 import org.webgpu.api.InstanceLimits;
 import org.webgpu.api.RequestAdapterOptions;
 import org.webgpu.api.WGPU;
-import org.webgpu.impl.spi.InstanceInjectorImpl;
+import org.webgpu.impl.spi.WGPUProviderImpl;
 
 public class InstanceImplTest {
 
@@ -21,14 +21,14 @@ public class InstanceImplTest {
 
     @Test
     public void create() {
-        Instance instance = WGPU.createInstance(null);
+        Instance instance = WGPU.createInstance(new InstanceDescriptor());
         logger.info("Create Instance:" + instance.toString());
         assertNotNull(instance);
     }
 
     @Test
     public void createWithDescriptor() {
-        InstanceDescriptor descriptor = new InstanceDescriptor(new InstanceFeatureName[0], new InstanceLimits(0));
+        InstanceDescriptor descriptor = new InstanceDescriptor();
         Instance instance = WGPU.createInstance(descriptor);
         logger.info("Create Instance:" + instance.toString());
         assertNotNull(instance);
@@ -36,30 +36,30 @@ public class InstanceImplTest {
 
     @Test
     void testCreateSurface() {
-        
+
     }
 
     @Test
     void testGetWGSLLanguageFeatures() {
-        
+
     }
 
     @Test
     void testHasWGSLLanguageFeature() {
-        
+
     }
 
     @Test
     void testProcessEvents() {
-        
+
     }
 
     @Test
     void testRequestAdapter() {
-        InstanceInjectorImpl injector = new InstanceInjectorImpl();
+        WGPUProviderImpl injector = new WGPUProviderImpl();
 
         InstanceImpl instance = (InstanceImpl) injector.createInstance(null);
-        
+
         instance.requestAdapter((status, adapter, message) -> {
             logger.info("Request Adapter Callback: status=" + status + ", adapter=" + adapter + ", message=" + message);
             assertNotNull(status);
@@ -71,15 +71,12 @@ public class InstanceImplTest {
 
     @Test
     void testWaitAny() {
-        
+
     }
 
     @Test
     void testRequestAdapter2() {
-        
+
     }
-
-
-
 
 }

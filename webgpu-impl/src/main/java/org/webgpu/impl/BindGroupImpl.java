@@ -1,12 +1,25 @@
 package org.webgpu.impl;
 
+import java.lang.foreign.MemorySegment;
+
+import org.jspecify.annotations.NullMarked;
 import org.webgpu.api.BindGroup;
 
-class BindGroupImpl implements BindGroup {
+@NullMarked
+final class BindGroupImpl implements BindGroup, WebGPUObjectImpl {
+
+    private final MemorySegment memorySegment;
+
+    public BindGroupImpl(MemorySegment memorySegment) {
+        this.memorySegment = memorySegment;
+    }
+    @Override
+    public MemorySegment ptr() {
+        return memorySegment;
+    }
 
     @Override
     public void setLabel(String label) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'setLabel'");
     }
 }

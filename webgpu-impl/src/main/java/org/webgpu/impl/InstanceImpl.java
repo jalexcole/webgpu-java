@@ -2,10 +2,9 @@ package org.webgpu.impl;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
-import java.lang.foreign.ValueLayout;
-import java.util.concurrent.CompletableFuture;
+import java.util.Objects;
 
-import org.webgpu.api.Adapter;
+import org.jspecify.annotations.NullMarked;
 import org.webgpu.api.BackendType;
 import org.webgpu.api.CallbackMode;
 import org.webgpu.api.FutureWaitInfo;
@@ -22,11 +21,13 @@ import org.webgpu.api.WGSLLanguageFeatureName;
 import org.webgpu.api.WaitStatus;
 import org.webgpu.impl.util.InstanceDescriptorMapper;
 import org.webgpu.impl.util.StringViewMapper;
+import org.webgpu.impl.util.StructTools;
 import org.webgpu.panama.WGPURequestAdapterCallback;
 import org.webgpu.panama.WGPURequestAdapterCallbackInfo;
 import org.webgpu.panama.WGPURequestAdapterOptions;
 import org.webgpu.panama.webgpu_h;
 
+@NullMarked
 public class InstanceImpl implements Instance {
 
     private final MemorySegment memorySegment;
@@ -38,8 +39,11 @@ public class InstanceImpl implements Instance {
     }
 
     @Override
-    public Surface createSurface(SurfaceDescriptor descriptor) {
-        throw new UnsupportedOperationException("Unimplemented method 'createSurface'");
+    public SurfaceImpl createSurface(SurfaceDescriptor descriptor) {
+        final var descriptorPtr = StructTools.fetchSegment(descriptor);
+        final var surfacePtr = webgpu_h.wgpuInstanceCreateSurface(this.memorySegment, descriptorPtr);
+        Objects.requireNonNull(surfacePtr);
+        return new SurfaceImpl(surfacePtr);
     }
 
     @Override
@@ -49,7 +53,7 @@ public class InstanceImpl implements Instance {
 
     @Override
     public boolean hasWGSLLanguageFeature(WGSLLanguageFeatureName feature) {
-        return webgpu_h.wgpuInstanceHasWGSLLanguageFeature(memorySegment, feature.value()) == 1;
+        return webgpu_h.wgpuInstanceHasWGSLLanguageFeature(memorySegment, feature.value()) == webgpu_h.WGPU_TRUE();
     }
 
     @Override
@@ -57,13 +61,7 @@ public class InstanceImpl implements Instance {
         webgpu_h.wgpuInstanceProcessEvents(memorySegment);
     }
 
-    
-    public void requestAdapter(RequestAdapterOptions options) {
-        // var requestAdapterOptions = Arenas.ofAuto().
-
-        throw new UnsupportedOperationException("Unimplemented method 'requestAdapter'");
-    }
-
+    @Override
     public void requestAdapter(RequestAdapter callback, RequestAdapterOptions options) {
         var requestAdapterOptions = WGPURequestAdapterOptions.allocate(arena);
         WGPURequestAdapterOptions.powerPreference(requestAdapterOptions,
