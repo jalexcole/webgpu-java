@@ -9,8 +9,8 @@ import java.lang.invoke.MethodType;
 
 import org.jspecify.annotations.NullMarked;
 import org.webgpu.api.WGPUStruct;
+import org.webgpu.api.exceptions.WGPUException;
 
-@SuppressWarnings("null")
 @NullMarked
 public final class StructTools {
 
@@ -38,7 +38,14 @@ public final class StructTools {
                     getter,
                     getter.type());
 
-            GETTER = (SegmentGetter) callSite.getTarget().invokeExact();
+            final var getterInit = (SegmentGetter) callSite.getTarget().invokeExact();
+            
+            if (getterInit != null) {
+                GETTER = getterInit;
+            } else {
+                throw new WGPUException("Could not build struct tool ptr fetcher.");
+            }
+
         } catch (Throwable t) {
             throw new ExceptionInInitializerError(t);
         }

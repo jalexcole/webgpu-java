@@ -4,6 +4,7 @@ import java.lang.foreign.MemorySegment;
 
 import org.jspecify.annotations.NullMarked;
 import org.webgpu.api.BindGroup;
+import org.webgpu.api.exceptions.WGPUException;
 
 @NullMarked
 final class BindGroupImpl implements BindGroup, WebGPUObjectImpl {
@@ -20,6 +21,6 @@ final class BindGroupImpl implements BindGroup, WebGPUObjectImpl {
 
     @Override
     public void setLabel(String label) {
-        throw new UnsupportedOperationException("Unimplemented method 'setLabel'");
+        throw new WGPUException(new UnsupportedOperationException("Unimplemented method 'setLabel'"));
     }
 }

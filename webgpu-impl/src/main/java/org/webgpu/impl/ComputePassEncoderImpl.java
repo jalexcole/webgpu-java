@@ -1,13 +1,16 @@
 package org.webgpu.impl;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
-import java.nio.ByteBuffer;
+import java.lang.foreign.ValueLayout;
+import java.lang.foreign.ValueLayout.OfInt;
 
 import org.jspecify.annotations.NullMarked;
 import org.webgpu.api.BindGroup;
 import org.webgpu.api.Buffer;
 import org.webgpu.api.ComputePassEncoder;
 import org.webgpu.api.ComputePipeline;
+import org.webgpu.api.exceptions.WGPUException;
 import org.webgpu.impl.util.StringViewMapper;
 import org.webgpu.panama.webgpu_h;
 
@@ -43,8 +46,10 @@ public class ComputePassEncoderImpl implements ComputePassEncoder {
 
 	@Override
 	public void setBindGroup(int groupIndex, BindGroup group, int[] dynamicOffsets) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'setBindGroup'");
+		final var groupPtr = ((BindGroupImpl) group).ptr();
+		final var dynamicOffsetsPtr = Arena.ofAuto().allocateFrom(ValueLayout.JAVA_INT, dynamicOffsets);
+
+		webgpu_h.wgpuComputePassEncoderSetBindGroup(this.memorySegment, groupIndex, groupPtr, groupIndex, dynamicOffsetsPtr);
 	}
 
 	@Override
@@ -69,7 +74,7 @@ public class ComputePassEncoderImpl implements ComputePassEncoder {
 
 	@Override
 	public void setLabel(String label) {
-		throw new UnsupportedOperationException("Unimplemented method 'setLabel'");
+		throw new WGPUException(new UnsupportedOperationException("Unimplemented method 'setLabel'"));
 	}
     
 }

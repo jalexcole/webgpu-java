@@ -3,8 +3,13 @@ package org.webgpu.impl;
 import org.jspecify.annotations.NullMarked;
 import org.webgpu.api.*;
 import org.webgpu.api.exceptions.WGPUException;
+import org.webgpu.impl.util.BitPacker;
+import org.webgpu.impl.util.StringViewMapper;
+import org.webgpu.panama.WGPUBufferMapCallback;
+import org.webgpu.panama.WGPUBufferMapCallbackInfo;
 import org.webgpu.panama.webgpu_h;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.util.EnumSet;
 import java.util.Set;
@@ -22,7 +27,7 @@ public final class BufferImpl implements Buffer, WebGPUObjectImpl {
 
     public void mapAsync(Set<MapMode> mode, long offset, long size) {
         final long modes = mode.stream().mapToLong(MapMode::value).sum();
-
+       
         throw new WGPUException(new UnsupportedOperationException());
     }
 
@@ -38,12 +43,14 @@ public final class BufferImpl implements Buffer, WebGPUObjectImpl {
 
     @Override
     public Status readMappedRange(long offset, MemorySegment data, long size) {
-        return null;
+        var statusCode = webgpu_h.wgpuBufferReadMappedRange(this.memorySegment, offset, data, size);
+        return Status.values()[statusCode];
     }
 
     @Override
     public Status writeMappedRange(long offset, MemorySegment data, long size) {
-        return null;
+        var statusCode = webgpu_h.wgpuBufferWriteMappedRange(this.memorySegment, offset, data, size);
+        return Status.values()[statusCode];
     }
 
     @Override
@@ -52,8 +59,8 @@ public final class BufferImpl implements Buffer, WebGPUObjectImpl {
     }
 
     @Override
-    public EnumSet<BufferUsage> getUsage() {
-        return null;
+    public Set<BufferUsage> getUsage() {
+        return BitPacker.unpack(webgpu_h.wgpuBufferGetUsage(this.memorySegment), BufferUsage.class);
     }
 
     @Override
@@ -83,7 +90,16 @@ public final class BufferImpl implements Buffer, WebGPUObjectImpl {
     
     @Override
     public void mapAsync(BufferMap callback, Set<MapMode> mode, long offset, long size) {
-        throw new UnsupportedOperationException("Unimplemented method 'mapAsync'");
+        final long modes = BitPacker.pack(mode);
+        final var callbackPtr = WGPUBufferMapCallback
+                .allocate((int status, MemorySegment message, MemorySegment userdata1, MemorySegment userdata2) -> {
+            callback.apply(MapAsyncStatus.values()[status], StringViewMapper.map(message));
+                }, Arena.ofAuto());
+        
+        final var callbackInfoPtr = WGPUBufferMapCallbackInfo.allocate(Arena.ofAuto());
+        WGPUBufferMapCallbackInfo.callback(callbackInfoPtr, callbackPtr);
+
+        webgpu_h.wgpuBufferMapAsync(Arena.ofAuto(), this.memorySegment, modes, offset, size, callbackInfoPtr);
     }
 
 

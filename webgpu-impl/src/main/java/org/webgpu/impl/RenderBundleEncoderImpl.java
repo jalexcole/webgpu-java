@@ -1,8 +1,10 @@
 package org.webgpu.impl;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
-import java.nio.ByteBuffer;
+import java.lang.foreign.ValueLayout;
 
+import org.jspecify.annotations.NullMarked;
 import org.webgpu.api.BindGroup;
 import org.webgpu.api.Buffer;
 import org.webgpu.api.IndexFormat;
@@ -10,12 +12,16 @@ import org.webgpu.api.RenderBundle;
 import org.webgpu.api.RenderBundleDescriptor;
 import org.webgpu.api.RenderBundleEncoder;
 import org.webgpu.api.RenderPipeline;
+import org.webgpu.api.exceptions.WGPUException;
 import org.webgpu.impl.util.StringViewMapper;
+import org.webgpu.impl.util.StructTools;
 import org.webgpu.panama.webgpu_h;
 
+@NullMarked
 public class RenderBundleEncoderImpl implements RenderBundleEncoder {
 
 	private final MemorySegment memorySegment;
+	private final Arena arena = Arena.ofAuto();
 	
 	public RenderBundleEncoderImpl(MemorySegment memorySegment) {
 		this.memorySegment = memorySegment;
@@ -23,21 +29,20 @@ public class RenderBundleEncoderImpl implements RenderBundleEncoder {
 
 	@Override
 	public void setPipeline(RenderPipeline pipeline) {
-
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'setPipeline'");
+		final var pipelinePtr = ((RenderPipelineImpl) pipeline).ptr();
+		webgpu_h.wgpuRenderBundleEncoderSetPipeline(this.memorySegment, pipelinePtr);
 	}
 
 	@Override
 	public void setBindGroup(int groupIndex, BindGroup group, int[] dynamicOffsets) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'setBindGroup'");
+		final var groupPtr = ((BindGroupImpl) group).ptr();
+		final var dynamicOffsetsPtr = arena.allocateFrom(ValueLayout.JAVA_INT, dynamicOffsets);
+		webgpu_h.wgpuRenderBundleEncoderSetBindGroup(this.memorySegment, groupIndex, groupPtr, dynamicOffsets.length, dynamicOffsetsPtr);
 	}
 
 	@Override
 	public void setImmediates(int offset, MemorySegment data, long size) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'setImmediates'");
+		webgpu_h.wgpuRenderBundleEncoderSetImmediates(this.memorySegment, offset, data, size);
 	}
 
 	@Override
@@ -86,14 +91,15 @@ public class RenderBundleEncoderImpl implements RenderBundleEncoder {
 	}
 
 	@Override
-	public RenderBundle finish(RenderBundleDescriptor descriptor) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'finish'");
+	public RenderBundleImpl finish(RenderBundleDescriptor descriptor) {
+		final var descriptorPtr = StructTools.fetchSegment(descriptor);
+		final var renderBundlePtr = webgpu_h.wgpuRenderBundleEncoderFinish(this.memorySegment, descriptorPtr);
+		return new RenderBundleImpl(renderBundlePtr);
 	}
 
 	@Override
 	public void setLabel(String label) {
-		throw new UnsupportedOperationException("Unimplemented method 'setLabel'");
+		throw new WGPUException(new UnsupportedOperationException("Unimplemented method 'setLabel'"));
 	}
     
 }

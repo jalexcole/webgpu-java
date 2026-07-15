@@ -8,7 +8,6 @@ import java.util.WeakHashMap;
 import org.jspecify.annotations.NullMarked;
 import org.webgpu.api.Adapter;
 import org.webgpu.api.AdapterInfo;
-import org.webgpu.api.BackendType;
 import org.webgpu.api.DeviceDescriptor;
 import org.webgpu.api.FeatureName;
 import org.webgpu.api.Limits;
@@ -16,11 +15,8 @@ import org.webgpu.api.RequestDevice;
 import org.webgpu.api.RequestDeviceStatus;
 import org.webgpu.api.Status;
 import org.webgpu.api.SupportedFeatures;
-import org.webgpu.impl.util.LimitsMapper;
 import org.webgpu.impl.util.StringViewMapper;
-import org.webgpu.panama.WGPUAdapterInfo;
-import org.webgpu.panama.WGPUDeviceDescriptor;
-import org.webgpu.panama.WGPULimits;
+import org.webgpu.impl.util.StructTools;
 import org.webgpu.panama.WGPURequestDeviceCallback;
 import org.webgpu.panama.WGPURequestDeviceCallbackInfo;
 import org.webgpu.panama.webgpu_h;
@@ -39,97 +35,27 @@ public final class AdapterImpl implements Adapter, WebGPUObjectImpl {
 
     @Override
     public Status getLimits(Limits limits) {
-        final MemorySegment limitsSegment = WGPULimits.allocate(arena);
+        final MemorySegment limitsSegment = StructTools.fetchSegment(limits);
         final int statusCode = webgpu_h.wgpuAdapterGetLimits(this.memorySegment, limitsSegment);
-        final Status status = Status.values()[statusCode];
-
-        if (status != Status.SUCCESS) {
-            return status;
-        }
-
-        var maxBindGroups = WGPULimits.maxBindGroups(limitsSegment);
-        var maxDynamicUniformBuffersPerPipelineLayout = WGPULimits
-                .maxDynamicUniformBuffersPerPipelineLayout(limitsSegment);
-        var maxDynamicStorageBuffersPerPipelineLayout = WGPULimits
-                .maxDynamicStorageBuffersPerPipelineLayout(limitsSegment);
-        var maxSampledTexturesPerShaderStage = WGPULimits.maxSampledTexturesPerShaderStage(limitsSegment);
-        var maxSamplersPerShaderStage = WGPULimits.maxSamplersPerShaderStage(limitsSegment);
-        var maxStorageBuffersPerShaderStage = WGPULimits.maxStorageBuffersPerShaderStage(limitsSegment);
-        var maxStorageTexturesPerShaderStage = WGPULimits.maxStorageTexturesPerShaderStage(limitsSegment);
-        var maxUniformBuffersPerShaderStage = WGPULimits.maxUniformBuffersPerShaderStage(limitsSegment);
-        var maxUniformBufferBindingSize = WGPULimits.maxUniformBufferBindingSize(limitsSegment);
-        var maxStorageBufferBindingSize = WGPULimits.maxStorageBufferBindingSize(limitsSegment);
-        var maxVertexBuffers = WGPULimits.maxVertexBuffers(limitsSegment);
-        var maxVertexAttributes = WGPULimits.maxVertexAttributes(limitsSegment);
-        var maxVertexBufferArrayStride = WGPULimits.maxVertexBufferArrayStride(limitsSegment);
-
-        limits.maxBindGroups(maxBindGroups);
-        limits.maxDynamicUniformBuffersPerPipelineLayout(maxDynamicUniformBuffersPerPipelineLayout);
-        limits.maxDynamicStorageBuffersPerPipelineLayout(maxDynamicStorageBuffersPerPipelineLayout);
-        limits.maxSampledTexturesPerShaderStage(maxSampledTexturesPerShaderStage);
-        limits.maxSamplersPerShaderStage(maxSamplersPerShaderStage);
-        limits.maxStorageBuffersPerShaderStage(maxStorageBuffersPerShaderStage);
-        limits.maxStorageTexturesPerShaderStage(maxStorageTexturesPerShaderStage);
-        limits.maxUniformBuffersPerShaderStage(maxUniformBuffersPerShaderStage);
-        limits.maxUniformBufferBindingSize(maxUniformBufferBindingSize);
-        limits.maxStorageBufferBindingSize(maxStorageBufferBindingSize);
-        limits.maxVertexBuffers(maxVertexBuffers);
-        limits.maxVertexAttributes(maxVertexAttributes);
-        limits.maxVertexBufferArrayStride(maxVertexBufferArrayStride);
-
-
-
-
-
-
-
-
-
-
-        return status;
+        return Status.values()[statusCode];
     }
 
     @Override
     public boolean hasFeature(FeatureName feature) {
-        return webgpu_h.wgpuAdapterHasFeature(this.memorySegment, feature.value()) == webgpu_h.WGPUOptionalBool_True();
+        return webgpu_h.wgpuAdapterHasFeature(this.memorySegment, feature.value()) == webgpu_h.WGPU_TRUE();
     }
 
     @Override
     public void getFeatures(SupportedFeatures features) {
-        throw new UnsupportedOperationException("Unimplemented method 'getFeatures'");
+        final var featuresPtr = StructTools.fetchSegment(features);
+        webgpu_h.wgpuAdapterGetFeatures(this.memorySegment, featuresPtr);
     }
 
     @Override
     public Status getInfo(AdapterInfo info) {
-        final var adapterInfo = WGPUAdapterInfo.allocate(arena);
-
-        var status = Status.values()[webgpu_h.wgpuAdapterGetInfo(this.memorySegment, adapterInfo)];
-
-        if (status != Status.SUCCESS) {
-            return status;
-        }
-
-        final var nextInChain = WGPUAdapterInfo.nextInChain(adapterInfo);
-
-        final var architecture = WGPUAdapterInfo.architecture(adapterInfo);
-        final var backendType = WGPUAdapterInfo.backendType(adapterInfo);
-        final var deviceID = WGPUAdapterInfo.deviceID(adapterInfo);
-        final var description = WGPUAdapterInfo.description(adapterInfo);
-        final var device = WGPUAdapterInfo.device(adapterInfo);
-        final var subgroupMaxSize = WGPUAdapterInfo.subgroupMaxSize(adapterInfo);
-        final var vendor = WGPUAdapterInfo.vendor(adapterInfo);
-        final var vendorID = WGPUAdapterInfo.vendorID(adapterInfo);
-
-        info.architecture(StringViewMapper.map(architecture));
-        info.backendType(BackendType.values()[backendType]);
-        info.deviceID(deviceID);
-        info.description(StringViewMapper.map(description));
-        info.device(StringViewMapper.map(device));
-        info.subgroupMaxSize(subgroupMaxSize);
-        info.vendor(StringViewMapper.map(vendor));
-        info.vendorID(vendorID);
-
-        return status;
+        final var adapterInfo = StructTools.fetchSegment(info);
+        final var statusCode = webgpu_h.wgpuAdapterGetInfo(this.memorySegment, adapterInfo);
+        return Status.values()[statusCode];
     }
 
     public MemorySegment ptr() {
@@ -138,21 +64,8 @@ public final class AdapterImpl implements Adapter, WebGPUObjectImpl {
 
     @Override
     public void requestDevice(RequestDevice callback, DeviceDescriptor descriptor) {
-        final var deviceDescriptor = WGPUDeviceDescriptor.allocate(arena);
-        WGPUDeviceDescriptor.nextInChain(deviceDescriptor, MemorySegment.NULL);
-        WGPUDeviceDescriptor.label(deviceDescriptor, StringViewMapper.map(descriptor.label(), arena));
-        WGPUDeviceDescriptor.requiredFeatureCount(deviceDescriptor, descriptor.requiredFeatures().length);
-        final FeatureName[] features = descriptor.requiredFeatures();
 
-        final var featureSegment = arena.allocate(ValueLayout.JAVA_LONG, features.length);
-        WGPUDeviceDescriptor.requiredFeatures(deviceDescriptor, featureSegment);
-        for (int i = 0; i < descriptor.requiredFeatures().length; i++) {
-            featureSegment.setAtIndex(ValueLayout.JAVA_LONG, i, features[i].value());
-        }
-
-        final var limits = LimitsMapper.map(descriptor.requiredLimits(), arena);
-
-        WGPUDeviceDescriptor.requiredLimits(deviceDescriptor, limits);
+        final var deviceDescriptor = StructTools.fetchSegment(descriptor);
 
         final var callbackInfo = WGPURequestDeviceCallbackInfo.allocate(arena);
 
@@ -182,7 +95,4 @@ public final class AdapterImpl implements Adapter, WebGPUObjectImpl {
 	public String toString() {
 		return "AdapterImpl [memorySegment=" + memorySegment + "]";
 	}
-
-    
-
 }

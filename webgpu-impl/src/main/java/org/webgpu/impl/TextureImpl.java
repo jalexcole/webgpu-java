@@ -3,6 +3,7 @@ package org.webgpu.impl;
 import java.lang.foreign.MemorySegment;
 import java.util.BitSet;
 import java.util.EnumSet;
+import java.util.Set;
 
 import org.jspecify.annotations.NullMarked;
 import org.webgpu.api.Texture;
@@ -12,6 +13,8 @@ import org.webgpu.api.TextureUsage;
 import org.webgpu.api.TextureView;
 import org.webgpu.api.TextureViewDescriptor;
 import org.webgpu.api.TextureViewDimension;
+import org.webgpu.api.exceptions.WGPUException;
+import org.webgpu.impl.util.BitPacker;
 import org.webgpu.impl.util.StructTools;
 import org.webgpu.panama.webgpu_h;
 
@@ -34,7 +37,7 @@ public class TextureImpl implements Texture {
 
 	@Override
 	public void setLabel(String label) {
-		throw new UnsupportedOperationException("Unimplemented method 'setLabel'");
+		throw new WGPUException(new UnsupportedOperationException("Unimplemented method 'setLabel'"));
 	}
 
 	@Override
@@ -82,26 +85,9 @@ public class TextureImpl implements Texture {
 	}
 
 	@Override
-	public EnumSet<TextureUsage> getUsage() {
+	public Set<TextureUsage> getUsage() {
 		final long usageValue = webgpu_h.wgpuTextureGetUsage(memorySegment);
-
-		if (usageValue == 0) {
-			return EnumSet.of(TextureUsage.NONE);
-		}
-		final long[] longs = new long[1];
-		longs[0] = usageValue;
-		final BitSet bitSet = BitSet.valueOf(longs);
-
-		@SuppressWarnings("null")
-		final EnumSet<TextureUsage> textureUsages = EnumSet.noneOf(TextureUsage.class);
-
-		for (int i = 0; i < TextureUsage.values().length - 1; i++) {
-			if (bitSet.get(i)) {
-				textureUsages.add(TextureUsage.values()[i + 1]);
-			}
-		}
-
-		return textureUsages;
+		return BitPacker.unpack(usageValue, TextureUsage.class);
 	}
 
 	@Override

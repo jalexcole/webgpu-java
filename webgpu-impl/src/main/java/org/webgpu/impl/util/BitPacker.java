@@ -3,28 +3,27 @@ package org.webgpu.impl.util;
 import java.util.EnumSet;
 import java.util.Set;
 
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.NullMarked;
+import org.webgpu.api.WGPUBitflag;
+import org.webgpu.api.exceptions.WGPUException;
 
 @NullMarked
 public class BitPacker {
 
     @SuppressWarnings("null")
-    public static <T extends Enum<T>> long pack(Set<T> enums) {
-        long packedValue = 0;
-        for (T enumValue : enums) {
-            packedValue |= 1L << enumValue.ordinal();
-        }
-        return packedValue;
+    public static <T extends Enum<T> & WGPUBitflag> long pack(final Set<T> enums) {
+
+        return enums.stream().mapToLong(WGPUBitflag::value).sum();
+
     }
 
-    public static <T extends Enum<T>> Set<T> unpack(long packedValue, Class<T> type) {
-        T[] values = type.getEnumConstants();
+    public static <T extends Enum<T> & WGPUBitflag> Set<T> unpack(final long packedValue, final Class<T> type) {
+        final T[] values = type.getEnumConstants();
         if (values == null) {
-            return EnumSet.noneOf(type);
+            throw new WGPUException("Unable to unpack due to null type");
         }
-        if (packedValue == 0) {
-            return EnumSet.noneOf(type);
+        if (packedValue == 0 && values.length > 0) {
+            return EnumSet.of(values[0]);
         }
 
         EnumSet<T> result = EnumSet.noneOf(type);

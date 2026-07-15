@@ -9,6 +9,7 @@ import org.webgpu.api.Surface;
 import org.webgpu.api.SurfaceCapabilities;
 import org.webgpu.api.SurfaceConfiguration;
 import org.webgpu.api.SurfaceTexture;
+import org.webgpu.api.exceptions.WGPUException;
 import org.webgpu.impl.util.StructTools;
 import org.webgpu.panama.webgpu_h;
 
@@ -55,7 +56,7 @@ public class SurfaceImpl implements Surface {
 
 	@Override
 	public void setLabel(String label) {
-		throw new UnsupportedOperationException("Unimplemented method 'setLabel'");
+		throw new WGPUException(new UnsupportedOperationException("Unimplemented method 'setLabel'"));
 	}
     
 }

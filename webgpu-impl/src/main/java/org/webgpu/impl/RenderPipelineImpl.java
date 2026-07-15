@@ -2,6 +2,7 @@ package org.webgpu.impl;
 
 import org.webgpu.api.BindGroupLayout;
 import org.webgpu.api.RenderPipeline;
+import org.webgpu.api.exceptions.WGPUException;
 import org.webgpu.panama.webgpu_h;
 
 import java.lang.foreign.MemorySegment;
@@ -23,7 +24,7 @@ public final class RenderPipelineImpl implements RenderPipeline, WebGPUObjectImp
 
     @Override
     public void setLabel(final String label) {
-        throw new UnsupportedOperationException("WGPU Does not support setting labels on render pipelines yet.");
+        throw new WGPUException(new UnsupportedOperationException("WGPU Does not support setting labels on render pipelines yet."));
     }
 
 	@Override

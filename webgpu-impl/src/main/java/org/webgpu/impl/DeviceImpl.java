@@ -4,9 +4,12 @@ import org.jspecify.annotations.NullMarked;
 import org.webgpu.api.*;
 import org.webgpu.api.exceptions.WGPUException;
 import org.webgpu.impl.util.StructTools;
+import org.webgpu.panama.WGPUFuture;
 import org.webgpu.panama.webgpu_h;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @NullMarked
@@ -14,6 +17,7 @@ public class DeviceImpl implements Device {
 
     private final MemorySegment memorySegment;
     private final AtomicBoolean destroyed = new AtomicBoolean(false);
+    private final Arena arena = Arena.ofAuto();
 
     public DeviceImpl(MemorySegment memorySegment) {
         this.memorySegment = memorySegment;
@@ -22,72 +26,90 @@ public class DeviceImpl implements Device {
     @Override
     public BindGroup createBindGroup(BindGroupDescriptor descriptor) {
         final MemorySegment descriptorPtr = StructTools.fetchSegment(descriptor);
-        final var bindgroupPtr = webgpu_h.wgpuDeviceCreateBindGroup(this.memorySegment, descriptorPtr)
+        final var bindgroupPtr = webgpu_h.wgpuDeviceCreateBindGroup(this.memorySegment, descriptorPtr);
         return new BindGroupImpl(bindgroupPtr);
     }
 
     @Override
     public BindGroupLayoutImpl createBindGroupLayout(BindGroupLayoutDescriptor descriptor) {
-        return null;
+        final var descriptorPtr = StructTools.fetchSegment(descriptor);
+        final var BindGroupLayoutPtr = webgpu_h.wgpuDeviceCreateBindGroupLayout(this.memorySegment, descriptorPtr);
+        return new BindGroupLayoutImpl(BindGroupLayoutPtr);
     }
 
     @Override
-    public Buffer createBuffer(BufferDescriptor descriptor) {
-        return null;
+    public BufferImpl createBuffer(BufferDescriptor descriptor) {
+        final var descriptorPtr = StructTools.fetchSegment(descriptor);
+        final var bufferPtr = webgpu_h.wgpuDeviceCreateBuffer(this.memorySegment, descriptorPtr);
+        return new BufferImpl(bufferPtr);
     }
 
     @Override
     public CommandEncoderImpl createCommandEncoder(CommandEncoderDescriptor descriptor) {
-        return null;
+        final var descriptorPtr = StructTools.fetchSegment(descriptor);
+        final var commandEncoderPtr = webgpu_h.wgpuDeviceCreateCommandEncoder(this.memorySegment, descriptorPtr);
+        return new CommandEncoderImpl(commandEncoderPtr);
     }
 
     @Override
     public ComputePipelineImpl createComputePipeline(ComputePipelineDescriptor descriptor) {
-        return null;
+        final var descriptorPtr = StructTools.fetchSegment(descriptor);
+        final var computePipelinePtr = webgpu_h.wgpuDeviceCreateComputePipeline(this.memorySegment, descriptorPtr);
+        return new ComputePipelineImpl(computePipelinePtr);
     }
 
     
     public void createComputePipelineAsync(ComputePipelineDescriptor descriptor) {
-
+        final var descriptorPtr = StructTools.fetchSegment(descriptor);
+        
+        // TODO: Investigate why callback function is missing.
     }
 
     @Override
     public PipelineLayoutImpl createPipelineLayout(PipelineLayoutDescriptor descriptor) {
+        final var descriptorPtr = StructTools.fetchSegment(descriptor);
         return null;
     }
 
     @Override
     public QuerySetImpl createQuerySet(QuerySetDescriptor descriptor) {
-        return new QuerySetImpl(webgpu_h.wgpuDeviceCreateQuerySet(memorySegment, StructTools.fetchSegment(descriptor)));
+        final var descriptorPtr = StructTools.fetchSegment(descriptor);
+        return new QuerySetImpl(webgpu_h.wgpuDeviceCreateQuerySet(memorySegment, descriptorPtr));
     }
 
     
     public void createRenderPipelineAsync(RenderPipelineDescriptor descriptor) {
+        final var descriptorPtr = StructTools.fetchSegment(descriptor);
         throw new UnsupportedOperationException();
     }
 
     @Override
     public RenderBundleEncoderImpl createRenderBundleEncoder(RenderBundleEncoderDescriptor descriptor) {
+        final var descriptorPtr = StructTools.fetchSegment(descriptor);
         return null;
     }
 
     @Override
     public RenderPipelineImpl createRenderPipeline(RenderPipelineDescriptor descriptor) {
+        final var descriptorPtr = StructTools.fetchSegment(descriptor);
         return null;
     }
 
     @Override
     public Sampler createSampler(SamplerDescriptor descriptor) {
+        final var descriptorPtr = StructTools.fetchSegment(descriptor);
         return null;
     }
 
     @Override
     public ShaderModule createShaderModule(ShaderModuleDescriptor descriptor) {
+        final var descriptorPtr = StructTools.fetchSegment(descriptor);
         return null;
     }
 
     @Override
     public Texture createTexture(TextureDescriptor descriptor) {
+        final var descriptorPtr = StructTools.fetchSegment(descriptor);
         return null;
     }
 
@@ -100,33 +122,44 @@ public class DeviceImpl implements Device {
 
     @Override
     public Future getLostFuture() {
-        return null;
+        final var futurePtr = webgpu_h.wgpuDeviceGetLostFuture(arena, this.memorySegment);
+        final Future future = new Future();
+        future.id(WGPUFuture.id(futurePtr));
+        return future;
     }
 
     @Override
     public Status getLimits(Limits limits) {
-        // webgpu_h.wgpuDeviceGetLimits(this.memorySegment, )
-        return null;
+        final MemorySegment limitsPtr = StructTools.fetchSegment(limits);
+        final int statusCode = webgpu_h.wgpuDeviceGetLimits(this.memorySegment, limitsPtr);
+        return Status.values()[statusCode];
     }
 
     @Override
     public boolean hasFeature(FeatureName feature) {
-        return false;
+        final int result = webgpu_h.wgpuDeviceHasFeature(memorySegment, feature.value());
+        return result == webgpu_h.WGPU_TRUE();
     }
 
     @Override
     public void getFeatures(SupportedFeatures features) {
-
+        final MemorySegment featuresPtr = StructTools.fetchSegment(features);
+        Objects.requireNonNull(featuresPtr);
+        webgpu_h.wgpuDeviceGetFeatures(this.memorySegment, featuresPtr);
     }
 
     @Override
     public Status getAdapterInfo(AdapterInfo adapterInfo) {
-        return null;
+        final var adapterInfoPtr = StructTools.fetchSegment(adapterInfo);
+        Objects.requireNonNull(adapterInfoPtr);
+        final int statusCode = webgpu_h.wgpuDeviceGetAdapterInfo(this.memorySegment, adapterInfoPtr);
+        return Status.values()[statusCode];
     }
 
     @Override
     public Queue getQueue() {
-        return new QueueImpl(webgpu_h.wgpuDeviceGetQueue(memorySegment));
+        final var queuePtr = webgpu_h.wgpuDeviceGetQueue(memorySegment);
+        return new QueueImpl(queuePtr);
     }
 
     @Override

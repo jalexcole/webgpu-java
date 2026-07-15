@@ -1,9 +1,13 @@
 package org.webgpu.impl;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.webgpu.api.CompilationInfo;
 import org.webgpu.api.ShaderModule;
+import org.webgpu.api.exceptions.WGPUException;
+import org.webgpu.impl.util.StructTools;
+import org.webgpu.panama.webgpu_h;
 
 public class ShaderModuleImpl implements ShaderModule {
 
@@ -15,14 +19,14 @@ public class ShaderModuleImpl implements ShaderModule {
 
 	@Override
 	public void setLabel(String label) {
-		throw new UnsupportedOperationException("Unimplemented method 'setLabel'");
+		throw new WGPUException(new UnsupportedOperationException("Unimplemented method 'setLabel'"));
 	}
 
 
 	@Override
 	public void getCompilationInfo(CompilationInfo callback) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getCompilationInfo'");
+		final var callbackPtr = StructTools.fetchSegment(callback);
+		webgpu_h.wgpuShaderModuleGetCompilationInfo(Arena.ofAuto(), this.memorySegment, callbackPtr);
 	}
     
 }

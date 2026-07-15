@@ -1,10 +1,8 @@
 package org.webgpu.impl;
 
 import java.lang.foreign.MemorySegment;
-import java.util.Objects;
 
 import org.jspecify.annotations.NullMarked;
-import org.webgpu.api.BindGroupLayout;
 import org.webgpu.api.ComputePipeline;
 import org.webgpu.api.exceptions.WGPUException;
 import org.webgpu.panama.webgpu_h;

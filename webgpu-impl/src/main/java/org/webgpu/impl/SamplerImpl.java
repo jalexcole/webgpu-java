@@ -3,6 +3,7 @@ package org.webgpu.impl;
 import java.lang.foreign.MemorySegment;
 
 import org.webgpu.api.Sampler;
+import org.webgpu.api.exceptions.WGPUException;
 
 public class SamplerImpl implements Sampler {
 
@@ -15,6 +16,6 @@ public class SamplerImpl implements Sampler {
     
     @Override
     public void setLabel(String label) {
-        throw new UnsupportedOperationException("Unimplemented method 'setLabel'");
+        throw new WGPUException(new UnsupportedOperationException("Unimplemented method 'setLabel'"));
     }
 }

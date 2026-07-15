@@ -4,7 +4,7 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 
-
+import org.jspecify.annotations.NullMarked;
 import org.webgpu.api.BindGroup;
 import org.webgpu.api.Buffer;
 import org.webgpu.api.Color;
@@ -12,10 +12,13 @@ import org.webgpu.api.IndexFormat;
 import org.webgpu.api.RenderBundle;
 import org.webgpu.api.RenderPassEncoder;
 import org.webgpu.api.RenderPipeline;
+import org.webgpu.api.exceptions.WGPUException;
+import org.webgpu.impl.util.ObjectUtils;
 import org.webgpu.impl.util.StringViewMapper;
 import org.webgpu.impl.util.StructTools;
 import org.webgpu.panama.webgpu_h;
 
+@NullMarked
 public class RenderPassEncoderImpl implements RenderPassEncoder {
 
 	private final MemorySegment memorySegment;
@@ -69,8 +72,11 @@ public class RenderPassEncoderImpl implements RenderPassEncoder {
 
 	@Override
 	public void executeBundles(RenderBundle[] bundles) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'executeBundles'");
+		
+		try (Arena confinedArena = Arena.ofConfined()) {
+			final var bundlesPtr = ObjectUtils.mapArray(bundles, confinedArena);
+			webgpu_h.wgpuRenderPassEncoderExecuteBundles(this.memorySegment, bundles.length, bundlesPtr);
+		}
 	}
 
 	@Override
@@ -139,7 +145,7 @@ public class RenderPassEncoderImpl implements RenderPassEncoder {
 
 	@Override
 	public void setLabel(String label) {
-		throw new UnsupportedOperationException("Unimplemented method 'setLabel'");
+		throw new WGPUException(new UnsupportedOperationException("Unimplemented method 'setLabel'"));
 	}
     
 }
