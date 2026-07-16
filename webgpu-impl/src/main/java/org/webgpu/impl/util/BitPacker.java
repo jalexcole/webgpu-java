@@ -28,7 +28,8 @@ public class BitPacker {
 
         EnumSet<T> result = EnumSet.noneOf(type);
         for (int i = 0; i < values.length; i++) {
-            if ((packedValue & (1L << i)) != 0) {
+            long flag = values[i].value();
+            if (flag != 0 && (packedValue & flag) != 0) {
                 result.add(values[i]);
             }
         }

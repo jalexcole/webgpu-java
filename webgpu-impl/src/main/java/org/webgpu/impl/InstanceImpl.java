@@ -2,7 +2,6 @@ package org.webgpu.impl;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
-import java.sql.Struct;
 import java.util.Objects;
 
 import org.jspecify.annotations.NullMarked;

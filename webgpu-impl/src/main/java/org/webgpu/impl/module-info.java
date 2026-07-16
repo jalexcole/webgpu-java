@@ -1,4 +1,7 @@
 
+import org.webgpu.api.spi.StructProviderRegistry;
+import org.webgpu.api.spi.WGPUProvider;
+import org.webgpu.impl.spi.WGPUProviderImpl;
 import org.webgpu.impl.spi.WGPUStructProviderRegistry;
 
 module org.webgpu.impl {
@@ -8,6 +11,6 @@ module org.webgpu.impl {
     requires org.webgpu.panama;
     requires java.logging;
 
-    provides org.webgpu.api.spi.WGPUProvider with org.webgpu.impl.spi.WGPUProviderImpl;
-    provides org.webgpu.api.spi.StructProviderRegistry with WGPUStructProviderRegistry;
+    provides WGPUProvider with WGPUProviderImpl;
+    provides StructProviderRegistry with WGPUStructProviderRegistry;
 }

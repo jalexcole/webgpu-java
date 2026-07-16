@@ -10,7 +10,7 @@ import java.nio.file.StandardCopyOption;
  */
 public final class NativeLibraryLoader {
 
-    private static final Arena LIBRARY_ARENA = Arena.ofAuto();
+    private static final Arena LIBRARY_ARENA = Arena.global();
     private static final String LIBRARY_NAME = "wgpu_native";
 
     private NativeLibraryLoader() {

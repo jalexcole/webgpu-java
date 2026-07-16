@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.webgpu.api.Adapter;
@@ -21,12 +21,18 @@ import org.webgpu.api.RequestDeviceStatus;
 import org.webgpu.api.Status;
 import org.webgpu.api.SupportedFeatures;
 import org.webgpu.api.WGPU;
+import org.webgpu.panama.NativeLibraryLoader;
 
 public class AdapterImplTest {
 
 
     private AdapterImpl adapter;
 
+    @BeforeAll
+    public static void beforeClass() {
+        NativeLibraryLoader.loadLibrary();
+    }
+    
     @BeforeEach
     void createAdapter() {
         Instance instance = WGPU.createInstance(new InstanceDescriptor());
@@ -35,13 +41,15 @@ public class AdapterImplTest {
 
         instance.requestAdapter((RequestAdapterStatus status, Adapter adapter, String message) -> {
             this.adapter = (AdapterImpl) adapter;
-            System.out.println("Request Adapter Callback: status=" + status + ", adapter=" + adapter + ", message=" + message);
+            System.out.println(
+                    "Request Adapter Callback: status=" + status + ", adapter=" + adapter + ", message=" + message);
             assertNotNull(status);
             assertNotNull(adapter);
             assertNotNull(message);
         }, options);
 
     }
+    
 
 
     @Test

@@ -100,7 +100,7 @@
                     <executable>jextract</executable>
                     <arguments>
                         <argument>--output</argument>
-                        <argument>${project.build.directory}/generated-sources</argument>
+                        <argument>${project.build.directory}/generated-sources/java</argument>
                         <argument>--target-package</argument>
                         <argument>org.webgpu.panama</argument>
                         <argument>--header-class-name</argument>
@@ -127,7 +127,7 @@
                         </goals>
                         <configuration>
                             <sources>
-                                <source>${project.build.directory}/generated-sources</source>
+                                <source>${project.build.directory}/generated-sources/java</source>
                             </sources>
                         </configuration>
                     </execution>

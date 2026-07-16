@@ -24,6 +24,7 @@ import com.palantir.javapoet.CodeBlock;
 import com.palantir.javapoet.FieldSpec;
 import com.palantir.javapoet.JavaFile;
 import com.palantir.javapoet.MethodSpec;
+import com.palantir.javapoet.ParameterSpec;
 import com.palantir.javapoet.TypeName;
 import com.palantir.javapoet.TypeSpec;
 
@@ -81,7 +82,8 @@ public class StructGenerator {
         }
 
         structSpecBuilder.addSuperinterfaces(Collections.singleton(Utils.map(COMMON_STRUCT)));
-        structSpecBuilder.addField(FieldSpec.builder(MemorySegment.class, "memorySegment", Modifier.PRIVATE, Modifier.FINAL).build());
+        structSpecBuilder.addField(
+                FieldSpec.builder(MemorySegment.class, "memorySegment", Modifier.PRIVATE, Modifier.FINAL).build());
 
         // If this struct is extended by other structs, make it sealed
         if (!children.isEmpty()) {
@@ -98,9 +100,8 @@ public class StructGenerator {
         e.getExtends()
                 .forEach(ext -> structSpecBuilder.superclass(ClassName.get(packageName, Utils.toPascalCase(ext))));
 
-
-
         structSpecBuilder.addMethod(this.defaultConstructor(""));
+        structSpecBuilder.addMethod(this.wrapperConstructor(""));
         structSpecBuilder.addField(addProvider(e.getName()));
         structSpecBuilder.addMethods(getterAndSetters(e));
 
@@ -143,7 +144,7 @@ public class StructGenerator {
             structSpecBuilder.addMethod(methodBuilder.build());
         });
     }
-    
+
     public FieldSpec addProvider(String name) {
         final ClassName providerName = ClassName.get(packageName + ".spi", Utils.toPascalCase(name) + "Provider");
         final ClassName registry = ClassName.get(packageName + ".spi", "StructProviderRegistry");
@@ -182,19 +183,27 @@ public class StructGenerator {
             initBlock.addStatement("this.$N = null", fieldName);
         }
     }
-   
 
+    
+    
     public MethodSpec defaultConstructor(String doc) {
         return MethodSpec.constructorBuilder()
                 .addJavadoc(doc)
                 .addModifiers(Modifier.PUBLIC)
                 .addCode(CodeBlock.builder()
-                        .add("this.memorySegment = $N.initializer();", "PROVIDER").build())
+                        .add("this($N.initializer());", "PROVIDER").build())
                 .build();
     }
 
     public MethodSpec wrapperConstructor(String doc) {
-        return MethodSpec.constructorBuilder().addJavadoc(doc).build();
+        final String pointerName = "memorySegment";
+        return MethodSpec.constructorBuilder()
+                .addJavadoc(doc)
+                .addModifiers(Modifier.PRIVATE)
+                .addParameter(ParameterSpec.builder(MemorySegment.class, pointerName).build())
+                .addCode(CodeBlock.of(
+                        "this.$N = $N;", pointerName, pointerName))
+                .build();
     }
 
     public List<MethodSpec> getterAndSetters(final GpuStruct gpuStruct) {
@@ -205,7 +214,8 @@ public class StructGenerator {
             getterSpecBuilder.addModifiers(Modifier.PUBLIC);
             getterSpecBuilder.returns(Utils.map(member.getType()));
             getterSpecBuilder.addJavadoc(member.getDoc());
-            getterSpecBuilder.addCode(CodeBlock.of("return PROVIDER.$L(this.memorySegment);", Utils.toCamelCase(member.getName())));
+            getterSpecBuilder.addCode(
+                    CodeBlock.of("return PROVIDER.$L(this.memorySegment);", Utils.toCamelCase(member.getName())));
 
             methods.add(getterSpecBuilder.build());
 
@@ -214,7 +224,8 @@ public class StructGenerator {
             setterSpecBuilder.addParameter(Utils.map(member.getType()), Utils.toCamelCase(member.getName()));
             setterSpecBuilder.addJavadoc(member.getDoc());
             setterSpecBuilder.addCode(
-                    CodeBlock.of("PROVIDER.$L(this.memorySegment, $L);", Utils.toCamelCase(member.getName()), Utils.toCamelCase(member.getName())));
+                    CodeBlock.of("PROVIDER.$L(this.memorySegment, $L);", Utils.toCamelCase(member.getName()),
+                            Utils.toCamelCase(member.getName())));
 
             methods.add(setterSpecBuilder.build());
         }

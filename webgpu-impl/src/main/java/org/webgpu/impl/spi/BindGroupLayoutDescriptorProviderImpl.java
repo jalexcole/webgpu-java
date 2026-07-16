@@ -47,8 +47,7 @@ public class BindGroupLayoutDescriptorProviderImpl implements BindGroupLayoutDes
 
     @Override
     public void label(MemorySegment structPtr, String label) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'label'");
+        WGPUBindGroupLayoutDescriptor.label(structPtr, StringViewMapper.map(label));
     }
 
     @Override
