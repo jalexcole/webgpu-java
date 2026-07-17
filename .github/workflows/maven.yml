@@ -45,7 +45,7 @@ jobs:
         run: |
           curl -s "https://get.sdkman.io" | bash
           source "$HOME/.sdkman/bin/sdkman-init.sh"
-          sdk install jextract 25.1.1
+          sdk install jextract 22.ea.6
           echo "$HOME/.sdkman/candidates/jextract/current/bin" >> "$GITHUB_PATH"
       - name: Verify jextract
         run: jextract --version
