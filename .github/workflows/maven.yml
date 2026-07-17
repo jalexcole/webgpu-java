@@ -10,41 +10,47 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo with submodules
-      uses: actions/checkout@v4
-      with:
-        submodules: recursive   # Recursively initialize submodules
-    - name: Install Rust
-      uses: actions-rs/toolchain@v1
-      with:
-        toolchain: stable
-    - name: Build wgpu-native from submodule
-      run: |
-        cd wgpu-native
-        cargo build --release
-        sudo cp target/release/libwgpu_native.so /usr/local/lib/
-        sudo ldconfig
-        echo "LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
-    - name: Set up JDK 25
-      uses: actions/setup-java@v4
-      with:
-        java-version: '25'
-        distribution: 'temurin'
-        cache: maven
-    - name: Verify jextract
-      run: jextract --version
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      - name: Checkout repo with submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive # Recursively initialize submodules
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - name: Build wgpu-native from submodule
+        run: |
+          cd wgpu-native
+          cargo build --release
+          sudo cp target/release/libwgpu_native.so /usr/local/lib/
+          sudo ldconfig
+          echo "LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+      - name: Set up JDK 25
+        uses: actions/setup-java@v4
+        with:
+          java-version: "25"
+          distribution: "temurin"
+          cache: maven
+      - name: Install jextract via SDKMAN
+        shell: bash
+        run: |
+          curl -s "https://get.sdkman.io" | bash
+          source "$HOME/.sdkman/bin/sdkman-init.sh"
+          sdk install jextract 25.1.1
+          echo "$HOME/.sdkman/candidates/jextract/current/bin" >> "$GITHUB_PATH"
+      - name: Verify jextract
+        run: jextract --version
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     # - name: Update dependency graph
