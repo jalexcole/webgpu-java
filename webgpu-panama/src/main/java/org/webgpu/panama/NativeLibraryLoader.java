@@ -2,6 +2,7 @@ package org.webgpu.panama;
 
 import java.lang.foreign.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 /**
@@ -20,7 +21,8 @@ public final class NativeLibraryLoader {
     /**
      * Creates a SymbolLookup for the WebGPU native library.
      * First tries to load from JAR resources, then falls back to system lookup.
-     * Supports all platforms that have ever run Java (Windows, Linux, macOS, Solaris, AIX, etc.)
+     * Supports all platforms that have ever run Java (Windows, Linux, macOS,
+     * Solaris, AIX, etc.)
      *
      * @return a SymbolLookup configured for wgpu_native
      */
@@ -48,11 +50,36 @@ public final class NativeLibraryLoader {
             lookup = null;
         }
 
-        // Fallback to system library lookup
         if (lookup == null) {
-            lookup = SymbolLookup.libraryLookup(System.mapLibraryName(LIBRARY_NAME), LIBRARY_ARENA)
-                    .or(SymbolLookup.loaderLookup())
-                    .or(Linker.nativeLinker().defaultLookup());
+            // Try common local build and download locations first
+            try {
+                String mappedLibName = System.mapLibraryName(LIBRARY_NAME);
+                Path cwd = Path.of(System.getProperty("user.dir"));
+                // try up to 5 parent levels to find the repo root containing wgpu-native
+                for (int up = 0; up < 6 && cwd != null; up++) {
+                    java.nio.file.Path candidate = cwd
+                            .resolve(Path.of("wgpu-native", "target", "debug", mappedLibName));
+                    if (Files.exists(candidate)) {
+                        lookup = SymbolLookup.libraryLookup(candidate.toAbsolutePath().toString(), LIBRARY_ARENA);
+                        break;
+                    }
+                    candidate = cwd
+                            .resolve(Path.of("target", "downloads-unzipped", "lib", mappedLibName));
+                    if (Files.exists(candidate)) {
+                        lookup = SymbolLookup.libraryLookup(candidate.toAbsolutePath().toString(), LIBRARY_ARENA);
+                        break;
+                    }
+                    cwd = cwd.getParent();
+                }
+            } catch (Exception e) {
+                // ignore and continue to generic lookups
+            }
+
+            if (lookup == null) {
+                lookup = SymbolLookup.libraryLookup(System.mapLibraryName(LIBRARY_NAME), LIBRARY_ARENA)
+                        .or(SymbolLookup.loaderLookup())
+                        .or(Linker.nativeLinker().defaultLookup());
+            }
         }
 
         return lookup;
@@ -60,8 +87,10 @@ public final class NativeLibraryLoader {
 
     /**
      * Loads the WebGPU native library into the JVM.
-     * First tries to load from JAR resources, then falls back to system library loading.
-     * Supports all platforms that have ever run Java (Windows, Linux, macOS, Solaris, AIX, etc.)
+     * First tries to load from JAR resources, then falls back to system library
+     * loading.
+     * Supports all platforms that have ever run Java (Windows, Linux, macOS,
+     * Solaris, AIX, etc.)
      */
     public static void loadLibrary() {
         // First, try to load from resources (bundled in JAR)
@@ -84,7 +113,28 @@ public final class NativeLibraryLoader {
             // Fall through to system loading
         }
 
-        // Fallback to system library loading
+        // Try explicit local paths before delegating to system loader
+        try {
+            String mappedLibName = System.mapLibraryName(LIBRARY_NAME);
+            java.nio.file.Path cwd = java.nio.file.Path.of(System.getProperty("user.dir"));
+            for (int up = 0; up < 6 && cwd != null; up++) {
+                java.nio.file.Path candidate = cwd
+                        .resolve(java.nio.file.Path.of("wgpu-native", "target", "debug", mappedLibName));
+                if (Files.exists(candidate)) {
+                    System.load(candidate.toAbsolutePath().toString());
+                    return;
+                }
+                candidate = cwd.resolve(java.nio.file.Path.of("target", "downloads-unzipped", "lib", mappedLibName));
+                if (Files.exists(candidate)) {
+                    System.load(candidate.toAbsolutePath().toString());
+                    return;
+                }
+                cwd = cwd.getParent();
+            }
+        } catch (Exception e) {
+            // fallthrough to system load
+        }
+
         System.loadLibrary(LIBRARY_NAME);
     }
 

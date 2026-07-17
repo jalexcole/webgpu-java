@@ -5,17 +5,14 @@ import java.lang.foreign.MemorySegment;
 import java.util.Objects;
 
 import org.jspecify.annotations.NullMarked;
-import org.webgpu.api.BackendType;
 import org.webgpu.api.CallbackMode;
 import org.webgpu.api.FutureWaitInfo;
 import org.webgpu.api.Instance;
 import org.webgpu.api.InstanceDescriptor;
-import org.webgpu.api.PowerPreference;
 import org.webgpu.api.RequestAdapter;
 import org.webgpu.api.RequestAdapterOptions;
 import org.webgpu.api.RequestAdapterStatus;
 import org.webgpu.api.SupportedWGSLLanguageFeatures;
-import org.webgpu.api.Surface;
 import org.webgpu.api.SurfaceDescriptor;
 import org.webgpu.api.WGSLLanguageFeatureName;
 import org.webgpu.api.WaitStatus;
@@ -23,7 +20,6 @@ import org.webgpu.impl.util.StringViewMapper;
 import org.webgpu.impl.util.StructTools;
 import org.webgpu.panama.WGPURequestAdapterCallback;
 import org.webgpu.panama.WGPURequestAdapterCallbackInfo;
-import org.webgpu.panama.WGPURequestAdapterOptions;
 import org.webgpu.panama.webgpu_h;
 
 @NullMarked
