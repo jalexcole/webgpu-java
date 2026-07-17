@@ -34,8 +34,6 @@ public class WGPUProviderImpl implements WGPUProvider {
 
     @Override
     public Instance createInstance(InstanceDescriptor descriptor) {
-        // descriptor = descriptor == null ? new InstanceDescriptor(new InstanceFeatureName[0], new InstanceLimits(0))
-        //         : descriptor;
         return new InstanceImpl(descriptor);
     }
 

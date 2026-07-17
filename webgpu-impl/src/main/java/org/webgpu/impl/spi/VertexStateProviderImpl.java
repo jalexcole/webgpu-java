@@ -1,5 +1,6 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.webgpu.api.ConstantEntry;
@@ -11,7 +12,7 @@ import org.webgpu.api.spi.VertexStateProvider;
  * VertexStateProviderImpl
  */
 public class VertexStateProviderImpl implements VertexStateProvider {
-
+private final Arena arena = Arena.ofAuto();
     @Override
     public MemorySegment initializer() {
         // TODO Auto-generated method stub
