@@ -49,8 +49,11 @@ jobs:
           echo "$HOME/.sdkman/candidates/jextract/current/bin" >> "$GITHUB_PATH"
       - name: Verify jextract
         run: jextract --version
-      - name: Build with Maven
-        run: mvn -B package --file pom.xml
+      - name: Build with Maven skipping Tests
+        run: mvn -B package -DskipTests=true --file pom.xml
+
+      - name: Test with Maven
+        run: mvn -B test --file pom.xml
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     # - name: Update dependency graph
