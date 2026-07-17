@@ -1,31 +1,32 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.jspecify.annotations.NonNull;
 import org.webgpu.api.spi.RequestAdapterWebXROptionsProvider;
+import org.webgpu.panama.WGPURequestAdapterWebXROptions;
+import org.webgpu.panama.webgpu_h;
 
 /**
  * RequestAdapterWebXROptionsProviderImpl
  */
 public class RequestAdapterWebXROptionsProviderImpl implements RequestAdapterWebXROptionsProvider {
+    private final Arena arena = Arena.ofAuto();
 
     @Override
-    public @NonNull MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+    public MemorySegment initializer() {
+        return WGPURequestAdapterWebXROptions.allocate(arena);
     }
 
     @Override
-    public boolean xrCompatible(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'xrCompatible'");
+    public boolean xrCompatible(MemorySegment structPtr) {
+        return WGPURequestAdapterWebXROptions.xrCompatible(structPtr) != 0;
     }
 
     @Override
-    public void xrCompatible(@NonNull MemorySegment structPtr, boolean xrCompatible) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'xrCompatible'");
+    public void xrCompatible(MemorySegment structPtr, boolean xrCompatible) {
+        WGPURequestAdapterWebXROptions.xrCompatible(structPtr, xrCompatible ? webgpu_h.WGPU_TRUE() : 0);
     }
 
 }

@@ -7,7 +7,7 @@ import org.webgpu.api.PipelineLayout;
 import org.webgpu.api.exceptions.WGPUException;
 
 @NullMarked
-public class PipelineLayoutImpl implements PipelineLayout {
+public final class PipelineLayoutImpl implements PipelineLayout, WebGPUObjectImpl {
 
 	private final MemorySegment ptr;
 	
@@ -21,5 +21,8 @@ public class PipelineLayoutImpl implements PipelineLayout {
 		// TODO Auto-generated method stub
 		throw new WGPUException(new UnsupportedOperationException("Unimplemented method 'setLabel'"));
 	}
-    
+	@Override
+	public MemorySegment ptr() {
+		return ptr;
+	}
 }

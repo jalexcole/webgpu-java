@@ -1,32 +1,33 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.jspecify.annotations.NonNull;
 import org.webgpu.api.SamplerBindingType;
 import org.webgpu.api.spi.SamplerBindingLayoutProvider;
+import org.webgpu.panama.WGPUSamplerBindingLayout;
 
 /**
  * SamplerBindingLayoutProviderImpl
  */
 public class SamplerBindingLayoutProviderImpl implements SamplerBindingLayoutProvider {
 
+    private final Arena arena = Arena.ofAuto();
+
     @Override
-    public @NonNull MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+    public MemorySegment initializer() {
+        return WGPUSamplerBindingLayout.allocate(arena);
     }
 
     @Override
-    public @NonNull SamplerBindingType type(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'type'");
+    public SamplerBindingType type(MemorySegment structPtr) {
+        return SamplerBindingType.values()[WGPUSamplerBindingLayout.type(structPtr)];
     }
 
     @Override
-    public void type(@NonNull MemorySegment structPtr, @NonNull SamplerBindingType type) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'type'");
+    public void type(MemorySegment structPtr, SamplerBindingType type) {
+        WGPUSamplerBindingLayout.type(structPtr, type.value());
     }
 
 }

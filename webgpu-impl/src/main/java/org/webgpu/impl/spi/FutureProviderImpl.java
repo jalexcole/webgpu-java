@@ -1,42 +1,45 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.jspecify.annotations.NonNull;
 import org.webgpu.api.Future;
 import org.webgpu.api.spi.FutureWaitInfoProvider;
+import org.webgpu.panama.WGPUFuture;
 
 /**
  * FutureProviderImpl
  */
-public class FutureProviderImpl implements FutureWaitInfoProvider{
+public class FutureProviderImpl implements FutureWaitInfoProvider {
+
+    private final Arena arena = Arena.ofAuto();
 
     @Override
-    public @NonNull MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+    public MemorySegment initializer() {
+        return WGPUFuture.allocate(arena);
     }
 
     @Override
-    public @NonNull Future future(@NonNull MemorySegment structPtr) {
+    public Future future(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'future'");
     }
 
     @Override
-    public boolean completed(@NonNull MemorySegment structPtr) {
+    public boolean completed(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'completed'");
     }
 
     @Override
-    public void future(@NonNull MemorySegment structPtr, @NonNull Future future) {
+    public void future(MemorySegment structPtr, Future future) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'future'");
     }
 
     @Override
-    public void completed(@NonNull MemorySegment structPtr, boolean completed) {
+    public void completed(MemorySegment structPtr, boolean completed) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'completed'");
     }

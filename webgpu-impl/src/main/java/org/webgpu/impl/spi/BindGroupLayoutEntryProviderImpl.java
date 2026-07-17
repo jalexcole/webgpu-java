@@ -20,6 +20,7 @@ import org.webgpu.api.spi.BindGroupLayoutEntryProvider;
 import org.webgpu.impl.util.BitPacker;
 import org.webgpu.panama.WGPUBindGroupLayoutEntry;
 import org.webgpu.panama.WGPUSamplerBindingLayout;
+import org.webgpu.panama.WGPUBufferBindingLayout;
 import org.webgpu.panama.WGPUStorageTextureBindingLayout;
 import org.webgpu.panama.WGPUTextureBindingLayout;
 
@@ -96,43 +97,62 @@ public class BindGroupLayoutEntryProviderImpl implements BindGroupLayoutEntryPro
 
     @Override
     public void binding(MemorySegment structPtr, int binding) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'binding'");
+        WGPUBindGroupLayoutEntry.binding(structPtr, binding);
     }
 
     @Override
     public void visibility(MemorySegment structPtr, Set<ShaderStage> visibility) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'visibility'");
+        WGPUBindGroupLayoutEntry.visibility(structPtr, BitPacker.pack(visibility));
     }
 
     @Override
     public void bindingArraySize(MemorySegment structPtr, int bindingArraySize) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'bindingArraySize'");
+        WGPUBindGroupLayoutEntry.bindingArraySize(structPtr, bindingArraySize);
     }
 
     @Override
     public void buffer(MemorySegment structPtr, BufferBindingLayout buffer) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buffer'");
+        if (buffer == null) {
+            return;
+        }
+        var buf = WGPUBufferBindingLayout.allocate(arena);
+        WGPUBufferBindingLayout.type(buf, buffer.type().value());
+        WGPUBufferBindingLayout.hasDynamicOffset(buf, buffer.hasDynamicOffset() ? 1 : 0);
+        WGPUBufferBindingLayout.minBindingSize(buf, buffer.minBindingSize());
+        WGPUBindGroupLayoutEntry.buffer(structPtr, buf);
     }
 
     @Override
     public void sampler(MemorySegment structPtr, SamplerBindingLayout sampler) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'sampler'");
+        if (sampler == null) {
+            return;
+        }
+        var seg = WGPUSamplerBindingLayout.allocate(arena);
+        WGPUSamplerBindingLayout.type(seg, sampler.type().value());
+        WGPUBindGroupLayoutEntry.sampler(structPtr, seg);
     }
 
     @Override
     public void texture(MemorySegment structPtr, TextureBindingLayout texture) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'texture'");
+        if (texture == null) {
+            return;
+        }
+        var seg = WGPUTextureBindingLayout.allocate(arena);
+        WGPUTextureBindingLayout.sampleType(seg, texture.sampleType().value());
+        WGPUTextureBindingLayout.viewDimension(seg, texture.viewDimension().value());
+        WGPUTextureBindingLayout.multisampled(seg, texture.multisampled() ? 1 : 0);
+        WGPUBindGroupLayoutEntry.texture(structPtr, seg);
     }
 
     @Override
     public void storageTexture(MemorySegment structPtr, StorageTextureBindingLayout storageTexture) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'storageTexture'");
+        if (storageTexture == null) {
+            return;
+        }
+        var seg = WGPUStorageTextureBindingLayout.allocate(arena);
+        WGPUStorageTextureBindingLayout.access(seg, storageTexture.access().value());
+        WGPUStorageTextureBindingLayout.format(seg, storageTexture.format().value());
+        WGPUStorageTextureBindingLayout.viewDimension(seg, storageTexture.viewDimension().value());
+        WGPUBindGroupLayoutEntry.storageTexture(structPtr, seg);
     }
 }

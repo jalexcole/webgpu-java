@@ -1,54 +1,56 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.jspecify.annotations.NonNull;
 import org.webgpu.api.QuerySet;
 import org.webgpu.api.spi.PassTimestampWritesProvider;
+import org.webgpu.panama.WGPUPassTimestampWrites;
 
 /**
  * PassTimestampWritesProviderImpl
  */
 public class PassTimestampWritesProviderImpl implements PassTimestampWritesProvider {
+    private final Arena arena = Arena.ofAuto();
 
     @Override
-    public @NonNull MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+    public MemorySegment initializer() {
+        return WGPUPassTimestampWrites.allocate(arena);
     }
 
     @Override
-    public @NonNull QuerySet querySet(@NonNull MemorySegment structPtr) {
+    public QuerySet querySet(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'querySet'");
     }
 
     @Override
-    public int beginningOfPassWriteIndex(@NonNull MemorySegment structPtr) {
+    public int beginningOfPassWriteIndex(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'beginningOfPassWriteIndex'");
     }
 
     @Override
-    public int endOfPassWriteIndex(@NonNull MemorySegment structPtr) {
+    public int endOfPassWriteIndex(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'endOfPassWriteIndex'");
     }
 
     @Override
-    public void querySet(@NonNull MemorySegment structPtr, @NonNull QuerySet querySet) {
+    public void querySet(MemorySegment structPtr, QuerySet querySet) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'querySet'");
     }
 
     @Override
-    public void beginningOfPassWriteIndex(@NonNull MemorySegment structPtr, int beginningOfPassWriteIndex) {
+    public void beginningOfPassWriteIndex(MemorySegment structPtr, int beginningOfPassWriteIndex) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'beginningOfPassWriteIndex'");
     }
 
     @Override
-    public void endOfPassWriteIndex(@NonNull MemorySegment structPtr, int endOfPassWriteIndex) {
+    public void endOfPassWriteIndex(MemorySegment structPtr, int endOfPassWriteIndex) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'endOfPassWriteIndex'");
     }

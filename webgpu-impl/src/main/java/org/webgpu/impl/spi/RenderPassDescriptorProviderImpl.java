@@ -1,5 +1,6 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.jspecify.annotations.NonNull;
@@ -8,76 +9,77 @@ import org.webgpu.api.QuerySet;
 import org.webgpu.api.RenderPassColorAttachment;
 import org.webgpu.api.RenderPassDepthStencilAttachment;
 import org.webgpu.api.spi.RenderPassDescriptorProvider;
+import org.webgpu.panama.WGPURenderPassDescriptor;
 
 /**
  * RenderPassDescriptorProviderImpl
  */
 public class RenderPassDescriptorProviderImpl implements RenderPassDescriptorProvider {
+    private final Arena arena = Arena.ofAuto();
 
     @Override
-    public @NonNull MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+    public MemorySegment initializer() {
+        return WGPURenderPassDescriptor.allocate(arena);
     }
 
     @Override
-    public @NonNull String label(@NonNull MemorySegment structPtr) {
+    public String label(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'label'");
     }
 
     @Override
-    public RenderPassColorAttachment @NonNull [] colorAttachments(@NonNull MemorySegment structPtr) {
+    public RenderPassColorAttachment[] colorAttachments(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'colorAttachments'");
     }
 
     @Override
-    public @NonNull RenderPassDepthStencilAttachment depthStencilAttachment(@NonNull MemorySegment structPtr) {
+    public RenderPassDepthStencilAttachment depthStencilAttachment(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'depthStencilAttachment'");
     }
 
     @Override
-    public @NonNull QuerySet occlusionQuerySet(@NonNull MemorySegment structPtr) {
+    public QuerySet occlusionQuerySet(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'occlusionQuerySet'");
     }
 
     @Override
-    public @NonNull PassTimestampWrites timestampWrites(@NonNull MemorySegment structPtr) {
+    public PassTimestampWrites timestampWrites(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'timestampWrites'");
     }
 
     @Override
-    public void label(@NonNull MemorySegment structPtr, @NonNull String label) {
+    public void label(MemorySegment structPtr, String label) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'label'");
     }
 
     @Override
-    public void colorAttachments(@NonNull MemorySegment structPtr,
-            RenderPassColorAttachment @NonNull [] colorAttachments) {
+    public void colorAttachments(MemorySegment structPtr,
+            RenderPassColorAttachment[] colorAttachments) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'colorAttachments'");
     }
 
     @Override
-    public void depthStencilAttachment(@NonNull MemorySegment structPtr,
-            @NonNull RenderPassDepthStencilAttachment depthStencilAttachment) {
+    public void depthStencilAttachment(MemorySegment structPtr,
+            RenderPassDepthStencilAttachment depthStencilAttachment) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'depthStencilAttachment'");
     }
 
     @Override
-    public void occlusionQuerySet(@NonNull MemorySegment structPtr, @NonNull QuerySet occlusionQuerySet) {
+    public void occlusionQuerySet(MemorySegment structPtr, QuerySet occlusionQuerySet) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'occlusionQuerySet'");
     }
 
     @Override
-    public void timestampWrites(@NonNull MemorySegment structPtr, @NonNull PassTimestampWrites timestampWrites) {
+    public void timestampWrites(MemorySegment structPtr, PassTimestampWrites timestampWrites) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'timestampWrites'");
     }

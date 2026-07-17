@@ -1,56 +1,33 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
-import org.jspecify.annotations.NonNull;
-import org.webgpu.api.QueryType;
-import org.webgpu.api.spi.QuerySetDescriptorProvider;
 
-/**
- * QueueDescriptorProviderImpl
- */
-public class QueueDescriptorProviderImpl implements QuerySetDescriptorProvider {
+import org.jspecify.annotations.NullMarked;
+
+import org.webgpu.api.spi.QueueDescriptorProvider;
+import org.webgpu.panama.WGPUQueueDescriptor;
+
+@NullMarked
+public class QueueDescriptorProviderImpl implements QueueDescriptorProvider {
+    private final Arena arena = Arena.ofAuto();
 
     @Override
-    public @NonNull MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+    public MemorySegment initializer() {
+        return WGPUQueueDescriptor.allocate(arena);
     }
 
     @Override
-    public @NonNull String label(@NonNull MemorySegment structPtr) {
+    public String label(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'label'");
     }
 
     @Override
-    public @NonNull QueryType type(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'type'");
-    }
-
-    @Override
-    public int count(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'count'");
-    }
-
-    @Override
-    public void label(@NonNull MemorySegment structPtr, @NonNull String label) {
+    public void label(MemorySegment structPtr, String label) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'label'");
-    }
-
-    @Override
-    public void type(@NonNull MemorySegment structPtr, @NonNull QueryType type) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'type'");
-    }
-
-    @Override
-    public void count(@NonNull MemorySegment structPtr, int count) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'count'");
     }
 
 }

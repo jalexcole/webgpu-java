@@ -5,39 +5,43 @@ import java.lang.foreign.MemorySegment;
 import java.util.EnumSet;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
 import org.webgpu.api.BufferUsage;
 import org.webgpu.api.spi.BufferDescriptorProvider;
+import org.webgpu.impl.util.BitPacker;
 import org.webgpu.impl.util.StringViewMapper;
 import org.webgpu.panama.WGPUBufferDescriptor;
 import org.webgpu.panama.webgpu_h;
-
+@NullMarked
 public class BufferDescriptorProviderImpl implements BufferDescriptorProvider {
 
-    private final Arena arena = Arena.ofAuto();
+	private final Arena arena = Arena.ofAuto();
+
 	@Override
 	public MemorySegment initializer() {
-        return WGPUBufferDescriptor.allocate(arena);
+		return WGPUBufferDescriptor.allocate(arena);
 	}
 
 	@Override
 	public String label(MemorySegment structPtr) {
-        var stringView = WGPUBufferDescriptor.label(structPtr);
-        return StringViewMapper.map(stringView);
+		var stringView = WGPUBufferDescriptor.label(structPtr);
+		return StringViewMapper.map(stringView);
 	}
 
 	@Override
-	public EnumSet<BufferUsage> usage(MemorySegment structPtr) {
-		throw new UnsupportedOperationException("Unimplemented method 'usage'");
+	public Set<BufferUsage> usage(MemorySegment structPtr) {
+		long packed = WGPUBufferDescriptor.usage(structPtr);
+		return BitPacker.unpack(packed, BufferUsage.class);
 	}
 
 	@Override
 	public long size(MemorySegment structPtr) {
-        return WGPUBufferDescriptor.size(structPtr);
+		return WGPUBufferDescriptor.size(structPtr);
 	}
 
 	@Override
 	public boolean mappedAtCreation(MemorySegment structPtr) {
-        return WGPUBufferDescriptor.mappedAtCreation(structPtr) == webgpu_h.WGPU_TRUE();
+		return WGPUBufferDescriptor.mappedAtCreation(structPtr) == webgpu_h.WGPU_TRUE();
 	}
 
 	@Override
@@ -47,7 +51,8 @@ public class BufferDescriptorProviderImpl implements BufferDescriptorProvider {
 
 	@Override
 	public void usage(MemorySegment structPtr, Set<BufferUsage> usage) {
-		throw new UnsupportedOperationException("Unimplemented method 'usage'");
+		final long packed = BitPacker.pack(usage);
+		WGPUBufferDescriptor.usage(structPtr, packed);
 	}
 
 	@Override

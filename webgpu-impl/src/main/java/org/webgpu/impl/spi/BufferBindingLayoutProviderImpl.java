@@ -33,16 +33,16 @@ public class BufferBindingLayoutProviderImpl implements BufferBindingLayoutProvi
 
     @Override
     public void type(MemorySegment structPtr, BufferBindingType type) {
-        throw new UnsupportedOperationException("Unimplemented method 'type'");
+        WGPUBufferBindingLayout.type(structPtr, type.value());
     }
 
     @Override
     public void hasDynamicOffset(MemorySegment structPtr, boolean hasDynamicOffset) {
-        throw new UnsupportedOperationException("Unimplemented method 'hasDynamicOffset'");
+        WGPUBufferBindingLayout.hasDynamicOffset(structPtr, hasDynamicOffset ? 1 : 0);
     }
 
     @Override
     public void minBindingSize(MemorySegment structPtr, long minBindingSize) {
-        throw new UnsupportedOperationException("Unimplemented method 'minBindingSize'");
+        WGPUBufferBindingLayout.minBindingSize(structPtr, minBindingSize);
     }
 }

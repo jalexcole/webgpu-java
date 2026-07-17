@@ -1,5 +1,6 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.util.Set;
 
@@ -10,112 +11,103 @@ import org.webgpu.api.PresentMode;
 import org.webgpu.api.TextureFormat;
 import org.webgpu.api.TextureUsage;
 import org.webgpu.api.spi.SurfaceConfigurationProvider;
+import org.webgpu.impl.DeviceImpl;
+import org.webgpu.panama.WGPUSurfaceConfiguration;
 
 /**
  * SurfaceConfigurationProviderImpl
  */
 public class SurfaceConfigurationProviderImpl implements SurfaceConfigurationProvider {
+    private final Arena arena = Arena.ofAuto();
 
     @Override
-    public @NonNull MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+    public MemorySegment initializer() {
+        return WGPUSurfaceConfiguration.allocate(arena);
     }
 
     @Override
-    public @NonNull Device device(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'device'");
+    public Device device(MemorySegment structPtr) {
+        return new DeviceImpl(WGPUSurfaceConfiguration.device(structPtr));
     }
 
     @Override
-    public @NonNull TextureFormat format(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'format'");
+    public TextureFormat format(MemorySegment structPtr) {
+        return TextureFormat.values()[WGPUSurfaceConfiguration.format(structPtr)];
     }
 
     @Override
-    public @NonNull Set<TextureUsage> usage(@NonNull MemorySegment structPtr) {
+    public Set<TextureUsage> usage(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'usage'");
     }
 
     @Override
-    public int width(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'width'");
+    public int width(MemorySegment structPtr) {
+        return WGPUSurfaceConfiguration.width(structPtr);
     }
 
     @Override
-    public int height(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'height'");
+    public int height(MemorySegment structPtr) {
+        return WGPUSurfaceConfiguration.height(structPtr);
     }
 
     @Override
-    public TextureFormat @NonNull [] viewFormats(@NonNull MemorySegment structPtr) {
+    public TextureFormat[] viewFormats(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'viewFormats'");
     }
 
     @Override
-    public @NonNull CompositeAlphaMode alphaMode(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'alphaMode'");
+    public CompositeAlphaMode alphaMode(MemorySegment structPtr) {
+        return CompositeAlphaMode.values()[WGPUSurfaceConfiguration.alphaMode(structPtr)];
     }
 
     @Override
-    public @NonNull PresentMode presentMode(@NonNull MemorySegment structPtr) {
+    public PresentMode presentMode(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'presentMode'");
     }
 
     @Override
-    public void device(@NonNull MemorySegment structPtr, @NonNull Device device) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'device'");
+    public void device(MemorySegment structPtr, Device device) {
+        WGPUSurfaceConfiguration.device(structPtr, ((DeviceImpl) device).ptr());
     }
 
     @Override
-    public void format(@NonNull MemorySegment structPtr, @NonNull TextureFormat format) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'format'");
+    public void format(MemorySegment structPtr, TextureFormat format) {
+        WGPUSurfaceConfiguration.format(structPtr, format.value());
     }
 
     @Override
-    public void usage(@NonNull MemorySegment structPtr, @NonNull Set<TextureUsage> usage) {
+    public void usage(MemorySegment structPtr, Set<TextureUsage> usage) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'usage'");
     }
 
     @Override
-    public void width(@NonNull MemorySegment structPtr, int width) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'width'");
+    public void width(MemorySegment structPtr, int width) {
+        WGPUSurfaceConfiguration.width(structPtr, width);
     }
 
     @Override
-    public void height(@NonNull MemorySegment structPtr, int height) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'height'");
+    public void height(MemorySegment structPtr, int height) {
+        WGPUSurfaceConfiguration.height(structPtr, height);
     }
 
     @Override
-    public void viewFormats(@NonNull MemorySegment structPtr, TextureFormat @NonNull [] viewFormats) {
+    public void viewFormats(MemorySegment structPtr, TextureFormat[] viewFormats) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'viewFormats'");
     }
 
     @Override
-    public void alphaMode(@NonNull MemorySegment structPtr, @NonNull CompositeAlphaMode alphaMode) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'alphaMode'");
+    public void alphaMode(MemorySegment structPtr, CompositeAlphaMode alphaMode) {
+        WGPUSurfaceConfiguration.alphaMode(structPtr, alphaMode.value());
     }
 
     @Override
-    public void presentMode(@NonNull MemorySegment structPtr, @NonNull PresentMode presentMode) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'presentMode'");
+    public void presentMode(MemorySegment structPtr, PresentMode presentMode) {
+        WGPUSurfaceConfiguration.presentMode(structPtr, presentMode.value());
     }
 
 }

@@ -10,14 +10,14 @@ import org.webgpu.impl.util.StringViewMapper;
 import org.webgpu.panama.WGPUCommandBufferDescriptor;
 
 @NullMarked
-public class CommandBufferDescriptorProviderImpl implements CommandBufferDescriptorProvider{
+public class CommandBufferDescriptorProviderImpl implements CommandBufferDescriptorProvider {
 
-    @SuppressWarnings("null")
+	@SuppressWarnings("null")
 	private final Arena arena = Arena.ofAuto();
-	
+
 	@Override
 	public MemorySegment initializer() {
-        return WGPUCommandBufferDescriptor.allocate(arena);
+		return WGPUCommandBufferDescriptor.allocate(arena);
 	}
 
 	@Override
@@ -25,13 +25,12 @@ public class CommandBufferDescriptorProviderImpl implements CommandBufferDescrip
 		Objects.requireNonNull(structPtr);
 		var stringView = WGPUCommandBufferDescriptor.label(structPtr);
 		Objects.requireNonNull(stringView);
-        return StringViewMapper.map(stringView);
+		return StringViewMapper.map(stringView);
 	}
 
 	@Override
 	public void label(MemorySegment structPtr, String label) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'label'");
+		WGPUCommandBufferDescriptor.label(structPtr, org.webgpu.impl.util.StringViewMapper.map(label, arena));
 	}
-    
+
 }

@@ -1,410 +1,348 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.jspecify.annotations.NonNull;
 import org.webgpu.api.spi.LimitsProvider;
+import org.webgpu.panama.WGPULimits;
 
 /**
  * LimitsProviderImpl
  */
 public class LimitsProviderImpl implements LimitsProvider {
+    private final Arena arena = Arena.ofAuto();
 
     @Override
-    public @NonNull MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+    public MemorySegment initializer() {
+        return WGPULimits.allocate(arena);
     }
 
     @Override
-    public int maxTextureDimension1D(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxTextureDimension1D'");
+    public int maxTextureDimension1D(MemorySegment structPtr) {
+        return WGPULimits.maxTextureDimension1D(structPtr);
     }
 
     @Override
-    public int maxTextureDimension2D(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxTextureDimension2D'");
+    public int maxTextureDimension2D(MemorySegment structPtr) {
+        return WGPULimits.maxTextureDimension2D(structPtr);
     }
 
     @Override
-    public int maxTextureDimension3D(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxTextureDimension3D'");
+    public int maxTextureDimension3D(MemorySegment structPtr) {
+        return WGPULimits.maxTextureDimension3D(structPtr);
     }
 
     @Override
-    public int maxTextureArrayLayers(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxTextureArrayLayers'");
+    public int maxTextureArrayLayers(MemorySegment structPtr) {
+        return WGPULimits.maxTextureArrayLayers(structPtr);
     }
 
     @Override
-    public int maxBindGroups(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxBindGroups'");
+    public int maxBindGroups(MemorySegment structPtr) {
+        return WGPULimits.maxBindGroups(structPtr);
     }
 
     @Override
-    public int maxBindGroupsPlusVertexBuffers(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxBindGroupsPlusVertexBuffers'");
+    public int maxBindGroupsPlusVertexBuffers(MemorySegment structPtr) {
+        return WGPULimits.maxBindGroupsPlusVertexBuffers(structPtr);
     }
 
     @Override
-    public int maxBindingsPerBindGroup(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxBindingsPerBindGroup'");
+    public int maxBindingsPerBindGroup(MemorySegment structPtr) {
+        return WGPULimits.maxBindingsPerBindGroup(structPtr);
     }
 
     @Override
-    public int maxDynamicUniformBuffersPerPipelineLayout(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxDynamicUniformBuffersPerPipelineLayout'");
+    public int maxDynamicUniformBuffersPerPipelineLayout(MemorySegment structPtr) {
+        return WGPULimits.maxDynamicUniformBuffersPerPipelineLayout(structPtr);
     }
 
     @Override
-    public int maxDynamicStorageBuffersPerPipelineLayout(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxDynamicStorageBuffersPerPipelineLayout'");
+    public int maxDynamicStorageBuffersPerPipelineLayout(MemorySegment structPtr) {
+        return WGPULimits.maxDynamicStorageBuffersPerPipelineLayout(structPtr);
     }
 
     @Override
-    public int maxSampledTexturesPerShaderStage(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxSampledTexturesPerShaderStage'");
+    public int maxSampledTexturesPerShaderStage(MemorySegment structPtr) {
+        return WGPULimits.maxSampledTexturesPerShaderStage(structPtr);
     }
 
     @Override
-    public int maxSamplersPerShaderStage(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxSamplersPerShaderStage'");
+    public int maxSamplersPerShaderStage(MemorySegment structPtr) {
+        return WGPULimits.maxSamplersPerShaderStage(structPtr);
     }
 
     @Override
-    public int maxStorageBuffersPerShaderStage(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxStorageBuffersPerShaderStage'");
+    public int maxStorageBuffersPerShaderStage(MemorySegment structPtr) {
+        return WGPULimits.maxStorageBuffersPerShaderStage(structPtr);
     }
 
     @Override
-    public int maxStorageTexturesPerShaderStage(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxStorageTexturesPerShaderStage'");
+    public int maxStorageTexturesPerShaderStage(MemorySegment structPtr) {
+        return WGPULimits.maxStorageTexturesPerShaderStage(structPtr);
     }
 
     @Override
-    public int maxUniformBuffersPerShaderStage(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxUniformBuffersPerShaderStage'");
+    public int maxUniformBuffersPerShaderStage(MemorySegment structPtr) {
+        return WGPULimits.maxUniformBuffersPerShaderStage(structPtr);
     }
 
     @Override
-    public long maxUniformBufferBindingSize(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxUniformBufferBindingSize'");
+    public long maxUniformBufferBindingSize(MemorySegment structPtr) {
+        return WGPULimits.maxUniformBufferBindingSize(structPtr);
     }
 
     @Override
-    public long maxStorageBufferBindingSize(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxStorageBufferBindingSize'");
+    public long maxStorageBufferBindingSize(MemorySegment structPtr) {
+        return WGPULimits.maxStorageBufferBindingSize(structPtr);
     }
 
     @Override
-    public int minUniformBufferOffsetAlignment(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'minUniformBufferOffsetAlignment'");
+    public int minUniformBufferOffsetAlignment(MemorySegment structPtr) {
+        return WGPULimits.minUniformBufferOffsetAlignment(structPtr);
     }
 
     @Override
-    public int minStorageBufferOffsetAlignment(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'minStorageBufferOffsetAlignment'");
+    public int minStorageBufferOffsetAlignment(MemorySegment structPtr) {
+        return WGPULimits.minStorageBufferOffsetAlignment(structPtr);
     }
 
     @Override
-    public int maxVertexBuffers(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxVertexBuffers'");
+    public int maxVertexBuffers(MemorySegment structPtr) {
+        return WGPULimits.maxVertexBuffers(structPtr);
     }
 
     @Override
-    public long maxBufferSize(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxBufferSize'");
+    public long maxBufferSize(MemorySegment structPtr) {
+        return WGPULimits.maxBufferSize(structPtr);
     }
 
     @Override
-    public int maxVertexAttributes(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxVertexAttributes'");
+    public int maxVertexAttributes(MemorySegment structPtr) {
+        return WGPULimits.maxVertexAttributes(structPtr);
     }
 
     @Override
-    public int maxVertexBufferArrayStride(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxVertexBufferArrayStride'");
+    public int maxVertexBufferArrayStride(MemorySegment structPtr) {
+        return WGPULimits.maxVertexBufferArrayStride(structPtr);
     }
 
     @Override
-    public int maxInterStageShaderVariables(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxInterStageShaderVariables'");
+    public int maxInterStageShaderVariables(MemorySegment structPtr) {
+        return WGPULimits.maxInterStageShaderVariables(structPtr);
     }
 
     @Override
-    public int maxColorAttachments(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxColorAttachments'");
+    public int maxColorAttachments(MemorySegment structPtr) {
+        return WGPULimits.maxColorAttachments(structPtr);
     }
 
     @Override
-    public int maxColorAttachmentBytesPerSample(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxColorAttachmentBytesPerSample'");
+    public int maxColorAttachmentBytesPerSample(MemorySegment structPtr) {
+        return WGPULimits.maxColorAttachmentBytesPerSample(structPtr);
     }
 
     @Override
-    public int maxComputeWorkgroupStorageSize(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxComputeWorkgroupStorageSize'");
+    public int maxComputeWorkgroupStorageSize(MemorySegment structPtr) {
+        return WGPULimits.maxComputeWorkgroupStorageSize(structPtr);
     }
 
     @Override
-    public int maxComputeInvocationsPerWorkgroup(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxComputeInvocationsPerWorkgroup'");
+    public int maxComputeInvocationsPerWorkgroup(MemorySegment structPtr) {
+        return WGPULimits.maxComputeInvocationsPerWorkgroup(structPtr);
     }
 
     @Override
-    public int maxComputeWorkgroupSizeX(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxComputeWorkgroupSizeX'");
+    public int maxComputeWorkgroupSizeX(MemorySegment structPtr) {
+        return WGPULimits.maxComputeWorkgroupSizeX(structPtr);
     }
 
     @Override
-    public int maxComputeWorkgroupSizeY(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxComputeWorkgroupSizeY'");
+    public int maxComputeWorkgroupSizeY(MemorySegment structPtr) {
+        return WGPULimits.maxComputeWorkgroupSizeY(structPtr);
     }
 
     @Override
-    public int maxComputeWorkgroupSizeZ(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxComputeWorkgroupSizeZ'");
+    public int maxComputeWorkgroupSizeZ(MemorySegment structPtr) {
+        return WGPULimits.maxComputeWorkgroupSizeZ(structPtr);
     }
 
     @Override
-    public int maxComputeWorkgroupsPerDimension(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxComputeWorkgroupsPerDimension'");
+    public int maxComputeWorkgroupsPerDimension(MemorySegment structPtr) {
+        return WGPULimits.maxComputeWorkgroupsPerDimension(structPtr);
     }
 
     @Override
-    public int maxImmediateSize(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxImmediateSize'");
+    public int maxImmediateSize(MemorySegment structPtr) {
+        return WGPULimits.maxImmediateSize(structPtr);
     }
 
     @Override
-    public void maxTextureDimension1D(@NonNull MemorySegment structPtr, int maxTextureDimension1D) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxTextureDimension1D'");
+    public void maxTextureDimension1D(MemorySegment structPtr, int maxTextureDimension1D) {
+        WGPULimits.maxTextureDimension1D(structPtr, maxTextureDimension1D);
     }
 
     @Override
-    public void maxTextureDimension2D(@NonNull MemorySegment structPtr, int maxTextureDimension2D) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxTextureDimension2D'");
+    public void maxTextureDimension2D(MemorySegment structPtr, int maxTextureDimension2D) {
+        WGPULimits.maxTextureDimension2D(structPtr, maxTextureDimension2D);
     }
 
     @Override
-    public void maxTextureDimension3D(@NonNull MemorySegment structPtr, int maxTextureDimension3D) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxTextureDimension3D'");
+    public void maxTextureDimension3D(MemorySegment structPtr, int maxTextureDimension3D) {
+        WGPULimits.maxTextureDimension3D(structPtr, maxTextureDimension3D);
     }
 
     @Override
-    public void maxTextureArrayLayers(@NonNull MemorySegment structPtr, int maxTextureArrayLayers) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxTextureArrayLayers'");
+    public void maxTextureArrayLayers(MemorySegment structPtr, int maxTextureArrayLayers) {
+        WGPULimits.maxTextureArrayLayers(structPtr, maxTextureArrayLayers);
     }
 
     @Override
-    public void maxBindGroups(@NonNull MemorySegment structPtr, int maxBindGroups) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxBindGroups'");
+    public void maxBindGroups(MemorySegment structPtr, int maxBindGroups) {
+        WGPULimits.maxBindGroups(structPtr, maxBindGroups);
     }
 
     @Override
-    public void maxBindGroupsPlusVertexBuffers(@NonNull MemorySegment structPtr, int maxBindGroupsPlusVertexBuffers) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxBindGroupsPlusVertexBuffers'");
+    public void maxBindGroupsPlusVertexBuffers(MemorySegment structPtr, int maxBindGroupsPlusVertexBuffers) {
+        WGPULimits.maxBindGroupsPlusVertexBuffers(structPtr, maxBindGroupsPlusVertexBuffers);
     }
 
     @Override
-    public void maxBindingsPerBindGroup(@NonNull MemorySegment structPtr, int maxBindingsPerBindGroup) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxBindingsPerBindGroup'");
+    public void maxBindingsPerBindGroup(MemorySegment structPtr, int maxBindingsPerBindGroup) {
+        WGPULimits.maxBindingsPerBindGroup(structPtr, maxBindingsPerBindGroup);
     }
 
     @Override
-    public void maxDynamicUniformBuffersPerPipelineLayout(@NonNull MemorySegment structPtr,
+    public void maxDynamicUniformBuffersPerPipelineLayout(MemorySegment structPtr,
             int maxDynamicUniformBuffersPerPipelineLayout) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxDynamicUniformBuffersPerPipelineLayout'");
+        WGPULimits.maxDynamicUniformBuffersPerPipelineLayout(structPtr, maxDynamicUniformBuffersPerPipelineLayout);
     }
 
     @Override
-    public void maxDynamicStorageBuffersPerPipelineLayout(@NonNull MemorySegment structPtr,
+    public void maxDynamicStorageBuffersPerPipelineLayout(MemorySegment structPtr,
             int maxDynamicStorageBuffersPerPipelineLayout) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxDynamicStorageBuffersPerPipelineLayout'");
+        WGPULimits.maxDynamicStorageBuffersPerPipelineLayout(structPtr, maxDynamicStorageBuffersPerPipelineLayout);
     }
 
     @Override
-    public void maxSampledTexturesPerShaderStage(@NonNull MemorySegment structPtr,
+    public void maxSampledTexturesPerShaderStage(MemorySegment structPtr,
             int maxSampledTexturesPerShaderStage) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxSampledTexturesPerShaderStage'");
+        WGPULimits.maxSampledTexturesPerShaderStage(structPtr, maxSampledTexturesPerShaderStage);
     }
 
     @Override
-    public void maxSamplersPerShaderStage(@NonNull MemorySegment structPtr, int maxSamplersPerShaderStage) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxSamplersPerShaderStage'");
+    public void maxSamplersPerShaderStage(MemorySegment structPtr, int maxSamplersPerShaderStage) {
+        WGPULimits.maxSamplersPerShaderStage(structPtr, maxSamplersPerShaderStage);
     }
 
     @Override
-    public void maxStorageBuffersPerShaderStage(@NonNull MemorySegment structPtr, int maxStorageBuffersPerShaderStage) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxStorageBuffersPerShaderStage'");
+    public void maxStorageBuffersPerShaderStage(MemorySegment structPtr, int maxStorageBuffersPerShaderStage) {
+        WGPULimits.maxStorageBuffersPerShaderStage(structPtr, maxStorageBuffersPerShaderStage);
     }
 
     @Override
-    public void maxStorageTexturesPerShaderStage(@NonNull MemorySegment structPtr,
+    public void maxStorageTexturesPerShaderStage(MemorySegment structPtr,
             int maxStorageTexturesPerShaderStage) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxStorageTexturesPerShaderStage'");
+        WGPULimits.maxStorageTexturesPerShaderStage(structPtr, maxStorageTexturesPerShaderStage);
     }
 
     @Override
-    public void maxUniformBuffersPerShaderStage(@NonNull MemorySegment structPtr, int maxUniformBuffersPerShaderStage) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxUniformBuffersPerShaderStage'");
+    public void maxUniformBuffersPerShaderStage(MemorySegment structPtr, int maxUniformBuffersPerShaderStage) {
+        WGPULimits.maxUniformBuffersPerShaderStage(structPtr, maxUniformBuffersPerShaderStage);
     }
 
     @Override
-    public void maxUniformBufferBindingSize(@NonNull MemorySegment structPtr, long maxUniformBufferBindingSize) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxUniformBufferBindingSize'");
+    public void maxUniformBufferBindingSize(MemorySegment structPtr, long maxUniformBufferBindingSize) {
+        WGPULimits.maxUniformBufferBindingSize(structPtr, maxUniformBufferBindingSize);
     }
 
     @Override
-    public void maxStorageBufferBindingSize(@NonNull MemorySegment structPtr, long maxStorageBufferBindingSize) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxStorageBufferBindingSize'");
+    public void maxStorageBufferBindingSize(MemorySegment structPtr, long maxStorageBufferBindingSize) {
+        WGPULimits.maxStorageBufferBindingSize(structPtr, maxStorageBufferBindingSize);
     }
 
     @Override
-    public void minUniformBufferOffsetAlignment(@NonNull MemorySegment structPtr, int minUniformBufferOffsetAlignment) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'minUniformBufferOffsetAlignment'");
+    public void minUniformBufferOffsetAlignment(MemorySegment structPtr, int minUniformBufferOffsetAlignment) {
+        WGPULimits.minUniformBufferOffsetAlignment(structPtr, minUniformBufferOffsetAlignment);
     }
 
     @Override
-    public void minStorageBufferOffsetAlignment(@NonNull MemorySegment structPtr, int minStorageBufferOffsetAlignment) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'minStorageBufferOffsetAlignment'");
+    public void minStorageBufferOffsetAlignment(MemorySegment structPtr, int minStorageBufferOffsetAlignment) {
+        WGPULimits.minStorageBufferOffsetAlignment(structPtr, minStorageBufferOffsetAlignment);
     }
 
     @Override
-    public void maxVertexBuffers(@NonNull MemorySegment structPtr, int maxVertexBuffers) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxVertexBuffers'");
+    public void maxVertexBuffers(MemorySegment structPtr, int maxVertexBuffers) {
+        WGPULimits.maxVertexBuffers(structPtr, maxVertexBuffers);
     }
 
     @Override
-    public void maxBufferSize(@NonNull MemorySegment structPtr, long maxBufferSize) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxBufferSize'");
+    public void maxBufferSize(MemorySegment structPtr, long maxBufferSize) {
+        WGPULimits.maxBufferSize(structPtr, maxBufferSize);
     }
 
     @Override
-    public void maxVertexAttributes(@NonNull MemorySegment structPtr, int maxVertexAttributes) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxVertexAttributes'");
+    public void maxVertexAttributes(MemorySegment structPtr, int maxVertexAttributes) {
+        WGPULimits.maxVertexAttributes(structPtr, maxVertexAttributes);
     }
 
     @Override
-    public void maxVertexBufferArrayStride(@NonNull MemorySegment structPtr, int maxVertexBufferArrayStride) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxVertexBufferArrayStride'");
+    public void maxVertexBufferArrayStride(MemorySegment structPtr, int maxVertexBufferArrayStride) {
+        WGPULimits.maxVertexBufferArrayStride(structPtr, maxVertexBufferArrayStride);
     }
 
     @Override
-    public void maxInterStageShaderVariables(@NonNull MemorySegment structPtr, int maxInterStageShaderVariables) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxInterStageShaderVariables'");
+    public void maxInterStageShaderVariables(MemorySegment structPtr, int maxInterStageShaderVariables) {
+        WGPULimits.maxInterStageShaderVariables(structPtr, maxInterStageShaderVariables);
     }
 
     @Override
-    public void maxColorAttachments(@NonNull MemorySegment structPtr, int maxColorAttachments) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxColorAttachments'");
+    public void maxColorAttachments(MemorySegment structPtr, int maxColorAttachments) {
+        WGPULimits.maxColorAttachments(structPtr, maxColorAttachments);
     }
 
     @Override
-    public void maxColorAttachmentBytesPerSample(@NonNull MemorySegment structPtr,
+    public void maxColorAttachmentBytesPerSample(MemorySegment structPtr,
             int maxColorAttachmentBytesPerSample) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxColorAttachmentBytesPerSample'");
+        WGPULimits.maxColorAttachmentBytesPerSample(structPtr, maxColorAttachmentBytesPerSample);
     }
 
     @Override
-    public void maxComputeWorkgroupStorageSize(@NonNull MemorySegment structPtr, int maxComputeWorkgroupStorageSize) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxComputeWorkgroupStorageSize'");
+    public void maxComputeWorkgroupStorageSize(MemorySegment structPtr, int maxComputeWorkgroupStorageSize) {
+        WGPULimits.maxComputeWorkgroupStorageSize(structPtr, maxComputeWorkgroupStorageSize);
     }
 
     @Override
-    public void maxComputeInvocationsPerWorkgroup(@NonNull MemorySegment structPtr,
+    public void maxComputeInvocationsPerWorkgroup(MemorySegment structPtr,
             int maxComputeInvocationsPerWorkgroup) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxComputeInvocationsPerWorkgroup'");
+        WGPULimits.maxComputeInvocationsPerWorkgroup(structPtr, maxComputeInvocationsPerWorkgroup);
     }
 
     @Override
-    public void maxComputeWorkgroupSizeX(@NonNull MemorySegment structPtr, int maxComputeWorkgroupSizeX) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxComputeWorkgroupSizeX'");
+    public void maxComputeWorkgroupSizeX(MemorySegment structPtr, int maxComputeWorkgroupSizeX) {
+        WGPULimits.maxComputeWorkgroupSizeX(structPtr, maxComputeWorkgroupSizeX);
     }
 
     @Override
-    public void maxComputeWorkgroupSizeY(@NonNull MemorySegment structPtr, int maxComputeWorkgroupSizeY) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxComputeWorkgroupSizeY'");
+    public void maxComputeWorkgroupSizeY(MemorySegment structPtr, int maxComputeWorkgroupSizeY) {
+        WGPULimits.maxComputeWorkgroupSizeY(structPtr, maxComputeWorkgroupSizeY);
     }
 
     @Override
-    public void maxComputeWorkgroupSizeZ(@NonNull MemorySegment structPtr, int maxComputeWorkgroupSizeZ) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxComputeWorkgroupSizeZ'");
+    public void maxComputeWorkgroupSizeZ(MemorySegment structPtr, int maxComputeWorkgroupSizeZ) {
+        WGPULimits.maxComputeWorkgroupSizeZ(structPtr, maxComputeWorkgroupSizeZ);
     }
 
     @Override
-    public void maxComputeWorkgroupsPerDimension(@NonNull MemorySegment structPtr,
+    public void maxComputeWorkgroupsPerDimension(MemorySegment structPtr,
             int maxComputeWorkgroupsPerDimension) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxComputeWorkgroupsPerDimension'");
+        WGPULimits.maxComputeWorkgroupsPerDimension(structPtr, maxComputeWorkgroupsPerDimension);
     }
 
     @Override
-    public void maxImmediateSize(@NonNull MemorySegment structPtr, int maxImmediateSize) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'maxImmediateSize'");
+    public void maxImmediateSize(MemorySegment structPtr, int maxImmediateSize) {
+        WGPULimits.maxImmediateSize(structPtr, maxImmediateSize);
     }
 
 }

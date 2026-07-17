@@ -1,5 +1,6 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.jspecify.annotations.NonNull;
@@ -7,52 +8,48 @@ import org.webgpu.api.StorageTextureAccess;
 import org.webgpu.api.TextureFormat;
 import org.webgpu.api.TextureViewDimension;
 import org.webgpu.api.spi.StorageTextureBindingLayoutProvider;
+import org.webgpu.panama.WGPUStorageTextureBindingLayout;
 
 /**
  * StorageTextureBindingLayoutProviderImpl
  */
 public class StorageTextureBindingLayoutProviderImpl implements StorageTextureBindingLayoutProvider {
 
+    private final Arena arena = Arena.ofAuto();
+
     @Override
-    public @NonNull MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+    public MemorySegment initializer() {
+        return WGPUStorageTextureBindingLayout.allocate(arena);
     }
 
     @Override
-    public @NonNull StorageTextureAccess access(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'access'");
+    public StorageTextureAccess access(MemorySegment structPtr) {
+        return StorageTextureAccess.values()[WGPUStorageTextureBindingLayout.access(structPtr)];
     }
 
     @Override
-    public @NonNull TextureFormat format(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'format'");
+    public TextureFormat format(MemorySegment structPtr) {
+        return TextureFormat.values()[WGPUStorageTextureBindingLayout.format(structPtr)];
     }
 
     @Override
-    public @NonNull TextureViewDimension viewDimension(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'viewDimension'");
+    public TextureViewDimension viewDimension(MemorySegment structPtr) {
+        return TextureViewDimension.values()[WGPUStorageTextureBindingLayout.viewDimension(structPtr)];
     }
 
     @Override
-    public void access(@NonNull MemorySegment structPtr, @NonNull StorageTextureAccess access) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'access'");
+    public void access(MemorySegment structPtr, StorageTextureAccess access) {
+        WGPUStorageTextureBindingLayout.access(structPtr, access.value());
     }
 
     @Override
-    public void format(@NonNull MemorySegment structPtr, @NonNull TextureFormat format) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'format'");
+    public void format(MemorySegment structPtr, TextureFormat format) {
+        WGPUStorageTextureBindingLayout.format(structPtr, format.value());
     }
 
     @Override
-    public void viewDimension(@NonNull MemorySegment structPtr, @NonNull TextureViewDimension viewDimension) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'viewDimension'");
+    public void viewDimension(MemorySegment structPtr, TextureViewDimension viewDimension) {
+        WGPUStorageTextureBindingLayout.viewDimension(structPtr, viewDimension.value());
     }
 
 }

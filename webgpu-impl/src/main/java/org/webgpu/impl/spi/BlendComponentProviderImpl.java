@@ -34,19 +34,16 @@ public class BlendComponentProviderImpl implements BlendComponentProvider {
 
     @Override
     public void operation(MemorySegment structPtr, BlendOperation operation) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'operation'");
+        WGPUBlendComponent.operation(structPtr, operation.value());
     }
 
     @Override
     public void srcFactor(MemorySegment structPtr, BlendFactor srcFactor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'srcFactor'");
+        WGPUBlendComponent.srcFactor(structPtr, srcFactor.value());
     }
 
     @Override
     public void dstFactor(MemorySegment structPtr, BlendFactor dstFactor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'dstFactor'");
+        WGPUBlendComponent.dstFactor(structPtr, dstFactor.value());
     }
 }

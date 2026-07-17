@@ -1,43 +1,43 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.jspecify.annotations.NonNull;
 import org.webgpu.api.spi.ConstantEntryProvider;
+import org.webgpu.impl.util.StringViewMapper;
+import org.webgpu.panama.WGPUConstantEntry;
 
 /**
  * ConstantEntryProviderImpl
  */
 public class ConstantEntryProviderImpl implements ConstantEntryProvider {
 
+    private final Arena arena = Arena.ofAuto();
+
     @Override
-    public @NonNull MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+    public MemorySegment initializer() {
+        return WGPUConstantEntry.allocate(arena);
     }
 
     @Override
-    public @NonNull String key(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'key'");
+    public String key(MemorySegment structPtr) {
+        return StringViewMapper.map(WGPUConstantEntry.key(structPtr));
     }
 
     @Override
-    public double value(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'value'");
+    public double value(MemorySegment structPtr) {
+        return WGPUConstantEntry.value(structPtr);
     }
 
     @Override
-    public void key(@NonNull MemorySegment structPtr, @NonNull String key) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'key'");
+    public void key(MemorySegment structPtr, String key) {
+        WGPUConstantEntry.key(structPtr, StringViewMapper.map(key));
     }
 
     @Override
-    public void value(@NonNull MemorySegment structPtr, double value) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'value'");
+    public void value(MemorySegment structPtr, double value) {
+        WGPUConstantEntry.value(structPtr, value);
     }
 
 }

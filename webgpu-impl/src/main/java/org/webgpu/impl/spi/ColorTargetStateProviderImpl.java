@@ -15,6 +15,7 @@ import org.webgpu.api.spi.ColorTargetStateProvider;
 import org.webgpu.impl.util.BitPacker;
 import org.webgpu.panama.WGPUBlendState;
 import org.webgpu.panama.WGPUColorTargetState;
+import org.webgpu.impl.util.StructTools;
 
 public class ColorTargetStateProviderImpl implements ColorTargetStateProvider {
 
@@ -66,16 +67,23 @@ public class ColorTargetStateProviderImpl implements ColorTargetStateProvider {
 
     @Override
     public void format(MemorySegment structPtr, TextureFormat format) {
-        throw new UnsupportedOperationException("Unimplemented method 'format'");
+        WGPUColorTargetState.format(structPtr, format.value());
     }
 
     @Override
     public void blend(MemorySegment structPtr, BlendState blend) {
-        throw new UnsupportedOperationException("Unimplemented method 'blend'");
+        if (blend == null) {
+            WGPUColorTargetState.blend(structPtr, MemorySegment.NULL);
+            return;
+        }
+
+        var seg = StructTools.fetchSegment(blend);
+        WGPUColorTargetState.blend(structPtr, seg);
     }
 
     @Override
     public void writeMask(MemorySegment structPtr, Set<ColorWriteMask> writeMask) {
-        throw new UnsupportedOperationException("Unimplemented method 'writeMask'");
+        final long packed = BitPacker.pack(writeMask);
+        WGPUColorTargetState.writeMask(structPtr, packed);
     }
 }

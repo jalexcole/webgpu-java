@@ -10,6 +10,7 @@ module org.webgpu.impl {
     requires org.webgpu.api;
     requires org.webgpu.panama;
     requires java.logging;
+    requires panama;
 
     provides WGPUProvider with WGPUProviderImpl;
     provides StructProviderRegistry with WGPUStructProviderRegistry;

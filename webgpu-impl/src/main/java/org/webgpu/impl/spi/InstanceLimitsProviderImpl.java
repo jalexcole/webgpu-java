@@ -12,18 +12,19 @@ import org.webgpu.panama.WGPUInstanceLimits;
  */
 public class InstanceLimitsProviderImpl implements InstanceLimitsProvider {
     private final Arena arena = Arena.ofAuto();
+
     @Override
-    public @NonNull MemorySegment initializer() {
+    public MemorySegment initializer() {
         return WGPUInstanceLimits.allocate(arena);
     }
 
     @Override
-    public long timedWaitAnyMaxCount(@NonNull MemorySegment structPtr) {
+    public long timedWaitAnyMaxCount(MemorySegment structPtr) {
         return WGPUInstanceLimits.timedWaitAnyMaxCount(structPtr);
     }
 
     @Override
-    public void timedWaitAnyMaxCount(@NonNull MemorySegment structPtr, long timedWaitAnyMaxCount) {
+    public void timedWaitAnyMaxCount(MemorySegment structPtr, long timedWaitAnyMaxCount) {
         WGPUInstanceLimits.timedWaitAnyMaxCount(structPtr, timedWaitAnyMaxCount);
     }
 

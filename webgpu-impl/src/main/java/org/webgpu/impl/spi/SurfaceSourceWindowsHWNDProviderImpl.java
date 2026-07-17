@@ -1,43 +1,41 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.jspecify.annotations.NonNull;
 import org.webgpu.api.spi.SurfaceSourceWindowsHWNDProvider;
+import org.webgpu.panama.WGPUSurfaceSourceWindowsHWND;
 
 /**
  * SurfaceSourceWindowsHWNDProviderImpl
  */
 public class SurfaceSourceWindowsHWNDProviderImpl implements SurfaceSourceWindowsHWNDProvider {
+    private final Arena arena = Arena.ofAuto();
 
     @Override
-    public @NonNull MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+    public MemorySegment initializer() {
+        return WGPUSurfaceSourceWindowsHWND.allocate(arena);
     }
 
     @Override
-    public @NonNull MemorySegment hinstance(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'hinstance'");
+    public MemorySegment hinstance(MemorySegment structPtr) {
+        return WGPUSurfaceSourceWindowsHWND.hinstance(structPtr);
     }
 
     @Override
-    public @NonNull MemorySegment hwnd(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'hwnd'");
+    public MemorySegment hwnd(MemorySegment structPtr) {
+        return WGPUSurfaceSourceWindowsHWND.hwnd(structPtr);
     }
 
     @Override
-    public void hinstance(@NonNull MemorySegment structPtr, @NonNull MemorySegment hinstance) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'hinstance'");
+    public void hinstance(MemorySegment structPtr, MemorySegment hinstance) {
+        WGPUSurfaceSourceWindowsHWND.hinstance(structPtr, hinstance);
     }
 
     @Override
-    public void hwnd(@NonNull MemorySegment structPtr, @NonNull MemorySegment hwnd) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'hwnd'");
+    public void hwnd(MemorySegment structPtr, MemorySegment hwnd) {
+        WGPUSurfaceSourceWindowsHWND.hwnd(structPtr, hwnd);
     }
 
 }

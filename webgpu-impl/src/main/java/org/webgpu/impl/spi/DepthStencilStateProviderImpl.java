@@ -1,5 +1,6 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.jspecify.annotations.NonNull;
@@ -8,134 +9,135 @@ import org.webgpu.api.OptionalBool;
 import org.webgpu.api.StencilFaceState;
 import org.webgpu.api.TextureFormat;
 import org.webgpu.api.spi.DepthStencilStateProvider;
+import org.webgpu.panama.WGPUDepthStencilState;
 
 /**
  * DepthStencilStateProviderImpl
  */
-public class DepthStencilStateProviderImpl implements DepthStencilStateProvider{
+public class DepthStencilStateProviderImpl implements DepthStencilStateProvider {
+    private final Arena arena = Arena.ofAuto();
 
     @Override
-    public @NonNull MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+    public MemorySegment initializer() {
+        return WGPUDepthStencilState.allocate(arena);
     }
 
     @Override
-    public @NonNull TextureFormat format(@NonNull MemorySegment structPtr) {
+    public TextureFormat format(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'format'");
     }
 
     @Override
-    public @NonNull OptionalBool depthWriteEnabled(@NonNull MemorySegment structPtr) {
+    public OptionalBool depthWriteEnabled(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'depthWriteEnabled'");
     }
 
     @Override
-    public @NonNull CompareFunction depthCompare(@NonNull MemorySegment structPtr) {
+    public CompareFunction depthCompare(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'depthCompare'");
     }
 
     @Override
-    public @NonNull StencilFaceState stencilFront(@NonNull MemorySegment structPtr) {
+    public StencilFaceState stencilFront(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'stencilFront'");
     }
 
     @Override
-    public @NonNull StencilFaceState stencilBack(@NonNull MemorySegment structPtr) {
+    public StencilFaceState stencilBack(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'stencilBack'");
     }
 
     @Override
-    public int stencilReadMask(@NonNull MemorySegment structPtr) {
+    public int stencilReadMask(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'stencilReadMask'");
     }
 
     @Override
-    public int stencilWriteMask(@NonNull MemorySegment structPtr) {
+    public int stencilWriteMask(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'stencilWriteMask'");
     }
 
     @Override
-    public int depthBias(@NonNull MemorySegment structPtr) {
+    public int depthBias(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'depthBias'");
     }
 
     @Override
-    public float depthBiasSlopeScale(@NonNull MemorySegment structPtr) {
+    public float depthBiasSlopeScale(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'depthBiasSlopeScale'");
     }
 
     @Override
-    public float depthBiasClamp(@NonNull MemorySegment structPtr) {
+    public float depthBiasClamp(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'depthBiasClamp'");
     }
 
     @Override
-    public void format(@NonNull MemorySegment structPtr, @NonNull TextureFormat format) {
+    public void format(MemorySegment structPtr, TextureFormat format) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'format'");
     }
 
     @Override
-    public void depthWriteEnabled(@NonNull MemorySegment structPtr, @NonNull OptionalBool depthWriteEnabled) {
+    public void depthWriteEnabled(MemorySegment structPtr, OptionalBool depthWriteEnabled) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'depthWriteEnabled'");
     }
 
     @Override
-    public void depthCompare(@NonNull MemorySegment structPtr, @NonNull CompareFunction depthCompare) {
+    public void depthCompare(MemorySegment structPtr, CompareFunction depthCompare) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'depthCompare'");
     }
 
     @Override
-    public void stencilFront(@NonNull MemorySegment structPtr, @NonNull StencilFaceState stencilFront) {
+    public void stencilFront(MemorySegment structPtr, StencilFaceState stencilFront) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'stencilFront'");
     }
 
     @Override
-    public void stencilBack(@NonNull MemorySegment structPtr, @NonNull StencilFaceState stencilBack) {
+    public void stencilBack(MemorySegment structPtr, StencilFaceState stencilBack) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'stencilBack'");
     }
 
     @Override
-    public void stencilReadMask(@NonNull MemorySegment structPtr, int stencilReadMask) {
+    public void stencilReadMask(MemorySegment structPtr, int stencilReadMask) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'stencilReadMask'");
     }
 
     @Override
-    public void stencilWriteMask(@NonNull MemorySegment structPtr, int stencilWriteMask) {
+    public void stencilWriteMask(MemorySegment structPtr, int stencilWriteMask) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'stencilWriteMask'");
     }
 
     @Override
-    public void depthBias(@NonNull MemorySegment structPtr, int depthBias) {
+    public void depthBias(MemorySegment structPtr, int depthBias) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'depthBias'");
     }
 
     @Override
-    public void depthBiasSlopeScale(@NonNull MemorySegment structPtr, float depthBiasSlopeScale) {
+    public void depthBiasSlopeScale(MemorySegment structPtr, float depthBiasSlopeScale) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'depthBiasSlopeScale'");
     }
 
     @Override
-    public void depthBiasClamp(@NonNull MemorySegment structPtr, float depthBiasClamp) {
+    public void depthBiasClamp(MemorySegment structPtr, float depthBiasClamp) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'depthBiasClamp'");
     }

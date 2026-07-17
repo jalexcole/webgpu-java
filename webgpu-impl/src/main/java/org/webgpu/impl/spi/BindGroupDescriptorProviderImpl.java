@@ -41,12 +41,12 @@ public class BindGroupDescriptorProviderImpl implements BindGroupDescriptorProvi
 
 	@Override
 	public void label(MemorySegment structPtr, String label) {
-		throw new UnsupportedOperationException("Unimplemented method 'label'");
+		WGPUBindGroupDescriptor.label(structPtr, StringViewMapper.map(label, arena));
 	}
 
 	@Override
 	public void layout(MemorySegment structPtr, BindGroupLayout layout) {
-		throw new UnsupportedOperationException("Unimplemented method 'layout'");
+		WGPUBindGroupDescriptor.layout(structPtr, ((BindGroupLayoutImpl) layout).ptr());
 	}
 
 	@Override

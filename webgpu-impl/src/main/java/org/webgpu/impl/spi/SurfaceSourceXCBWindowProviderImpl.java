@@ -1,43 +1,41 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.jspecify.annotations.NonNull;
 import org.webgpu.api.spi.SurfaceSourceXCBWindowProvider;
+import org.webgpu.panama.WGPUSurfaceSourceXCBWindow;
 
 /**
  * SurfaceSourceXCBWindowProviderImpl
  */
 public class SurfaceSourceXCBWindowProviderImpl implements SurfaceSourceXCBWindowProvider {
+    private final Arena arena = Arena.ofAuto();
 
     @Override
-    public @NonNull MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+    public MemorySegment initializer() {
+        return WGPUSurfaceSourceXCBWindow.allocate(arena);
     }
 
     @Override
-    public @NonNull MemorySegment connection(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'connection'");
+    public MemorySegment connection(MemorySegment structPtr) {
+        return WGPUSurfaceSourceXCBWindow.connection(structPtr);
     }
 
     @Override
-    public int window(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'window'");
+    public int window(MemorySegment structPtr) {
+        return WGPUSurfaceSourceXCBWindow.window(structPtr);
     }
 
     @Override
-    public void connection(@NonNull MemorySegment structPtr, @NonNull MemorySegment connection) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'connection'");
+    public void connection(MemorySegment structPtr, MemorySegment connection) {
+        WGPUSurfaceSourceXCBWindow.connection(structPtr, connection);
     }
 
     @Override
-    public void window(@NonNull MemorySegment structPtr, int window) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'window'");
+    public void window(MemorySegment structPtr, int window) {
+        WGPUSurfaceSourceXCBWindow.window(structPtr, window);
     }
 
 }

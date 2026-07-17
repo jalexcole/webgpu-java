@@ -1,45 +1,45 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.jspecify.annotations.NonNull;
 import org.webgpu.api.SurfaceGetCurrentTextureStatus;
 import org.webgpu.api.Texture;
 import org.webgpu.api.spi.SurfaceTextureProvider;
+import org.webgpu.impl.TextureImpl;
+import org.webgpu.panama.WGPUSurfaceTexture;
 
 /**
  * SurfaceTextureProviderImpl
  */
 public class SurfaceTextureProviderImpl implements SurfaceTextureProvider {
+    private final Arena arena = Arena.ofAuto();
 
     @Override
-    public @NonNull MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+    public MemorySegment initializer() {
+        return WGPUSurfaceTexture.allocate(arena);
     }
 
     @Override
-    public @NonNull Texture texture(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'texture'");
+    public Texture texture(MemorySegment structPtr) {
+        final var texturePtr = WGPUSurfaceTexture.texture(structPtr);
+        return new TextureImpl(texturePtr);
     }
 
     @Override
-    public @NonNull SurfaceGetCurrentTextureStatus status(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'status'");
+    public SurfaceGetCurrentTextureStatus status(MemorySegment structPtr) {
+        return SurfaceGetCurrentTextureStatus.values()[WGPUSurfaceTexture.status(structPtr)];
     }
 
     @Override
-    public void texture(@NonNull MemorySegment structPtr, @NonNull Texture texture) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'texture'");
+    public void texture(MemorySegment structPtr, Texture texture) {
+        WGPUSurfaceTexture.texture(structPtr, ((TextureImpl) texture).ptr());
     }
 
     @Override
-    public void status(@NonNull MemorySegment structPtr, @NonNull SurfaceGetCurrentTextureStatus status) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'status'");
+    public void status(MemorySegment structPtr, SurfaceGetCurrentTextureStatus status) {
+        WGPUSurfaceTexture.status(structPtr, status.value());
     }
 
 }

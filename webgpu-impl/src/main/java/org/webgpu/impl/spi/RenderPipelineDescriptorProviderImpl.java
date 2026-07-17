@@ -1,5 +1,6 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.jspecify.annotations.NonNull;
@@ -10,98 +11,99 @@ import org.webgpu.api.PipelineLayout;
 import org.webgpu.api.PrimitiveState;
 import org.webgpu.api.VertexState;
 import org.webgpu.api.spi.RenderPipelineDescriptorProvider;
+import org.webgpu.panama.WGPURenderPipelineDescriptor;
 
 /**
  * RenderPipelineDescriptorProviderImpl
  */
 public class RenderPipelineDescriptorProviderImpl implements RenderPipelineDescriptorProvider {
+    private final Arena arena = Arena.ofAuto();
 
     @Override
-    public @NonNull MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+    public MemorySegment initializer() {
+        return WGPURenderPipelineDescriptor.allocate(arena);
     }
 
     @Override
-    public @NonNull String label(@NonNull MemorySegment structPtr) {
+    public String label(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'label'");
     }
 
     @Override
-    public @NonNull PipelineLayout layout(@NonNull MemorySegment structPtr) {
+    public PipelineLayout layout(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'layout'");
     }
 
     @Override
-    public @NonNull VertexState vertex(@NonNull MemorySegment structPtr) {
+    public VertexState vertex(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'vertex'");
     }
 
     @Override
-    public @NonNull PrimitiveState primitive(@NonNull MemorySegment structPtr) {
+    public PrimitiveState primitive(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'primitive'");
     }
 
     @Override
-    public @NonNull DepthStencilState depthStencil(@NonNull MemorySegment structPtr) {
+    public DepthStencilState depthStencil(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'depthStencil'");
     }
 
     @Override
-    public @NonNull MultisampleState multisample(@NonNull MemorySegment structPtr) {
+    public MultisampleState multisample(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'multisample'");
     }
 
     @Override
-    public @NonNull FragmentState fragment(@NonNull MemorySegment structPtr) {
+    public FragmentState fragment(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'fragment'");
     }
 
     @Override
-    public void label(@NonNull MemorySegment structPtr, @NonNull String label) {
+    public void label(MemorySegment structPtr, String label) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'label'");
     }
 
     @Override
-    public void layout(@NonNull MemorySegment structPtr, @NonNull PipelineLayout layout) {
+    public void layout(MemorySegment structPtr, PipelineLayout layout) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'layout'");
     }
 
     @Override
-    public void vertex(@NonNull MemorySegment structPtr, @NonNull VertexState vertex) {
+    public void vertex(MemorySegment structPtr, VertexState vertex) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'vertex'");
     }
 
     @Override
-    public void primitive(@NonNull MemorySegment structPtr, @NonNull PrimitiveState primitive) {
+    public void primitive(MemorySegment structPtr, PrimitiveState primitive) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'primitive'");
     }
 
     @Override
-    public void depthStencil(@NonNull MemorySegment structPtr, @NonNull DepthStencilState depthStencil) {
+    public void depthStencil(MemorySegment structPtr, DepthStencilState depthStencil) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'depthStencil'");
     }
 
     @Override
-    public void multisample(@NonNull MemorySegment structPtr, @NonNull MultisampleState multisample) {
+    public void multisample(MemorySegment structPtr, MultisampleState multisample) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'multisample'");
     }
 
     @Override
-    public void fragment(@NonNull MemorySegment structPtr, @NonNull FragmentState fragment) {
+    public void fragment(MemorySegment structPtr, FragmentState fragment) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'fragment'");
     }

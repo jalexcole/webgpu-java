@@ -19,7 +19,7 @@ import org.webgpu.impl.util.StructTools;
 import org.webgpu.panama.webgpu_h;
 
 @NullMarked
-public class TextureImpl implements Texture {
+public final class TextureImpl implements Texture, WebGPUObjectImpl {
 
 	private final MemorySegment memorySegment;
 	private boolean destroyed = false;
@@ -96,6 +96,11 @@ public class TextureImpl implements Texture {
 			webgpu_h.wgpuTextureDestroy(memorySegment);
 			destroyed = true;
 		}
+	}
+
+	@Override
+	public MemorySegment ptr() {
+		return memorySegment;
 	}
     
 }

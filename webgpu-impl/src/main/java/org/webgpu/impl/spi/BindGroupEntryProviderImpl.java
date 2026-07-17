@@ -11,6 +11,7 @@ import org.webgpu.api.spi.BindGroupEntryProvider;
 import org.webgpu.panama.WGPUBindGroupEntry;
 
 import org.webgpu.impl.BufferImpl;
+import org.webgpu.impl.TextureViewImpl;
 
 @NullMarked
 public class BindGroupEntryProviderImpl implements BindGroupEntryProvider {
@@ -35,64 +36,54 @@ public class BindGroupEntryProviderImpl implements BindGroupEntryProvider {
 
     @Override
     public long offset(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'offset'");
+        return WGPUBindGroupEntry.offset(structPtr);
     }
 
     @Override
     public long size(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'size'");
+        return WGPUBindGroupEntry.size(structPtr);
     }
 
     @Override
     public Sampler sampler(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'sampler'");
+        return new org.webgpu.impl.SamplerImpl(WGPUBindGroupEntry.sampler(structPtr));
     }
 
     @Override
     public TextureView textureView(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'textureView'");
+        return new org.webgpu.impl.TextureViewImpl(WGPUBindGroupEntry.textureView(structPtr));
     }
     // This class is intentionally left empty as a placeholder for future
     // implementation.
 
     @Override
     public void binding(MemorySegment structPtr, int binding) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'binding'");
+        WGPUBindGroupEntry.binding(structPtr, binding);
     }
 
     @Override
     public void buffer(MemorySegment structPtr, Buffer buffer) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buffer'");
+        WGPUBindGroupEntry.buffer(structPtr, ((BufferImpl) buffer).ptr());
     }
 
     @Override
     public void offset(MemorySegment structPtr, long offset) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'offset'");
+        WGPUBindGroupEntry.offset(structPtr, offset);
     }
 
     @Override
     public void size(MemorySegment structPtr, long size) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'size'");
+        WGPUBindGroupEntry.size(structPtr, size);
     }
 
     @Override
     public void sampler(MemorySegment structPtr, Sampler sampler) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'sampler'");
+        WGPUBindGroupEntry.sampler(structPtr, ((org.webgpu.impl.SamplerImpl) sampler).ptr());
     }
 
     @Override
     public void textureView(MemorySegment structPtr, TextureView textureView) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'textureView'");
+        WGPUBindGroupEntry.textureView(structPtr, ((TextureViewImpl) textureView).ptr());
     }
 
 }

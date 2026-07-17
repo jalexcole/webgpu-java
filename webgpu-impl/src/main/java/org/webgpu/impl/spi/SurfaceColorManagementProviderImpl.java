@@ -1,43 +1,45 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.jspecify.annotations.NonNull;
 import org.webgpu.api.PredefinedColorSpace;
 import org.webgpu.api.ToneMappingMode;
 import org.webgpu.api.spi.SurfaceColorManagementProvider;
+import org.webgpu.panama.WGPUSurfaceColorManagement;
 
 /**
  * SurfaceColorManagementProviderImpl
  */
 public class SurfaceColorManagementProviderImpl implements SurfaceColorManagementProvider {
+    private final Arena arena = Arena.ofAuto();
 
     @Override
-    public @NonNull MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+    public MemorySegment initializer() {
+        return WGPUSurfaceColorManagement.allocate(arena);
     }
 
     @Override
-    public @NonNull PredefinedColorSpace colorSpace(@NonNull MemorySegment structPtr) {
+    public PredefinedColorSpace colorSpace(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'colorSpace'");
     }
 
     @Override
-    public @NonNull ToneMappingMode toneMappingMode(@NonNull MemorySegment structPtr) {
+    public ToneMappingMode toneMappingMode(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'toneMappingMode'");
     }
 
     @Override
-    public void colorSpace(@NonNull MemorySegment structPtr, @NonNull PredefinedColorSpace colorSpace) {
+    public void colorSpace(MemorySegment structPtr, PredefinedColorSpace colorSpace) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'colorSpace'");
     }
 
     @Override
-    public void toneMappingMode(@NonNull MemorySegment structPtr, @NonNull ToneMappingMode toneMappingMode) {
+    public void toneMappingMode(MemorySegment structPtr, ToneMappingMode toneMappingMode) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'toneMappingMode'");
     }

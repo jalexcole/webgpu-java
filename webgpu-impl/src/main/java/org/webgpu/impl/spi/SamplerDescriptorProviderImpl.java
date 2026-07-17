@@ -1,5 +1,6 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.jspecify.annotations.NonNull;
@@ -8,146 +9,147 @@ import org.webgpu.api.CompareFunction;
 import org.webgpu.api.FilterMode;
 import org.webgpu.api.MipmapFilterMode;
 import org.webgpu.api.spi.SamplerDescriptorProvider;
+import org.webgpu.panama.WGPUSamplerDescriptor;
 
 /**
  * SamplerDescriptorProviderImpl
  */
 public class SamplerDescriptorProviderImpl implements SamplerDescriptorProvider {
+    private final Arena arena = Arena.ofAuto();
 
     @Override
-    public @NonNull MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+    public MemorySegment initializer() {
+        return WGPUSamplerDescriptor.allocate(arena);
     }
 
     @Override
-    public @NonNull String label(@NonNull MemorySegment structPtr) {
+    public String label(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'label'");
     }
 
     @Override
-    public @NonNull AddressMode addressModeU(@NonNull MemorySegment structPtr) {
+    public AddressMode addressModeU(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'addressModeU'");
     }
 
     @Override
-    public @NonNull AddressMode addressModeV(@NonNull MemorySegment structPtr) {
+    public AddressMode addressModeV(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'addressModeV'");
     }
 
     @Override
-    public @NonNull AddressMode addressModeW(@NonNull MemorySegment structPtr) {
+    public AddressMode addressModeW(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'addressModeW'");
     }
 
     @Override
-    public @NonNull FilterMode magFilter(@NonNull MemorySegment structPtr) {
+    public FilterMode magFilter(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'magFilter'");
     }
 
     @Override
-    public @NonNull FilterMode minFilter(@NonNull MemorySegment structPtr) {
+    public FilterMode minFilter(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'minFilter'");
     }
 
     @Override
-    public @NonNull MipmapFilterMode mipmapFilter(@NonNull MemorySegment structPtr) {
+    public MipmapFilterMode mipmapFilter(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'mipmapFilter'");
     }
 
     @Override
-    public float lodMinClamp(@NonNull MemorySegment structPtr) {
+    public float lodMinClamp(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'lodMinClamp'");
     }
 
     @Override
-    public float lodMaxClamp(@NonNull MemorySegment structPtr) {
+    public float lodMaxClamp(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'lodMaxClamp'");
     }
 
     @Override
-    public @NonNull CompareFunction compare(@NonNull MemorySegment structPtr) {
+    public CompareFunction compare(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'compare'");
     }
 
     @Override
-    public short maxAnisotropy(@NonNull MemorySegment structPtr) {
+    public short maxAnisotropy(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'maxAnisotropy'");
     }
 
     @Override
-    public void label(@NonNull MemorySegment structPtr, @NonNull String label) {
+    public void label(MemorySegment structPtr, String label) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'label'");
     }
 
     @Override
-    public void addressModeU(@NonNull MemorySegment structPtr, @NonNull AddressMode addressModeU) {
+    public void addressModeU(MemorySegment structPtr, AddressMode addressModeU) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'addressModeU'");
     }
 
     @Override
-    public void addressModeV(@NonNull MemorySegment structPtr, @NonNull AddressMode addressModeV) {
+    public void addressModeV(MemorySegment structPtr, AddressMode addressModeV) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'addressModeV'");
     }
 
     @Override
-    public void addressModeW(@NonNull MemorySegment structPtr, @NonNull AddressMode addressModeW) {
+    public void addressModeW(MemorySegment structPtr, AddressMode addressModeW) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'addressModeW'");
     }
 
     @Override
-    public void magFilter(@NonNull MemorySegment structPtr, @NonNull FilterMode magFilter) {
+    public void magFilter(MemorySegment structPtr, FilterMode magFilter) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'magFilter'");
     }
 
     @Override
-    public void minFilter(@NonNull MemorySegment structPtr, @NonNull FilterMode minFilter) {
+    public void minFilter(MemorySegment structPtr, FilterMode minFilter) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'minFilter'");
     }
 
     @Override
-    public void mipmapFilter(@NonNull MemorySegment structPtr, @NonNull MipmapFilterMode mipmapFilter) {
+    public void mipmapFilter(MemorySegment structPtr, MipmapFilterMode mipmapFilter) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'mipmapFilter'");
     }
 
     @Override
-    public void lodMinClamp(@NonNull MemorySegment structPtr, float lodMinClamp) {
+    public void lodMinClamp(MemorySegment structPtr, float lodMinClamp) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'lodMinClamp'");
     }
 
     @Override
-    public void lodMaxClamp(@NonNull MemorySegment structPtr, float lodMaxClamp) {
+    public void lodMaxClamp(MemorySegment structPtr, float lodMaxClamp) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'lodMaxClamp'");
     }
 
     @Override
-    public void compare(@NonNull MemorySegment structPtr, @NonNull CompareFunction compare) {
+    public void compare(MemorySegment structPtr, CompareFunction compare) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'compare'");
     }
 
     @Override
-    public void maxAnisotropy(@NonNull MemorySegment structPtr, short maxAnisotropy) {
+    public void maxAnisotropy(MemorySegment structPtr, short maxAnisotropy) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'maxAnisotropy'");
     }

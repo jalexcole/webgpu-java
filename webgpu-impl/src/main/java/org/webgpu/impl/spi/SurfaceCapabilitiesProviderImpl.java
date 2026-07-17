@@ -1,5 +1,6 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.util.Set;
 
@@ -9,62 +10,63 @@ import org.webgpu.api.PresentMode;
 import org.webgpu.api.TextureFormat;
 import org.webgpu.api.TextureUsage;
 import org.webgpu.api.spi.SurfaceCapabilitiesProvider;
+import org.webgpu.panama.WGPUSurfaceCapabilities;
 
 /**
  * SurfaceCapabilitiesProviderImpl
  */
 public class SurfaceCapabilitiesProviderImpl implements SurfaceCapabilitiesProvider {
+    private final Arena arena = Arena.ofAuto();
 
     @Override
-    public @NonNull MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+    public MemorySegment initializer() {
+        return WGPUSurfaceCapabilities.allocate(arena);
     }
 
     @Override
-    public @NonNull Set<TextureUsage> usages(@NonNull MemorySegment structPtr) {
+    public Set<TextureUsage> usages(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'usages'");
     }
 
     @Override
-    public TextureFormat @NonNull [] formats(@NonNull MemorySegment structPtr) {
+    public TextureFormat[] formats(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'formats'");
     }
 
     @Override
-    public PresentMode @NonNull [] presentModes(@NonNull MemorySegment structPtr) {
+    public PresentMode[] presentModes(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'presentModes'");
     }
 
     @Override
-    public CompositeAlphaMode @NonNull [] alphaModes(@NonNull MemorySegment structPtr) {
+    public CompositeAlphaMode[] alphaModes(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'alphaModes'");
     }
 
     @Override
-    public void usages(@NonNull MemorySegment structPtr, @NonNull Set<TextureUsage> usages) {
+    public void usages(MemorySegment structPtr, Set<TextureUsage> usages) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'usages'");
     }
 
     @Override
-    public void formats(@NonNull MemorySegment structPtr, TextureFormat @NonNull [] formats) {
+    public void formats(MemorySegment structPtr, TextureFormat[] formats) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'formats'");
     }
 
     @Override
-    public void presentModes(@NonNull MemorySegment structPtr, PresentMode @NonNull [] presentModes) {
+    public void presentModes(MemorySegment structPtr, PresentMode[] presentModes) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'presentModes'");
     }
 
     @Override
-    public void alphaModes(@NonNull MemorySegment structPtr, CompositeAlphaMode @NonNull [] alphaModes) {
+    public void alphaModes(MemorySegment structPtr, CompositeAlphaMode[] alphaModes) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'alphaModes'");
     }

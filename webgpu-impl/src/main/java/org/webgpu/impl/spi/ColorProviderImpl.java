@@ -37,25 +37,21 @@ public class ColorProviderImpl implements ColorProvider {
 
     @Override
     public void r(MemorySegment structPtr, double r) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'r'");
+        WGPUColor.r(structPtr, r);
     }
 
     @Override
     public void g(MemorySegment structPtr, double g) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'g'");
+        WGPUColor.g(structPtr, g);
     }
 
     @Override
     public void b(MemorySegment structPtr, double b) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'b'");
+        WGPUColor.b(structPtr, b);
     }
 
     @Override
     public void a(MemorySegment structPtr, double a) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'a'");
+        WGPUColor.a(structPtr, a);
     }
 }

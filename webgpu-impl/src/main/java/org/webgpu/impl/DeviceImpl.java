@@ -13,7 +13,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @NullMarked
-public class DeviceImpl implements Device {
+public final class DeviceImpl implements Device, WebGPUObjectImpl {
 
     private final MemorySegment memorySegment;
     private final AtomicBoolean destroyed = new AtomicBoolean(false);
@@ -187,5 +187,11 @@ public class DeviceImpl implements Device {
     @Override
     public void createRenderPipelineAsync(CreateRenderPipelineAsync callback, RenderPipelineDescriptor descriptor) {
         throw new UnsupportedOperationException("Unimplemented method 'createRenderPipelineAsync'");
+    }
+
+    @Override
+    public MemorySegment ptr() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'ptr'");
     }
 }

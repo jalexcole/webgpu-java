@@ -1,5 +1,6 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.jspecify.annotations.NonNull;
@@ -8,86 +9,87 @@ import org.webgpu.api.LoadOp;
 import org.webgpu.api.StoreOp;
 import org.webgpu.api.TextureView;
 import org.webgpu.api.spi.RenderPassColorAttachmentProvider;
+import org.webgpu.panama.WGPURenderPassColorAttachment;
 
 /**
  * RenderPassColorAttachmentProviderImpl
  */
 public class RenderPassColorAttachmentProviderImpl implements RenderPassColorAttachmentProvider {
+    private final Arena arena = Arena.ofAuto();
 
     @Override
-    public @NonNull MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+    public MemorySegment initializer() {
+        return WGPURenderPassColorAttachment.allocate(arena);
     }
 
     @Override
-    public @NonNull TextureView view(@NonNull MemorySegment structPtr) {
+    public TextureView view(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'view'");
     }
 
     @Override
-    public int depthSlice(@NonNull MemorySegment structPtr) {
+    public int depthSlice(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'depthSlice'");
     }
 
     @Override
-    public @NonNull TextureView resolveTarget(@NonNull MemorySegment structPtr) {
+    public TextureView resolveTarget(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'resolveTarget'");
     }
 
     @Override
-    public @NonNull LoadOp loadOp(@NonNull MemorySegment structPtr) {
+    public LoadOp loadOp(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'loadOp'");
     }
 
     @Override
-    public @NonNull StoreOp storeOp(@NonNull MemorySegment structPtr) {
+    public StoreOp storeOp(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'storeOp'");
     }
 
     @Override
-    public @NonNull Color clearValue(@NonNull MemorySegment structPtr) {
+    public Color clearValue(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'clearValue'");
     }
 
     @Override
-    public void view(@NonNull MemorySegment structPtr, @NonNull TextureView view) {
+    public void view(MemorySegment structPtr, TextureView view) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'view'");
     }
 
     @Override
-    public void depthSlice(@NonNull MemorySegment structPtr, int depthSlice) {
+    public void depthSlice(MemorySegment structPtr, int depthSlice) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'depthSlice'");
     }
 
     @Override
-    public void resolveTarget(@NonNull MemorySegment structPtr, @NonNull TextureView resolveTarget) {
+    public void resolveTarget(MemorySegment structPtr, TextureView resolveTarget) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'resolveTarget'");
     }
 
     @Override
-    public void loadOp(@NonNull MemorySegment structPtr, @NonNull LoadOp loadOp) {
+    public void loadOp(MemorySegment structPtr, LoadOp loadOp) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'loadOp'");
     }
 
     @Override
-    public void storeOp(@NonNull MemorySegment structPtr, @NonNull StoreOp storeOp) {
+    public void storeOp(MemorySegment structPtr, StoreOp storeOp) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'storeOp'");
     }
 
     @Override
-    public void clearValue(@NonNull MemorySegment structPtr, @NonNull Color clearValue) {
+    public void clearValue(MemorySegment structPtr, Color clearValue) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'clearValue'");
     }

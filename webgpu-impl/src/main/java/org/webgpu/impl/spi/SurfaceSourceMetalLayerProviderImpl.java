@@ -22,14 +22,12 @@ public class SurfaceSourceMetalLayerProviderImpl implements SurfaceSourceMetalLa
 
     @Override
     public MemorySegment layer(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'layer'");
+        return WGPUSurfaceSourceMetalLayer.layer(structPtr);
     }
 
     @Override
     public void layer(MemorySegment structPtr, MemorySegment layer) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'layer'");
+        WGPUSurfaceSourceMetalLayer.layer(structPtr, layer);
     }
 
 }

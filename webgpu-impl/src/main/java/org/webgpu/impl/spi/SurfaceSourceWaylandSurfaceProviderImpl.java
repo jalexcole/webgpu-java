@@ -1,43 +1,41 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.jspecify.annotations.NonNull;
 import org.webgpu.api.spi.SurfaceSourceWaylandSurfaceProvider;
+import org.webgpu.panama.WGPUSurfaceSourceWaylandSurface;
 
 /**
  * SurfaceSourceWaylandSurfaceProviderImpl
  */
 public class SurfaceSourceWaylandSurfaceProviderImpl implements SurfaceSourceWaylandSurfaceProvider {
+    private final Arena arena = Arena.ofAuto();
 
     @Override
-    public @NonNull MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+    public MemorySegment initializer() {
+        return WGPUSurfaceSourceWaylandSurface.allocate(arena);
     }
 
     @Override
-    public @NonNull MemorySegment display(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'display'");
+    public MemorySegment display(MemorySegment structPtr) {
+        return WGPUSurfaceSourceWaylandSurface.display(structPtr);
     }
 
     @Override
-    public @NonNull MemorySegment surface(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'surface'");
+    public MemorySegment surface(MemorySegment structPtr) {
+        return WGPUSurfaceSourceWaylandSurface.surface(structPtr);
     }
 
     @Override
-    public void display(@NonNull MemorySegment structPtr, @NonNull MemorySegment display) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'display'");
+    public void display(MemorySegment structPtr, MemorySegment display) {
+        WGPUSurfaceSourceWaylandSurface.display(structPtr, display);
     }
 
     @Override
-    public void surface(@NonNull MemorySegment structPtr, @NonNull MemorySegment surface) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'surface'");
+    public void surface(MemorySegment structPtr, MemorySegment surface) {
+        WGPUSurfaceSourceWaylandSurface.surface(structPtr, surface);
     }
 
 }

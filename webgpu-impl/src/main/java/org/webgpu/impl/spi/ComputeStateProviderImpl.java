@@ -9,34 +9,34 @@ import org.webgpu.api.spi.ComputePassDescriptorProvider;
 /**
  * ComputeStateProviderImpl
  */
-public class ComputeStateProviderImpl implements ComputePassDescriptorProvider{
+public class ComputeStateProviderImpl implements ComputePassDescriptorProvider {
 
     @Override
-    public @NonNull MemorySegment initializer() {
+    public MemorySegment initializer() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'initializer'");
     }
 
     @Override
-    public @NonNull String label(@NonNull MemorySegment structPtr) {
+    public String label(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'label'");
     }
 
     @Override
-    public @NonNull PassTimestampWrites timestampWrites(@NonNull MemorySegment structPtr) {
+    public PassTimestampWrites timestampWrites(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'timestampWrites'");
     }
 
     @Override
-    public void label(@NonNull MemorySegment structPtr, @NonNull String label) {
+    public void label(MemorySegment structPtr, String label) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'label'");
     }
 
     @Override
-    public void timestampWrites(@NonNull MemorySegment structPtr, @NonNull PassTimestampWrites timestampWrites) {
+    public void timestampWrites(MemorySegment structPtr, PassTimestampWrites timestampWrites) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'timestampWrites'");
     }

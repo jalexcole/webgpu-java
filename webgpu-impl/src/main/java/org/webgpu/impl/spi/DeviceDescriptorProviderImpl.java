@@ -1,5 +1,6 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.jspecify.annotations.NonNull;
@@ -9,87 +10,88 @@ import org.webgpu.api.Limits;
 import org.webgpu.api.QueueDescriptor;
 import org.webgpu.api.UncapturedError;
 import org.webgpu.api.spi.DeviceDescriptorProvider;
+import org.webgpu.panama.WGPUDeviceDescriptor;
 
 /**
  * DeviceDescriptorProviderImpl
  */
 public class DeviceDescriptorProviderImpl implements DeviceDescriptorProvider {
+    private final Arena arena = Arena.ofAuto();
 
     @Override
-    public @NonNull MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+    public MemorySegment initializer() {
+        return WGPUDeviceDescriptor.allocate(arena);
     }
 
     @Override
-    public @NonNull String label(@NonNull MemorySegment structPtr) {
+    public String label(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'label'");
     }
 
     @Override
-    public FeatureName @NonNull [] requiredFeatures(@NonNull MemorySegment structPtr) {
+    public FeatureName[] requiredFeatures(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'requiredFeatures'");
     }
 
     @Override
-    public @NonNull Limits requiredLimits(@NonNull MemorySegment structPtr) {
+    public Limits requiredLimits(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'requiredLimits'");
     }
 
     @Override
-    public @NonNull QueueDescriptor defaultQueue(@NonNull MemorySegment structPtr) {
+    public QueueDescriptor defaultQueue(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'defaultQueue'");
     }
 
     @Override
-    public @NonNull DeviceLost deviceLostCallbackInfo(@NonNull MemorySegment structPtr) {
+    public DeviceLost deviceLostCallbackInfo(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'deviceLostCallbackInfo'");
     }
 
     @Override
-    public @NonNull UncapturedError uncapturedErrorCallbackInfo(@NonNull MemorySegment structPtr) {
+    public UncapturedError uncapturedErrorCallbackInfo(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'uncapturedErrorCallbackInfo'");
     }
 
     @Override
-    public void label(@NonNull MemorySegment structPtr, @NonNull String label) {
+    public void label(MemorySegment structPtr, String label) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'label'");
     }
 
     @Override
-    public void requiredFeatures(@NonNull MemorySegment structPtr, FeatureName @NonNull [] requiredFeatures) {
+    public void requiredFeatures(MemorySegment structPtr, FeatureName[] requiredFeatures) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'requiredFeatures'");
     }
 
     @Override
-    public void requiredLimits(@NonNull MemorySegment structPtr, @NonNull Limits requiredLimits) {
+    public void requiredLimits(MemorySegment structPtr, Limits requiredLimits) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'requiredLimits'");
     }
 
     @Override
-    public void defaultQueue(@NonNull MemorySegment structPtr, @NonNull QueueDescriptor defaultQueue) {
+    public void defaultQueue(MemorySegment structPtr, QueueDescriptor defaultQueue) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'defaultQueue'");
     }
 
     @Override
-    public void deviceLostCallbackInfo(@NonNull MemorySegment structPtr, @NonNull DeviceLost deviceLostCallbackInfo) {
+    public void deviceLostCallbackInfo(MemorySegment structPtr, DeviceLost deviceLostCallbackInfo) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'deviceLostCallbackInfo'");
     }
 
     @Override
-    public void uncapturedErrorCallbackInfo(@NonNull MemorySegment structPtr,
-            @NonNull UncapturedError uncapturedErrorCallbackInfo) {
+    public void uncapturedErrorCallbackInfo(MemorySegment structPtr,
+            UncapturedError uncapturedErrorCallbackInfo) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'uncapturedErrorCallbackInfo'");
     }

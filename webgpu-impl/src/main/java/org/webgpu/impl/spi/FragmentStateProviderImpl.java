@@ -1,5 +1,6 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.jspecify.annotations.NonNull;
@@ -7,62 +8,63 @@ import org.webgpu.api.ColorTargetState;
 import org.webgpu.api.ConstantEntry;
 import org.webgpu.api.ShaderModule;
 import org.webgpu.api.spi.FragmentStateProvider;
+import org.webgpu.panama.WGPUFragmentState;
 
 /**
  * FragmentStateProviderImpl
  */
 public class FragmentStateProviderImpl implements FragmentStateProvider {
+    private final Arena arena = Arena.ofAuto();
 
     @Override
-    public @NonNull MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+    public MemorySegment initializer() {
+        return WGPUFragmentState.allocate(arena);
     }
 
     @Override
-    public @NonNull ShaderModule module(@NonNull MemorySegment structPtr) {
+    public ShaderModule module(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'module'");
     }
 
     @Override
-    public @NonNull String entryPoint(@NonNull MemorySegment structPtr) {
+    public String entryPoint(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'entryPoint'");
     }
 
     @Override
-    public ConstantEntry @NonNull [] constants(@NonNull MemorySegment structPtr) {
+    public ConstantEntry[] constants(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'constants'");
     }
 
     @Override
-    public ColorTargetState @NonNull [] targets(@NonNull MemorySegment structPtr) {
+    public ColorTargetState[] targets(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'targets'");
     }
 
     @Override
-    public void module(@NonNull MemorySegment structPtr, @NonNull ShaderModule module) {
+    public void module(MemorySegment structPtr, ShaderModule module) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'module'");
     }
 
     @Override
-    public void entryPoint(@NonNull MemorySegment structPtr, @NonNull String entryPoint) {
+    public void entryPoint(MemorySegment structPtr, String entryPoint) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'entryPoint'");
     }
 
     @Override
-    public void constants(@NonNull MemorySegment structPtr, ConstantEntry @NonNull [] constants) {
+    public void constants(MemorySegment structPtr, ConstantEntry[] constants) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'constants'");
     }
 
     @Override
-    public void targets(@NonNull MemorySegment structPtr, ColorTargetState @NonNull [] targets) {
+    public void targets(MemorySegment structPtr, ColorTargetState[] targets) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'targets'");
     }

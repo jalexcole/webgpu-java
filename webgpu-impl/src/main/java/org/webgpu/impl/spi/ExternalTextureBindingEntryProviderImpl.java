@@ -1,30 +1,32 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.jspecify.annotations.NonNull;
 import org.webgpu.api.ExternalTexture;
 import org.webgpu.api.spi.ExternalTextureBindingEntryProvider;
+import org.webgpu.panama.WGPUExternalTextureBindingEntry;
 
 /**
  * ExternalTextureBindingEntryProviderImpl
  */
-public class ExternalTextureBindingEntryProviderImpl implements ExternalTextureBindingEntryProvider{
+public class ExternalTextureBindingEntryProviderImpl implements ExternalTextureBindingEntryProvider {
+    private final Arena arena = Arena.ofAuto();
 
     @Override
-    public @NonNull MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+    public MemorySegment initializer() {
+        return WGPUExternalTextureBindingEntry.allocate(arena);
     }
 
     @Override
-    public @NonNull ExternalTexture externalTexture(@NonNull MemorySegment structPtr) {
+    public ExternalTexture externalTexture(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'externalTexture'");
     }
 
     @Override
-    public void externalTexture(@NonNull MemorySegment structPtr, @NonNull ExternalTexture externalTexture) {
+    public void externalTexture(MemorySegment structPtr, ExternalTexture externalTexture) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'externalTexture'");
     }

@@ -1,33 +1,35 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.jspecify.annotations.NonNull;
 import org.webgpu.api.TextureViewDimension;
 import org.webgpu.api.spi.TextureBindingViewDimensionProvider;
+import org.webgpu.panama.WGPUTextureBindingViewDimension;
 
 /**
  * TextureBindingViewDimensionProviderImpl
  */
-public class TextureBindingViewDimensionProviderImpl implements TextureBindingViewDimensionProvider{
+public class TextureBindingViewDimensionProviderImpl implements TextureBindingViewDimensionProvider {
+    private final Arena arena = Arena.ofAuto();
 
     @Override
-    public @NonNull MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+    public MemorySegment initializer() {
+        return WGPUTextureBindingViewDimension.allocate(arena);
     }
 
     @Override
-    public @NonNull TextureViewDimension textureBindingViewDimension(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'textureBindingViewDimension'");
+    public TextureViewDimension textureBindingViewDimension(MemorySegment structPtr) {
+        final int value = WGPUTextureBindingViewDimension.textureBindingViewDimension(structPtr);
+        return TextureViewDimension.values()[value];
+        
     }
 
     @Override
-    public void textureBindingViewDimension(@NonNull MemorySegment structPtr,
-            @NonNull TextureViewDimension textureBindingViewDimension) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'textureBindingViewDimension'");
+    public void textureBindingViewDimension(MemorySegment structPtr,
+            TextureViewDimension textureBindingViewDimension) {
+        WGPUTextureBindingViewDimension.textureBindingViewDimension(structPtr, textureBindingViewDimension.value());
     }
 
 }

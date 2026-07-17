@@ -1,5 +1,6 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.jspecify.annotations.NonNull;
@@ -7,122 +8,123 @@ import org.webgpu.api.LoadOp;
 import org.webgpu.api.StoreOp;
 import org.webgpu.api.TextureView;
 import org.webgpu.api.spi.RenderPassDepthStencilAttachmentProvider;
+import org.webgpu.panama.WGPURenderPassDepthStencilAttachment;
 
 /**
  * RenderPassDepthStencilAttachmentProviderImpl
  */
 public class RenderPassDepthStencilAttachmentProviderImpl implements RenderPassDepthStencilAttachmentProvider {
+    private final Arena arena = Arena.ofAuto();
 
     @Override
-    public @NonNull MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+    public MemorySegment initializer() {
+        return WGPURenderPassDepthStencilAttachment.allocate(arena);
     }
 
     @Override
-    public @NonNull TextureView view(@NonNull MemorySegment structPtr) {
+    public TextureView view(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'view'");
     }
 
     @Override
-    public @NonNull LoadOp depthLoadOp(@NonNull MemorySegment structPtr) {
+    public LoadOp depthLoadOp(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'depthLoadOp'");
     }
 
     @Override
-    public @NonNull StoreOp depthStoreOp(@NonNull MemorySegment structPtr) {
+    public StoreOp depthStoreOp(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'depthStoreOp'");
     }
 
     @Override
-    public float depthClearValue(@NonNull MemorySegment structPtr) {
+    public float depthClearValue(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'depthClearValue'");
     }
 
     @Override
-    public boolean depthReadOnly(@NonNull MemorySegment structPtr) {
+    public boolean depthReadOnly(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'depthReadOnly'");
     }
 
     @Override
-    public @NonNull LoadOp stencilLoadOp(@NonNull MemorySegment structPtr) {
+    public LoadOp stencilLoadOp(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'stencilLoadOp'");
     }
 
     @Override
-    public @NonNull StoreOp stencilStoreOp(@NonNull MemorySegment structPtr) {
+    public StoreOp stencilStoreOp(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'stencilStoreOp'");
     }
 
     @Override
-    public int stencilClearValue(@NonNull MemorySegment structPtr) {
+    public int stencilClearValue(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'stencilClearValue'");
     }
 
     @Override
-    public boolean stencilReadOnly(@NonNull MemorySegment structPtr) {
+    public boolean stencilReadOnly(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'stencilReadOnly'");
     }
 
     @Override
-    public void view(@NonNull MemorySegment structPtr, @NonNull TextureView view) {
+    public void view(MemorySegment structPtr, TextureView view) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'view'");
     }
 
     @Override
-    public void depthLoadOp(@NonNull MemorySegment structPtr, @NonNull LoadOp depthLoadOp) {
+    public void depthLoadOp(MemorySegment structPtr, LoadOp depthLoadOp) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'depthLoadOp'");
     }
 
     @Override
-    public void depthStoreOp(@NonNull MemorySegment structPtr, @NonNull StoreOp depthStoreOp) {
+    public void depthStoreOp(MemorySegment structPtr, StoreOp depthStoreOp) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'depthStoreOp'");
     }
 
     @Override
-    public void depthClearValue(@NonNull MemorySegment structPtr, float depthClearValue) {
+    public void depthClearValue(MemorySegment structPtr, float depthClearValue) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'depthClearValue'");
     }
 
     @Override
-    public void depthReadOnly(@NonNull MemorySegment structPtr, boolean depthReadOnly) {
+    public void depthReadOnly(MemorySegment structPtr, boolean depthReadOnly) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'depthReadOnly'");
     }
 
     @Override
-    public void stencilLoadOp(@NonNull MemorySegment structPtr, @NonNull LoadOp stencilLoadOp) {
+    public void stencilLoadOp(MemorySegment structPtr, LoadOp stencilLoadOp) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'stencilLoadOp'");
     }
 
     @Override
-    public void stencilStoreOp(@NonNull MemorySegment structPtr, @NonNull StoreOp stencilStoreOp) {
+    public void stencilStoreOp(MemorySegment structPtr, StoreOp stencilStoreOp) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'stencilStoreOp'");
     }
 
     @Override
-    public void stencilClearValue(@NonNull MemorySegment structPtr, int stencilClearValue) {
+    public void stencilClearValue(MemorySegment structPtr, int stencilClearValue) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'stencilClearValue'");
     }
 
     @Override
-    public void stencilReadOnly(@NonNull MemorySegment structPtr, boolean stencilReadOnly) {
+    public void stencilReadOnly(MemorySegment structPtr, boolean stencilReadOnly) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'stencilReadOnly'");
     }

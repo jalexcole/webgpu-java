@@ -1,31 +1,32 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.jspecify.annotations.NonNull;
 import org.webgpu.api.spi.RenderBundleDescriptorProvider;
+import org.webgpu.impl.util.StringViewMapper;
+import org.webgpu.panama.WGPURenderBundleDescriptor;
 
 /**
  * RenderBundleDescriptorProviderImpl
  */
 public class RenderBundleDescriptorProviderImpl implements RenderBundleDescriptorProvider {
+    private final Arena arena = Arena.ofAuto();
 
     @Override
-    public @NonNull MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+    public MemorySegment initializer() {
+        return WGPURenderBundleDescriptor.allocate(arena);
     }
 
     @Override
-    public @NonNull String label(@NonNull MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'label'");
+    public String label(MemorySegment structPtr) {
+        return StringViewMapper.map(WGPURenderBundleDescriptor.label(structPtr));
     }
 
     @Override
-    public void label(@NonNull MemorySegment structPtr, @NonNull String label) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'label'");
+    public void label(MemorySegment structPtr, String label) {
+        WGPURenderBundleDescriptor.label(structPtr, StringViewMapper.map(label, arena));
     }
 
 }

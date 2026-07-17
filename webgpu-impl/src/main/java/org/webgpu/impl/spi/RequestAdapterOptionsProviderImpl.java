@@ -1,5 +1,6 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.jspecify.annotations.NonNull;
@@ -8,74 +9,75 @@ import org.webgpu.api.FeatureLevel;
 import org.webgpu.api.PowerPreference;
 import org.webgpu.api.Surface;
 import org.webgpu.api.spi.RequestAdapterOptionsProvider;
+import org.webgpu.panama.WGPURequestAdapterOptions;
 
 /**
  * RequestAdapterOptionsProviderImpl
  */
 public class RequestAdapterOptionsProviderImpl implements RequestAdapterOptionsProvider {
+    private final Arena arena = Arena.ofAuto();
 
     @Override
-    public @NonNull MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+    public MemorySegment initializer() {
+        return WGPURequestAdapterOptions.allocate(arena);
     }
 
     @Override
-    public @NonNull FeatureLevel featureLevel(@NonNull MemorySegment structPtr) {
+    public FeatureLevel featureLevel(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'featureLevel'");
     }
 
     @Override
-    public @NonNull PowerPreference powerPreference(@NonNull MemorySegment structPtr) {
+    public PowerPreference powerPreference(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'powerPreference'");
     }
 
     @Override
-    public boolean forceFallbackAdapter(@NonNull MemorySegment structPtr) {
+    public boolean forceFallbackAdapter(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'forceFallbackAdapter'");
     }
 
     @Override
-    public @NonNull BackendType backendType(@NonNull MemorySegment structPtr) {
+    public BackendType backendType(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'backendType'");
     }
 
     @Override
-    public @NonNull Surface compatibleSurface(@NonNull MemorySegment structPtr) {
+    public Surface compatibleSurface(MemorySegment structPtr) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'compatibleSurface'");
     }
 
     @Override
-    public void featureLevel(@NonNull MemorySegment structPtr, @NonNull FeatureLevel featureLevel) {
+    public void featureLevel(MemorySegment structPtr, FeatureLevel featureLevel) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'featureLevel'");
     }
 
     @Override
-    public void powerPreference(@NonNull MemorySegment structPtr, @NonNull PowerPreference powerPreference) {
+    public void powerPreference(MemorySegment structPtr, PowerPreference powerPreference) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'powerPreference'");
     }
 
     @Override
-    public void forceFallbackAdapter(@NonNull MemorySegment structPtr, boolean forceFallbackAdapter) {
+    public void forceFallbackAdapter(MemorySegment structPtr, boolean forceFallbackAdapter) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'forceFallbackAdapter'");
     }
 
     @Override
-    public void backendType(@NonNull MemorySegment structPtr, @NonNull BackendType backendType) {
+    public void backendType(MemorySegment structPtr, BackendType backendType) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'backendType'");
     }
 
     @Override
-    public void compatibleSurface(@NonNull MemorySegment structPtr, @NonNull Surface compatibleSurface) {
+    public void compatibleSurface(MemorySegment structPtr, Surface compatibleSurface) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'compatibleSurface'");
     }
