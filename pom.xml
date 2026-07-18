@@ -17,31 +17,36 @@
         <module>webgpu-annotations</module>
         <module>webgpu-generator</module>
         <module>webgpu-panama</module>
-        
+
         <module>webgpu-api</module>
         <module>webgpu-impl</module>
         <module>webgpu</module>
         <module>webgpu-examples</module>
     </modules>
 
-    <!-- <build>
+    <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>3.3.1</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.0.0</version>
                 <executions>
                     <execution>
-                        <id>attach-sources</id>
-                        <phase>verify</phase>
+                        <id>add-integration-test-source</id>
+                        <phase>process-test-sources</phase>
                         <goals>
-                            <goal>jar-no-fork</goal>
+                            <goal>add-test-source</goal>
                         </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/integration-test/java</source>
+                            </sources>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
-    </build> -->
+    </build>
 
     <dependencyManagement>
         <dependencies>
@@ -50,7 +55,7 @@
                 <artifactId>junit-jupiter-api</artifactId>
                 <version>5.10.0</version>
             </dependency>
-            
+
         </dependencies>
     </dependencyManagement>
 </project>
