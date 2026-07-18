@@ -68,7 +68,8 @@ public final class DeviceImpl implements Device, WebGPUObjectImpl {
     @Override
     public PipelineLayoutImpl createPipelineLayout(PipelineLayoutDescriptor descriptor) {
         final var descriptorPtr = StructTools.fetchSegment(descriptor);
-        return null;
+        final var pipelineLayoutPtr = webgpu_h.wgpuDeviceCreatePipelineLayout(this.memorySegment, descriptorPtr);
+        return new PipelineLayoutImpl(pipelineLayoutPtr);
     }
 
     @Override
@@ -92,25 +93,29 @@ public final class DeviceImpl implements Device, WebGPUObjectImpl {
     @Override
     public RenderPipelineImpl createRenderPipeline(RenderPipelineDescriptor descriptor) {
         final var descriptorPtr = StructTools.fetchSegment(descriptor);
-        return null;
+        final var renderPipelinePtr = webgpu_h.wgpuDeviceCreateRenderPipeline(this.memorySegment, descriptorPtr);
+        return new RenderPipelineImpl(renderPipelinePtr);
     }
 
     @Override
-    public Sampler createSampler(SamplerDescriptor descriptor) {
+    public SamplerImpl createSampler(SamplerDescriptor descriptor) {
         final var descriptorPtr = StructTools.fetchSegment(descriptor);
-        return null;
+        final var samplerPtr = webgpu_h.wgpuDeviceCreateSampler(this.memorySegment, descriptorPtr);
+        return new SamplerImpl(samplerPtr);
     }
 
     @Override
     public ShaderModule createShaderModule(ShaderModuleDescriptor descriptor) {
         final var descriptorPtr = StructTools.fetchSegment(descriptor);
-        return null;
+        final var shaderModulePtr = webgpu_h.wgpuDeviceCreateShaderModule(this.memorySegment, descriptorPtr);
+        return new ShaderModuleImpl(shaderModulePtr);
     }
 
     @Override
     public Texture createTexture(TextureDescriptor descriptor) {
         final var descriptorPtr = StructTools.fetchSegment(descriptor);
-        return null;
+        final var texturePtr = webgpu_h.wgpuDeviceCreateTexture(this.memorySegment, descriptorPtr);
+        return new TextureImpl(texturePtr);
     }
 
     @Override
@@ -123,9 +128,7 @@ public final class DeviceImpl implements Device, WebGPUObjectImpl {
     @Override
     public Future getLostFuture() {
         final var futurePtr = webgpu_h.wgpuDeviceGetLostFuture(arena, this.memorySegment);
-        final Future future = new Future();
-        future.id(WGPUFuture.id(futurePtr));
-        return future;
+        return StructTools.placeSegment(futurePtr, Future.class);
     }
 
     @Override

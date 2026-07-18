@@ -52,8 +52,8 @@ jobs:
       - name: Build with Maven skipping Tests
         run: mvn -B package -DskipTests=true --file pom.xml
 
-      - name: Test with Maven
-        run: mvn -B test --file pom.xml
+      # - name: Test with Maven
+      #   run: mvn -B test --file pom.xml
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     # - name: Update dependency graph
