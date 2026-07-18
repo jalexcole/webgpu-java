@@ -5,7 +5,6 @@ import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import java.util.Arrays;
 
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.NullMarked;
 import org.webgpu.api.WGSLLanguageFeatureName;
 import org.webgpu.api.spi.SupportedWGSLLanguageFeaturesProvider;

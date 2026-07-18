@@ -3,9 +3,10 @@ package org.webgpu.impl.spi;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
-import org.jspecify.annotations.NonNull;
 import org.webgpu.api.spi.SurfaceDescriptorProvider;
+import org.webgpu.impl.util.StringViewMapper;
 import org.webgpu.panama.WGPUSurfaceDescriptor;
+
 /**
  * SurfaceDescriptorProviderImpl
  */
@@ -19,14 +20,15 @@ public class SurfaceDescriptorProviderImpl implements SurfaceDescriptorProvider 
 
     @Override
     public String label(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'label'");
+        return StringViewMapper.map(WGPUSurfaceDescriptor.label(structPtr));
     }
 
     @Override
     public void label(MemorySegment structPtr, String label) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'label'");
+        try (Arena labelArena = Arena.ofConfined()) {
+            final MemorySegment labelSegment = StringViewMapper.map(label, labelArena);
+            WGPUSurfaceDescriptor.label(structPtr, labelSegment);
+        }
     }
 
 }

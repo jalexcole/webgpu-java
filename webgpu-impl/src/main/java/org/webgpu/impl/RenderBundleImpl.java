@@ -17,5 +17,9 @@ public class RenderBundleImpl implements RenderBundle {
 	public void setLabel(String label) {
 		throw new WGPUException(new UnsupportedOperationException("Unimplemented method 'setLabel'"));
 	}
+
+	public MemorySegment ptr() {
+		return this.memorySegment;
+	}
     
 }

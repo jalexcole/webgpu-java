@@ -4,9 +4,9 @@ import java.lang.foreign.MemorySegment;
 
 import org.jspecify.annotations.NullMarked;
 import org.webgpu.api.ExternalTexture;
-
+import org.webgpu.api.exceptions.WGPUException;
 @NullMarked
-public class ExternalTextureImpl implements ExternalTexture {
+public final class ExternalTextureImpl implements ExternalTexture, WebGPUObjectImpl {
 
     private final MemorySegment memorySegment;
     
@@ -16,8 +16,12 @@ public class ExternalTextureImpl implements ExternalTexture {
 
 	@Override
 	public void setLabel(String label) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'setLabel'");
+		throw new WGPUException(new UnsupportedOperationException("Unimplemented method 'setLabel'"));
+	}
+
+	@Override
+	public MemorySegment ptr() {
+		return this.memorySegment;
 	}
     
 }

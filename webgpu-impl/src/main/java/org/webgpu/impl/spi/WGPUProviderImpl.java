@@ -7,7 +7,6 @@ import java.lang.foreign.ValueLayout;
 import java.nio.charset.StandardCharsets;
 import java.util.function.BiConsumer;
 
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.NullMarked;
 import org.webgpu.api.Instance;
 import org.webgpu.api.InstanceDescriptor;
@@ -33,7 +32,7 @@ public class WGPUProviderImpl implements WGPUProvider {
     }
 
     @Override
-    public Instance createInstance(InstanceDescriptor descriptor) {
+    public InstanceImpl createInstance(InstanceDescriptor descriptor) {
         return new InstanceImpl(descriptor != null ? descriptor : new InstanceDescriptor());
     }
 

@@ -3,7 +3,6 @@ package org.webgpu.impl.spi;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
-import org.jspecify.annotations.NonNull;
 import org.webgpu.api.TextureViewDimension;
 import org.webgpu.api.spi.TextureBindingViewDimensionProvider;
 import org.webgpu.panama.WGPUTextureBindingViewDimension;
@@ -23,7 +22,7 @@ public class TextureBindingViewDimensionProviderImpl implements TextureBindingVi
     public TextureViewDimension textureBindingViewDimension(MemorySegment structPtr) {
         final int value = WGPUTextureBindingViewDimension.textureBindingViewDimension(structPtr);
         return TextureViewDimension.values()[value];
-        
+
     }
 
     @Override

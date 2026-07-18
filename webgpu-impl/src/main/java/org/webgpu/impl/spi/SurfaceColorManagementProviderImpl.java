@@ -3,7 +3,6 @@ package org.webgpu.impl.spi;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
-import org.jspecify.annotations.NonNull;
 import org.webgpu.api.PredefinedColorSpace;
 import org.webgpu.api.ToneMappingMode;
 import org.webgpu.api.spi.SurfaceColorManagementProvider;

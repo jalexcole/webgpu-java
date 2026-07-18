@@ -1,44 +1,60 @@
 package org.webgpu.impl.spi;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
-import org.jspecify.annotations.NonNull;
-import org.webgpu.api.PassTimestampWrites;
-import org.webgpu.api.spi.ComputePassDescriptorProvider;
+import org.webgpu.api.ConstantEntry;
+import org.webgpu.api.ShaderModule;
+import org.webgpu.api.spi.ComputeStateProvider;
+import org.webgpu.impl.ShaderModuleImpl;
+import org.webgpu.impl.util.StringViewMapper;
+import org.webgpu.panama.WGPUComputeState;
 
 /**
  * ComputeStateProviderImpl
  */
-public class ComputeStateProviderImpl implements ComputePassDescriptorProvider {
+public class ComputeStateProviderImpl implements ComputeStateProvider {
 
     @Override
     public MemorySegment initializer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializer'");
+        return WGPUComputeState.allocate(Arena.ofAuto());
     }
 
     @Override
-    public String label(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'label'");
+    public ShaderModuleImpl module(MemorySegment structPtr) {
+        final var shaderModulePtr = WGPUComputeState.module(structPtr);
+        return new ShaderModuleImpl(shaderModulePtr);
     }
 
     @Override
-    public PassTimestampWrites timestampWrites(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'timestampWrites'");
+    public String entryPoint(MemorySegment structPtr) {
+        final var entryPointPtr = WGPUComputeState.entryPoint(structPtr);
+        return StringViewMapper.map(entryPointPtr);
     }
 
     @Override
-    public void label(MemorySegment structPtr, String label) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'label'");
+    public ConstantEntry[] constants(MemorySegment structPtr) {
+        throw new UnsupportedOperationException("Unimplemented method 'constants'");
     }
 
     @Override
-    public void timestampWrites(MemorySegment structPtr, PassTimestampWrites timestampWrites) {
+    public void module(MemorySegment structPtr, ShaderModule module) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'timestampWrites'");
+        throw new UnsupportedOperationException("Unimplemented method 'module'");
     }
+
+    @Override
+    public void entryPoint(MemorySegment structPtr, String entryPoint) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'entryPoint'");
+    }
+
+    @Override
+    public void constants(MemorySegment structPtr, ConstantEntry[] constants) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'constants'");
+    }
+
+    
 
 }

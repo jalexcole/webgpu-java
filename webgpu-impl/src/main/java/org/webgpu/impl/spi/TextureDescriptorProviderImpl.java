@@ -2,14 +2,17 @@ package org.webgpu.impl.spi;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
+import java.lang.foreign.ValueLayout;
 import java.util.Set;
 
-import org.jspecify.annotations.NonNull;
 import org.webgpu.api.Extent3D;
 import org.webgpu.api.TextureDimension;
 import org.webgpu.api.TextureFormat;
 import org.webgpu.api.TextureUsage;
 import org.webgpu.api.spi.TextureDescriptorProvider;
+import org.webgpu.impl.util.BitPacker;
+import org.webgpu.impl.util.StringViewMapper;
+import org.webgpu.impl.util.StructTools;
 import org.webgpu.panama.WGPUTextureDescriptor;
 
 /**
@@ -25,32 +28,31 @@ public class TextureDescriptorProviderImpl implements TextureDescriptorProvider 
 
     @Override
     public String label(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'label'");
+        return StringViewMapper.map(WGPUTextureDescriptor.label(structPtr));
     }
 
     @Override
     public Set<TextureUsage> usage(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'usage'");
+        final long usageValue = WGPUTextureDescriptor.usage(structPtr);
+        return BitPacker.unpack(usageValue, TextureUsage.class);
     }
 
     @Override
     public TextureDimension dimension(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'dimension'");
+        final int dimensionValue = WGPUTextureDescriptor.dimension(structPtr);
+        return TextureDimension.values()[dimensionValue];
     }
 
     @Override
     public Extent3D size(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'size'");
+        final var size = WGPUTextureDescriptor.size(structPtr);
+        return StructTools.placeSegment(size, Extent3D.class);
     }
 
     @Override
     public TextureFormat format(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'format'");
+        final int formatValue = WGPUTextureDescriptor.format(structPtr);
+        return TextureFormat.values()[formatValue];
     }
 
     @Override
@@ -71,32 +73,34 @@ public class TextureDescriptorProviderImpl implements TextureDescriptorProvider 
 
     @Override
     public void label(MemorySegment structPtr, String label) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'label'");
+        try (Arena confinedArena = Arena.ofConfined()) {
+            final MemorySegment labelSegment = StringViewMapper.map(label, confinedArena);
+            WGPUTextureDescriptor.label(structPtr, labelSegment);
+        }
     }
 
     @Override
     public void usage(MemorySegment structPtr, Set<TextureUsage> usage) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'usage'");
+        final long usageValue = BitPacker.pack(usage);
+        WGPUTextureDescriptor.usage(structPtr, usageValue);
     }
 
     @Override
     public void dimension(MemorySegment structPtr, TextureDimension dimension) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'dimension'");
+        int dimensionValue = dimension.value();
+        WGPUTextureDescriptor.dimension(structPtr, dimensionValue);
     }
 
     @Override
     public void size(MemorySegment structPtr, Extent3D size) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'size'");
+        final var sizeSegment = StructTools.fetchSegment(size);
+        WGPUTextureDescriptor.size(structPtr, sizeSegment);
     }
 
     @Override
     public void format(MemorySegment structPtr, TextureFormat format) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'format'");
+        final int formatValue = format.value();
+        WGPUTextureDescriptor.format(structPtr, formatValue);
     }
 
     @Override
@@ -111,8 +115,14 @@ public class TextureDescriptorProviderImpl implements TextureDescriptorProvider 
 
     @Override
     public void viewFormats(MemorySegment structPtr, TextureFormat[] viewFormats) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'viewFormats'");
+        try (Arena confinedArena = Arena.ofConfined()) {
+            final MemorySegment viewFormatsPtr = confinedArena.allocate(ValueLayout.JAVA_INT, viewFormats.length);
+            for (int i = 0; i < viewFormats.length; i++) {
+                viewFormatsPtr.setAtIndex(ValueLayout.JAVA_INT, i, viewFormats[i].value());
+            }
+            WGPUTextureDescriptor.viewFormats(structPtr, viewFormatsPtr);
+            WGPUTextureDescriptor.viewFormatCount(structPtr, viewFormats.length);
+        }
     }
 
 }

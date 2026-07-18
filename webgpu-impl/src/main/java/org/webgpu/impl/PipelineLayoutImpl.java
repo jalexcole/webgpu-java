@@ -18,7 +18,6 @@ public final class PipelineLayoutImpl implements PipelineLayout, WebGPUObjectImp
 
 	@Override
 	public void setLabel(String label) {
-		// TODO Auto-generated method stub
 		throw new WGPUException(new UnsupportedOperationException("Unimplemented method 'setLabel'"));
 	}
 	@Override

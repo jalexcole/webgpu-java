@@ -23,7 +23,7 @@ public class BitPacker {
             throw new WGPUException("Unable to unpack due to null type");
         }
         if (packedValue == 0 && values.length > 0) {
-            return EnumSet.of(values[0]);
+            return EnumSet.noneOf(type);
         }
 
         EnumSet<T> result = EnumSet.noneOf(type);

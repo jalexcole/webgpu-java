@@ -2,11 +2,13 @@ package org.webgpu.impl.spi;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
+import java.lang.foreign.ValueLayout;
 
 import org.jspecify.annotations.NullMarked;
 import org.webgpu.api.BindGroupLayoutEntry;
 import org.webgpu.api.spi.BindGroupLayoutDescriptorProvider;
 import org.webgpu.impl.util.StringViewMapper;
+import org.webgpu.impl.util.StructTools;
 import org.webgpu.panama.WGPUBindGroupLayoutDescriptor;
 import org.webgpu.panama.WGPUBindGroupLayoutEntry;
 
@@ -52,7 +54,14 @@ public class BindGroupLayoutDescriptorProviderImpl implements BindGroupLayoutDes
 
     @Override
     public void entries(MemorySegment structPtr, BindGroupLayoutEntry[] entries) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'entries'");
+        
+        final MemorySegment entriesPtr = WGPUBindGroupLayoutEntry.allocateArray(entries.length, arena);
+
+        for (int i = 0; i < entries.length; i++) {
+            final MemorySegment bindGroupLayoutEntryPtr = StructTools.fetchSegment(entries[i]);
+            entriesPtr.setAtIndex(ValueLayout.ADDRESS, i, bindGroupLayoutEntryPtr);
+        }
+
+        WGPUBindGroupLayoutDescriptor.entries(structPtr, entriesPtr);
     }
 }

@@ -3,9 +3,9 @@ package org.webgpu.impl.spi;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
-import org.jspecify.annotations.NonNull;
 import org.webgpu.api.QueryType;
 import org.webgpu.api.spi.QuerySetDescriptorProvider;
+import org.webgpu.impl.util.StringViewMapper;
 import org.webgpu.panama.WGPUQuerySetDescriptor;
 
 /**
@@ -21,38 +21,37 @@ public class QuerySetDescriptorProviderImpl implements QuerySetDescriptorProvide
 
     @Override
     public String label(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'label'");
+        return StringViewMapper.map(WGPUQuerySetDescriptor.label(structPtr));
     }
 
     @Override
     public QueryType type(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'type'");
+        final int typeValue = WGPUQuerySetDescriptor.type(structPtr);
+        return QueryType.values()[typeValue];
     }
 
     @Override
     public int count(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'count'");
+        return WGPUQuerySetDescriptor.count(structPtr);
     }
 
     @Override
     public void label(MemorySegment structPtr, String label) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'label'");
+        try (Arena labelArena = Arena.ofAuto()) {
+            final MemorySegment labelSegment = StringViewMapper.map(label, labelArena);
+            WGPUQuerySetDescriptor.label(structPtr, labelSegment);
+        }
     }
 
     @Override
     public void type(MemorySegment structPtr, QueryType type) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'type'");
+        int typeValue = type.value();
+        WGPUQuerySetDescriptor.type(structPtr, typeValue);
     }
 
     @Override
     public void count(MemorySegment structPtr, int count) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'count'");
+        WGPUQuerySetDescriptor.count(structPtr, count);
     }
 
 }

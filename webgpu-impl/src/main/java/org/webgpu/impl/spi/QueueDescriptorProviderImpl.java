@@ -7,6 +7,7 @@ import java.lang.foreign.MemorySegment;
 import org.jspecify.annotations.NullMarked;
 
 import org.webgpu.api.spi.QueueDescriptorProvider;
+import org.webgpu.impl.util.StringViewMapper;
 import org.webgpu.panama.WGPUQueueDescriptor;
 
 @NullMarked
@@ -20,14 +21,15 @@ public class QueueDescriptorProviderImpl implements QueueDescriptorProvider {
 
     @Override
     public String label(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'label'");
+        return StringViewMapper.map(WGPUQueueDescriptor.label(structPtr));
     }
 
     @Override
     public void label(MemorySegment structPtr, String label) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'label'");
+        try (Arena confinedArena = Arena.ofConfined()) {
+            final MemorySegment labelSegment = StringViewMapper.map(label, confinedArena);
+            WGPUQueueDescriptor.label(structPtr, labelSegment);
+        }
     }
 
 }

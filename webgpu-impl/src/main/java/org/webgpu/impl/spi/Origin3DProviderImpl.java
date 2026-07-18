@@ -3,7 +3,6 @@ package org.webgpu.impl.spi;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
-import org.jspecify.annotations.NonNull;
 import org.webgpu.api.spi.Origin3DProvider;
 import org.webgpu.panama.WGPUOrigin3D;
 
@@ -20,38 +19,32 @@ public class Origin3DProviderImpl implements Origin3DProvider {
 
     @Override
     public int x(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'x'");
+        return WGPUOrigin3D.x(structPtr);
     }
 
     @Override
     public int y(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'y'");
+        return WGPUOrigin3D.y(structPtr);
     }
 
     @Override
     public int z(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'z'");
+        return WGPUOrigin3D.z(structPtr);
     }
 
     @Override
     public void x(MemorySegment structPtr, int x) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'x'");
+        WGPUOrigin3D.x(structPtr, x);
     }
 
     @Override
     public void y(MemorySegment structPtr, int y) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'y'");
+        WGPUOrigin3D.y(structPtr, y);
     }
 
     @Override
     public void z(MemorySegment structPtr, int z) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'z'");
+        WGPUOrigin3D.z(structPtr, z);
     }
 
 }

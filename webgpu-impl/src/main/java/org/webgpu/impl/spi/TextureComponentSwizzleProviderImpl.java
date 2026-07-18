@@ -3,7 +3,6 @@ package org.webgpu.impl.spi;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
-import org.jspecify.annotations.NonNull;
 import org.webgpu.api.ComponentSwizzle;
 import org.webgpu.api.TextureComponentSwizzle;
 import org.webgpu.api.spi.TextureComponentSwizzleDescriptorProvider;
@@ -68,7 +67,5 @@ public class TextureComponentSwizzleProviderImpl implements TextureComponentSwiz
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'a'");
     }
-
-    
 
 }

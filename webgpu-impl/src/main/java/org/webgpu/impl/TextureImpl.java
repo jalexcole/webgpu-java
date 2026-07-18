@@ -1,8 +1,6 @@
 package org.webgpu.impl;
 
 import java.lang.foreign.MemorySegment;
-import java.util.BitSet;
-import java.util.EnumSet;
 import java.util.Set;
 
 import org.jspecify.annotations.NullMarked;

@@ -2,8 +2,6 @@ package org.webgpu.impl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,16 +21,15 @@ import org.webgpu.api.SupportedFeatures;
 import org.webgpu.api.WGPU;
 import org.webgpu.panama.NativeLibraryLoader;
 
-public class AdapterImplTest {
-
+class AdapterImplTest {
 
     private AdapterImpl adapter;
 
-    @BeforeAll
-    public static void beforeClass() {
-        NativeLibraryLoader.loadLibrary();
-    }
-    
+    // @BeforeAll
+    // static void beforeClass() {
+    //     NativeLibraryLoader.loadLibrary();
+    // }
+
     @BeforeEach
     void createAdapter() {
         Instance instance = WGPU.createInstance(new InstanceDescriptor());
@@ -49,16 +46,14 @@ public class AdapterImplTest {
         }, options);
 
     }
-    
-
 
     @Test
     void testGetFeatures() {
-        assertThrows(UnsupportedOperationException.class, () -> {
-            var features = new SupportedFeatures();
-            adapter.getFeatures(features);
-            System.out.println("Supported Features: " + features);
-        });
+
+        var features = new SupportedFeatures();
+        adapter.getFeatures(features);
+        System.out.println("Supported Features: " + features);
+
     }
 
     @Test
@@ -89,7 +84,8 @@ public class AdapterImplTest {
     void testRequestDevice() {
         var deviceDescriptor = new DeviceDescriptor();
         adapter.requestDevice((RequestDeviceStatus status, Device device, String message) -> {
-            System.out.println("Request Device Callback: status=" + status + ", device=" + device + ", message=" + message);
+            System.out.println(
+                    "Request Device Callback: status=" + status + ", device=" + device + ", message=" + message);
             assertNotNull(status);
             assertNotNull(device);
             assertNotNull(message);

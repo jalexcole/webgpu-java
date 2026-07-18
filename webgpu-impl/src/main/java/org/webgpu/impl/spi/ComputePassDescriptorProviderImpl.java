@@ -27,10 +27,7 @@ public class ComputePassDescriptorProviderImpl implements ComputePassDescriptorP
 
     @Override
     public PassTimestampWrites timestampWrites(MemorySegment structPtr) {
-        var seg = WGPUComputePassDescriptor.timestampWrites(structPtr);
-        if (seg == null || seg.equals(MemorySegment.NULL)) {
-            return null;
-        }
+        final var seg = WGPUComputePassDescriptor.timestampWrites(structPtr);        
         return StructTools.placeSegment(seg, PassTimestampWrites.class);
     }
 
@@ -41,10 +38,6 @@ public class ComputePassDescriptorProviderImpl implements ComputePassDescriptorP
 
     @Override
     public void timestampWrites(MemorySegment structPtr, PassTimestampWrites timestampWrites) {
-        if (timestampWrites == null) {
-            WGPUComputePassDescriptor.timestampWrites(structPtr, MemorySegment.NULL);
-            return;
-        }
         WGPUComputePassDescriptor.timestampWrites(structPtr, StructTools.fetchSegment(timestampWrites));
     }
 

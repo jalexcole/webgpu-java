@@ -5,10 +5,10 @@ import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import java.util.Arrays;
 
-import org.jspecify.annotations.NonNull;
 import org.webgpu.api.InstanceFeatureName;
 import org.webgpu.api.InstanceLimits;
 import org.webgpu.api.spi.InstanceDescriptorProvider;
+import org.webgpu.impl.util.EnumUtil;
 import org.webgpu.impl.util.StructTools;
 import org.webgpu.panama.WGPUInstanceDescriptor;
 
@@ -20,20 +20,21 @@ public class InstanceDescriptorProviderImpl implements InstanceDescriptorProvide
 
     @Override
     public MemorySegment initializer() {
-        System.out.println("Creating Instance Descriptor");
         return WGPUInstanceDescriptor.allocate(arena);
     }
 
     @Override
     public InstanceFeatureName[] requiredFeatures(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'requiredFeatures'");
+        final var requiredFeaturesPtr = WGPUInstanceDescriptor.requiredFeatures(structPtr);
+        final long count = WGPUInstanceDescriptor.requiredFeatureCount(structPtr);
+
+       return EnumUtil.unpackEnum(requiredFeaturesPtr, count, InstanceFeatureName.class);
     }
 
     @Override
     public InstanceLimits requiredLimits(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'requiredLimits'");
+        final var limitsPtr = WGPUInstanceDescriptor.requiredLimits(structPtr);
+        return StructTools.placeSegment(limitsPtr, InstanceLimits.class);
     }
 
     @Override

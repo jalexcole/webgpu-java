@@ -4,7 +4,6 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.util.Set;
 
-import org.jspecify.annotations.NonNull;
 import org.webgpu.api.TextureAspect;
 import org.webgpu.api.TextureFormat;
 import org.webgpu.api.TextureUsage;

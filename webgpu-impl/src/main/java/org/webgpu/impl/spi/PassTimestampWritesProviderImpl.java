@@ -3,7 +3,6 @@ package org.webgpu.impl.spi;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
-import org.jspecify.annotations.NonNull;
 import org.webgpu.api.QuerySet;
 import org.webgpu.api.spi.PassTimestampWritesProvider;
 import org.webgpu.panama.WGPUPassTimestampWrites;
@@ -27,14 +26,12 @@ public class PassTimestampWritesProviderImpl implements PassTimestampWritesProvi
 
     @Override
     public int beginningOfPassWriteIndex(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'beginningOfPassWriteIndex'");
+        return WGPUPassTimestampWrites.beginningOfPassWriteIndex(structPtr);
     }
 
     @Override
     public int endOfPassWriteIndex(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'endOfPassWriteIndex'");
+        return WGPUPassTimestampWrites.endOfPassWriteIndex(structPtr);
     }
 
     @Override
@@ -45,14 +42,12 @@ public class PassTimestampWritesProviderImpl implements PassTimestampWritesProvi
 
     @Override
     public void beginningOfPassWriteIndex(MemorySegment structPtr, int beginningOfPassWriteIndex) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'beginningOfPassWriteIndex'");
+        WGPUPassTimestampWrites.beginningOfPassWriteIndex(structPtr, beginningOfPassWriteIndex);
     }
 
     @Override
     public void endOfPassWriteIndex(MemorySegment structPtr, int endOfPassWriteIndex) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'endOfPassWriteIndex'");
+        WGPUPassTimestampWrites.endOfPassWriteIndex(structPtr, endOfPassWriteIndex);
     }
 
 }

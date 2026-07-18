@@ -3,13 +3,10 @@ package org.webgpu.impl.spi;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
-import org.jspecify.annotations.NonNull;
 import org.webgpu.api.spi.ShaderSourceWGSLProvider;
+import org.webgpu.impl.util.StringViewMapper;
 import org.webgpu.panama.WGPUShaderSourceWGSL;
 
-/**
- * ShaderSourceWGSLProviderImpl
- */
 public class ShaderSourceWGSLProviderImpl implements ShaderSourceWGSLProvider {
     private final Arena arena = Arena.ofAuto();
 
@@ -20,14 +17,14 @@ public class ShaderSourceWGSLProviderImpl implements ShaderSourceWGSLProvider {
 
     @Override
     public String code(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'code'");
+        return StringViewMapper.map(WGPUShaderSourceWGSL.code(structPtr));
     }
 
     @Override
     public void code(MemorySegment structPtr, String code) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'code'");
+        try (Arena arena = Arena.ofConfined()) {
+            WGPUShaderSourceWGSL.code(structPtr, StringViewMapper.map(code, arena));
+        }
     }
 
 }

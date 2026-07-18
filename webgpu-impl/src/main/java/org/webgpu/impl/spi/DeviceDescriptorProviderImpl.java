@@ -3,13 +3,14 @@ package org.webgpu.impl.spi;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
-import org.jspecify.annotations.NonNull;
 import org.webgpu.api.DeviceLost;
 import org.webgpu.api.FeatureName;
 import org.webgpu.api.Limits;
 import org.webgpu.api.QueueDescriptor;
 import org.webgpu.api.UncapturedError;
 import org.webgpu.api.spi.DeviceDescriptorProvider;
+import org.webgpu.impl.util.StringViewMapper;
+import org.webgpu.impl.util.StructTools;
 import org.webgpu.panama.WGPUDeviceDescriptor;
 
 /**
@@ -25,8 +26,8 @@ public class DeviceDescriptorProviderImpl implements DeviceDescriptorProvider {
 
     @Override
     public String label(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'label'");
+        final var labelPtr = WGPUDeviceDescriptor.label(structPtr);
+        return StringViewMapper.map(labelPtr);
     }
 
     @Override
@@ -37,14 +38,14 @@ public class DeviceDescriptorProviderImpl implements DeviceDescriptorProvider {
 
     @Override
     public Limits requiredLimits(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'requiredLimits'");
+        final var limitsPtr = WGPUDeviceDescriptor.requiredLimits(structPtr);
+        return StructTools.placeSegment(limitsPtr, Limits.class);
     }
 
     @Override
     public QueueDescriptor defaultQueue(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'defaultQueue'");
+        final var queueDescriptorPtr = WGPUDeviceDescriptor.defaultQueue(structPtr);
+        return StructTools.placeSegment(queueDescriptorPtr, QueueDescriptor.class);
     }
 
     @Override
@@ -61,8 +62,7 @@ public class DeviceDescriptorProviderImpl implements DeviceDescriptorProvider {
 
     @Override
     public void label(MemorySegment structPtr, String label) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'label'");
+        WGPUDeviceDescriptor.label(structPtr, StringViewMapper.map(label, arena));
     }
 
     @Override
@@ -79,8 +79,8 @@ public class DeviceDescriptorProviderImpl implements DeviceDescriptorProvider {
 
     @Override
     public void defaultQueue(MemorySegment structPtr, QueueDescriptor defaultQueue) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'defaultQueue'");
+        final var descriptorPtr = StructTools.fetchSegment(defaultQueue);
+        WGPUDeviceDescriptor.defaultQueue(structPtr, descriptorPtr);
     }
 
     @Override

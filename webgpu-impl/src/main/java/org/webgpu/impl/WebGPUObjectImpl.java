@@ -4,7 +4,7 @@ import java.lang.foreign.MemorySegment;
 
 import org.jspecify.annotations.NonNull;
 
-public sealed interface WebGPUObjectImpl permits AdapterImpl, BindGroupImpl, BufferImpl, RenderPipelineImpl, CommandBufferImpl, BindGroupLayoutImpl, ComputePipelineImpl, QuerySetImpl, SamplerImpl, TextureViewImpl, PipelineLayoutImpl, DeviceImpl, TextureImpl {
+public sealed interface WebGPUObjectImpl permits AdapterImpl, BindGroupImpl, BufferImpl, RenderPipelineImpl, CommandBufferImpl, BindGroupLayoutImpl, ComputePipelineImpl, QuerySetImpl, SamplerImpl, TextureViewImpl, PipelineLayoutImpl, DeviceImpl, TextureImpl, ExternalTextureImpl {
     
     @NonNull
     public MemorySegment ptr();

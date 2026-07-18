@@ -2,11 +2,13 @@ package org.webgpu.impl.spi;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
+import java.lang.foreign.ValueLayout;
 
-import org.jspecify.annotations.NonNull;
 import org.webgpu.api.TextureFormat;
 import org.webgpu.api.spi.RenderBundleEncoderDescriptorProvider;
+import org.webgpu.impl.util.StringViewMapper;
 import org.webgpu.panama.WGPURenderBundleEncoderDescriptor;
+import org.webgpu.panama.webgpu_h;
 
 /**
  * RenderBundleEncoderDescriptorProviderImpl
@@ -21,8 +23,7 @@ public class RenderBundleEncoderDescriptorProviderImpl implements RenderBundleEn
 
     @Override
     public String label(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'label'");
+        return StringViewMapper.map(WGPURenderBundleEncoderDescriptor.label(structPtr));
     }
 
     @Override
@@ -33,62 +34,63 @@ public class RenderBundleEncoderDescriptorProviderImpl implements RenderBundleEn
 
     @Override
     public TextureFormat depthStencilFormat(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'depthStencilFormat'");
+        final int depthStencilFormatValue = WGPURenderBundleEncoderDescriptor.depthStencilFormat(structPtr);
+        return TextureFormat.values()[depthStencilFormatValue];
     }
 
     @Override
     public int sampleCount(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'sampleCount'");
+        return WGPURenderBundleEncoderDescriptor.sampleCount(structPtr);
     }
 
     @Override
     public boolean depthReadOnly(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'depthReadOnly'");
+        return WGPURenderBundleEncoderDescriptor.depthReadOnly(structPtr) == webgpu_h.WGPU_TRUE();
     }
 
     @Override
     public boolean stencilReadOnly(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'stencilReadOnly'");
+        return WGPURenderBundleEncoderDescriptor.stencilReadOnly(structPtr) == webgpu_h.WGPU_TRUE();
     }
 
     @Override
     public void label(MemorySegment structPtr, String label) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'label'");
+        try (Arena confinedArena = Arena.ofConfined()) {
+            final MemorySegment labelSegment = StringViewMapper.map(label, confinedArena);
+            WGPURenderBundleEncoderDescriptor.label(structPtr, labelSegment);
+        }
     }
 
     @Override
     public void colorFormats(MemorySegment structPtr, TextureFormat[] colorFormats) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'colorFormats'");
+        try (Arena confinedArena = Arena.ofConfined()) {
+            final MemorySegment colorFormatsPtr = confinedArena.allocate(ValueLayout.JAVA_INT, colorFormats.length);
+            for (int i = 0; i < colorFormats.length; i++) {
+                colorFormatsPtr.setAtIndex(ValueLayout.JAVA_INT, i, colorFormats[i].value());
+            }
+            WGPURenderBundleEncoderDescriptor.colorFormats(structPtr, colorFormatsPtr);
+            WGPURenderBundleEncoderDescriptor.colorFormatCount(structPtr, colorFormats.length);
+        }
     }
 
     @Override
     public void depthStencilFormat(MemorySegment structPtr, TextureFormat depthStencilFormat) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'depthStencilFormat'");
+        WGPURenderBundleEncoderDescriptor.depthStencilFormat(structPtr, depthStencilFormat.value());
     }
 
     @Override
     public void sampleCount(MemorySegment structPtr, int sampleCount) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'sampleCount'");
+        WGPURenderBundleEncoderDescriptor.sampleCount(structPtr, sampleCount);
     }
 
     @Override
     public void depthReadOnly(MemorySegment structPtr, boolean depthReadOnly) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'depthReadOnly'");
+        WGPURenderBundleEncoderDescriptor.depthReadOnly(structPtr, depthReadOnly ? webgpu_h.WGPU_TRUE() : webgpu_h.WGPU_FALSE());
     }
 
     @Override
     public void stencilReadOnly(MemorySegment structPtr, boolean stencilReadOnly) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'stencilReadOnly'");
+        WGPURenderBundleEncoderDescriptor.stencilReadOnly(structPtr, stencilReadOnly ? webgpu_h.WGPU_TRUE() : webgpu_h.WGPU_FALSE());
     }
 
 }

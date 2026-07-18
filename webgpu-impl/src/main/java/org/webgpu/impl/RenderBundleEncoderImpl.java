@@ -8,7 +8,6 @@ import org.jspecify.annotations.NullMarked;
 import org.webgpu.api.BindGroup;
 import org.webgpu.api.Buffer;
 import org.webgpu.api.IndexFormat;
-import org.webgpu.api.RenderBundle;
 import org.webgpu.api.RenderBundleDescriptor;
 import org.webgpu.api.RenderBundleEncoder;
 import org.webgpu.api.RenderPipeline;

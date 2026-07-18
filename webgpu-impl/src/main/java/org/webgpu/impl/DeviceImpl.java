@@ -191,7 +191,6 @@ public final class DeviceImpl implements Device, WebGPUObjectImpl {
 
     @Override
     public MemorySegment ptr() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'ptr'");
+        return this.memorySegment;
     }
 }

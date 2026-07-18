@@ -3,7 +3,6 @@ package org.webgpu.impl.spi;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
-import org.jspecify.annotations.NonNull;
 import org.webgpu.api.ComputeState;
 import org.webgpu.api.PipelineLayout;
 import org.webgpu.api.spi.ComputePipelineDescriptorProvider;
@@ -34,9 +33,6 @@ public class ComputePipelineDescriptorProviderImpl implements ComputePipelineDes
     @Override
     public PipelineLayoutImpl layout(MemorySegment structPtr) {
         var ptr = WGPUComputePipelineDescriptor.layout(structPtr);
-        if (ptr == null || ptr.equals(MemorySegment.NULL)) {
-            return null;
-        }
         return new PipelineLayoutImpl(ptr);
     }
 
@@ -48,7 +44,9 @@ public class ComputePipelineDescriptorProviderImpl implements ComputePipelineDes
 
     @Override
     public void label(MemorySegment structPtr, String label) {
-        WGPUComputePipelineDescriptor.label(structPtr, StringViewMapper.map(label, arena));
+       try (Arena tempArena = Arena.ofConfined()) {
+           WGPUComputePipelineDescriptor.label(structPtr, StringViewMapper.map(label, tempArena));
+       }
     }
 
     @Override
@@ -58,12 +56,8 @@ public class ComputePipelineDescriptorProviderImpl implements ComputePipelineDes
 
     @Override
     public void compute(MemorySegment structPtr, ComputeState compute) {
-        if (compute == null) {
-            return;
-        }
         var seg = StructTools.fetchSegment(compute);
-        MemorySegment.copy(seg, 0, WGPUComputePipelineDescriptor.compute(structPtr), 0,
-                WGPUComputeState.layout().byteSize());
+        WGPUComputePipelineDescriptor.compute(structPtr, seg);
     }
 
 }

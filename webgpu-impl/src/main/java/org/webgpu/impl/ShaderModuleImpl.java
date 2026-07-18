@@ -4,6 +4,7 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.webgpu.api.CompilationInfo;
+import org.webgpu.api.Future;
 import org.webgpu.api.ShaderModule;
 import org.webgpu.api.exceptions.WGPUException;
 import org.webgpu.impl.util.StructTools;
@@ -26,7 +27,11 @@ public class ShaderModuleImpl implements ShaderModule {
 	@Override
 	public void getCompilationInfo(CompilationInfo callback) {
 		final var callbackPtr = StructTools.fetchSegment(callback);
-		webgpu_h.wgpuShaderModuleGetCompilationInfo(Arena.ofAuto(), this.memorySegment, callbackPtr);
+		final var futurePtr = webgpu_h.wgpuShaderModuleGetCompilationInfo(Arena.ofAuto(), this.memorySegment,
+				callbackPtr);
+		final Future future = StructTools.placeSegment(futurePtr, Future.class);
+
+		future.id();
 	}
     
 }

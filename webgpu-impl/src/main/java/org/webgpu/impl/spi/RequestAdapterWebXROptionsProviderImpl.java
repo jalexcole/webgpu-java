@@ -3,7 +3,6 @@ package org.webgpu.impl.spi;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
-import org.jspecify.annotations.NonNull;
 import org.webgpu.api.spi.RequestAdapterWebXROptionsProvider;
 import org.webgpu.panama.WGPURequestAdapterWebXROptions;
 import org.webgpu.panama.webgpu_h;
