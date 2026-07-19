@@ -11,24 +11,17 @@ import org.webgpu.panama.webgpu_h;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
-import java.util.EnumSet;
 import java.util.Set;
 
 @NullMarked
 public final class BufferImpl implements Buffer, WebGPUObjectImpl {
 
     private final MemorySegment memorySegment;
+    private final Arena callbackArena = Arena.ofShared();
     private boolean destroyed = false;
 
     public BufferImpl(MemorySegment memorySegment) {
         this.memorySegment = memorySegment;
-    }
-
-
-    public void mapAsync(Set<MapMode> mode, long offset, long size) {
-        final long modes = mode.stream().mapToLong(MapMode::value).sum();
-       
-        throw new WGPUException(new UnsupportedOperationException());
     }
 
     @Override
@@ -55,7 +48,8 @@ public final class BufferImpl implements Buffer, WebGPUObjectImpl {
 
     @Override
     public void setLabel(String label) {
-        throw new WGPUException(new UnsupportedOperationException("WGPU Does not support setting labels on buffers yet."));
+        throw new WGPUException(
+                new UnsupportedOperationException("WGPU Does not support setting labels on buffers yet."));
     }
 
     @Override
@@ -72,7 +66,7 @@ public final class BufferImpl implements Buffer, WebGPUObjectImpl {
     public BufferMapState getMapState() {
         final var mapState = webgpu_h.wgpuBufferGetMapState(this.memorySegment);
         return BufferMapState.values()[mapState];
-        
+
     }
 
     @Override
@@ -87,24 +81,28 @@ public final class BufferImpl implements Buffer, WebGPUObjectImpl {
             destroyed = true;
         }
     }
-    
+
     @Override
     public void mapAsync(BufferMap callback, Set<MapMode> mode, long offset, long size) {
         final long modes = BitPacker.pack(mode);
-        final var callbackPtr = WGPUBufferMapCallback
-                .allocate((int status, MemorySegment message, MemorySegment userdata1, MemorySegment userdata2) -> {
-            callback.apply(MapAsyncStatus.values()[status], StringViewMapper.map(message));
-                }, Arena.ofAuto());
-        
-        final var callbackInfoPtr = WGPUBufferMapCallbackInfo.allocate(Arena.ofAuto());
-        WGPUBufferMapCallbackInfo.callback(callbackInfoPtr, callbackPtr);
+        final var callbackPtr = WGPUBufferMapCallback.allocate(
+                (int status, MemorySegment message, MemorySegment userdata1, MemorySegment userdata2) -> callback
+                        .apply(MapAsyncStatus.values()[status],
+                                message == MemorySegment.NULL ? "" : StringViewMapper.map(message)),
+                callbackArena);
 
-        webgpu_h.wgpuBufferMapAsync(Arena.ofAuto(), this.memorySegment, modes, offset, size, callbackInfoPtr);
+        final var callbackInfoPtr = WGPUBufferMapCallbackInfo.allocate(callbackArena);
+        WGPUBufferMapCallbackInfo.callback(callbackInfoPtr, callbackPtr);
+        WGPUBufferMapCallbackInfo.nextInChain(callbackInfoPtr, MemorySegment.NULL);
+        WGPUBufferMapCallbackInfo.mode(callbackInfoPtr, CallbackMode.ALLOW_SPONTANEOUS.value());
+        WGPUBufferMapCallbackInfo.userdata1(callbackInfoPtr, MemorySegment.NULL);
+        WGPUBufferMapCallbackInfo.userdata2(callbackInfoPtr, MemorySegment.NULL);
+
+        webgpu_h.wgpuBufferMapAsync(callbackArena, this.memorySegment, modes, offset, size, callbackInfoPtr);
     }
 
-
-	@Override
-	public MemorySegment ptr() {
-		return this.memorySegment;
-	}
+    @Override
+    public MemorySegment ptr() {
+        return this.memorySegment;
+    }
 }

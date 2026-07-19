@@ -73,10 +73,8 @@ public class TextureDescriptorProviderImpl implements TextureDescriptorProvider 
 
     @Override
     public void label(MemorySegment structPtr, String label) {
-        try (Arena confinedArena = Arena.ofConfined()) {
-            final MemorySegment labelSegment = StringViewMapper.map(label, confinedArena);
-            WGPUTextureDescriptor.label(structPtr, labelSegment);
-        }
+        final MemorySegment labelSegment = StringViewMapper.map(label, arena);
+        WGPUTextureDescriptor.label(structPtr, labelSegment);
     }
 
     @Override
@@ -115,14 +113,17 @@ public class TextureDescriptorProviderImpl implements TextureDescriptorProvider 
 
     @Override
     public void viewFormats(MemorySegment structPtr, TextureFormat[] viewFormats) {
-        try (Arena confinedArena = Arena.ofConfined()) {
-            final MemorySegment viewFormatsPtr = confinedArena.allocate(ValueLayout.JAVA_INT, viewFormats.length);
-            for (int i = 0; i < viewFormats.length; i++) {
-                viewFormatsPtr.setAtIndex(ValueLayout.JAVA_INT, i, viewFormats[i].value());
-            }
-            WGPUTextureDescriptor.viewFormats(structPtr, viewFormatsPtr);
-            WGPUTextureDescriptor.viewFormatCount(structPtr, viewFormats.length);
+        if (viewFormats == null || viewFormats.length == 0) {
+            WGPUTextureDescriptor.viewFormats(structPtr, MemorySegment.NULL);
+            WGPUTextureDescriptor.viewFormatCount(structPtr, 0);
+            return;
         }
+        final MemorySegment viewFormatsPtr = arena.allocate(ValueLayout.JAVA_INT, viewFormats.length);
+        for (int i = 0; i < viewFormats.length; i++) {
+            viewFormatsPtr.setAtIndex(ValueLayout.JAVA_INT, i, viewFormats[i].value());
+        }
+        WGPUTextureDescriptor.viewFormats(structPtr, viewFormatsPtr);
+        WGPUTextureDescriptor.viewFormatCount(structPtr, viewFormats.length);
     }
 
 }

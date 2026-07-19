@@ -31,7 +31,7 @@ public class ConstantEntryProviderImpl implements ConstantEntryProvider {
 
     @Override
     public void key(MemorySegment structPtr, String key) {
-        WGPUConstantEntry.key(structPtr, StringViewMapper.map(key));
+        WGPUConstantEntry.key(structPtr, StringViewMapper.map(key, arena));
     }
 
     @Override

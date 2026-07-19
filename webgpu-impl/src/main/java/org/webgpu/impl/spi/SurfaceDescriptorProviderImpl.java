@@ -25,10 +25,8 @@ public class SurfaceDescriptorProviderImpl implements SurfaceDescriptorProvider 
 
     @Override
     public void label(MemorySegment structPtr, String label) {
-        try (Arena labelArena = Arena.ofConfined()) {
-            final MemorySegment labelSegment = StringViewMapper.map(label, labelArena);
-            WGPUSurfaceDescriptor.label(structPtr, labelSegment);
-        }
+        final MemorySegment labelSegment = StringViewMapper.map(label, arena);
+        WGPUSurfaceDescriptor.label(structPtr, labelSegment);
     }
 
 }

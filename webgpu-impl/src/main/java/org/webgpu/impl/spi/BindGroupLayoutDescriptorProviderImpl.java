@@ -2,7 +2,6 @@ package org.webgpu.impl.spi;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
-import java.lang.foreign.ValueLayout;
 
 import org.jspecify.annotations.NullMarked;
 import org.webgpu.api.BindGroupLayoutEntry;
@@ -31,10 +30,13 @@ public class BindGroupLayoutDescriptorProviderImpl implements BindGroupLayoutDes
     public BindGroupLayoutEntry[] entries(MemorySegment structPtr) {
         var entryCount = WGPUBindGroupLayoutDescriptor.entryCount(structPtr);
         var entriesPtr = WGPUBindGroupLayoutDescriptor.entries(structPtr);
+        if (entriesPtr == null || entriesPtr.equals(MemorySegment.NULL) || entryCount == 0) {
+            return new BindGroupLayoutEntry[0];
+        }
         var result = new BindGroupLayoutEntry[(int) entryCount];
         var entryProvider = new BindGroupLayoutEntryProviderImpl();
         for (int i = 0; i < entryCount; i++) {
-            var entryPtr = entriesPtr.asSlice(i * WGPUBindGroupLayoutEntry.layout().byteSize());
+            var entryPtr = WGPUBindGroupLayoutEntry.asSlice(entriesPtr, i);
             result[i] = new BindGroupLayoutEntry();
             result[i].binding(entryProvider.binding(entryPtr));
             result[i].bindingArraySize(entryProvider.bindingArraySize(entryPtr));
@@ -49,19 +51,26 @@ public class BindGroupLayoutDescriptorProviderImpl implements BindGroupLayoutDes
 
     @Override
     public void label(MemorySegment structPtr, String label) {
-        WGPUBindGroupLayoutDescriptor.label(structPtr, StringViewMapper.map(label));
+        WGPUBindGroupLayoutDescriptor.label(structPtr, StringViewMapper.map(label, arena));
     }
 
     @Override
     public void entries(MemorySegment structPtr, BindGroupLayoutEntry[] entries) {
-        
+        if (entries == null || entries.length == 0) {
+            WGPUBindGroupLayoutDescriptor.entries(structPtr, MemorySegment.NULL);
+            WGPUBindGroupLayoutDescriptor.entryCount(structPtr, 0);
+            return;
+        }
+
         final MemorySegment entriesPtr = WGPUBindGroupLayoutEntry.allocateArray(entries.length, arena);
 
         for (int i = 0; i < entries.length; i++) {
-            final MemorySegment bindGroupLayoutEntryPtr = StructTools.fetchSegment(entries[i]);
-            entriesPtr.setAtIndex(ValueLayout.ADDRESS, i, bindGroupLayoutEntryPtr);
+            final MemorySegment src = StructTools.fetchSegment(entries[i]);
+            final MemorySegment dest = WGPUBindGroupLayoutEntry.asSlice(entriesPtr, i);
+            MemorySegment.copy(src, 0, dest, 0, WGPUBindGroupLayoutEntry.layout().byteSize());
         }
 
         WGPUBindGroupLayoutDescriptor.entries(structPtr, entriesPtr);
+        WGPUBindGroupLayoutDescriptor.entryCount(structPtr, entries.length);
     }
 }

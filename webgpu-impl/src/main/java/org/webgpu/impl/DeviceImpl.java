@@ -4,7 +4,10 @@ import org.jspecify.annotations.NullMarked;
 import org.webgpu.api.*;
 import org.webgpu.api.exceptions.WGPUException;
 import org.webgpu.impl.util.StructTools;
+import org.webgpu.impl.util.StringViewMapper;
 import org.webgpu.panama.WGPUFuture;
+import org.webgpu.panama.WGPUShaderModuleDescriptor;
+import org.webgpu.panama.WGPUShaderSourceWGSL;
 import org.webgpu.panama.webgpu_h;
 
 import java.lang.foreign.Arena;
@@ -22,7 +25,7 @@ public final class DeviceImpl implements Device, WebGPUObjectImpl {
     public DeviceImpl(MemorySegment memorySegment) {
         this.memorySegment = memorySegment;
     }
-    
+
     @Override
     public BindGroup createBindGroup(BindGroupDescriptor descriptor) {
         final MemorySegment descriptorPtr = StructTools.fetchSegment(descriptor);
@@ -58,10 +61,9 @@ public final class DeviceImpl implements Device, WebGPUObjectImpl {
         return new ComputePipelineImpl(computePipelinePtr);
     }
 
-    
     public void createComputePipelineAsync(ComputePipelineDescriptor descriptor) {
         final var descriptorPtr = StructTools.fetchSegment(descriptor);
-        
+
         // TODO: Investigate why callback function is missing.
     }
 
@@ -78,7 +80,6 @@ public final class DeviceImpl implements Device, WebGPUObjectImpl {
         return new QuerySetImpl(webgpu_h.wgpuDeviceCreateQuerySet(memorySegment, descriptorPtr));
     }
 
-    
     public void createRenderPipelineAsync(RenderPipelineDescriptor descriptor) {
         final var descriptorPtr = StructTools.fetchSegment(descriptor);
         throw new UnsupportedOperationException();
@@ -106,7 +107,16 @@ public final class DeviceImpl implements Device, WebGPUObjectImpl {
 
     @Override
     public ShaderModule createShaderModule(ShaderModuleDescriptor descriptor) {
-        final var descriptorPtr = StructTools.fetchSegment(descriptor);
+        final MemorySegment descriptorPtr;
+        if (descriptor instanceof ShaderSourceWGSL) {
+            final MemorySegment wgslPtr = StructTools.fetchSegment((ShaderSourceWGSL) descriptor);
+            final MemorySegment moduleDescriptorPtr = WGPUShaderModuleDescriptor.allocate(arena);
+            WGPUShaderModuleDescriptor.nextInChain(moduleDescriptorPtr, WGPUShaderSourceWGSL.chain(wgslPtr));
+            WGPUShaderModuleDescriptor.label(moduleDescriptorPtr, StringViewMapper.map("", arena));
+            descriptorPtr = moduleDescriptorPtr;
+        } else {
+            descriptorPtr = StructTools.fetchSegment(descriptor);
+        }
         final var shaderModulePtr = webgpu_h.wgpuDeviceCreateShaderModule(this.memorySegment, descriptorPtr);
         return new ShaderModuleImpl(shaderModulePtr);
     }
@@ -174,8 +184,6 @@ public final class DeviceImpl implements Device, WebGPUObjectImpl {
     public void setLabel(String label) {
         throw new WGPUException(new UnsupportedOperationException());
     }
-
-    
 
     @Override
     public void popErrorScope(PopErrorScope callback) {

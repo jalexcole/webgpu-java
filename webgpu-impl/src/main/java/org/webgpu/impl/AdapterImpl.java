@@ -2,12 +2,12 @@ package org.webgpu.impl;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
-import java.lang.foreign.ValueLayout;
 import java.util.WeakHashMap;
 
 import org.jspecify.annotations.NullMarked;
 import org.webgpu.api.Adapter;
 import org.webgpu.api.AdapterInfo;
+import org.webgpu.api.CallbackMode;
 import org.webgpu.api.DeviceDescriptor;
 import org.webgpu.api.FeatureName;
 import org.webgpu.api.Limits;
@@ -81,6 +81,8 @@ public final class AdapterImpl implements Adapter, WebGPUObjectImpl {
 
         };
 
+        WGPURequestDeviceCallbackInfo.mode(callbackInfo, CallbackMode.ALLOW_PROCESS_EVENTS.value());
+        
         WGPURequestDeviceCallbackInfo.callback(callbackInfo, WGPURequestDeviceCallback.allocate(nativeCallback, arena));
 
         webgpu_h.wgpuAdapterRequestDevice(arena, this.memorySegment, deviceDescriptor, callbackInfo);

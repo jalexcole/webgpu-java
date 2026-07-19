@@ -4,7 +4,8 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
 import org.webgpu.api.spi.ShaderModuleDescriptorProvider;
-import org.webgpu.panama.WGPUSamplerDescriptor;
+import org.webgpu.impl.util.StringViewMapper;
+import org.webgpu.panama.WGPUShaderModuleDescriptor;
 
 /**
  * ShaderModuleDescriptorProviderImpl
@@ -14,19 +15,20 @@ public class ShaderModuleDescriptorProviderImpl implements ShaderModuleDescripto
 
     @Override
     public MemorySegment initializer() {
-        return WGPUSamplerDescriptor.allocate(arena);
+        return WGPUShaderModuleDescriptor.allocate(arena);
     }
 
     @Override
     public String label(MemorySegment structPtr) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'label'");
+        final MemorySegment labelSegment = WGPUShaderModuleDescriptor.label(structPtr);
+        return StringViewMapper.map(labelSegment);
+
     }
 
     @Override
     public void label(MemorySegment structPtr, String label) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'label'");
+        final MemorySegment labelSegment = StringViewMapper.map(label, arena);
+        WGPUShaderModuleDescriptor.label(structPtr, labelSegment);
     }
 
 }

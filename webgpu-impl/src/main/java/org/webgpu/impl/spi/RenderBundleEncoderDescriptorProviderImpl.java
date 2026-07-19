@@ -55,22 +55,23 @@ public class RenderBundleEncoderDescriptorProviderImpl implements RenderBundleEn
 
     @Override
     public void label(MemorySegment structPtr, String label) {
-        try (Arena confinedArena = Arena.ofConfined()) {
-            final MemorySegment labelSegment = StringViewMapper.map(label, confinedArena);
-            WGPURenderBundleEncoderDescriptor.label(structPtr, labelSegment);
-        }
+        final MemorySegment labelSegment = StringViewMapper.map(label, arena);
+        WGPURenderBundleEncoderDescriptor.label(structPtr, labelSegment);
     }
 
     @Override
     public void colorFormats(MemorySegment structPtr, TextureFormat[] colorFormats) {
-        try (Arena confinedArena = Arena.ofConfined()) {
-            final MemorySegment colorFormatsPtr = confinedArena.allocate(ValueLayout.JAVA_INT, colorFormats.length);
-            for (int i = 0; i < colorFormats.length; i++) {
-                colorFormatsPtr.setAtIndex(ValueLayout.JAVA_INT, i, colorFormats[i].value());
-            }
-            WGPURenderBundleEncoderDescriptor.colorFormats(structPtr, colorFormatsPtr);
-            WGPURenderBundleEncoderDescriptor.colorFormatCount(structPtr, colorFormats.length);
+        if (colorFormats == null || colorFormats.length == 0) {
+            WGPURenderBundleEncoderDescriptor.colorFormats(structPtr, MemorySegment.NULL);
+            WGPURenderBundleEncoderDescriptor.colorFormatCount(structPtr, 0);
+            return;
         }
+        final MemorySegment colorFormatsPtr = arena.allocate(ValueLayout.JAVA_INT, colorFormats.length);
+        for (int i = 0; i < colorFormats.length; i++) {
+            colorFormatsPtr.setAtIndex(ValueLayout.JAVA_INT, i, colorFormats[i].value());
+        }
+        WGPURenderBundleEncoderDescriptor.colorFormats(structPtr, colorFormatsPtr);
+        WGPURenderBundleEncoderDescriptor.colorFormatCount(structPtr, colorFormats.length);
     }
 
     @Override
@@ -85,12 +86,14 @@ public class RenderBundleEncoderDescriptorProviderImpl implements RenderBundleEn
 
     @Override
     public void depthReadOnly(MemorySegment structPtr, boolean depthReadOnly) {
-        WGPURenderBundleEncoderDescriptor.depthReadOnly(structPtr, depthReadOnly ? webgpu_h.WGPU_TRUE() : webgpu_h.WGPU_FALSE());
+        WGPURenderBundleEncoderDescriptor.depthReadOnly(structPtr,
+                depthReadOnly ? webgpu_h.WGPU_TRUE() : webgpu_h.WGPU_FALSE());
     }
 
     @Override
     public void stencilReadOnly(MemorySegment structPtr, boolean stencilReadOnly) {
-        WGPURenderBundleEncoderDescriptor.stencilReadOnly(structPtr, stencilReadOnly ? webgpu_h.WGPU_TRUE() : webgpu_h.WGPU_FALSE());
+        WGPURenderBundleEncoderDescriptor.stencilReadOnly(structPtr,
+                stencilReadOnly ? webgpu_h.WGPU_TRUE() : webgpu_h.WGPU_FALSE());
     }
 
 }

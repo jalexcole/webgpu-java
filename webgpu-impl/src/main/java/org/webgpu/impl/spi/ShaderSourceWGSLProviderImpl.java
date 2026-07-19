@@ -5,14 +5,19 @@ import java.lang.foreign.MemorySegment;
 
 import org.webgpu.api.spi.ShaderSourceWGSLProvider;
 import org.webgpu.impl.util.StringViewMapper;
+import org.webgpu.panama.WGPUChainedStruct;
 import org.webgpu.panama.WGPUShaderSourceWGSL;
+import org.webgpu.panama.webgpu_h;
 
 public class ShaderSourceWGSLProviderImpl implements ShaderSourceWGSLProvider {
     private final Arena arena = Arena.ofAuto();
 
     @Override
     public MemorySegment initializer() {
-        return WGPUShaderSourceWGSL.allocate(arena);
+        final MemorySegment structPtr = WGPUShaderSourceWGSL.allocate(arena);
+        WGPUChainedStruct.sType(WGPUShaderSourceWGSL.chain(structPtr), webgpu_h.WGPUSType_ShaderSourceWGSL());
+        WGPUShaderSourceWGSL.code(structPtr, StringViewMapper.map("", arena));
+        return structPtr;
     }
 
     @Override
@@ -22,9 +27,8 @@ public class ShaderSourceWGSLProviderImpl implements ShaderSourceWGSLProvider {
 
     @Override
     public void code(MemorySegment structPtr, String code) {
-        try (Arena arena = Arena.ofConfined()) {
-            WGPUShaderSourceWGSL.code(structPtr, StringViewMapper.map(code, arena));
-        }
+        final MemorySegment codeSegment = StringViewMapper.map(code, arena);
+        WGPUShaderSourceWGSL.code(structPtr, codeSegment);
     }
 
 }

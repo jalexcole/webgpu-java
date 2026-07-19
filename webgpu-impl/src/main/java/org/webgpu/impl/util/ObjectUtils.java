@@ -19,7 +19,13 @@ public class ObjectUtils {
     
 	public static <T extends WGPUObject> MemorySegment mapArray(T[] input, Arena arena) {
         @SuppressWarnings("null")
-		final var pointers = Arrays.stream((WebGPUObjectImpl[]) input).map(WebGPUObjectImpl::ptr).toList();
+		final var pointers = Arrays.stream(input).map(item -> {
+            if (!(item instanceof WebGPUObjectImpl impl)) {
+                throw new IllegalArgumentException("Expected implementation instance but got: "
+                        + item.getClass().getName());
+            }
+            return impl.ptr();
+        }).toList();
 
         final MemorySegment commandArray = arena.allocate(
                 ValueLayout.ADDRESS, pointers.size());

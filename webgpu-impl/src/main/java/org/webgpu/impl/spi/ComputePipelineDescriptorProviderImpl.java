@@ -44,9 +44,7 @@ public class ComputePipelineDescriptorProviderImpl implements ComputePipelineDes
 
     @Override
     public void label(MemorySegment structPtr, String label) {
-       try (Arena tempArena = Arena.ofConfined()) {
-           WGPUComputePipelineDescriptor.label(structPtr, StringViewMapper.map(label, tempArena));
-       }
+        WGPUComputePipelineDescriptor.label(structPtr, StringViewMapper.map(label, arena));
     }
 
     @Override

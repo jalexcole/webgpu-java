@@ -3,7 +3,6 @@ package org.webgpu.impl.spi;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
-
 import org.jspecify.annotations.NullMarked;
 
 import org.webgpu.api.spi.QueueDescriptorProvider;
@@ -26,10 +25,8 @@ public class QueueDescriptorProviderImpl implements QueueDescriptorProvider {
 
     @Override
     public void label(MemorySegment structPtr, String label) {
-        try (Arena confinedArena = Arena.ofConfined()) {
-            final MemorySegment labelSegment = StringViewMapper.map(label, confinedArena);
-            WGPUQueueDescriptor.label(structPtr, labelSegment);
-        }
+        final MemorySegment labelSegment = StringViewMapper.map(label, arena);
+        WGPUQueueDescriptor.label(structPtr, labelSegment);
     }
 
 }

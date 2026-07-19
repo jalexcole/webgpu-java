@@ -78,7 +78,7 @@ public class InstanceImpl implements Instance {
 
         WGPURequestAdapterCallbackInfo.callback(callbackInfo, callbackSegment);
         WGPURequestAdapterCallbackInfo.nextInChain(callbackInfo, MemorySegment.NULL);
-        WGPURequestAdapterCallbackInfo.mode(callbackInfo, CallbackMode.WAIT_ANY_ONLY.value()); // Assuming 0 is
+        WGPURequestAdapterCallbackInfo.mode(callbackInfo, CallbackMode.ALLOW_PROCESS_EVENTS.value()); // Assuming 0 is
 
         WGPURequestAdapterCallbackInfo.userdata1(callbackInfo, MemorySegment.NULL);
         WGPURequestAdapterCallbackInfo.userdata2(callbackInfo, MemorySegment.NULL);

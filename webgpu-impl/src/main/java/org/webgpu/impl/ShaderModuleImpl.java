@@ -33,5 +33,9 @@ public class ShaderModuleImpl implements ShaderModule {
 
 		future.id();
 	}
+
+	public MemorySegment ptr() {
+		return this.memorySegment;
+	}
     
 }

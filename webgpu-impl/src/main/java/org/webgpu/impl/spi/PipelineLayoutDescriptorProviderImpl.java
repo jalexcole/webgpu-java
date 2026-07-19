@@ -47,9 +47,7 @@ public class PipelineLayoutDescriptorProviderImpl implements PipelineLayoutDescr
 
     @Override
     public void label(MemorySegment structPtr, String label) {
-        try (Arena confinedArena = Arena.ofConfined()) {
-            WGPUPipelineLayoutDescriptor.label(structPtr, StringViewMapper.map(label, confinedArena));
-        }
+        WGPUPipelineLayoutDescriptor.label(structPtr, StringViewMapper.map(label, arena));
     }
 
     @Override

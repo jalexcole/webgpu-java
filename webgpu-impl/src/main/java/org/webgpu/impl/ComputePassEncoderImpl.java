@@ -3,7 +3,6 @@ package org.webgpu.impl;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
-import java.lang.foreign.ValueLayout.OfInt;
 
 import org.jspecify.annotations.NullMarked;
 import org.webgpu.api.BindGroup;
@@ -17,11 +16,11 @@ import org.webgpu.panama.webgpu_h;
 @NullMarked
 public class ComputePassEncoderImpl implements ComputePassEncoder {
 
-    private final MemorySegment memorySegment;
+	private final MemorySegment memorySegment;
 
-    public ComputePassEncoderImpl(MemorySegment memorySegment) {
-        this.memorySegment = memorySegment;
-    }
+	public ComputePassEncoderImpl(MemorySegment memorySegment) {
+		this.memorySegment = memorySegment;
+	}
 
 	@Override
 	public void insertDebugMarker(String markerLabel) {
@@ -47,9 +46,18 @@ public class ComputePassEncoderImpl implements ComputePassEncoder {
 	@Override
 	public void setBindGroup(int groupIndex, BindGroup group, int[] dynamicOffsets) {
 		final var groupPtr = ((BindGroupImpl) group).ptr();
-		final var dynamicOffsetsPtr = Arena.ofAuto().allocateFrom(ValueLayout.JAVA_INT, dynamicOffsets);
+		if (dynamicOffsets == null || dynamicOffsets.length == 0) {
+			webgpu_h.wgpuComputePassEncoderSetBindGroup(this.memorySegment, groupIndex, groupPtr, 0,
+					MemorySegment.NULL);
+			return;
+		}
 
-		webgpu_h.wgpuComputePassEncoderSetBindGroup(this.memorySegment, groupIndex, groupPtr, groupIndex, dynamicOffsetsPtr);
+		try (Arena arena = Arena.ofShared()) {
+			final var dynamicOffsetsPtr = arena.allocateFrom(ValueLayout.JAVA_INT, dynamicOffsets);
+			webgpu_h.wgpuComputePassEncoderSetBindGroup(this.memorySegment, groupIndex, groupPtr,
+					dynamicOffsets.length,
+					dynamicOffsetsPtr);
+		}
 	}
 
 	@Override
@@ -59,12 +67,14 @@ public class ComputePassEncoderImpl implements ComputePassEncoder {
 
 	@Override
 	public void dispatchWorkgroups(int workgroupCountX, int workgroupCountY, int workgroupCountZ) {
-		webgpu_h.wgpuComputePassEncoderDispatchWorkgroups(this.memorySegment, workgroupCountX, workgroupCountY, workgroupCountZ);
+		webgpu_h.wgpuComputePassEncoderDispatchWorkgroups(this.memorySegment, workgroupCountX, workgroupCountY,
+				workgroupCountZ);
 	}
 
 	@Override
 	public void dispatchWorkgroupsIndirect(Buffer indirectBuffer, long indirectOffset) {
-		webgpu_h.wgpuComputePassEncoderDispatchWorkgroupsIndirect(this.memorySegment, ((BufferImpl) indirectBuffer).ptr(), indirectOffset);
+		webgpu_h.wgpuComputePassEncoderDispatchWorkgroupsIndirect(this.memorySegment,
+				((BufferImpl) indirectBuffer).ptr(), indirectOffset);
 	}
 
 	@Override
@@ -76,5 +86,5 @@ public class ComputePassEncoderImpl implements ComputePassEncoder {
 	public void setLabel(String label) {
 		throw new WGPUException(new UnsupportedOperationException("Unimplemented method 'setLabel'"));
 	}
-    
+
 }
