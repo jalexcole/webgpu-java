@@ -35,10 +35,14 @@ public class StructGenerator {
 
     private static final Logger logger = LoggerFactory.getLogger(StructGenerator.class);
     private static final String COMMON_STRUCT = "WGPUStruct";
+    private static final String COMMON_ABSTRACT_STRUCT = "WGPUAbstractStruct";
+
+    private final TypeName abstractStruct;
 
     public StructGenerator(YamlModel yamlModel, String packageName) {
         this.yamlModel = yamlModel;
         this.packageName = packageName;
+        this.abstractStruct = ClassName.get(packageName + ".internal", COMMON_ABSTRACT_STRUCT);
     }
 
     public List<JavaFile> generate() {
@@ -81,9 +85,13 @@ public class StructGenerator {
             structSpecBuilder.addJavadoc(e.getDoc());
         }
 
+        if (e.getExtends().isEmpty()) {
+            structSpecBuilder.superclass(abstractStruct);
+        }
+
         structSpecBuilder.addSuperinterfaces(Collections.singleton(Utils.map(COMMON_STRUCT)));
-        structSpecBuilder.addField(
-                FieldSpec.builder(MemorySegment.class, "memorySegment", Modifier.PRIVATE, Modifier.FINAL).build());
+        // structSpecBuilder.addField(
+        //         FieldSpec.builder(MemorySegment.class, "memorySegment", Modifier.PROTECTED, Modifier.FINAL).build());
 
         // If this struct is extended by other structs, make it sealed
         if (!children.isEmpty()) {
@@ -199,10 +207,10 @@ public class StructGenerator {
         final String pointerName = "memorySegment";
         return MethodSpec.constructorBuilder()
                 .addJavadoc(doc)
-                .addModifiers(Modifier.PRIVATE)
+                .addModifiers(Modifier.PROTECTED)
                 .addParameter(ParameterSpec.builder(MemorySegment.class, pointerName).build())
                 .addCode(CodeBlock.of(
-                        "this.$N = $N;", pointerName, pointerName))
+                        "super($N);", pointerName))
                 .build();
     }
 
